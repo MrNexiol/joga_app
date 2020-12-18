@@ -2,6 +2,7 @@
 <navigation
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
     app:startDestination="@id/loginFragment">
     <fragment
@@ -11,9 +12,50 @@
         <action
             android:id="@+id/action_loginFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_loginErrorFragment"
+            app:destination="@id/loginErrorFragment" />
     </fragment>
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.prograils.joga.ui.home.HomeFragment"
-        android:label="HomeFragment" />
+        android:label="HomeFragment" >
+        <action
+            android:id="@+id/action_homeFragment_to_likedFragment"
+            app:destination="@id/likedFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_journeysFragment"
+            app:destination="@id/journeysFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_trainerDetailFragment"
+            app:destination="@id/trainerDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/loginErrorFragment"
+        android:name="com.prograils.joga.ui.loginError.LoginErrorFragment"
+        android:label="fragment_login_error"
+        tools:layout="@layout/fragment_login_error" />
+    <fragment
+        android:id="@+id/journeysFragment"
+        android:name="com.prograils.joga.ui.journeys.JourneysFragment"
+        android:label="JourneysFragment" >
+        <action
+            android:id="@+id/action_journeysFragment_to_journeyDetailsFragment"
+            app:destination="@id/journeyDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/likedFragment"
+        android:name="com.prograils.joga.ui.liked.LikedFragment"
+        android:label="fragment_liked"
+        tools:layout="@layout/fragment_liked" />
+    <fragment
+        android:id="@+id/trainerDetailFragment"
+        android:name="com.prograils.joga.ui.trainerDetail.TrainerDetailFragment"
+        android:label="fragment_trainer_detail"
+        tools:layout="@layout/fragment_trainer_detail" />
+    <fragment
+        android:id="@+id/journeyDetailsFragment"
+        android:name="com.prograils.joga.ui.journeyDetails.JourneyDetailsFragment"
+        android:label="fragment_journey_details"
+        tools:layout="@layout/fragment_journey_details" />
 </navigation>
