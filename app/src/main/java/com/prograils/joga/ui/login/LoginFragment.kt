@@ -1,18 +1,19 @@
-package com.prograils.joga.ui.fragments
+package com.prograils.joga.ui.login
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import androidx.navigation.findNavController
-import com.prograils.joga.R
+import androidx.navigation.fragment.findNavController
+import com.prograils.joga.databinding.FragmentLoginBinding
 
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
 class LoginFragment : Fragment() {
+    private var _binding: FragmentLoginBinding? = null
+    private val binding get() = _binding!!
     private var param1: String? = null
     private var param2: String? = null
 
@@ -27,14 +28,22 @@ class LoginFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        val view = inflater.inflate(R.layout.fragment_login, container, false)
-        val loginButton = view.findViewById<Button>(R.id.login_button)
-        loginButton.setOnClickListener {
+    ): View {
+        _binding = FragmentLoginBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding.loginButton.setOnClickListener {
             val action = LoginFragmentDirections.actionLoginFragmentToHomeFragment()
-            view.findNavController().navigate(action)
+            findNavController().navigate(action)
         }
-        return view
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     companion object {
