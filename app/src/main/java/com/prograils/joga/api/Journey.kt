@@ -1,9 +1,9 @@
 package com.prograils.joga.api
 
 data class Journey(
-        private val description: String,
-        private val id: String,
-        private val name: String
+        val description: String,
+        val id: String,
+        val name: String
 ) {
     override fun toString(): String {
         return "$id, $description, $name"

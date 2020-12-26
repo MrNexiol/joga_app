@@ -29,6 +29,12 @@
         <action
             android:id="@+id/action_homeFragment_to_trainerDetailFragment"
             app:destination="@id/trainerDetailFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_classesFragment"
+            app:destination="@id/classesFragment" />
     </fragment>
     <fragment
         android:id="@+id/loginErrorFragment"
@@ -58,4 +64,9 @@
         android:name="com.prograils.joga.ui.journeyDetails.JourneyDetailsFragment"
         android:label="fragment_journey_details"
         tools:layout="@layout/fragment_journey_details" />
+    <fragment
+        android:id="@+id/classesFragment"
+        android:name="com.prograils.joga.ui.classes.ClassesFragment"
+        android:label="fragment_classes"
+        tools:layout="@layout/fragment_classes" />
 </navigation>

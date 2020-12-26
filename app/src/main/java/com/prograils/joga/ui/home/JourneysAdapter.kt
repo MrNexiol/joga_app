@@ -18,7 +18,7 @@ class JourneysAdapter(private var data: List<Journey>) : RecyclerView.Adapter<Jo
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.binding.sss.text = data[position].toString()
+        holder.binding.journeyName.text = data[position].name
     }
 
     override fun getItemCount(): Int {
