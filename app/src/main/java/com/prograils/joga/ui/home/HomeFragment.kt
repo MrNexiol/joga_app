@@ -1,13 +1,17 @@
 package com.prograils.joga.ui.home
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.prograils.joga.JoGaApplication
+import com.prograils.joga.R
 import com.prograils.joga.databinding.FragmentHomeBinding
 
 class HomeFragment : Fragment() {
@@ -19,6 +23,7 @@ class HomeFragment : Fragment() {
     private lateinit var journeyRecyclerView: RecyclerView
     private lateinit var journeysAdapter: JourneysAdapter
 
+    @SuppressLint("SetTextI18n")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -36,7 +41,43 @@ class HomeFragment : Fragment() {
         homeViewModel.journeys.observe(viewLifecycleOwner, {
             journeysAdapter.setData(it.journeys)
         })
+        homeViewModel.dailyClass.observe(viewLifecycleOwner, {
+            Glide.with(this).load(it.lecture.thumbnailUrl).into(binding.todaysPickThumbnail)
+            binding.todayPickNameTextView.text = it.lecture.title
+            binding.todayPickTrainerNameTextView.text = it.lecture.instructor.name
+            binding.todayPickMinTextView.text = it.lecture.duration.toString() + getString(R.string.min)
+        })
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding.seeLikedButton.setOnClickListener {
+            val action = HomeFragmentDirections.actionHomeFragmentToLikedFragment()
+            findNavController().navigate(action)
+        }
+        binding.seeJourneysButton.setOnClickListener {
+            val action = HomeFragmentDirections.actionHomeFragmentToJourneysFragment()
+            findNavController().navigate(action)
+        }
+        binding.seeTrainersButton.setOnClickListener {
+            val action = HomeFragmentDirections.actionHomeFragmentToTrainerDetailFragment()
+            findNavController().navigate(action)
+        }
+        binding.logoutButton.setOnClickListener {
+            val action = HomeFragmentDirections.actionHomeFragmentToLoginFragment()
+            findNavController().navigate(action)
+        }
+        binding.navigationView.setOnNavigationItemSelectedListener {
+            when(it.itemId){
+                R.id.navigation_classes -> {
+                    val action = HomeFragmentDirections.actionHomeFragmentToClassesFragment()
+                    findNavController().navigate(action)
+                    true
+                }
+                else -> false
+            }
+        }
     }
 
     override fun onDestroyView() {
@@ -53,7 +94,7 @@ class HomeFragment : Fragment() {
 
     private fun setInstructorRecyclerView(){
         instructorRecyclerView = binding.instructorRecyclerView
-        instructorsAdapter = InstructorsAdapter(listOf())
+        instructorsAdapter = InstructorsAdapter(listOf(), this)
         instructorRecyclerView.adapter = instructorsAdapter
         instructorRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
     }

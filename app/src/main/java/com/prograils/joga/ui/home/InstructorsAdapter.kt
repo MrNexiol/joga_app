@@ -2,11 +2,13 @@ package com.prograils.joga.ui.home
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.prograils.joga.api.Instructor
 import com.prograils.joga.databinding.InstructorsRecyclerViewItemBinding
 
-class InstructorsAdapter(private var data: List<Instructor>) : RecyclerView.Adapter<InstructorsAdapter.ViewHolder>() {
+class InstructorsAdapter(private var data: List<Instructor>, private var context: Fragment) : RecyclerView.Adapter<InstructorsAdapter.ViewHolder>() {
 
     class ViewHolder(
             val binding: InstructorsRecyclerViewItemBinding) : RecyclerView.ViewHolder(binding.root)
@@ -18,7 +20,13 @@ class InstructorsAdapter(private var data: List<Instructor>) : RecyclerView.Adap
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.binding.recyclerTest.text = data[position].toString()
+        val tmp = data[position].name.split(" ")
+        var splitName = ""
+        for (word in tmp){
+            splitName += "$word\n"
+        }
+        Glide.with(context).load(data[position].avatar_url).into(holder.binding.trainerAvatar)
+        holder.binding.trainerName.text = splitName
     }
 
     override fun getItemCount(): Int {
