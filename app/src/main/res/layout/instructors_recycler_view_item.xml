@@ -4,14 +4,14 @@
     android:layout_width="128dp"
     android:layout_height="wrap_content"
     android:paddingStart="0dp"
-    android:paddingEnd="24dp">
+    android:paddingEnd="@dimen/instructor_item_padding">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/instructor_avatar_card_view"
-        android:layout_width="88dp"
-        android:layout_height="88dp"
+        android:layout_width="@dimen/instructor_avatar_size"
+        android:layout_height="@dimen/instructor_avatar_size"
         android:foregroundGravity="center"
-        app:cardCornerRadius="44dp"
+        app:cardCornerRadius="@dimen/instructor_avatar_radius"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -31,7 +31,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="@string/placeholder"
-        android:textSize="18sp"
+        android:textSize="@dimen/default_text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/instructor_avatar_card_view" />

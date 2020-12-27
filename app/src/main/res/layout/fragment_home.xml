@@ -32,8 +32,8 @@
             <View
                 android:id="@+id/top_divider"
                 android:layout_width="0dp"
-                android:layout_height="1dp"
-                android:layout_marginTop="4dp"
+                android:layout_height="@dimen/divider_height"
+                android:layout_marginTop="@dimen/margin_very_small"
                 android:background="@color/secondary_text"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -43,8 +43,8 @@
                 android:id="@+id/today_pick_thumbnail_card_view"
                 android:layout_width="0dp"
                 android:layout_height="240dp"
-                android:layout_marginTop="24dp"
-                app:cardCornerRadius="8dp"
+                android:layout_marginTop="@dimen/margin_medium"
+                app:cardCornerRadius="@dimen/card_radius"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/top_divider">
@@ -52,7 +52,7 @@
                 <ImageView
                     android:id="@+id/todays_pick_thumbnail"
                     android:layout_width="match_parent"
-                    android:layout_height="240dp"
+                    android:layout_height="match_parent"
                     android:contentDescription="@string/placeholder"
                     android:src="@drawable/placeholder_image" />
 
@@ -62,9 +62,9 @@
                 android:id="@+id/today_pick_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="@dimen/margin_big"
                 android:text="@string/today_pick"
-                android:textSize="24sp"
+                android:textSize="@dimen/header_text"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/today_pick_thumbnail_card_view" />
 
@@ -73,7 +73,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/placeholder"
-                android:textSize="24sp"
+                android:textSize="@dimen/header_text"
                 app:layout_constraintBottom_toTopOf="@+id/with_text_view"
                 app:layout_constraintStart_toEndOf="@+id/today_pick_text_view" />
 
@@ -83,7 +83,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/with"
                 android:textColor="@color/secondary_text"
-                android:textSize="18sp"
+                android:textSize="@dimen/default_text"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/today_pick_text_view" />
 
@@ -93,7 +93,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/placeholder"
                 android:textColor="@color/secondary_text"
-                android:textSize="18sp"
+                android:textSize="@dimen/default_text"
                 app:layout_constraintBottom_toBottomOf="@+id/with_text_view"
                 app:layout_constraintStart_toEndOf="@+id/with_text_view" />
 
@@ -103,7 +103,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/min"
                 android:textColor="@color/secondary_text"
-                android:textSize="18sp"
+                android:textSize="@dimen/default_text"
                 app:layout_constraintBottom_toBottomOf="@+id/with_text_view"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/today_pick_text_view" />
@@ -111,8 +111,8 @@
             <View
                 android:id="@+id/second_divider"
                 android:layout_width="0dp"
-                android:layout_height="1dp"
-                android:layout_marginTop="24dp"
+                android:layout_height="@dimen/divider_height"
+                android:layout_marginTop="@dimen/margin_medium"
                 android:background="@color/secondary_text"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -122,9 +122,9 @@
                 android:id="@+id/liked_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:drawablePadding="8dp"
+                android:drawablePadding="@dimen/drawable_padding"
                 android:text="@string/by_you"
-                android:textSize="24sp"
+                android:textSize="@dimen/header_text"
                 app:drawableStartCompat="@drawable/like_icon"
                 app:layout_constraintBottom_toBottomOf="@+id/see_liked_button"
                 app:layout_constraintStart_toStartOf="parent"
@@ -137,7 +137,7 @@
                 android:text="@string/see_all"
                 android:textAllCaps="false"
                 android:textColor="@color/light_blue"
-                android:textSize="24sp"
+                android:textSize="@dimen/header_text"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/second_divider" />
 
@@ -152,8 +152,8 @@
             <View
                 android:id="@+id/third_divider"
                 android:layout_width="0dp"
-                android:layout_height="1dp"
-                android:layout_marginTop="4dp"
+                android:layout_height="@dimen/divider_height"
+                android:layout_marginTop="@dimen/margin_medium"
                 android:background="@color/secondary_text"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -163,9 +163,9 @@
                 android:id="@+id/journeys_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:drawablePadding="8dp"
+                android:drawablePadding="@dimen/drawable_padding"
                 android:text="@string/journeys"
-                android:textSize="24sp"
+                android:textSize="@dimen/header_text"
                 app:drawableStartCompat="@drawable/journeys_icon"
                 app:layout_constraintBottom_toBottomOf="@+id/see_journeys_button"
                 app:layout_constraintStart_toStartOf="parent"
@@ -178,7 +178,7 @@
                 android:text="@string/see_all"
                 android:textAllCaps="false"
                 android:textColor="@color/light_blue"
-                android:textSize="24sp"
+                android:textSize="@dimen/header_text"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/third_divider" />
 
@@ -193,8 +193,8 @@
             <View
                 android:id="@+id/fourth_divider"
                 android:layout_width="0dp"
-                android:layout_height="1dp"
-                android:layout_marginTop="16dp"
+                android:layout_height="@dimen/divider_height"
+                android:layout_marginTop="@dimen/margin_medium"
                 android:background="@color/secondary_text"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -204,9 +204,9 @@
                 android:id="@+id/trainers_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:drawablePadding="8dp"
+                android:drawablePadding="@dimen/drawable_padding"
                 android:text="@string/trainers"
-                android:textSize="24sp"
+                android:textSize="@dimen/header_text"
                 app:drawableStartCompat="@drawable/trainer_icon"
                 app:layout_constraintBottom_toBottomOf="@+id/see_trainers_button"
                 app:layout_constraintStart_toStartOf="parent"
@@ -219,7 +219,7 @@
                 android:text="@string/see_all"
                 android:textAllCaps="false"
                 android:textColor="@color/light_blue"
-                android:textSize="24sp"
+                android:textSize="@dimen/header_text"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/fourth_divider" />
 
@@ -227,7 +227,7 @@
                 android:id="@+id/instructor_recycler_view"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
+                android:layout_marginTop="@dimen/margin_very_small"
                 android:orientation="horizontal"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -237,10 +237,10 @@
                 android:id="@+id/logout_button"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:drawablePadding="8dp"
+                android:layout_marginTop="@dimen/margin_big"
+                android:drawablePadding="@dimen/drawable_padding"
                 android:text="@string/logout"
-                android:textSize="18sp"
+                android:textSize="@dimen/default_text"
                 app:icon="@drawable/logout_icon"
                 app:iconGravity="textStart"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -253,9 +253,10 @@
                 android:id="@+id/copyright_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
+                android:layout_marginTop="@dimen/margin_very_small"
                 android:text="@string/copyright"
                 android:textColor="@color/secondary_text"
+                android:textSize="@dimen/secondary_text"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/logout_button" />
@@ -266,7 +267,7 @@
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/navigation_view"
         android:layout_width="0dp"
-        android:layout_height="75dp"
+        android:layout_height="@dimen/bottom_navigation_height"
         android:background="@color/background"
         app:itemIconTint="@color/white"
         app:itemRippleColor="@color/white"
