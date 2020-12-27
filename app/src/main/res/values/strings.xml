@@ -15,5 +15,6 @@
     <string name="logout">Logout</string>
     <string name="home">Home</string>
     <string name="classes">Classes</string>
+    <string name="all_classes">All classes</string>
     <string name="copyright">Copyright 2020 by Prograils.com</string>
 </resources>

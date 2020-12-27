@@ -68,5 +68,21 @@
         android:id="@+id/classesFragment"
         android:name="com.prograils.joga.ui.classes.ClassesFragment"
         android:label="fragment_classes"
-        tools:layout="@layout/fragment_classes" />
+        tools:layout="@layout/fragment_classes" >
+        <action
+            android:id="@+id/action_classesFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+        <action
+            android:id="@+id/action_classesFragment_to_classDetailsFragment"
+            app:destination="@id/classDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/classDetailsFragment"
+        android:name="com.prograils.joga.ui.classDetails.ClassDetailsFragment"
+        android:label="fragment_class_details"
+        tools:layout="@layout/fragment_class_details" >
+        <argument
+            android:name="class_id"
+            app:argType="string" />
+    </fragment>
 </navigation>

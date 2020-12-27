@@ -45,6 +45,24 @@ class Repository(
         return data
     }
 
+    fun getClasses(): LiveData<Classes> {
+        val data = MutableLiveData<Classes>()
+        service.getClasses().enqueue(object : Callback<Classes>{
+            override fun onResponse(call: Call<Classes>, response: Response<Classes>) {
+                if (response.body() != null){
+                    data.value = response.body()
+                } else {
+                    TODO("Error handle")
+                }
+            }
+
+            override fun onFailure(call: Call<Classes>, t: Throwable) {
+                TODO("Error handle")
+            }
+        })
+        return data
+    }
+
     fun getDailyClass(): LiveData<ClassResponse> {
         val data = MutableLiveData<ClassResponse>()
         service.getDailyClass().enqueue(object : Callback<ClassResponse>{
