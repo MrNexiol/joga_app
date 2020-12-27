@@ -10,6 +10,9 @@ interface WebService {
     @GET("api/v1/journeys")
     fun getJourneys(): Call<Journeys>
 
+    @GET("api/v1/classes")
+    fun getClasses(): Call<Classes>
+
     @GET("api/v1/daily_class")
     fun getDailyClass(): Call<ClassResponse>
 }

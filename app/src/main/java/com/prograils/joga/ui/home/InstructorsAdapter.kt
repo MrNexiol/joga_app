@@ -8,7 +8,7 @@ import com.bumptech.glide.Glide
 import com.prograils.joga.api.Instructor
 import com.prograils.joga.databinding.InstructorsRecyclerViewItemBinding
 
-class InstructorsAdapter(private var data: List<Instructor>, private var context: Fragment) : RecyclerView.Adapter<InstructorsAdapter.ViewHolder>() {
+class InstructorsAdapter(private var data: List<Instructor>, private var fragment: Fragment) : RecyclerView.Adapter<InstructorsAdapter.ViewHolder>() {
 
     class ViewHolder(
             val binding: InstructorsRecyclerViewItemBinding) : RecyclerView.ViewHolder(binding.root)
@@ -25,7 +25,7 @@ class InstructorsAdapter(private var data: List<Instructor>, private var context
         for (word in tmp){
             splitName += "$word\n"
         }
-        Glide.with(context).load(data[position].avatar_url).into(holder.binding.trainerAvatar)
+        Glide.with(fragment).load(data[position].avatar_url).into(holder.binding.trainerAvatar)
         holder.binding.trainerName.text = splitName
     }
 
