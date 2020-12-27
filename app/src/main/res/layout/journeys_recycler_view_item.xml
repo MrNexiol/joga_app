@@ -9,7 +9,7 @@
         android:id="@+id/journey_thumbnail_container"
         android:layout_width="188dp"
         android:layout_height="129dp"
-        app:cardCornerRadius="8dp"
+        app:cardCornerRadius="@dimen/card_radius"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -25,8 +25,8 @@
         android:id="@+id/journey_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:textSize="18sp"
+        android:layout_marginTop="@dimen/margin_small"
+        android:textSize="@dimen/default_text"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/journey_thumbnail_container" />
 </androidx.constraintlayout.widget.ConstraintLayout>

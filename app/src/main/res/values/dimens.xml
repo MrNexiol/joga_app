@@ -1,6 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <dimen name="margin_big">24dp</dimen>
+    <dimen name="margin_medium">16dp</dimen>
+    <dimen name="margin_small">8dp</dimen>
+    <dimen name="margin_very_small">4dp</dimen>
+
+    <dimen name="bottom_navigation_height">75dp</dimen>
     <dimen name="default_app_padding">16dp</dimen>
-    <dimen name="screen_title_text">36sp</dimen>
     <dimen name="card_radius">8dp</dimen>
+    <dimen name="divider_height">1dp</dimen>
+
+    <dimen name="instructor_item_padding">24dp</dimen>
+    <dimen name="drawable_padding">8dp</dimen>
+
+    <dimen name="instructor_avatar_size">88dp</dimen>
+    <dimen name="instructor_avatar_radius">44dp</dimen>
+
+    <dimen name="welcome_text">48sp</dimen>
+    <dimen name="screen_title_text">36sp</dimen>
+    <dimen name="header_text">24sp</dimen>
+    <dimen name="default_text">18sp</dimen>
+    <dimen name="secondary_text">14sp</dimen>
 </resources>
