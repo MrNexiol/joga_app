@@ -8,7 +8,8 @@
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.prograils.joga.ui.login.LoginFragment"
-        android:label="LoginFragment" >
+        android:label="LoginFragment"
+        tools:layout="@layout/fragment_login">
         <action
             android:id="@+id/action_loginFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
@@ -19,7 +20,8 @@
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.prograils.joga.ui.home.HomeFragment"
-        android:label="HomeFragment" >
+        android:label="HomeFragment"
+        tools:layout="@layout/fragment_home">
         <action
             android:id="@+id/action_homeFragment_to_likedFragment"
             app:destination="@id/likedFragment" />
@@ -35,6 +37,12 @@
         <action
             android:id="@+id/action_homeFragment_to_classesFragment"
             app:destination="@id/classesFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_classDetailsFragment"
+            app:destination="@id/classDetailsFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_journeyDetailsFragment"
+            app:destination="@id/journeyDetailsFragment" />
     </fragment>
     <fragment
         android:id="@+id/loginErrorFragment"
@@ -44,7 +52,8 @@
     <fragment
         android:id="@+id/journeysFragment"
         android:name="com.prograils.joga.ui.journeys.JourneysFragment"
-        android:label="JourneysFragment" >
+        android:label="JourneysFragment"
+        tools:layout="@layout/fragment_journeys">
         <action
             android:id="@+id/action_journeysFragment_to_journeyDetailsFragment"
             app:destination="@id/journeyDetailsFragment" />
@@ -58,12 +67,20 @@
         android:id="@+id/trainerDetailFragment"
         android:name="com.prograils.joga.ui.trainerDetail.TrainerDetailFragment"
         android:label="fragment_trainer_detail"
-        tools:layout="@layout/fragment_trainer_detail" />
+        tools:layout="@layout/fragment_trainer_detail" >
+        <argument
+            android:name="trainer_id"
+            app:argType="string" />
+    </fragment>
     <fragment
         android:id="@+id/journeyDetailsFragment"
         android:name="com.prograils.joga.ui.journeyDetails.JourneyDetailsFragment"
         android:label="fragment_journey_details"
-        tools:layout="@layout/fragment_journey_details" />
+        tools:layout="@layout/fragment_journey_details" >
+        <argument
+            android:name="journey_id"
+            app:argType="string" />
+    </fragment>
     <fragment
         android:id="@+id/classesFragment"
         android:name="com.prograils.joga.ui.classes.ClassesFragment"

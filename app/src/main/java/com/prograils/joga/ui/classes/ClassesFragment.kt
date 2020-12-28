@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.prograils.joga.GridSpacingItemDecoration
 import com.prograils.joga.JoGaApplication
 import com.prograils.joga.R
 import com.prograils.joga.databinding.FragmentClassesBinding
