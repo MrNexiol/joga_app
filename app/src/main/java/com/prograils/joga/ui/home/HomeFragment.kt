@@ -22,6 +22,7 @@ class HomeFragment : Fragment() {
     private lateinit var instructorsAdapter: InstructorsAdapter
     private lateinit var journeyRecyclerView: RecyclerView
     private lateinit var journeysAdapter: JourneysAdapter
+    private lateinit var dailyClassId: String
 
     @SuppressLint("SetTextI18n")
     override fun onCreateView(
@@ -42,6 +43,7 @@ class HomeFragment : Fragment() {
             journeysAdapter.setData(it.journeys)
         })
         homeViewModel.dailyClass.observe(viewLifecycleOwner, {
+            dailyClassId = it.lecture.id
             Glide.with(this).load(it.lecture.thumbnailUrl).into(binding.todaysPickThumbnail)
             binding.todayPickNameTextView.text = it.lecture.title
             binding.todayPickTrainerNameTextView.text = it.lecture.instructor.name
@@ -52,16 +54,16 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.todaysPickRoot.setOnClickListener {
+            val action = HomeFragmentDirections.actionHomeFragmentToClassDetailsFragment(dailyClassId)
+            findNavController().navigate(action)
+        }
         binding.seeLikedButton.setOnClickListener {
             val action = HomeFragmentDirections.actionHomeFragmentToLikedFragment()
             findNavController().navigate(action)
         }
         binding.seeJourneysButton.setOnClickListener {
             val action = HomeFragmentDirections.actionHomeFragmentToJourneysFragment()
-            findNavController().navigate(action)
-        }
-        binding.seeTrainersButton.setOnClickListener {
-            val action = HomeFragmentDirections.actionHomeFragmentToTrainerDetailFragment()
             findNavController().navigate(action)
         }
         binding.logoutButton.setOnClickListener {

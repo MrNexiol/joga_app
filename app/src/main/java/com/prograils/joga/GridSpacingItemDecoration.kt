@@ -1,4 +1,4 @@
-package com.prograils.joga.ui.classes
+package com.prograils.joga
 
 import android.graphics.Rect
 import android.view.View

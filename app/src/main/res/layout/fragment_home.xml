@@ -39,74 +39,81 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/train_now_text_view" />
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/today_pick_thumbnail_card_view"
-                android:layout_width="0dp"
-                android:layout_height="240dp"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/todays_pick_root"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_medium"
-                app:cardCornerRadius="@dimen/card_radius"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/top_divider">
+                app:layout_constraintTop_toBottomOf="@id/top_divider"
+                tools:layout_editor_absoluteX="16dp">
 
-                <ImageView
-                    android:id="@+id/todays_pick_thumbnail"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:contentDescription="@string/placeholder"
-                    android:src="@drawable/placeholder_image" />
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/today_pick_thumbnail_card_view"
+                    android:layout_width="0dp"
+                    android:layout_height="240dp"
+                    app:cardCornerRadius="@dimen/card_radius"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
 
-            </androidx.cardview.widget.CardView>
+                    <ImageView
+                        android:id="@+id/todays_pick_thumbnail"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:contentDescription="@string/placeholder"
+                        android:src="@drawable/placeholder_image" />
 
-            <TextView
-                android:id="@+id/today_pick_text_view"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_big"
-                android:text="@string/today_pick"
-                android:textSize="@dimen/header_text"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/today_pick_thumbnail_card_view" />
+                </androidx.cardview.widget.CardView>
 
-            <TextView
-                android:id="@+id/today_pick_name_text_view"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/placeholder"
-                android:textSize="@dimen/header_text"
-                app:layout_constraintBottom_toTopOf="@+id/with_text_view"
-                app:layout_constraintStart_toEndOf="@+id/today_pick_text_view" />
+                <TextView
+                    android:id="@+id/today_pick_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/today_pick"
+                    android:textSize="@dimen/header_text"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/today_pick_thumbnail_card_view" />
 
-            <TextView
-                android:id="@+id/with_text_view"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/with"
-                android:textColor="@color/secondary_text"
-                android:textSize="@dimen/default_text"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/today_pick_text_view" />
+                <TextView
+                    android:id="@+id/today_pick_name_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/placeholder"
+                    android:textSize="@dimen/header_text"
+                    app:layout_constraintBottom_toBottomOf="@+id/today_pick_text_view"
+                    app:layout_constraintStart_toEndOf="@+id/today_pick_text_view" />
 
-            <TextView
-                android:id="@+id/today_pick_trainer_name_text_view"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/placeholder"
-                android:textColor="@color/secondary_text"
-                android:textSize="@dimen/default_text"
-                app:layout_constraintBottom_toBottomOf="@+id/with_text_view"
-                app:layout_constraintStart_toEndOf="@+id/with_text_view" />
+                <TextView
+                    android:id="@+id/with_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/with"
+                    android:textColor="@color/secondary_text"
+                    android:textSize="@dimen/default_text"
+                    app:layout_constraintStart_toStartOf="@+id/today_pick_text_view"
+                    app:layout_constraintTop_toBottomOf="@+id/today_pick_text_view" />
 
-            <TextView
-                android:id="@+id/today_pick_min_text_view"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/min"
-                android:textColor="@color/secondary_text"
-                android:textSize="@dimen/default_text"
-                app:layout_constraintBottom_toBottomOf="@+id/with_text_view"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/today_pick_text_view" />
+                <TextView
+                    android:id="@+id/today_pick_trainer_name_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/placeholder"
+                    android:textColor="@color/secondary_text"
+                    android:textSize="@dimen/default_text"
+                    app:layout_constraintBottom_toBottomOf="@+id/with_text_view"
+                    app:layout_constraintStart_toEndOf="@+id/with_text_view" />
+
+                <TextView
+                    android:id="@+id/today_pick_min_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/min"
+                    android:textColor="@color/secondary_text"
+                    android:textSize="@dimen/default_text"
+                    app:layout_constraintBottom_toBottomOf="@+id/today_pick_trainer_name_text_view"
+                    app:layout_constraintEnd_toEndOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <View
                 android:id="@+id/second_divider"
@@ -116,7 +123,7 @@
                 android:background="@color/secondary_text"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/with_text_view" />
+                app:layout_constraintTop_toBottomOf="@id/todays_pick_root" />
 
             <TextView
                 android:id="@+id/liked_text_view"
@@ -186,6 +193,7 @@
                 android:id="@+id/journey_recycler_view"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_small"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/see_journeys_button" />
@@ -204,34 +212,23 @@
                 android:id="@+id/trainers_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_small"
                 android:drawablePadding="@dimen/drawable_padding"
                 android:text="@string/trainers"
                 android:textSize="@dimen/header_text"
                 app:drawableStartCompat="@drawable/trainer_icon"
-                app:layout_constraintBottom_toBottomOf="@+id/see_trainers_button"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/see_trainers_button" />
-
-            <Button
-                android:id="@+id/see_trainers_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/see_all"
-                android:textAllCaps="false"
-                android:textColor="@color/light_blue"
-                android:textSize="@dimen/header_text"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/fourth_divider" />
+                app:layout_constraintTop_toBottomOf="@id/fourth_divider" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/instructor_recycler_view"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_very_small"
+                android:layout_marginTop="@dimen/margin_medium"
                 android:orientation="horizontal"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/see_trainers_button" />
+                app:layout_constraintTop_toBottomOf="@id/trainers_text_view" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/logout_button"

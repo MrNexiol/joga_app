@@ -3,19 +3,20 @@ package com.prograils.joga.ui.home
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.prograils.joga.api.Instructor
-import com.prograils.joga.databinding.InstructorsRecyclerViewItemBinding
+import com.prograils.joga.databinding.HomeInstructorsRecyclerViewItemBinding
 
 class InstructorsAdapter(private var data: List<Instructor>, private var fragment: Fragment) : RecyclerView.Adapter<InstructorsAdapter.ViewHolder>() {
 
     class ViewHolder(
-            val binding: InstructorsRecyclerViewItemBinding) : RecyclerView.ViewHolder(binding.root)
+            val binding: HomeInstructorsRecyclerViewItemBinding) : RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding = InstructorsRecyclerViewItemBinding
-            .inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding = HomeInstructorsRecyclerViewItemBinding
+                .inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(binding)
     }
 
@@ -27,6 +28,10 @@ class InstructorsAdapter(private var data: List<Instructor>, private var fragmen
         }
         Glide.with(fragment).load(data[position].avatar_url).into(holder.binding.trainerAvatar)
         holder.binding.trainerName.text = splitName
+        holder.binding.root.setOnClickListener {
+            val action = HomeFragmentDirections.actionHomeFragmentToTrainerDetailFragment(data[position].id)
+            it.findNavController().navigate(action)
+        }
     }
 
     override fun getItemCount(): Int {
