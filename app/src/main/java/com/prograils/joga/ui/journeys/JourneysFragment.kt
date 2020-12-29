@@ -27,7 +27,7 @@ class JourneysFragment : Fragment() {
         journeysViewModel = JourneysViewModel(appContainer.repository)
 
         journeysRecyclerView = binding.journeysRecyclerView
-        journeysAdapter = JourneysAdapter(listOf(), this)
+        journeysAdapter = JourneysAdapter(listOf())
         journeysRecyclerView.adapter = journeysAdapter
         journeysRecyclerView.layoutManager = GridLayoutManager(context, 2)
         journeysRecyclerView.addItemDecoration(GridSpacingItemDecoration(40))

@@ -24,7 +24,6 @@ class HomeFragment : Fragment() {
     private lateinit var journeysAdapter: JourneysAdapter
     private lateinit var dailyClassId: String
 
-    @SuppressLint("SetTextI18n")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -47,7 +46,7 @@ class HomeFragment : Fragment() {
             Glide.with(this).load(it.lecture.thumbnailUrl).into(binding.todaysPickThumbnail)
             binding.todayPickNameTextView.text = it.lecture.title
             binding.todayPickTrainerNameTextView.text = it.lecture.instructor.name
-            binding.todayPickMinTextView.text = it.lecture.duration.toString() + getString(R.string.min)
+            binding.todayPickMinTextView.text = getString(R.string.min, it.lecture.duration)
         })
         return binding.root
     }
@@ -96,7 +95,7 @@ class HomeFragment : Fragment() {
 
     private fun setInstructorRecyclerView(){
         instructorRecyclerView = binding.instructorRecyclerView
-        instructorsAdapter = InstructorsAdapter(listOf(), this)
+        instructorsAdapter = InstructorsAdapter(listOf())
         instructorRecyclerView.adapter = instructorsAdapter
         instructorRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
     }

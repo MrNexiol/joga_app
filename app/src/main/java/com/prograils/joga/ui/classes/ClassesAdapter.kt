@@ -9,7 +9,7 @@ import com.bumptech.glide.Glide
 import com.prograils.joga.api.Class
 import com.prograils.joga.databinding.ClassesRecyclerViewItemBinding
 
-class ClassesAdapter (private var data: List<Class>, private var fragment: Fragment) : RecyclerView.Adapter<ClassesAdapter.ViewHolder>() {
+class ClassesAdapter (private var data: List<Class>) : RecyclerView.Adapter<ClassesAdapter.ViewHolder>() {
 
     class ViewHolder (
             val binding: ClassesRecyclerViewItemBinding) : RecyclerView.ViewHolder(binding.root)
@@ -21,7 +21,7 @@ class ClassesAdapter (private var data: List<Class>, private var fragment: Fragm
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        Glide.with(fragment).load(data[position].thumbnailUrl).into(holder.binding.classThumbnailImageView)
+        Glide.with(holder.itemView).load(data[position].thumbnailUrl).into(holder.binding.classThumbnailImageView)
         holder.binding.classNameTextView.text = data[position].title
         holder.binding.root.setOnClickListener {
             val action = ClassesFragmentDirections.actionClassesFragmentToClassDetailsFragment(data[position].id)

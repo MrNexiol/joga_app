@@ -5,47 +5,52 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.prograils.joga.JoGaApplication
 import com.prograils.joga.R
 import com.prograils.joga.databinding.FragmentJourneyDetailsBinding
-
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
 class JourneyDetailsFragment : Fragment() {
     private var _binding: FragmentJourneyDetailsBinding? = null
     private val binding get() = _binding!!
-    private var param1: String? = null
-    private var param2: String? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private val args: JourneyDetailsFragmentArgs by navArgs()
+    private lateinit var journeyViewModel: JourneyViewModel
+    private lateinit var journeyClassesRecyclerView: RecyclerView
+    private lateinit var journeyDetailsAdapter: JourneyDetailsAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentJourneyDetailsBinding.inflate(inflater, container, false)
+        val appContainer = (activity?.application as JoGaApplication).appContainer
+        journeyViewModel = JourneyViewModel(appContainer.repository, args.journeyId)
+
+        journeyClassesRecyclerView = binding.journeysRecyclerView
+        journeyDetailsAdapter = JourneyDetailsAdapter(listOf())
+        journeyClassesRecyclerView.adapter = journeyDetailsAdapter
+        journeyClassesRecyclerView.layoutManager = LinearLayoutManager(context)
+
+        journeyViewModel.journey.observe(viewLifecycleOwner, {
+            val firstClass = it.journey.classes.first()
+            val otherClasses = it.journey.classes - firstClass
+            binding.journeyTitle.text = it.journey.name
+            Glide.with(this).load(firstClass.thumbnailUrl).into(binding.firstClassThumbnail)
+            binding.firstClassNameTextView.text = firstClass.title
+            binding.firstClassInstructorNameTextView.text = firstClass.instructor.name
+            binding.firstClassMinTextView.text = getString(R.string.min, firstClass.duration)
+            binding.firstClassDescription.text = firstClass.description
+            journeyDetailsAdapter.setData(otherClasses)
+        })
+
         return binding.root
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-    }
-
-    companion object {
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            JourneyDetailsFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
     }
 }
