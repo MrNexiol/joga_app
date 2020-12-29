@@ -11,8 +11,4 @@ data class Journey(
         val name: String,
         @SerializedName("watched_classes_id")
         val watchedClassesIds: List<String>
-) {
-    override fun toString(): String {
-        return "$id, $description, $name"
-    }
-}
+)
