@@ -7,7 +7,7 @@
     <string name="train_now">Train now</string>
     <string name="today_pick">Today\'s pick:&#160;</string>
     <string name="with">with&#160;</string>
-    <string name="min">&#160;min</string>
+    <string name="min">%1$d min</string>
     <string name="by_you">by you</string>
     <string name="journeys">Journeys</string>
     <string name="trainers">Trainers</string>

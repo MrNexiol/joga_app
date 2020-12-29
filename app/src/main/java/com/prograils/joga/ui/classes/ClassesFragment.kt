@@ -30,7 +30,7 @@ class ClassesFragment : Fragment() {
         classesViewModel = ClassesViewModel(appContainer.repository)
 
         classesRecyclerView = binding.classesRecyclerView
-        classesAdapter = ClassesAdapter(listOf(), this)
+        classesAdapter = ClassesAdapter(listOf())
         classesRecyclerView.adapter = classesAdapter
         classesRecyclerView.layoutManager = GridLayoutManager(context, 2)
         classesRecyclerView.addItemDecoration(GridSpacingItemDecoration(40))

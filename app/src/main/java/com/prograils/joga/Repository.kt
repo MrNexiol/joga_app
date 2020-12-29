@@ -45,6 +45,25 @@ class Repository(
         return data
     }
 
+    fun getJourney(id: String): LiveData<JourneyResponse> {
+        val data = MutableLiveData<JourneyResponse>()
+        service.getJourney(id).enqueue(object : Callback<JourneyResponse>{
+            override fun onResponse(call: Call<JourneyResponse>, response: Response<JourneyResponse>) {
+                if (response.body() != null){
+                    data.value = response.body()
+                } else {
+                    TODO("Error handle")
+                }
+            }
+
+            override fun onFailure(call: Call<JourneyResponse>, t: Throwable) {
+                TODO("Error handle")
+            }
+
+        })
+        return data
+    }
+
     fun getClasses(): LiveData<Classes> {
         val data = MutableLiveData<Classes>()
         service.getClasses().enqueue(object : Callback<Classes>{
