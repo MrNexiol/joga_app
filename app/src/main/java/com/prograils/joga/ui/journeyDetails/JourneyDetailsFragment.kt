@@ -5,9 +5,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.prograils.joga.JoGaApplication
 import com.prograils.joga.R
@@ -17,9 +17,6 @@ class JourneyDetailsFragment : Fragment() {
     private var _binding: FragmentJourneyDetailsBinding? = null
     private val binding get() = _binding!!
     private val args: JourneyDetailsFragmentArgs by navArgs()
-    private lateinit var journeyViewModel: JourneyViewModel
-    private lateinit var journeyClassesRecyclerView: RecyclerView
-    private lateinit var journeyDetailsAdapter: JourneyDetailsAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -27,23 +24,25 @@ class JourneyDetailsFragment : Fragment() {
     ): View {
         _binding = FragmentJourneyDetailsBinding.inflate(inflater, container, false)
         val appContainer = (activity?.application as JoGaApplication).appContainer
-        journeyViewModel = JourneyViewModel(appContainer.repository, args.journeyId)
+        val journeyViewModel: JourneyViewModel by viewModels { JourneyViewModelFactory(appContainer.repository, args.journeyId) }
 
-        journeyClassesRecyclerView = binding.journeysRecyclerView
-        journeyDetailsAdapter = JourneyDetailsAdapter(listOf())
-        journeyClassesRecyclerView.adapter = journeyDetailsAdapter
-        journeyClassesRecyclerView.layoutManager = LinearLayoutManager(context)
+        val recyclerView = binding.journeysRecyclerView
+        val adapter = JourneyDetailsAdapter(listOf())
+        recyclerView.adapter = adapter
+        recyclerView.layoutManager = LinearLayoutManager(context)
 
-        journeyViewModel.journey.observe(viewLifecycleOwner, {
-            val firstClass = it.journey.classes.first()
-            val otherClasses = it.journey.classes - firstClass
-            binding.journeyTitle.text = it.journey.name
-            Glide.with(this).load(firstClass.thumbnailUrl).into(binding.firstClassThumbnail)
-            binding.firstClassNameTextView.text = firstClass.title
-            binding.firstClassInstructorNameTextView.text = firstClass.instructor.name
-            binding.firstClassMinTextView.text = getString(R.string.min, firstClass.duration)
-            binding.firstClassDescription.text = firstClass.description
-            journeyDetailsAdapter.setData(otherClasses)
+        journeyViewModel.journey.observe(viewLifecycleOwner, { resource ->
+            resource.data?.let {
+                val firstClass = it.classes.first()
+                val otherClasses = it.classes - firstClass
+                binding.journeyTitle.text = it.name
+                Glide.with(this).load(firstClass.thumbnailUrl).into(binding.firstClassThumbnail)
+                binding.firstClassNameTextView.text = firstClass.title
+                binding.firstClassInstructorNameTextView.text = firstClass.instructor.name
+                binding.firstClassMinTextView.text = getString(R.string.min, firstClass.duration)
+                binding.firstClassDescription.text = firstClass.description
+                adapter.setData(otherClasses)
+            }
         })
 
         return binding.root

@@ -5,9 +5,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.prograils.joga.GridSpacingItemDecoration
 import com.prograils.joga.JoGaApplication
 import com.prograils.joga.R
@@ -16,9 +16,6 @@ import com.prograils.joga.databinding.FragmentClassesBinding
 class ClassesFragment : Fragment() {
     private var _binding: FragmentClassesBinding? = null
     private val binding get() = _binding!!
-    private lateinit var classesViewModel: ClassesViewModel
-    private lateinit var classesRecyclerView: RecyclerView
-    private lateinit var classesAdapter: ClassesAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -27,16 +24,18 @@ class ClassesFragment : Fragment() {
         _binding = FragmentClassesBinding.inflate(inflater, container, false)
 
         val appContainer = (activity?.application as JoGaApplication).appContainer
-        classesViewModel = ClassesViewModel(appContainer.repository)
+        val classesViewModel : ClassesViewModel by viewModels { ClassesViewModelFactory(appContainer.repository) }
 
-        classesRecyclerView = binding.classesRecyclerView
-        classesAdapter = ClassesAdapter(listOf())
-        classesRecyclerView.adapter = classesAdapter
-        classesRecyclerView.layoutManager = GridLayoutManager(context, 2)
-        classesRecyclerView.addItemDecoration(GridSpacingItemDecoration(40))
+        val recyclerView = binding.classesRecyclerView
+        val adapter = ClassesAdapter(listOf())
+        recyclerView.adapter = adapter
+        recyclerView.layoutManager = GridLayoutManager(context, 2)
+        recyclerView.addItemDecoration(GridSpacingItemDecoration(40))
 
-        classesViewModel.classes.observe(viewLifecycleOwner, {
-            classesAdapter.setData(it.classes)
+        classesViewModel.classes.observe(viewLifecycleOwner, { resource ->
+            resource.data?.let {
+                adapter.setData(it)
+            }
         })
 
         return binding.root
