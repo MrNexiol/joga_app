@@ -1,9 +1,17 @@
 <resources>
     <string name="app_name">JoGa</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
     <string name="placeholder">Placeholder</string>
     <string name="welcome_to_yoga">Welcome to jo:ga</string>
     <string name="login_button">Login >></string>
+    <string name="oops">Ooops…</string>
+    <string name="incorrect_credentials">"You've typed incorrect credentials. \nPlease, try again!"</string>
+    <string name="are_you_sure">Are you sure?</string>
+    <string name="account_id">Account ID</string>
+    <string name="app_version">App version</string>
+    <string name="log_me_out">Yes, log me out!</string>
     <string name="train_now">Train now</string>
     <string name="today_pick">Today\'s pick:&#160;</string>
     <string name="with">with&#160;</string>
@@ -17,4 +25,7 @@
     <string name="classes">Classes</string>
     <string name="all_classes">All classes</string>
     <string name="copyright">Copyright 2020 by Prograils.com</string>
+    <string name="saved_token_key">saved_token_key</string>
+    <string name="saved_user_id">saved_user_id</string>
+    <string name="X">X</string>
 </resources>

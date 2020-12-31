@@ -10,6 +10,45 @@ import retrofit2.Response
 class Repository(
     private val service: WebService
 ) {
+    fun login(username: String, password: String): LiveData<Resource<Login>>{
+        val data = MutableLiveData<Resource<Login>>()
+        service.login(username, password).enqueue(object : Callback<Login>{
+            override fun onResponse(call: Call<Login>, response: Response<Login>) {
+                if (response.body() != null){
+                    val resource = Resource(Status.Success, response.body())
+                    data.value = resource
+                } else {
+                    val resource = Resource(Status.Fail, response.body())
+                    data.value = resource
+                }
+            }
+            override fun onFailure(call: Call<Login>, t: Throwable) {
+                val resource = Resource(Status.Fail, null, t)
+                data.value = resource
+            }
+        })
+        return data
+    }
+
+    fun logout(token: String): LiveData<Resource<Void>>{
+        val data = MutableLiveData<Resource<Void>>()
+        val tmp = "Bearer $token"
+        service.logout(tmp).enqueue(object : Callback<Void>{
+            override fun onResponse(call: Call<Void>, response: Response<Void>) {
+                if (response.code() == 200){
+                    val resource = Resource(Status.Success, response.body())
+                    data.value = resource
+                }
+            }
+
+            override fun onFailure(call: Call<Void>, t: Throwable) {
+                val resource = Resource(Status.Fail, null, t)
+                data.value = resource
+            }
+        })
+        return data
+    }
+
     fun getInstructors(): LiveData<Resource<List<Instructor>>> {
         val data = MutableLiveData<Resource<List<Instructor>>>()
         service.getInstructors().enqueue(object : Callback<Instructors>{
@@ -22,7 +61,7 @@ class Repository(
                 }
             }
             override fun onFailure(call: Call<Instructors>, t: Throwable) {
-                val resource = Resource(Status.Success, null, t)
+                val resource = Resource(Status.Fail, null, t)
                 data.value = resource
             }
         })
@@ -41,7 +80,7 @@ class Repository(
                 }
             }
             override fun onFailure(call: Call<Journeys>, t: Throwable) {
-                val resource = Resource(Status.Success, null, t)
+                val resource = Resource(Status.Fail, null, t)
                 data.value = resource
             }
         })
@@ -61,7 +100,7 @@ class Repository(
             }
 
             override fun onFailure(call: Call<JourneyResponse>, t: Throwable) {
-                val resource = Resource(Status.Success, null, t)
+                val resource = Resource(Status.Fail, null, t)
                 data.value = resource
             }
 
@@ -82,7 +121,7 @@ class Repository(
             }
 
             override fun onFailure(call: Call<Classes>, t: Throwable) {
-                val resource = Resource(Status.Success, null, t)
+                val resource = Resource(Status.Fail, null, t)
                 data.value = resource
             }
         })
@@ -102,7 +141,7 @@ class Repository(
             }
 
             override fun onFailure(call: Call<ClassResponse>, t: Throwable) {
-                val resource = Resource(Status.Success, null, t)
+                val resource = Resource(Status.Fail, null, t)
                 data.value = resource
             }
         })

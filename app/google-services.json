@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "654485839042",
+    "project_id": "joga-go-staging",
+    "storage_bucket": "joga-go-staging.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:654485839042:android:34a4aa3ede09b4f48eaf5b",
+        "android_client_info": {
+          "package_name": "com.prograils.joga"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "654485839042-3qih0o0rqoq720j6blp138j6adqofdcj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAdHSLZRAouJyfF1McRWESPowc82UmO2qc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "654485839042-3qih0o0rqoq720j6blp138j6adqofdcj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

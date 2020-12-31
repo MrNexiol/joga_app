@@ -1,10 +1,15 @@
 package com.prograils.joga.api
 
 import retrofit2.Call
-import retrofit2.http.GET
-import retrofit2.http.Path
+import retrofit2.http.*
 
 interface WebService {
+    @POST("api/v1/sessions")
+    fun login(@Query("username") username: String, @Query("password") password: String): Call<Login>
+
+    @DELETE("api/v1/sessions")
+    fun logout(@Header("Authorization") username: String): Call<Void>
+
     @GET("api/v1/instructors")
     fun getInstructors(): Call<Instructors>
 

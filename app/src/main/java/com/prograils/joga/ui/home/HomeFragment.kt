@@ -71,7 +71,7 @@ class HomeFragment : Fragment() {
             findNavController().navigate(action)
         }
         binding.logoutButton.setOnClickListener {
-            val action = HomeFragmentDirections.actionHomeFragmentToLoginFragment()
+            val action = HomeFragmentDirections.actionHomeFragmentToLogoutFragment()
             findNavController().navigate(action)
         }
         binding.navigationView.setOnNavigationItemSelectedListener {
