@@ -46,6 +46,9 @@
         <action
             android:id="@+id/action_homeFragment_to_logoutFragment"
             app:destination="@id/logoutFragment" />
+        <argument
+            android:name="userToken"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/loginErrorFragment"
@@ -69,7 +72,11 @@
         android:id="@+id/likedFragment"
         android:name="com.prograils.joga.ui.liked.LikedFragment"
         android:label="fragment_liked"
-        tools:layout="@layout/fragment_liked" />
+        tools:layout="@layout/fragment_liked" >
+        <argument
+            android:name="userToken"
+            app:argType="string" />
+    </fragment>
     <fragment
         android:id="@+id/trainerDetailFragment"
         android:name="com.prograils.joga.ui.trainerDetail.TrainerDetailFragment"
@@ -93,9 +100,6 @@
         android:name="com.prograils.joga.ui.classes.ClassesFragment"
         android:label="fragment_classes"
         tools:layout="@layout/fragment_classes" >
-        <action
-            android:id="@+id/action_classesFragment_to_homeFragment"
-            app:destination="@id/homeFragment" />
         <action
             android:id="@+id/action_classesFragment_to_classDetailsFragment"
             app:destination="@id/classDetailsFragment" />

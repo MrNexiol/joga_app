@@ -8,7 +8,7 @@ interface WebService {
     fun login(@Query("username") username: String, @Query("password") password: String): Call<Login>
 
     @DELETE("api/v1/sessions")
-    fun logout(@Header("Authorization") username: String): Call<Void>
+    fun logout(@Header("Authorization") userToken: String): Call<Void>
 
     @GET("api/v1/instructors")
     fun getInstructors(): Call<Instructors>
@@ -21,6 +21,9 @@ interface WebService {
 
     @GET("api/v1/classes")
     fun getClasses(): Call<Classes>
+
+    @GET("api/v1/liked_classes")
+    fun getLikedClasses(@Header("Authorization") userToken: String): Call<Classes>
 
     @GET("api/v1/daily_class")
     fun getDailyClass(): Call<ClassResponse>

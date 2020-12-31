@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -17,10 +18,13 @@ import com.prograils.joga.databinding.FragmentHomeBinding
 class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
+    private val args: HomeFragmentArgs by navArgs()
+    private lateinit var classRecyclerView: RecyclerView
+    private lateinit var classAdapter: LikedClassAdapter
     private lateinit var instructorRecyclerView: RecyclerView
-    private lateinit var instructorsAdapter: InstructorsAdapter
+    private lateinit var instructorAdapter: InstructorsAdapter
     private lateinit var journeyRecyclerView: RecyclerView
-    private lateinit var journeysAdapter: JourneysAdapter
+    private lateinit var journeyAdapter: JourneysAdapter
     private lateinit var dailyClassId: String
 
     override fun onCreateView(
@@ -29,19 +33,25 @@ class HomeFragment : Fragment() {
     ): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val appContainer = (activity?.application as JoGaApplication).appContainer
-        val homeViewModel: HomeViewModel by viewModels { HomeViewModelFactory(appContainer.repository) }
+        val homeViewModel: HomeViewModel by viewModels { HomeViewModelFactory(appContainer.repository, args.userToken) }
 
+        setLikedClassesRecyclerView()
         setJourneysRecyclerView()
         setInstructorRecyclerView()
 
-        homeViewModel.instructors.observe(viewLifecycleOwner, { resource ->
+        homeViewModel.likedClasses.observe(viewLifecycleOwner, { resource ->
             resource.data?.let {
-                instructorsAdapter.setData(it)
+                classAdapter.setData(it.take(3))
             }
         })
         homeViewModel.journeys.observe(viewLifecycleOwner, { resource ->
             resource.data?.let {
-                journeysAdapter.setData(it)
+                journeyAdapter.setData(it.take(3))
+            }
+        })
+        homeViewModel.instructors.observe(viewLifecycleOwner, { resource ->
+            resource.data?.let {
+                instructorAdapter.setData(it.take(5))
             }
         })
         homeViewModel.dailyClass.observe(viewLifecycleOwner, { resource ->
@@ -63,7 +73,7 @@ class HomeFragment : Fragment() {
             findNavController().navigate(action)
         }
         binding.seeLikedButton.setOnClickListener {
-            val action = HomeFragmentDirections.actionHomeFragmentToLikedFragment()
+            val action = HomeFragmentDirections.actionHomeFragmentToLikedFragment(args.userToken)
             findNavController().navigate(action)
         }
         binding.seeJourneysButton.setOnClickListener {
@@ -91,17 +101,24 @@ class HomeFragment : Fragment() {
         _binding = null
     }
 
+    private fun setLikedClassesRecyclerView(){
+        classRecyclerView = binding.likedRecyclerView
+        classAdapter = LikedClassAdapter(listOf())
+        classRecyclerView.adapter = classAdapter
+        classRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+    }
+
     private fun setJourneysRecyclerView(){
         journeyRecyclerView = binding.journeyRecyclerView
-        journeysAdapter = JourneysAdapter(listOf())
-        journeyRecyclerView.adapter = journeysAdapter
+        journeyAdapter = JourneysAdapter(listOf())
+        journeyRecyclerView.adapter = journeyAdapter
         journeyRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
     }
 
     private fun setInstructorRecyclerView(){
         instructorRecyclerView = binding.instructorRecyclerView
-        instructorsAdapter = InstructorsAdapter(listOf())
-        instructorRecyclerView.adapter = instructorsAdapter
+        instructorAdapter = InstructorsAdapter(listOf())
+        instructorRecyclerView.adapter = instructorAdapter
         instructorRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
     }
 }

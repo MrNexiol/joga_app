@@ -26,7 +26,7 @@ class LoginFragment : Fragment() {
         sharedPrefs = activity?.getPreferences(Context.MODE_PRIVATE)
         val token = sharedPrefs?.getString(getString(R.string.saved_token_key), null)
         if (token != null){
-            navigateToHome()
+            navigateToHome(token)
         }
         return binding.root
     }
@@ -44,7 +44,7 @@ class LoginFragment : Fragment() {
                         this?.putString(getString(R.string.saved_user_id), it.userId)
                         this?.commit()
                     }
-                    navigateToHome()
+                    navigateToHome(it.token)
                 }
                 if (resource.status == Status.Fail){
                     val action = LoginFragmentDirections.actionLoginFragmentToLoginErrorFragment()
@@ -59,8 +59,8 @@ class LoginFragment : Fragment() {
         _binding = null
     }
 
-    private fun navigateToHome() {
-        val action = LoginFragmentDirections.actionLoginFragmentToHomeFragment()
+    private fun navigateToHome(token: String) {
+        val action = LoginFragmentDirections.actionLoginFragmentToHomeFragment(token)
         findNavController().navigate(action)
     }
 }

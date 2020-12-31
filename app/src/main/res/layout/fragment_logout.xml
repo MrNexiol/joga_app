@@ -45,7 +45,6 @@
                 android:id="@+id/username_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/placeholder"
                 android:textSize="@dimen/default_text"
                 app:layout_constraintBottom_toBottomOf="@+id/account_id_text_view"
                 app:layout_constraintEnd_toEndOf="parent" />
@@ -73,7 +72,6 @@
                 android:id="@+id/current_app_version_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/placeholder"
                 android:textSize="@dimen/default_text"
                 app:layout_constraintBottom_toBottomOf="@+id/app_version_text_view"
                 app:layout_constraintEnd_toEndOf="parent" />
