@@ -16,12 +16,14 @@ class JourneysAdapter(private var data: List<Journey>) : RecyclerView.Adapter<Jo
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = HomeJourneysRecyclerViewItemBinding
-                .inflate(LayoutInflater.from(parent.context), parent, false)
+            .inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        Glide.with(holder.itemView).load(data[position].coverUrl).into(holder.binding.journeyThumbnail)
+        if (data[position].coverUrl != null){
+            Glide.with(holder.itemView).load(data[position].coverUrl).into(holder.binding.journeyThumbnail)
+        }
         holder.binding.journeyName.text = data[position].name
         holder.binding.root.setOnClickListener {
             val action = HomeFragmentDirections.actionHomeFragmentToJourneyDetailsFragment(data[position].id)

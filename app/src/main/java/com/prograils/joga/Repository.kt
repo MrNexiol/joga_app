@@ -32,8 +32,8 @@ class Repository(
 
     fun logout(token: String): LiveData<Resource<Void>>{
         val data = MutableLiveData<Resource<Void>>()
-        val tmp = "Bearer $token"
-        service.logout(tmp).enqueue(object : Callback<Void>{
+        val auth = "Bearer $token"
+        service.logout(auth).enqueue(object : Callback<Void>{
             override fun onResponse(call: Call<Void>, response: Response<Void>) {
                 if (response.code() == 200){
                     val resource = Resource(Status.Success, response.body())
@@ -128,6 +128,28 @@ class Repository(
         return data
     }
 
+    fun getLikedClasses(token: String): LiveData<Resource<List<Class>>> {
+        val data = MutableLiveData<Resource<List<Class>>>()
+        val auth = "Bearer $token"
+        service.getLikedClasses(auth).enqueue(object : Callback<Classes>{
+            override fun onResponse(call: Call<Classes>, response: Response<Classes>) {
+                if (response.body() != null){
+                    val resource = Resource(Status.Success, response.body()!!.classes)
+                    data.value = resource
+                } else {
+                    TODO("Error handle")
+                }
+            }
+
+            override fun onFailure(call: Call<Classes>, t: Throwable) {
+                val resource = Resource(Status.Fail, null, t)
+                data.value = resource
+            }
+
+        })
+        return data
+    }
+
     fun getDailyClass(): LiveData<Resource<Class>> {
         val data = MutableLiveData<Resource<Class>>()
         service.getDailyClass().enqueue(object : Callback<ClassResponse>{
@@ -136,7 +158,8 @@ class Repository(
                     val resource = Resource(Status.Success, response.body()!!.lecture)
                     data.value = resource
                 } else {
-                    TODO("Error handle")
+                    val resource = Resource(Status.Fail, null)
+                    data.value = resource
                 }
             }
 

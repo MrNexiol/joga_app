@@ -22,7 +22,6 @@
                 android:id="@+id/journey_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/placeholder"
                 android:textSize="@dimen/screen_title_text"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -66,7 +65,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/margin_small"
-                    android:text="@string/placeholder"
                     android:textSize="@dimen/header_text"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/cardView" />
@@ -85,7 +83,6 @@
                     android:id="@+id/first_class_instructor_name_text_view"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/placeholder"
                     android:textColor="@color/secondary_text"
                     android:textSize="@dimen/default_text"
                     app:layout_constraintBottom_toBottomOf="@+id/first_class_with_text_view"
@@ -104,7 +101,6 @@
                     android:id="@+id/first_class_description"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/placeholder"
                     android:textSize="@dimen/default_text"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/first_class_with_text_view" />

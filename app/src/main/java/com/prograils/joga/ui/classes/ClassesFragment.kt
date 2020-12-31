@@ -41,20 +41,6 @@ class ClassesFragment : Fragment() {
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        binding.classesBottomNavigation.setOnNavigationItemSelectedListener {
-            when(it.itemId){
-                R.id.navigation_home -> {
-                    val action = ClassesFragmentDirections.actionClassesFragmentToHomeFragment()
-                    findNavController().navigate(action)
-                    true
-                }
-                else -> false
-            }
-        }
-    }
-
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
