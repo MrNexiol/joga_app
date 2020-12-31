@@ -43,12 +43,19 @@
         <action
             android:id="@+id/action_homeFragment_to_journeyDetailsFragment"
             app:destination="@id/journeyDetailsFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_logoutFragment"
+            app:destination="@id/logoutFragment" />
     </fragment>
     <fragment
         android:id="@+id/loginErrorFragment"
         android:name="com.prograils.joga.ui.loginError.LoginErrorFragment"
         android:label="fragment_login_error"
-        tools:layout="@layout/fragment_login_error" />
+        tools:layout="@layout/fragment_login_error" >
+        <action
+            android:id="@+id/action_loginErrorFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+    </fragment>
     <fragment
         android:id="@+id/journeysFragment"
         android:name="com.prograils.joga.ui.journeys.JourneysFragment"
@@ -101,5 +108,14 @@
         <argument
             android:name="class_id"
             app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/logoutFragment"
+        android:name="com.prograils.joga.ui.logout.LogoutFragment"
+        android:label="fragment_logout"
+        tools:layout="@layout/fragment_logout" >
+        <action
+            android:id="@+id/action_logoutFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
     </fragment>
 </navigation>
