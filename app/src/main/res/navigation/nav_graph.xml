@@ -76,6 +76,9 @@
         <argument
             android:name="userToken"
             app:argType="string" />
+        <action
+            android:id="@+id/action_likedFragment_to_classDetailsFragment"
+            app:destination="@id/classDetailsFragment" />
     </fragment>
     <fragment
         android:id="@+id/trainerDetailFragment"
@@ -112,6 +115,9 @@
         <argument
             android:name="class_id"
             app:argType="string" />
+        <action
+            android:id="@+id/action_classDetailsFragment_to_trainerDetailFragment"
+            app:destination="@id/trainerDetailFragment" />
     </fragment>
     <fragment
         android:id="@+id/logoutFragment"
