@@ -35,4 +35,6 @@
     <string name="heart_icon">Heart icon</string>
     <string name="share_icon">Share icon</string>
     <string name="tv_share_icon">TV share icon</string>
+    <string name="instructor_no_classes">"This instructor doesn't have any classes"</string>
+    <string name="instructor_avatar">Instructor avatar</string>
 </resources>

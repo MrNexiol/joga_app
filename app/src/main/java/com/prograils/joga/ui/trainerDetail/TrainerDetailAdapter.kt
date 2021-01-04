@@ -1,4 +1,4 @@
-package com.prograils.joga.ui.liked
+package com.prograils.joga.ui.trainerDetail
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -9,14 +9,14 @@ import com.prograils.joga.R
 import com.prograils.joga.api.Class
 import com.prograils.joga.databinding.LikedOrInstructorClassRecyclerViewItemBinding
 
-class LikedAdapter(private var data: List<Class>) : RecyclerView.Adapter<LikedAdapter.ViewHolder>() {
+class TrainerDetailAdapter(private var data: List<Class>) : RecyclerView.Adapter<TrainerDetailAdapter.ViewHolder>() {
 
     class ViewHolder(
-    val binding: LikedOrInstructorClassRecyclerViewItemBinding) : RecyclerView.ViewHolder(binding.root)
+            val binding: LikedOrInstructorClassRecyclerViewItemBinding) : RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = LikedOrInstructorClassRecyclerViewItemBinding
-            .inflate(LayoutInflater.from(parent.context), parent, false)
+                .inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(binding)
     }
 
@@ -30,13 +30,13 @@ class LikedAdapter(private var data: List<Class>) : RecyclerView.Adapter<LikedAd
         holder.binding.likedClassDuration.text = holder.itemView.context.getString(R.string.min, data[position].duration)
         holder.binding.likedClassInstructorName.text = data[position].instructor.name
         holder.binding.root.setOnClickListener {
-            val action = LikedFragmentDirections.actionLikedFragmentToClassDetailsFragment(data[position].id)
+            val action = TrainerDetailFragmentDirections.actionTrainerDetailFragmentToClassDetailsFragment(data[position].id)
             holder.itemView.findNavController().navigate(action)
         }
     }
 
     override fun getItemCount(): Int {
-        return data.size
+        return  data.size
     }
 
     fun setData(data: List<Class>){

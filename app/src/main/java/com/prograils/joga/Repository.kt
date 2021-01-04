@@ -68,6 +68,27 @@ class Repository(
         return data
     }
 
+    fun getInstructor(id: String): LiveData<Resource<Instructor>> {
+        val data = MutableLiveData<Resource<Instructor>>()
+        service.getInstructor(id).enqueue(object : Callback<InstructorResponse>{
+            override fun onResponse(call: Call<InstructorResponse>, response: Response<InstructorResponse>) {
+                if (response.body() != null){
+                    val resource = Resource(Status.Success, response.body()!!.instructor)
+                    data.value = resource
+                } else {
+                    TODO("Error handle")
+                }
+            }
+
+            override fun onFailure(call: Call<InstructorResponse>, t: Throwable) {
+                val resource = Resource(Status.Fail, null, t)
+                data.value = resource
+            }
+
+        })
+        return data
+    }
+
     fun getJourneys(): LiveData<Resource<List<Journey>>> {
         val data = MutableLiveData<Resource<List<Journey>>>()
         service.getJourneys().enqueue(object : Callback<Journeys>{
@@ -132,6 +153,27 @@ class Repository(
         val data = MutableLiveData<Resource<List<Class>>>()
         val auth = "Bearer $token"
         service.getLikedClasses(auth).enqueue(object : Callback<Classes>{
+            override fun onResponse(call: Call<Classes>, response: Response<Classes>) {
+                if (response.body() != null){
+                    val resource = Resource(Status.Success, response.body()!!.classes)
+                    data.value = resource
+                } else {
+                    TODO("Error handle")
+                }
+            }
+
+            override fun onFailure(call: Call<Classes>, t: Throwable) {
+                val resource = Resource(Status.Fail, null, t)
+                data.value = resource
+            }
+
+        })
+        return data
+    }
+
+    fun getInstructorClasses(instructorId: String): LiveData<Resource<List<Class>>> {
+        val data = MutableLiveData<Resource<List<Class>>>()
+        service.getInstructorClasses(instructorId).enqueue(object : Callback<Classes>{
             override fun onResponse(call: Call<Classes>, response: Response<Classes>) {
                 if (response.body() != null){
                     val resource = Resource(Status.Success, response.body()!!.classes)
