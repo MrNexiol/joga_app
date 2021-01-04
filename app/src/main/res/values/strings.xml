@@ -16,6 +16,7 @@
     <string name="today_pick">Today\'s pick:&#160;</string>
     <string name="with">with&#160;</string>
     <string name="min">%1$d min</string>
+    <string name="title_duration">%1$s - %2$d min</string>
     <string name="by_you">by you</string>
     <string name="liked_by_you">Liked by you</string>
     <string name="journeys">Journeys</string>
@@ -29,4 +30,9 @@
     <string name="saved_token_key">saved_token_key</string>
     <string name="saved_user_id">saved_user_id</string>
     <string name="X">X</string>
+    <string name="play">Play</string>
+    <string name="your_instructor">Your instructor</string>
+    <string name="heart_icon">Heart icon</string>
+    <string name="share_icon">Share icon</string>
+    <string name="tv_share_icon">TV share icon</string>
 </resources>

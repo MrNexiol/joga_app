@@ -27,4 +27,7 @@ interface WebService {
 
     @GET("api/v1/daily_class")
     fun getDailyClass(): Call<ClassResponse>
+
+    @GET("api/v1/classes/{id}")
+    fun getClass(@Path("id") id: String): Call<ClassResponse>
 }

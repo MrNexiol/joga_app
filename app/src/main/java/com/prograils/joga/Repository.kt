@@ -170,4 +170,25 @@ class Repository(
         })
         return data
     }
+
+    fun getClass(id: String): LiveData<Resource<Class>> {
+        val data = MutableLiveData<Resource<Class>>()
+        service.getClass(id).enqueue(object : Callback<ClassResponse>{
+            override fun onResponse(call: Call<ClassResponse>, response: Response<ClassResponse>) {
+                if (response.body() != null){
+                    val resource = Resource(Status.Success, response.body()!!.lecture)
+                    data.value = resource
+                } else {
+                    val resource = Resource(Status.Fail, null)
+                    data.value = resource
+                }
+            }
+
+            override fun onFailure(call: Call<ClassResponse>, t: Throwable) {
+                val resource = Resource(Status.Fail, null, t)
+                data.value = resource
+            }
+        })
+        return data
+    }
 }
