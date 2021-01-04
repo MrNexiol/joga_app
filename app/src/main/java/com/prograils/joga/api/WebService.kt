@@ -13,6 +13,9 @@ interface WebService {
     @GET("api/v1/instructors")
     fun getInstructors(): Call<Instructors>
 
+    @GET("api/v1/instructors/{id}")
+    fun getInstructor(@Path("id") id: String): Call<InstructorResponse>
+
     @GET("api/v1/journeys")
     fun getJourneys(): Call<Journeys>
 
@@ -24,6 +27,9 @@ interface WebService {
 
     @GET("api/v1/liked_classes")
     fun getLikedClasses(@Header("Authorization") userToken: String): Call<Classes>
+
+    @GET("api/v1/classes")
+    fun getInstructorClasses(@Query("instructor_id") instructorId: String): Call<Classes>
 
     @GET("api/v1/daily_class")
     fun getDailyClass(): Call<ClassResponse>

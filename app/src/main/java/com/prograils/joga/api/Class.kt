@@ -12,6 +12,8 @@ data class Class(
         @SerializedName("thumbnail_url")
         val thumbnailUrl: String,
         val title: String,
+        @SerializedName("user_like")
+        val userLike: UserLike,
         @SerializedName("video_url")
         val videoUrl: String
 )

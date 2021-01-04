@@ -29,6 +29,15 @@
         app:layout_constraintStart_toStartOf="@+id/liked_class_focus"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <ImageView
+        android:id="@+id/heart_icon"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:contentDescription="@string/heart_icon"
+        app:layout_constraintBottom_toTopOf="@+id/liked_class_focus"
+        app:layout_constraintStart_toStartOf="@+id/liked_class_focus"
+        app:srcCompat="@drawable/heart_not_liked" />
+
     <TextView
         android:id="@+id/liked_class_focus"
         android:layout_width="wrap_content"
