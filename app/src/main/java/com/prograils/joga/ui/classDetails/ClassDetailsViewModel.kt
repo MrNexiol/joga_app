@@ -6,6 +6,10 @@ import com.prograils.joga.Repository
 import com.prograils.joga.api.Class
 import com.prograils.joga.api.Resource
 
-class ClassDetailsViewModel(repository: Repository, id: String) : ViewModel() {
-    val singleClass: LiveData<Resource<Class>> = repository.getClass(id)
+class ClassDetailsViewModel(private val repository: Repository, private val id: String, private val token: String) : ViewModel() {
+    val singleClass: LiveData<Resource<Class>> = repository.getClass(id, token)
+
+    fun toggleClassLike(){
+        repository.toggleClassLike(id, token)
+    }
 }
