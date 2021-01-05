@@ -1,5 +1,6 @@
 package com.prograils.joga.ui.classDetails
 
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -24,13 +25,26 @@ class ClassDetailsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentClassDetailsBinding.inflate(inflater, container, false)
-
+        val sharedPrefs = activity?.getPreferences(Context.MODE_PRIVATE)
+        val token = sharedPrefs?.getString(getString(R.string.saved_token_key), null)
         val appContainer = (activity?.application as JoGaApplication).appContainer
-        val viewModel: ClassDetailsViewModel by viewModels { ClassDetailsViewModelFactory(appContainer.repository, args.classId) }
+        val viewModel: ClassDetailsViewModel by viewModels { ClassDetailsViewModelFactory(appContainer.repository, args.classId, token!!) }
 
         viewModel.singleClass.observe(viewLifecycleOwner, { resource ->
             resource.data?.let {
                 binding.className.text = it.title
+                if (it.userLike.classId != null){
+                    binding.likeButton.setImageResource(R.drawable.heart_liked)
+                }
+                binding.likeButton.setOnClickListener { _ ->
+                    if (it.userLike.classId == null){
+                        viewModel.toggleClassLike()
+                        binding.likeButton.setImageResource(R.drawable.heart_liked)
+                    } else {
+                        viewModel.toggleClassLike()
+                        binding.likeButton.setImageResource(R.drawable.heart_not_liked)
+                    }
+                }
                 Glide.with(this).load(it.thumbnailUrl).into(binding.classThumbnail)
                 binding.classTitleDuration.text = getString(R.string.title_duration, it.title, it.duration)
                 binding.classDescription.text = it.description
@@ -44,19 +58,6 @@ class ClassDetailsFragment : Fragment() {
         })
 
         return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        binding.likeButton.setOnClickListener {
-            tmp = if (tmp){
-                binding.likeButton.setImageResource(R.drawable.heart_not_liked)
-                false
-            } else {
-                binding.likeButton.setImageResource(R.drawable.heart_liked)
-                true
-            }
-        }
     }
 
     override fun onDestroyView() {

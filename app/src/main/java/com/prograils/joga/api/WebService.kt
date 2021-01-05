@@ -4,12 +4,6 @@ import retrofit2.Call
 import retrofit2.http.*
 
 interface WebService {
-    @POST("api/v1/sessions")
-    fun login(@Query("username") username: String, @Query("password") password: String): Call<Login>
-
-    @DELETE("api/v1/sessions")
-    fun logout(@Header("Authorization") userToken: String): Call<Void>
-
     @GET("api/v1/instructors")
     fun getInstructors(): Call<Instructors>
 
@@ -35,5 +29,14 @@ interface WebService {
     fun getDailyClass(): Call<ClassResponse>
 
     @GET("api/v1/classes/{id}")
-    fun getClass(@Path("id") id: String): Call<ClassResponse>
+    fun getClass(@Path("id") id: String, @Header("Authorization") userToken: String): Call<ClassResponse>
+
+    @POST("api/v1/sessions")
+    fun login(@Query("username") username: String, @Query("password") password: String): Call<Login>
+
+    @POST("api/v1/like/{id}")
+    fun toggleLike(@Path("id") id: String, @Header("Authorization") userToken: String): Call<Void>
+
+    @DELETE("api/v1/sessions")
+    fun logout(@Header("Authorization") userToken: String): Call<Void>
 }

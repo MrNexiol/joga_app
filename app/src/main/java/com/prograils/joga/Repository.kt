@@ -213,9 +213,9 @@ class Repository(
         return data
     }
 
-    fun getClass(id: String): LiveData<Resource<Class>> {
+    fun getClass(id: String, token: String): LiveData<Resource<Class>> {
         val data = MutableLiveData<Resource<Class>>()
-        service.getClass(id).enqueue(object : Callback<ClassResponse>{
+        service.getClass(id, token).enqueue(object : Callback<ClassResponse>{
             override fun onResponse(call: Call<ClassResponse>, response: Response<ClassResponse>) {
                 if (response.body() != null){
                     val resource = Resource(Status.Success, response.body()!!.lecture)
@@ -227,6 +227,25 @@ class Repository(
             }
 
             override fun onFailure(call: Call<ClassResponse>, t: Throwable) {
+                val resource = Resource(Status.Fail, null, t)
+                data.value = resource
+            }
+        })
+        return data
+    }
+
+    fun toggleClassLike(id: String, token: String): LiveData<Resource<Void>>{
+        val data = MutableLiveData<Resource<Void>>()
+        val auth = "Bearer $token"
+        service.toggleLike(id ,auth).enqueue(object : Callback<Void>{
+            override fun onResponse(call: Call<Void>, response: Response<Void>) {
+                if (response.code() == 200){
+                    val resource = Resource(Status.Success, response.body())
+                    data.value = resource
+                }
+            }
+
+            override fun onFailure(call: Call<Void>, t: Throwable) {
                 val resource = Resource(Status.Fail, null, t)
                 data.value = resource
             }
