@@ -18,7 +18,6 @@ class ClassDetailsFragment : Fragment() {
     private var _binding: FragmentClassDetailsBinding? = null
     private val binding get() = _binding!!
     private val args: ClassDetailsFragmentArgs by navArgs()
-    private var tmp = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -47,6 +46,10 @@ class ClassDetailsFragment : Fragment() {
                 }
                 Glide.with(this).load(it.thumbnailUrl).into(binding.classThumbnail)
                 binding.classTitleDuration.text = getString(R.string.title_duration, it.title, it.duration)
+                binding.classPlayButton.setOnClickListener { _ ->
+                    val action = ClassDetailsFragmentDirections.actionClassDetailsFragmentToVideoFragment(it.videoUrl)
+                    findNavController().navigate(action)
+                }
                 binding.classDescription.text = it.description
                 Glide.with(this).load(it.instructor.avatar_url).into(binding.classInstructorAvatar)
                 binding.classInstructorName.text = it.instructor.name
