@@ -56,8 +56,6 @@ class Repository(
                 if (response.body() != null){
                     val resource = Resource(Status.Success, response.body()!!.instructors)
                     data.value = resource
-                } else {
-                    TODO("Error handle")
                 }
             }
             override fun onFailure(call: Call<Instructors>, t: Throwable) {
@@ -97,7 +95,8 @@ class Repository(
                     val resource = Resource(Status.Success, response.body()!!.journeys)
                     data.value = resource
                 } else {
-                    TODO("Error handle")
+                    val resource = Resource(Status.Fail, null)
+                    data.value = resource
                 }
             }
             override fun onFailure(call: Call<Journeys>, t: Throwable) {
@@ -115,8 +114,6 @@ class Repository(
                 if (response.body() != null){
                     val resource = Resource(Status.Success, response.body()!!.journey)
                     data.value = resource
-                } else {
-                    TODO("Error handle")
                 }
             }
 
@@ -136,8 +133,6 @@ class Repository(
                 if (response.body() != null){
                     val resource = Resource(Status.Success, response.body()!!.classes)
                     data.value = resource
-                } else {
-                    TODO("Error handle")
                 }
             }
 
@@ -157,8 +152,6 @@ class Repository(
                 if (response.body() != null){
                     val resource = Resource(Status.Success, response.body()!!.classes)
                     data.value = resource
-                } else {
-                    TODO("Error handle")
                 }
             }
 
@@ -178,8 +171,6 @@ class Repository(
                 if (response.body() != null){
                     val resource = Resource(Status.Success, response.body()!!.classes)
                     data.value = resource
-                } else {
-                    TODO("Error handle")
                 }
             }
 
@@ -215,7 +206,8 @@ class Repository(
 
     fun getClass(id: String, token: String): LiveData<Resource<Class>> {
         val data = MutableLiveData<Resource<Class>>()
-        service.getClass(id, token).enqueue(object : Callback<ClassResponse>{
+        val auth = "Bearer $token"
+        service.getClass(id, auth).enqueue(object : Callback<ClassResponse>{
             override fun onResponse(call: Call<ClassResponse>, response: Response<ClassResponse>) {
                 if (response.body() != null){
                     val resource = Resource(Status.Success, response.body()!!.lecture)

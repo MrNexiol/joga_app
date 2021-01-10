@@ -121,6 +121,9 @@
         <action
             android:id="@+id/action_classDetailsFragment_to_trainerDetailFragment"
             app:destination="@id/trainerDetailFragment" />
+        <action
+            android:id="@+id/action_classDetailsFragment_to_videoFragment"
+            app:destination="@id/videoFragment" />
     </fragment>
     <fragment
         android:id="@+id/logoutFragment"
@@ -130,5 +133,14 @@
         <action
             android:id="@+id/action_logoutFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/videoFragment"
+        android:name="com.prograils.joga.ui.video.VideoFragment"
+        android:label="fragment_video"
+        tools:layout="@layout/fragment_video" >
+        <argument
+            android:name="video_url"
+            app:argType="string" />
     </fragment>
 </navigation>
