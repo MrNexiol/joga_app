@@ -49,9 +49,10 @@ class Repository(
         return data
     }
 
-    fun getInstructors(): LiveData<Resource<List<Instructor>>> {
+    fun getInstructors(token: String): LiveData<Resource<List<Instructor>>> {
         val data = MutableLiveData<Resource<List<Instructor>>>()
-        service.getInstructors().enqueue(object : Callback<Instructors>{
+        val auth = "Bearer $token"
+        service.getInstructors(auth).enqueue(object : Callback<Instructors>{
             override fun onResponse(call: Call<Instructors>, response: Response<Instructors>) {
                 if (response.body() != null){
                     val resource = Resource(Status.Success, response.body()!!.instructors)
@@ -66,15 +67,14 @@ class Repository(
         return data
     }
 
-    fun getInstructor(id: String): LiveData<Resource<Instructor>> {
+    fun getInstructor(token: String, id: String): LiveData<Resource<Instructor>> {
         val data = MutableLiveData<Resource<Instructor>>()
-        service.getInstructor(id).enqueue(object : Callback<InstructorResponse>{
+        val auth = "Bearer $token"
+        service.getInstructor(auth, id).enqueue(object : Callback<InstructorResponse>{
             override fun onResponse(call: Call<InstructorResponse>, response: Response<InstructorResponse>) {
                 if (response.body() != null){
                     val resource = Resource(Status.Success, response.body()!!.instructor)
                     data.value = resource
-                } else {
-                    TODO("Error handle")
                 }
             }
 
@@ -87,9 +87,10 @@ class Repository(
         return data
     }
 
-    fun getJourneys(): LiveData<Resource<List<Journey>>> {
+    fun getJourneys(token: String): LiveData<Resource<List<Journey>>> {
         val data = MutableLiveData<Resource<List<Journey>>>()
-        service.getJourneys().enqueue(object : Callback<Journeys>{
+        val auth = "Bearer $token"
+        service.getJourneys(auth).enqueue(object : Callback<Journeys>{
             override fun onResponse(call: Call<Journeys>, response: Response<Journeys>) {
                 if (response.body() != null){
                     val resource = Resource(Status.Success, response.body()!!.journeys)
@@ -107,9 +108,10 @@ class Repository(
         return data
     }
 
-    fun getJourney(id: String): LiveData<Resource<Journey>> {
+    fun getJourney(token: String, id: String): LiveData<Resource<Journey>> {
         val data = MutableLiveData<Resource<Journey>>()
-        service.getJourney(id).enqueue(object : Callback<JourneyResponse>{
+        val auth = "Bearer $token"
+        service.getJourney(auth, id).enqueue(object : Callback<JourneyResponse>{
             override fun onResponse(call: Call<JourneyResponse>, response: Response<JourneyResponse>) {
                 if (response.body() != null){
                     val resource = Resource(Status.Success, response.body()!!.journey)
@@ -126,9 +128,10 @@ class Repository(
         return data
     }
 
-    fun getClasses(): LiveData<Resource<List<Class>>> {
+    fun getClasses(token: String): LiveData<Resource<List<Class>>> {
         val data = MutableLiveData<Resource<List<Class>>>()
-        service.getClasses().enqueue(object : Callback<Classes>{
+        val auth = "Bearer $token"
+        service.getClasses(auth).enqueue(object : Callback<Classes>{
             override fun onResponse(call: Call<Classes>, response: Response<Classes>) {
                 if (response.body() != null){
                     val resource = Resource(Status.Success, response.body()!!.classes)
@@ -150,8 +153,13 @@ class Repository(
         service.getLikedClasses(auth).enqueue(object : Callback<Classes>{
             override fun onResponse(call: Call<Classes>, response: Response<Classes>) {
                 if (response.body() != null){
-                    val resource = Resource(Status.Success, response.body()!!.classes)
-                    data.value = resource
+                    if (response.body()!!.classes.isEmpty()){
+                        val resource = Resource(Status.Empty, listOf<Class>())
+                        data.value = resource
+                    } else {
+                        val resource = Resource(Status.Success, response.body()!!.classes)
+                        data.value = resource
+                    }
                 }
             }
 
@@ -164,9 +172,10 @@ class Repository(
         return data
     }
 
-    fun getInstructorClasses(instructorId: String): LiveData<Resource<List<Class>>> {
+    fun getInstructorClasses(token: String, instructorId: String): LiveData<Resource<List<Class>>> {
         val data = MutableLiveData<Resource<List<Class>>>()
-        service.getInstructorClasses(instructorId).enqueue(object : Callback<Classes>{
+        val auth = "Bearer $token"
+        service.getInstructorClasses(auth, instructorId).enqueue(object : Callback<Classes>{
             override fun onResponse(call: Call<Classes>, response: Response<Classes>) {
                 if (response.body() != null){
                     val resource = Resource(Status.Success, response.body()!!.classes)
@@ -183,31 +192,10 @@ class Repository(
         return data
     }
 
-    fun getDailyClass(): LiveData<Resource<Class>> {
-        val data = MutableLiveData<Resource<Class>>()
-        service.getDailyClass().enqueue(object : Callback<ClassResponse>{
-            override fun onResponse(call: Call<ClassResponse>, response: Response<ClassResponse>) {
-                if (response.body() != null){
-                    val resource = Resource(Status.Success, response.body()!!.lecture)
-                    data.value = resource
-                } else {
-                    val resource = Resource(Status.Fail, null)
-                    data.value = resource
-                }
-            }
-
-            override fun onFailure(call: Call<ClassResponse>, t: Throwable) {
-                val resource = Resource(Status.Fail, null, t)
-                data.value = resource
-            }
-        })
-        return data
-    }
-
-    fun getClass(id: String, token: String): LiveData<Resource<Class>> {
+    fun getDailyClass(token: String): LiveData<Resource<Class>> {
         val data = MutableLiveData<Resource<Class>>()
         val auth = "Bearer $token"
-        service.getClass(id, auth).enqueue(object : Callback<ClassResponse>{
+        service.getDailyClass(auth).enqueue(object : Callback<ClassResponse>{
             override fun onResponse(call: Call<ClassResponse>, response: Response<ClassResponse>) {
                 if (response.body() != null){
                     val resource = Resource(Status.Success, response.body()!!.lecture)
@@ -226,10 +214,32 @@ class Repository(
         return data
     }
 
-    fun toggleClassLike(id: String, token: String): LiveData<Resource<Void>>{
+    fun getClass(token: String, id: String): LiveData<Resource<Class>> {
+        val data = MutableLiveData<Resource<Class>>()
+        val auth = "Bearer $token"
+        service.getClass(auth, id).enqueue(object : Callback<ClassResponse>{
+            override fun onResponse(call: Call<ClassResponse>, response: Response<ClassResponse>) {
+                if (response.body() != null){
+                    val resource = Resource(Status.Success, response.body()!!.lecture)
+                    data.value = resource
+                } else {
+                    val resource = Resource(Status.Fail, null)
+                    data.value = resource
+                }
+            }
+
+            override fun onFailure(call: Call<ClassResponse>, t: Throwable) {
+                val resource = Resource(Status.Fail, null, t)
+                data.value = resource
+            }
+        })
+        return data
+    }
+
+    fun toggleClassLike(token: String, id: String): LiveData<Resource<Void>>{
         val data = MutableLiveData<Resource<Void>>()
         val auth = "Bearer $token"
-        service.toggleLike(id ,auth).enqueue(object : Callback<Void>{
+        service.toggleLike(auth, id).enqueue(object : Callback<Void>{
             override fun onResponse(call: Call<Void>, response: Response<Void>) {
                 if (response.code() == 200){
                     val resource = Resource(Status.Success, response.body())

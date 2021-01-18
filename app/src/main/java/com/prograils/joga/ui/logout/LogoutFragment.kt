@@ -12,6 +12,7 @@ import com.prograils.joga.JoGaApplication
 import com.prograils.joga.R
 import com.prograils.joga.api.Status
 import com.prograils.joga.databinding.FragmentLogoutBinding
+import com.prograils.joga.BuildConfig
 
 class LogoutFragment : Fragment() {
     private var _binding: FragmentLogoutBinding? = null
@@ -30,6 +31,8 @@ class LogoutFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val appContainer = (activity?.application as JoGaApplication).appContainer
+        binding.usernameTextView.text = sharedPrefs?.getString(getString(R.string.saved_username), "")
+        binding.currentAppVersionTextView.text = BuildConfig.VERSION_NAME
         binding.logMeOutButton.setOnClickListener {
             val token = sharedPrefs?.getString(getString(R.string.saved_token_key), null)
             token?.let {
@@ -38,6 +41,7 @@ class LogoutFragment : Fragment() {
                         with(sharedPrefs?.edit()){
                             this?.remove(getString(R.string.saved_token_key))
                             this?.remove(getString(R.string.saved_user_id))
+                            this?.remove(getString(R.string.saved_username))
                             this?.apply()
                         }
                         val action = LogoutFragmentDirections.actionLogoutFragmentToLoginFragment()

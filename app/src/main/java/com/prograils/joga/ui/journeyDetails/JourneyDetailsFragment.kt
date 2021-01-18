@@ -1,11 +1,13 @@
 package com.prograils.joga.ui.journeyDetails
 
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
@@ -24,7 +26,9 @@ class JourneyDetailsFragment : Fragment() {
     ): View {
         _binding = FragmentJourneyDetailsBinding.inflate(inflater, container, false)
         val appContainer = (activity?.application as JoGaApplication).appContainer
-        val journeyViewModel: JourneyViewModel by viewModels { JourneyViewModelFactory(appContainer.repository, args.journeyId) }
+        val sharedPrefs = activity?.getPreferences(Context.MODE_PRIVATE)
+        val token = sharedPrefs?.getString(getString(R.string.saved_token_key), null)
+        val journeyViewModel: JourneyViewModel by viewModels { JourneyViewModelFactory(appContainer.repository, token!!, args.journeyId) }
 
         val recyclerView = binding.journeysRecyclerView
         val adapter = JourneyDetailsAdapter(listOf())
@@ -38,12 +42,30 @@ class JourneyDetailsFragment : Fragment() {
                 binding.journeyTitle.text = it.name
                 Glide.with(this).load(firstClass.thumbnailUrl).into(binding.firstClassThumbnail)
                 binding.firstClassNameTextView.text = firstClass.title
-                binding.firstClassInstructorNameTextView.text = firstClass.instructor.name
+                binding.firstClassInstructorNameTextView.text = getString(R.string.with, firstClass.instructor.name)
                 binding.firstClassMinTextView.text = getString(R.string.min, firstClass.duration)
                 binding.firstClassDescription.text = firstClass.description
+                binding.firstClassRoot.setOnClickListener {
+                    val action = JourneyDetailsFragmentDirections.actionJourneyDetailsFragmentToClassDetailsFragment(firstClass.id)
+                    findNavController().navigate(action)
+                }
                 adapter.setData(otherClasses)
             }
         })
+
+        binding.journeysBottomNavigation.setOnNavigationItemSelectedListener {
+            when(it.itemId){
+                R.id.navigation_home -> {
+                    findNavController().navigate(R.id.action_global_homeFragment)
+                    true
+                }
+                R.id.navigation_classes -> {
+                    findNavController().navigate(R.id.action_global_classesFragment)
+                    true
+                }
+                else -> false
+            }
+        }
 
         return binding.root
     }

@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:padding="@dimen/default_app_padding"
-        app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView3"
+        app:layout_constraintBottom_toTopOf="@+id/trainer_details_bottom_navigation"
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.cardview.widget.CardView
@@ -27,7 +27,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:contentDescription="@string/instructor_avatar"
-                android:src="@drawable/trainer_icon" />
+                android:scaleType="centerCrop"
+                app:srcCompat="@drawable/trainer_placeholder_icon" />
         </androidx.cardview.widget.CardView>
 
         <TextView
@@ -44,7 +45,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/divider_height"
             android:layout_marginTop="@dimen/margin_medium"
-            android:background="@color/white"
+            android:background="@color/secondary_text"
             app:layout_constraintTop_toBottomOf="@+id/instructor_name_text_view"
             tools:layout_editor_absoluteX="16dp" />
 
@@ -73,7 +74,7 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottomNavigationView3"
+        android:id="@+id/trainer_details_bottom_navigation"
         android:layout_width="match_parent"
         android:layout_height="@dimen/bottom_navigation_height"
         android:background="@color/background"

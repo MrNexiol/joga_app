@@ -22,6 +22,7 @@
             android:layout_height="match_parent"
             android:layout_gravity="center"
             android:contentDescription="@string/placeholder"
+            android:scaleType="centerCrop"
             app:srcCompat="@drawable/placeholder_image" />
     </androidx.cardview.widget.CardView>
 

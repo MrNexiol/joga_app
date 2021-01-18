@@ -12,7 +12,8 @@
         tools:layout="@layout/fragment_login">
         <action
             android:id="@+id/action_loginFragment_to_homeFragment"
-            app:destination="@id/homeFragment" />
+            app:destination="@id/homeFragment"
+            app:popUpTo="@id/nav_graph" />
         <action
             android:id="@+id/action_loginFragment_to_loginErrorFragment"
             app:destination="@id/loginErrorFragment" />
@@ -46,9 +47,6 @@
         <action
             android:id="@+id/action_homeFragment_to_logoutFragment"
             app:destination="@id/logoutFragment" />
-        <argument
-            android:name="userToken"
-            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/loginErrorFragment"
@@ -57,7 +55,8 @@
         tools:layout="@layout/fragment_login_error" >
         <action
             android:id="@+id/action_loginErrorFragment_to_loginFragment"
-            app:destination="@id/loginFragment" />
+            app:destination="@id/loginFragment"
+            app:popUpTo="@id/nav_graph" />
     </fragment>
     <fragment
         android:id="@+id/journeysFragment"
@@ -73,9 +72,6 @@
         android:name="com.prograils.joga.ui.liked.LikedFragment"
         android:label="fragment_liked"
         tools:layout="@layout/fragment_liked" >
-        <argument
-            android:name="userToken"
-            app:argType="string" />
         <action
             android:id="@+id/action_likedFragment_to_classDetailsFragment"
             app:destination="@id/classDetailsFragment" />
@@ -100,6 +96,9 @@
         <argument
             android:name="journey_id"
             app:argType="string" />
+        <action
+            android:id="@+id/action_journeyDetailsFragment_to_classDetailsFragment"
+            app:destination="@id/classDetailsFragment" />
     </fragment>
     <fragment
         android:id="@+id/classesFragment"
@@ -132,7 +131,8 @@
         tools:layout="@layout/fragment_logout" >
         <action
             android:id="@+id/action_logoutFragment_to_loginFragment"
-            app:destination="@id/loginFragment" />
+            app:destination="@id/loginFragment"
+            app:popUpTo="@id/nav_graph" />
     </fragment>
     <fragment
         android:id="@+id/videoFragment"
@@ -142,5 +142,5 @@
         <argument
             android:name="video_url"
             app:argType="string" />
-    </fragment>
+    </fragment><action android:id="@+id/action_global_homeFragment" app:destination="@id/homeFragment"/><action android:id="@+id/action_global_classesFragment" app:destination="@id/classesFragment"/>
 </navigation>

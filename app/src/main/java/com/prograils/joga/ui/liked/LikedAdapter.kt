@@ -24,7 +24,7 @@ class LikedAdapter(private var data: List<Class>) : RecyclerView.Adapter<LikedAd
         Glide.with(holder.itemView).load(data[position].thumbnailUrl).into(holder.binding.likedClassThumbnail)
         holder.binding.likedClassName.text = data[position].title
         if (data[position].userLike.classId != null){
-            holder.binding.heartIcon.setImageResource(R.drawable.heart_liked)
+            holder.binding.heartIcon.setImageResource(R.drawable.heart_liked_icon)
         }
         holder.binding.likedClassFocus.text = data[position].focus
         holder.binding.likedClassDuration.text = holder.itemView.context.getString(R.string.min, data[position].duration)

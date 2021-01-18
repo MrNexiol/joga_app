@@ -31,7 +31,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/divider_height"
                 android:layout_marginTop="@dimen/margin_small"
-                android:background="@color/white"
+                android:background="@color/secondary_text"
                 app:layout_constraintTop_toBottomOf="@+id/journey_title"
                 tools:layout_editor_absoluteX="16dp" />
 
@@ -47,7 +47,7 @@
                 <androidx.cardview.widget.CardView
                     android:id="@+id/cardView"
                     android:layout_width="match_parent"
-                    android:layout_height="240dp"
+                    android:layout_height="@dimen/first_journey_class_height"
                     app:cardCornerRadius="@dimen/card_radius"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
@@ -57,6 +57,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:contentDescription="@string/placeholder"
+                        android:scaleType="fitXY"
                         android:src="@drawable/placeholder_image" />
                 </androidx.cardview.widget.CardView>
 
@@ -70,29 +71,20 @@
                     app:layout_constraintTop_toBottomOf="@+id/cardView" />
 
                 <TextView
-                    android:id="@+id/first_class_with_text_view"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/first_class_instructor_name_text_view"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="@string/with"
                     android:textColor="@color/secondary_text"
                     android:textSize="@dimen/default_text"
+                    app:layout_constraintEnd_toStartOf="@+id/first_class_min_text_view"
+                    app:layout_constraintHorizontal_bias="0"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/first_class_name_text_view" />
-
-                <TextView
-                    android:id="@+id/first_class_instructor_name_text_view"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/secondary_text"
-                    android:textSize="@dimen/default_text"
-                    app:layout_constraintBottom_toBottomOf="@+id/first_class_with_text_view"
-                    app:layout_constraintStart_toEndOf="@+id/first_class_with_text_view" />
 
                 <TextView
                     android:id="@+id/first_class_min_text_view"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/min"
                     android:textColor="@color/secondary_text"
                     app:layout_constraintBottom_toBottomOf="@+id/first_class_instructor_name_text_view"
                     app:layout_constraintEnd_toEndOf="parent" />
@@ -103,7 +95,7 @@
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/default_text"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/first_class_with_text_view" />
+                    app:layout_constraintTop_toBottomOf="@+id/first_class_instructor_name_text_view" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -112,7 +104,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/divider_height"
                 android:layout_marginTop="@dimen/margin_medium"
-                android:background="@color/white"
+                android:background="@color/secondary_text"
                 app:layout_constraintTop_toBottomOf="@+id/first_class_root"
                 tools:layout_editor_absoluteX="16dp" />
 
