@@ -10,6 +10,8 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
+import com.google.android.exoplayer2.MediaItem
+import com.google.android.exoplayer2.SimpleExoPlayer
 import com.prograils.joga.JoGaApplication
 import com.prograils.joga.R
 import com.prograils.joga.databinding.FragmentClassDetailsBinding
@@ -18,6 +20,7 @@ class ClassDetailsFragment : Fragment() {
     private var _binding: FragmentClassDetailsBinding? = null
     private val binding get() = _binding!!
     private val args: ClassDetailsFragmentArgs by navArgs()
+    private var player: SimpleExoPlayer? = null
     private var liked: Boolean = false
 
     override fun onCreateView(
@@ -49,6 +52,7 @@ class ClassDetailsFragment : Fragment() {
                     }
                 }
                 Glide.with(this).load(it.thumbnailUrl).into(binding.classThumbnail)
+                initializePlayer(viewModel, it.videoUrl)
                 binding.classTitleDuration.text = getString(R.string.title_duration, it.title, it.duration)
                 binding.classDescription.text = it.description
                 Glide.with(this).load(it.instructor.avatar_url).into(binding.classInstructorAvatar)
@@ -68,6 +72,7 @@ class ClassDetailsFragment : Fragment() {
 
         binding.playButton.setOnClickListener {
             binding.playButton.visibility = View.INVISIBLE
+            binding.videoView.visibility = View.VISIBLE
         }
 
         binding.bottomNavigationClassDetails.setOnNavigationItemSelectedListener {
@@ -88,5 +93,15 @@ class ClassDetailsFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private fun initializePlayer(viewModel: ClassDetailsViewModel, videoUrl: String){
+        player = SimpleExoPlayer.Builder(requireContext()).build()
+        binding.videoView.player = player
+        val mediaItem = MediaItem.fromUri(videoUrl)
+        player!!.setMediaItem(mediaItem)
+        player!!.playWhenReady = viewModel.playWhenReady
+        player!!.seekTo(viewModel.currentWindow, viewModel.playbackPosition)
+        player!!.prepare()
     }
 }
