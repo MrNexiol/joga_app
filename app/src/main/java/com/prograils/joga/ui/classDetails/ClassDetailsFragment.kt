@@ -37,7 +37,7 @@ class ClassDetailsFragment : Fragment() {
                     liked = true
                     binding.likeButton.setImageResource(R.drawable.heart_liked_icon)
                 }
-                binding.likeButton.setOnClickListener { _ ->
+                binding.likeButton.setOnClickListener {
                     if (liked){
                         liked = false
                         viewModel.toggleClassLike()
