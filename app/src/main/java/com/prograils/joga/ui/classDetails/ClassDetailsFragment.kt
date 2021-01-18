@@ -60,6 +60,16 @@ class ClassDetailsFragment : Fragment() {
             }
         })
 
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        binding.playButton.setOnClickListener {
+            binding.playButton.visibility = View.INVISIBLE
+        }
+
         binding.bottomNavigationClassDetails.setOnNavigationItemSelectedListener {
             when(it.itemId){
                 R.id.navigation_home -> {
@@ -73,8 +83,6 @@ class ClassDetailsFragment : Fragment() {
                 else -> false
             }
         }
-
-        return binding.root
     }
 
     override fun onDestroyView() {
