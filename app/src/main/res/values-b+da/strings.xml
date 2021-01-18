@@ -13,10 +13,11 @@
     <string name="log_me_out">Ja, log mig ud.</string>
     <string name="train_now">Din træning</string>
     <string name="nothing_to_show">Nothing to show</string>
-    <string name="today_pick">Today\'s pick: %1$s</string>
+    <string name="today_pick">Today\'s pick</string>
     <string name="with">med %1$s</string>
     <string name="min">%1$d min</string>
     <string name="title_duration">%1$s - %2$d min</string>
+    <string name="new_classes">New classes</string>
     <string name="by_you">af dig</string>
     <string name="liked_by_you">Liked af dig</string>
     <string name="journeys">Forløb</string>
@@ -33,6 +34,8 @@
     <string name="X">X</string>
     <string name="play">Afspil</string>
     <string name="your_instructor">Din træner</string>
+    <string name="clock_icon">Clock icon</string>
+    <string name="star_icon">Star icon</string>
     <string name="trainer_icon">Trainer icon</string>
     <string name="heart_icon">Heart icon</string>
     <string name="share_icon">Share icon</string>

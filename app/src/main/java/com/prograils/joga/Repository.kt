@@ -147,6 +147,31 @@ class Repository(
         return data
     }
 
+    fun getNewClasses(token: String): LiveData<Resource<List<Class>>> {
+        val data = MutableLiveData<Resource<List<Class>>>()
+        val auth = "Bearer $token"
+        service.getNewClasses(auth).enqueue(object : Callback<Classes>{
+            override fun onResponse(call: Call<Classes>, response: Response<Classes>) {
+                if (response.body() != null){
+                    if (response.body()!!.classes.isEmpty()){
+                        val resource = Resource(Status.Empty, listOf<Class>())
+                        data.value = resource
+                    } else {
+                        val resource = Resource(Status.Success, response.body()!!.classes)
+                        data.value = resource
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<Classes>, t: Throwable) {
+                val resource = Resource(Status.Fail, null, t)
+                data.value = resource
+            }
+
+        })
+        return data
+    }
+
     fun getLikedClasses(token: String): LiveData<Resource<List<Class>>> {
         val data = MutableLiveData<Resource<List<Class>>>()
         val auth = "Bearer $token"

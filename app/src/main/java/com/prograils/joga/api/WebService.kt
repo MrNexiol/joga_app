@@ -19,6 +19,9 @@ interface WebService {
     @GET("api/v1/classes")
     fun getClasses(@Header("Authorization") userToken: String): Call<Classes>
 
+    @GET("api/v1/interesting_classes")
+    fun getNewClasses(@Header("Authorization") userToken: String): Call<Classes>
+
     @GET("api/v1/liked_classes")
     fun getLikedClasses(@Header("Authorization") userToken: String): Call<Classes>
 

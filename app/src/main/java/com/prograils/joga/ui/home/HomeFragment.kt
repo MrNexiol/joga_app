@@ -8,7 +8,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -22,8 +21,10 @@ class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
     private lateinit var appContainer: AppContainer
-    private lateinit var classRecyclerView: RecyclerView
-    private lateinit var classAdapter: LikedClassAdapter
+    private lateinit var newClassRecyclerView: RecyclerView
+    private lateinit var newClassAdapter: NewClassesAdapter
+    private lateinit var likedClassRecyclerView: RecyclerView
+    private lateinit var likedClassAdapter: LikedClassAdapter
     private lateinit var instructorRecyclerView: RecyclerView
     private lateinit var instructorAdapter: InstructorsAdapter
     private lateinit var journeyRecyclerView: RecyclerView
@@ -40,13 +41,20 @@ class HomeFragment : Fragment() {
         val token = sharedPrefs?.getString(getString(R.string.saved_token_key), null)
         val homeViewModel: HomeViewModel by viewModels { HomeViewModelFactory(appContainer.repository, token!!) }
 
+        setNewClassesRecyclerView()
         setLikedClassesRecyclerView()
         setJourneysRecyclerView()
         setInstructorRecyclerView()
 
+        homeViewModel.getNewClasses().observe(viewLifecycleOwner, { resource ->
+            if (resource.status == Status.Success){
+                newClassAdapter.setData(resource.data!!)
+            }
+        })
+
         homeViewModel.getLikedClasses().observe(viewLifecycleOwner, { resource ->
             if (resource.status == Status.Success){
-                classAdapter.setData(resource.data!!.take(3))
+                likedClassAdapter.setData(resource.data!!.take(3))
             } else {
                 binding.nothingLikedTextView.visibility = View.VISIBLE
             }
@@ -65,7 +73,7 @@ class HomeFragment : Fragment() {
             resource.data?.let {
                 dailyClassId = it.id
                 Glide.with(this).load(it.thumbnailUrl).into(binding.todaysPickThumbnail)
-                binding.todayPickNameTextView.text = getString(R.string.today_pick, it.title)
+                binding.todayPickName.text = it.title
                 binding.todayPickTrainerNameTextView.text = getString(R.string.with, it.instructor.name)
                 binding.todayPickMinTextView.text = getString(R.string.min, it.duration)
             }
@@ -120,11 +128,18 @@ class HomeFragment : Fragment() {
         _binding = null
     }
 
+    private fun setNewClassesRecyclerView(){
+        newClassRecyclerView = binding.newClassesRecyclerView
+        newClassAdapter = NewClassesAdapter(listOf())
+        newClassRecyclerView.adapter = newClassAdapter
+        newClassRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+    }
+
     private fun setLikedClassesRecyclerView(){
-        classRecyclerView = binding.likedRecyclerView
-        classAdapter = LikedClassAdapter(listOf())
-        classRecyclerView.adapter = classAdapter
-        classRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        likedClassRecyclerView = binding.likedRecyclerView
+        likedClassAdapter = LikedClassAdapter(listOf())
+        likedClassRecyclerView.adapter = likedClassAdapter
+        likedClassRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
     }
 
     private fun setJourneysRecyclerView(){
