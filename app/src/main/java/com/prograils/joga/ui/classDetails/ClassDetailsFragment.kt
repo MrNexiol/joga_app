@@ -18,6 +18,7 @@ class ClassDetailsFragment : Fragment() {
     private var _binding: FragmentClassDetailsBinding? = null
     private val binding get() = _binding!!
     private val args: ClassDetailsFragmentArgs by navArgs()
+    private var liked: Boolean = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -27,21 +28,24 @@ class ClassDetailsFragment : Fragment() {
         val sharedPrefs = activity?.getPreferences(Context.MODE_PRIVATE)
         val token = sharedPrefs?.getString(getString(R.string.saved_token_key), null)
         val appContainer = (activity?.application as JoGaApplication).appContainer
-        val viewModel: ClassDetailsViewModel by viewModels { ClassDetailsViewModelFactory(appContainer.repository, args.classId, token!!) }
+        val viewModel: ClassDetailsViewModel by viewModels { ClassDetailsViewModelFactory(appContainer.repository, token!!, args.classId) }
 
         viewModel.singleClass.observe(viewLifecycleOwner, { resource ->
             resource.data?.let {
                 binding.className.text = it.title
                 if (it.userLike.classId != null){
-                    binding.likeButton.setImageResource(R.drawable.heart_liked)
+                    liked = true
+                    binding.likeButton.setImageResource(R.drawable.heart_liked_icon)
                 }
                 binding.likeButton.setOnClickListener { _ ->
-                    if (it.userLike.classId == null){
-                        viewModel.toggleClassLike()
-                        binding.likeButton.setImageResource(R.drawable.heart_liked)
-                    } else {
+                    if (liked){
+                        liked = false
                         viewModel.toggleClassLike()
                         binding.likeButton.setImageResource(R.drawable.heart_not_liked)
+                    } else {
+                        liked = true
+                        viewModel.toggleClassLike()
+                        binding.likeButton.setImageResource(R.drawable.heart_liked_icon)
                     }
                 }
                 Glide.with(this).load(it.thumbnailUrl).into(binding.classThumbnail)
@@ -59,6 +63,20 @@ class ClassDetailsFragment : Fragment() {
                 }
             }
         })
+
+        binding.bottomNavigationClassDetails.setOnNavigationItemSelectedListener {
+            when(it.itemId){
+                R.id.navigation_home -> {
+                    findNavController().navigate(R.id.action_global_homeFragment)
+                    true
+                }
+                R.id.navigation_classes -> {
+                    findNavController().navigate(R.id.action_global_classesFragment)
+                    true
+                }
+                else -> false
+            }
+        }
 
         return binding.root
     }

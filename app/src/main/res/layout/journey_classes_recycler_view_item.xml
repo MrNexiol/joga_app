@@ -8,17 +8,21 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView2"
-        android:layout_width="192dp"
-        android:layout_height="136dp"
+        android:layout_width="0dp"
+        android:layout_height="100dp"
         app:cardCornerRadius="@dimen/card_radius"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintWidth_percent="0.5">
 
         <ImageView
             android:id="@+id/journey_class_thumbnail"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:contentDescription="@string/placeholder"
+            android:scaleType="fitXY"
             app:srcCompat="@drawable/placeholder_image" />
     </androidx.cardview.widget.CardView>
 

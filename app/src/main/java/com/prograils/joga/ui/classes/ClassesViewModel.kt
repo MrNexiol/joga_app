@@ -6,6 +6,6 @@ import com.prograils.joga.Repository
 import com.prograils.joga.api.Class
 import com.prograils.joga.api.Resource
 
-class ClassesViewModel(repository: Repository) : ViewModel() {
-    val classes: LiveData<Resource<List<Class>>> = repository.getClasses()
+class ClassesViewModel(repository: Repository, token: String) : ViewModel() {
+    val classes: LiveData<Resource<List<Class>>> = repository.getClasses(token)
 }

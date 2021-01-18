@@ -1,5 +1,6 @@
 package com.prograils.joga.ui.classes
 
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -23,20 +24,33 @@ class ClassesFragment : Fragment() {
     ): View {
         _binding = FragmentClassesBinding.inflate(inflater, container, false)
 
+        val sharedPrefs = activity?.getPreferences(Context.MODE_PRIVATE)
+        val token = sharedPrefs?.getString(getString(R.string.saved_token_key), null)
+
         val appContainer = (activity?.application as JoGaApplication).appContainer
-        val classesViewModel : ClassesViewModel by viewModels { ClassesViewModelFactory(appContainer.repository) }
+        val classesViewModel : ClassesViewModel by viewModels { ClassesViewModelFactory(appContainer.repository, token!!) }
 
         val recyclerView = binding.classesRecyclerView
         val adapter = ClassesAdapter(listOf())
         recyclerView.adapter = adapter
         recyclerView.layoutManager = GridLayoutManager(context, 2)
-        recyclerView.addItemDecoration(GridSpacingItemDecoration(40))
+        recyclerView.addItemDecoration(GridSpacingItemDecoration(resources.getDimension(R.dimen.journey_list_decoration).toInt()))
 
         classesViewModel.classes.observe(viewLifecycleOwner, { resource ->
             resource.data?.let {
                 adapter.setData(it)
             }
         })
+
+        binding.classesBottomNavigation.setOnNavigationItemSelectedListener {
+            when(it.itemId){
+                R.id.navigation_home -> {
+                    findNavController().navigate(R.id.action_global_homeFragment)
+                    true
+                }
+                else -> false
+            }
+        }
 
         return binding.root
     }

@@ -2,6 +2,7 @@ package com.prograils.joga.ui.journeyDetails
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.prograils.joga.R
@@ -25,6 +26,10 @@ class JourneyDetailsAdapter(private var data: List<Class>) : RecyclerView.Adapte
         holder.binding.journeyClassCategory.text = data[position].focus
         holder.binding.journeyClassMin.text = holder.itemView.context.getString(R.string.min, data[position].duration)
         holder.binding.journeyClassInstructorName.text = data[position].instructor.name
+        holder.binding.root.setOnClickListener {
+            val action = JourneyDetailsFragmentDirections.actionJourneyDetailsFragmentToClassDetailsFragment(data[position].id)
+            holder.itemView.findNavController().navigate(action)
+        }
     }
 
     override fun getItemCount(): Int {

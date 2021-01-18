@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="margin_big">20dp</dimen>
+    <dimen name="margin_medium">12dp</dimen>
+    <dimen name="margin_small">6dp</dimen>
+    <dimen name="margin_very_small">2dp</dimen>
+
+    <dimen name="bottom_navigation_height">64dp</dimen>
+    <dimen name="default_app_padding">16dp</dimen>
+    <dimen name="card_radius">8dp</dimen>
+    <dimen name="divider_height">1dp</dimen>
+
+    <dimen name="instructor_item_padding">24dp</dimen>
+    <dimen name="drawable_padding">8dp</dimen>
+
+    <dimen name="instructor_avatar_size">88dp</dimen>
+    <dimen name="instructor_avatar_radius">44dp</dimen>
+
+    <dimen name="first_journey_class_height">180dp</dimen>
+    <dimen name="journey_list_decoration">8dp</dimen>
+
+    <dimen name="welcome_text">48sp</dimen>
+    <dimen name="screen_title_text">32sp</dimen>
+    <dimen name="header_text">18sp</dimen>
+    <dimen name="default_text">14sp</dimen>
+    <dimen name="secondary_text">12sp</dimen>
+</resources>
