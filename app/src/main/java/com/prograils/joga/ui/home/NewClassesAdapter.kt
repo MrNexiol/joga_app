@@ -5,26 +5,26 @@ import android.view.ViewGroup
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.prograils.joga.api.Journey
+import com.prograils.joga.api.Class
 import com.prograils.joga.databinding.HomeRectangleRecyclerViewItemBinding
 
-class JourneysAdapter(private var data: List<Journey>) : RecyclerView.Adapter<JourneysAdapter.ViewHolder>() {
+class NewClassesAdapter(private var data: List<Class>) : RecyclerView.Adapter<NewClassesAdapter.ViewHolder>() {
 
     class ViewHolder(
             val binding: HomeRectangleRecyclerViewItemBinding) : RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = HomeRectangleRecyclerViewItemBinding
-            .inflate(LayoutInflater.from(parent.context), parent, false)
+                .inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        Glide.with(holder.itemView).load(data[position].coverUrl).into(holder.binding.homeItemThumbnail)
-        holder.binding.homeItemName.text = data[position].name
+        Glide.with(holder.itemView).load(data[position].thumbnailUrl).into(holder.binding.homeItemThumbnail)
+        holder.binding.homeItemName.text = data[position].title
         holder.binding.root.setOnClickListener {
-            val action = HomeFragmentDirections.actionHomeFragmentToJourneyDetailsFragment(data[position].id)
-            it.findNavController().navigate(action)
+            val action = HomeFragmentDirections.actionHomeFragmentToClassDetailsFragment(data[position].id)
+            holder.itemView.findNavController().navigate(action)
         }
     }
 
@@ -32,7 +32,7 @@ class JourneysAdapter(private var data: List<Journey>) : RecyclerView.Adapter<Jo
         return data.size
     }
 
-    fun setData(data: List<Journey>){
+    fun setData(data: List<Class>){
         this.data = data
         notifyDataSetChanged()
     }
