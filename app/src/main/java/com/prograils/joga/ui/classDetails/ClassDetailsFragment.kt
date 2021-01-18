@@ -1,6 +1,7 @@
 package com.prograils.joga.ui.classDetails
 
 import android.content.Context
+import android.content.res.Configuration
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -35,31 +36,33 @@ class ClassDetailsFragment : Fragment() {
 
         viewModel.singleClass.observe(viewLifecycleOwner, { resource ->
             resource.data?.let {
-                binding.className.text = it.title
-                if (it.userLike.classId != null){
-                    liked = true
-                    binding.likeButton.setImageResource(R.drawable.heart_liked_icon)
-                }
-                binding.likeButton.setOnClickListener {
-                    if (liked){
-                        liked = false
-                        viewModel.toggleClassLike()
-                        binding.likeButton.setImageResource(R.drawable.heart_not_liked)
-                    } else {
-                        liked = true
-                        viewModel.toggleClassLike()
-                        binding.likeButton.setImageResource(R.drawable.heart_liked_icon)
-                    }
-                }
-                Glide.with(this).load(it.thumbnailUrl).into(binding.classThumbnail)
                 initializePlayer(viewModel, it.videoUrl)
-                binding.classTitleDuration.text = getString(R.string.title_duration, it.title, it.duration)
-                binding.classDescription.text = it.description
-                Glide.with(this).load(it.instructor.avatar_url).into(binding.classInstructorAvatar)
-                binding.classInstructorName.text = it.instructor.name
-                binding.classInstructorRoot.setOnClickListener { _ ->
-                    val action = ClassDetailsFragmentDirections.actionClassDetailsFragmentToTrainerDetailFragment(it.instructor.id)
-                    findNavController().navigate(action)
+                if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT){
+                    binding.className!!.text = it.title
+                    if (it.userLike.classId != null){
+                        liked = true
+                        binding.likeButton!!.setImageResource(R.drawable.heart_liked_icon)
+                    }
+                    binding.likeButton!!.setOnClickListener {
+                        if (liked){
+                            liked = false
+                            viewModel.toggleClassLike()
+                            binding.likeButton!!.setImageResource(R.drawable.heart_not_liked)
+                        } else {
+                            liked = true
+                            viewModel.toggleClassLike()
+                            binding.likeButton!!.setImageResource(R.drawable.heart_liked_icon)
+                        }
+                    }
+                    Glide.with(this).load(it.thumbnailUrl).into(binding.classThumbnail!!)
+                    binding.classTitleDuration!!.text = getString(R.string.title_duration, it.title, it.duration)
+                    binding.classDescription!!.text = it.description
+                    Glide.with(this).load(it.instructor.avatar_url).into(binding.classInstructorAvatar!!)
+                    binding.classInstructorName!!.text = it.instructor.name
+                    binding.classInstructorRoot!!.setOnClickListener { _ ->
+                        val action = ClassDetailsFragmentDirections.actionClassDetailsFragmentToTrainerDetailFragment(it.instructor.id)
+                        findNavController().navigate(action)
+                    }
                 }
             }
         })
@@ -70,22 +73,24 @@ class ClassDetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.playButton.setOnClickListener {
-            binding.playButton.visibility = View.INVISIBLE
-            binding.videoView.visibility = View.VISIBLE
-        }
+        if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT){
+            binding.playButton!!.setOnClickListener {
+                binding.playButton!!.visibility = View.INVISIBLE
+                binding.videoView.visibility = View.VISIBLE
+            }
 
-        binding.bottomNavigationClassDetails.setOnNavigationItemSelectedListener {
-            when(it.itemId){
-                R.id.navigation_home -> {
-                    findNavController().navigate(R.id.action_global_homeFragment)
-                    true
+            binding.bottomNavigationClassDetails!!.setOnNavigationItemSelectedListener {
+                when(it.itemId){
+                    R.id.navigation_home -> {
+                        findNavController().navigate(R.id.action_global_homeFragment)
+                        true
+                    }
+                    R.id.navigation_classes -> {
+                        findNavController().navigate(R.id.action_global_classesFragment)
+                        true
+                    }
+                    else -> false
                 }
-                R.id.navigation_classes -> {
-                    findNavController().navigate(R.id.action_global_classesFragment)
-                    true
-                }
-                else -> false
             }
         }
     }
