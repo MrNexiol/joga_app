@@ -92,19 +92,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/cardView4" />
 
-            <Button
-                android:id="@+id/class_play_button"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_medium"
-                android:text="@string/play"
-                android:textSize="@dimen/welcome_text"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/class_title_duration"
-                app:strokeColor="@color/white"
-                app:strokeWidth="2dp" />
-
             <TextView
                 android:id="@+id/class_description"
                 android:layout_width="0dp"
@@ -113,7 +100,7 @@
                 android:textSize="@dimen/default_text"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/class_play_button" />
+                app:layout_constraintTop_toBottomOf="@+id/class_title_duration" />
 
             <TextView
                 android:id="@+id/class_instructor_text_view"
