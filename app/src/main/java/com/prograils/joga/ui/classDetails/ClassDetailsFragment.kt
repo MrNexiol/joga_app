@@ -7,7 +7,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -40,7 +39,7 @@ class ClassDetailsFragment : Fragment() {
 
         viewModel.singleClass.observe(viewLifecycleOwner, { resource ->
             resource.data?.let {
-                initializePlayer(viewModel, it.videoUrl)
+                initializePlayer(it.videoUrl)
                 if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT){
                     binding.className!!.text = it.title
                     if (it.userLike.classId != null){
@@ -104,7 +103,7 @@ class ClassDetailsFragment : Fragment() {
         _binding = null
     }
 
-    private fun initializePlayer(viewModel: ClassDetailsViewModel, videoUrl: String){
+    private fun initializePlayer(videoUrl: String){
         player = SimpleExoPlayer.Builder(requireContext()).build()
         binding.videoView.player = player
         val mediaItem = MediaItem.fromUri(videoUrl)
