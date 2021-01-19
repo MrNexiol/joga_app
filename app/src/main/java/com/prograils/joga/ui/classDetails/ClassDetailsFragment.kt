@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
@@ -23,6 +24,8 @@ class ClassDetailsFragment : Fragment() {
     private val args: ClassDetailsFragmentArgs by navArgs()
     private var player: SimpleExoPlayer? = null
     private var liked: Boolean = false
+    private lateinit var viewModel: ClassDetailsViewModel
+    private lateinit var viewModelFactory: ClassDetailsViewModelFactory
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -32,7 +35,8 @@ class ClassDetailsFragment : Fragment() {
         val sharedPrefs = activity?.getPreferences(Context.MODE_PRIVATE)
         val token = sharedPrefs?.getString(getString(R.string.saved_token_key), null)
         val appContainer = (activity?.application as JoGaApplication).appContainer
-        val viewModel: ClassDetailsViewModel by viewModels { ClassDetailsViewModelFactory(appContainer.repository, token!!, args.classId) }
+        viewModelFactory = ClassDetailsViewModelFactory(appContainer.repository, token!!, args.classId)
+        viewModel = ViewModelProvider(this, viewModelFactory).get(ClassDetailsViewModel::class.java)
 
         viewModel.singleClass.observe(viewLifecycleOwner, { resource ->
             resource.data?.let {
