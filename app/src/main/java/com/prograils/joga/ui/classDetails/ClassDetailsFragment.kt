@@ -13,6 +13,7 @@ import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.SimpleExoPlayer
+import com.google.android.exoplayer2.util.Util
 import com.prograils.joga.JoGaApplication
 import com.prograils.joga.R
 import com.prograils.joga.databinding.FragmentClassDetailsBinding
@@ -23,6 +24,7 @@ class ClassDetailsFragment : Fragment() {
     private val args: ClassDetailsFragmentArgs by navArgs()
     private var player: SimpleExoPlayer? = null
     private var liked: Boolean = false
+    private var videoUrl = ""
     private lateinit var viewModel: ClassDetailsViewModel
     private lateinit var viewModelFactory: ClassDetailsViewModelFactory
 
@@ -39,7 +41,11 @@ class ClassDetailsFragment : Fragment() {
 
         viewModel.singleClass.observe(viewLifecycleOwner, { resource ->
             resource.data?.let {
+                videoUrl = it.videoUrl
                 initializePlayer(it.videoUrl)
+                if (viewModel.isPlaying){
+                    showVideo()
+                }
                 if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT){
                     binding.className!!.text = it.title
                     @Suppress("SENSELESS_COMPARISON")
@@ -79,8 +85,7 @@ class ClassDetailsFragment : Fragment() {
 
         if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT){
             binding.playButton!!.setOnClickListener {
-                binding.playButton!!.visibility = View.INVISIBLE
-                binding.videoView.visibility = View.VISIBLE
+                showVideo()
             }
 
             binding.bottomNavigationClassDetails!!.setOnNavigationItemSelectedListener {
@@ -99,9 +104,43 @@ class ClassDetailsFragment : Fragment() {
         }
     }
 
+    override fun onStart() {
+        super.onStart()
+        if (Util.SDK_INT >= 24) {
+            initializePlayer(videoUrl)
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if ((Util.SDK_INT < 24 || player == null)) {
+            initializePlayer(videoUrl)
+        }
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    override fun onPause() {
+        super.onPause()
+        if (Util.SDK_INT < 24) {
+            releasePlayer()
+        }
+    }
+
+    override fun onStop() {
+        super.onStop()
+        if (Util.SDK_INT >= 24) {
+            releasePlayer()
+        }
+    }
+
+    private fun showVideo(){
+        binding.playButton?.visibility = View.INVISIBLE
+        binding.videoView.visibility = View.VISIBLE
+        viewModel.isPlaying = true
     }
 
     private fun initializePlayer(videoUrl: String){
@@ -112,5 +151,15 @@ class ClassDetailsFragment : Fragment() {
         player!!.playWhenReady = viewModel.playWhenReady
         player!!.seekTo(viewModel.currentWindow, viewModel.playbackPosition)
         player!!.prepare()
+    }
+
+    private fun releasePlayer(){
+        if (player != null){
+            viewModel.playWhenReady = player!!.playWhenReady
+            viewModel.playbackPosition = player!!.currentPosition
+            viewModel.currentWindow = player!!.currentWindowIndex
+            player!!.release()
+            player = null
+        }
     }
 }
