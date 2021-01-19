@@ -42,6 +42,7 @@ class ClassDetailsFragment : Fragment() {
                 initializePlayer(it.videoUrl)
                 if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT){
                     binding.className!!.text = it.title
+                    @Suppress("SENSELESS_COMPARISON")
                     if (it.userLike.classId != null){
                         liked = true
                         binding.likeButton!!.setImageResource(R.drawable.heart_liked_icon)
