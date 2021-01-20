@@ -7,6 +7,7 @@
     <string name="login_button">Login >></string>
     <string name="oops">Ups!</string>
     <string name="incorrect_credentials">Du har indtastet forkert brugernavn eller kode. \nPrøv igen!</string>
+    <string name="lets_go">"Let's Go >>"</string>
     <string name="are_you_sure">Er du sikker?</string>
     <string name="account_id">Medlemsnummer</string>
     <string name="app_version">App version</string>

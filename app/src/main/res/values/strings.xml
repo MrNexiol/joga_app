@@ -7,6 +7,7 @@
     <string name="login_button">Login >></string>
     <string name="oops">Ooops…</string>
     <string name="incorrect_credentials">"You've typed incorrect credentials. \nPlease, try again!"</string>
+    <string name="lets_go">"Let's Go >>"</string>
     <string name="are_you_sure">Are you sure?</string>
     <string name="account_id">Account ID</string>
     <string name="app_version">App version</string>
@@ -44,6 +45,4 @@
     <string name="tv_share_icon">TV share icon</string>
     <string name="instructor_no_classes">"This instructor doesn't have any classes"</string>
     <string name="instructor_avatar">Instructor avatar</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
