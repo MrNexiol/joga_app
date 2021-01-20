@@ -7,8 +7,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.prograils.joga.JoGaApplication
 import com.prograils.joga.R
+import com.prograils.joga.api.Status
 import com.prograils.joga.databinding.FragmentPopupBinding
 
 class PopupFragment : Fragment() {
@@ -27,6 +30,15 @@ class PopupFragment : Fragment() {
         if (wasSeen != null){
             navigateToHome()
         }
+        val appContainer = (activity?.application as JoGaApplication).appContainer
+        val token = sharedPrefs?.getString(getString(R.string.saved_token_key), null)
+        val viewModel: PopupViewModel by viewModels { PopupViewModelFactory(appContainer.repository, token!!) }
+        viewModel.welcomePopup.observe(viewLifecycleOwner, { resource ->
+            if (resource.status == Status.Success){
+                binding.popupWelcomeTextView.text = resource.data!!.titleDa
+                binding.popupMessageTextView.text = resource.data.textDa
+            }
+        })
         return binding.root
     }
 
