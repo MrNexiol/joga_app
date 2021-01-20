@@ -33,6 +33,10 @@ class PopupFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.letsGoButton.setOnClickListener {
+            with(sharedPrefs?.edit()){
+                this?.putString(getString(R.string.was_seen), "seen")
+                this?.commit()
+            }
             navigateToHome()
         }
     }
