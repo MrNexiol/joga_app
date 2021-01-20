@@ -4,6 +4,9 @@ import retrofit2.Call
 import retrofit2.http.*
 
 interface WebService {
+    @GET("api/v1/welcome_popup")
+    fun getWelcomePopup(@Header("Authorization") userToken: String): Call<WelcomePopupResponse>
+
     @GET("api/v1/instructors")
     fun getInstructors(@Header("Authorization") userToken: String): Call<Instructors>
 
