@@ -23,7 +23,7 @@ class PopupFragment : Fragment() {
     ): View {
         _binding = FragmentPopupBinding.inflate(inflater, container, false)
         sharedPrefs = activity?.getPreferences(Context.MODE_PRIVATE)
-        val wasSeen = sharedPrefs?.getString(getString(R.string.was_seen), null)
+        val wasSeen = sharedPrefs?.getString(getString(R.string.was_seen) + getString(R.string.saved_user_id), null)
         if (wasSeen != null){
             navigateToHome()
         }
@@ -34,7 +34,7 @@ class PopupFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.letsGoButton.setOnClickListener {
             with(sharedPrefs?.edit()){
-                this?.putString(getString(R.string.was_seen), "seen")
+                this?.putString(getString(R.string.was_seen) + getString(R.string.saved_user_id), "seen")
                 this?.commit()
             }
             navigateToHome()
