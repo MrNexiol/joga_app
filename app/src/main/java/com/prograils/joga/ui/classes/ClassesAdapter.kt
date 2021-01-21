@@ -21,7 +21,9 @@ class ClassesAdapter (private var data: List<Class>) : RecyclerView.Adapter<Clas
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        Glide.with(holder.itemView).load(data[position].thumbnailUrl).into(holder.binding.classThumbnailImageView)
+        Glide.with(holder.itemView)
+                .load(data[position].thumbnailUrl)
+                .into(holder.binding.classThumbnailImageView)
         holder.binding.classNameTextView.text = data[position].title
         holder.binding.root.setOnClickListener {
             val action = ClassesFragmentDirections.actionClassesFragmentToClassDetailsFragment(data[position].id)

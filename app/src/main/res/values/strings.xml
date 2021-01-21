@@ -7,6 +7,7 @@
     <string name="login_button">Login >></string>
     <string name="oops">Ooops…</string>
     <string name="incorrect_credentials">"You've typed incorrect credentials. \nPlease, try again!"</string>
+    <string name="lets_go">"Let's Go >>"</string>
     <string name="are_you_sure">Are you sure?</string>
     <string name="account_id">Account ID</string>
     <string name="app_version">App version</string>
@@ -31,6 +32,7 @@
     <string name="saved_token_key">saved_token_key</string>
     <string name="saved_user_id">saved_user_id</string>
     <string name="saved_username">saved_username</string>
+    <string name="was_seen">was_seen</string>
     <string name="X">X</string>
     <string name="play">Play</string>
     <string name="your_instructor">Your instructor</string>

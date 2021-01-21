@@ -7,9 +7,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class Repository(
-    private val service: WebService
-) {
+class Repository(private val service: WebService) {
     fun login(username: String, password: String): LiveData<Resource<Login>>{
         val data = MutableLiveData<Resource<Login>>()
         service.login(username, password).enqueue(object : Callback<Login>{
@@ -26,6 +24,28 @@ class Repository(
                 val resource = Resource(Status.Fail, null, t)
                 data.value = resource
             }
+        })
+        return data
+    }
+
+    fun getWelcomePopup(token: String): LiveData<Resource<WelcomePopup>>{
+        val data = MutableLiveData<Resource<WelcomePopup>>()
+        val auth = "Bearer $token"
+        service.getWelcomePopup(auth).enqueue(object : Callback<WelcomePopupResponse>{
+            override fun onResponse(call: Call<WelcomePopupResponse>, response: Response<WelcomePopupResponse>) {
+                if (response.body() != null){
+                    val resource = Resource(Status.Success, response.body()!!.welcomePopup)
+                    data.value = resource
+                } else {
+                    val resource = Resource(Status.Empty, null)
+                    data.value = resource
+                }
+            }
+            override fun onFailure(call: Call<WelcomePopupResponse>, t: Throwable) {
+                val resource = Resource(Status.Fail, null, t)
+                data.value = resource
+            }
+
         })
         return data
     }
@@ -96,7 +116,7 @@ class Repository(
                     val resource = Resource(Status.Success, response.body()!!.journeys)
                     data.value = resource
                 } else {
-                    val resource = Resource(Status.Fail, null)
+                    val resource = Resource(Status.Empty, null)
                     data.value = resource
                 }
             }
