@@ -13,6 +13,7 @@ import com.prograils.joga.JoGaApplication
 import com.prograils.joga.R
 import com.prograils.joga.api.Status
 import com.prograils.joga.databinding.FragmentPopupBinding
+import java.util.*
 
 class PopupFragment : Fragment() {
 
@@ -35,8 +36,13 @@ class PopupFragment : Fragment() {
         val viewModel: PopupViewModel by viewModels { PopupViewModelFactory(appContainer.repository, token!!) }
         viewModel.welcomePopup.observe(viewLifecycleOwner, { resource ->
             if (resource.status == Status.Success){
-                binding.popupWelcomeTextView.text = resource.data!!.titleDa
-                binding.popupMessageTextView.text = resource.data.textDa
+                if (Locale.getDefault().language == "da"){
+                    binding.popupWelcomeTextView.text = resource.data!!.titleDa
+                    binding.popupMessageTextView.text = resource.data.textDa
+                } else {
+                    binding.popupWelcomeTextView.text = resource.data!!.titleEn
+                    binding.popupMessageTextView.text = resource.data.textEn
+                }
             }
         })
         return binding.root
