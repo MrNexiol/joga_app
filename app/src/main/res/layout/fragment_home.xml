@@ -46,43 +46,43 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/train_now_text_view" />
 
+                <ImageView
+                    android:id="@+id/today_pick_icon"
+                    android:layout_width="30dp"
+                    android:layout_height="0dp"
+                    android:contentDescription="@string/star_icon"
+                    android:src="@drawable/star_icon"
+                    app:layout_constraintBottom_toBottomOf="@+id/today_pick_text_view"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/today_pick_text_view" />
+
+                <TextView
+                    android:id="@+id/today_pick_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_small"
+                    android:layout_marginTop="@dimen/margin_medium"
+                    android:text="@string/today_pick"
+                    android:textSize="@dimen/header_text"
+                    app:layout_constraintStart_toEndOf="@+id/today_pick_icon"
+                    app:layout_constraintTop_toBottomOf="@+id/top_divider" />
+
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/todays_pick_root"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/margin_medium"
-                    app:layout_constraintTop_toBottomOf="@id/top_divider"
+                    app:layout_constraintTop_toBottomOf="@+id/today_pick_text_view"
                     tools:layout_editor_absoluteX="16dp">
-
-                    <ImageView
-                        android:id="@+id/today_pick_icon"
-                        android:layout_width="30dp"
-                        android:layout_height="0dp"
-                        android:contentDescription="@string/star_icon"
-                        android:src="@drawable/star_icon"
-                        app:layout_constraintBottom_toBottomOf="@+id/today_pick_text_view"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="@+id/today_pick_text_view" />
-
-                    <TextView
-                        android:id="@+id/today_pick_text_view"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/margin_small"
-                        android:text="@string/today_pick"
-                        android:textSize="@dimen/header_text"
-                        app:layout_constraintStart_toEndOf="@+id/today_pick_icon"
-                        app:layout_constraintTop_toTopOf="parent" />
 
                     <androidx.cardview.widget.CardView
                         android:id="@+id/today_pick_thumbnail_card_view"
                         android:layout_width="0dp"
                         android:layout_height="@dimen/first_journey_class_height"
-                        android:layout_marginTop="@dimen/margin_medium"
                         app:cardCornerRadius="@dimen/card_radius"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/today_pick_text_view">
+                        app:layout_constraintTop_toTopOf="parent">
 
                         <ImageView
                             android:id="@+id/todays_pick_thumbnail"
