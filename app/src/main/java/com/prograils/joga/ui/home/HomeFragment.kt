@@ -90,6 +90,7 @@ class HomeFragment : Fragment() {
 
         binding.homeRefreshLayout.setOnRefreshListener {
             homeViewModel.refreshDailyClass()
+            homeViewModel.refreshNewClasses()
             homeViewModel.refreshLikedClasses()
             homeViewModel.refreshJourneys()
             homeViewModel.refreshInstructors()
