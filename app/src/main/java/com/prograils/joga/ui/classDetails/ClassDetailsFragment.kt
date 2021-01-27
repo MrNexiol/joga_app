@@ -141,6 +141,7 @@ class ClassDetailsFragment : Fragment() {
         binding.playButton?.visibility = View.INVISIBLE
         binding.videoView.visibility = View.VISIBLE
         viewModel.isPlaying = true
+        player!!.prepare()
     }
 
     private fun initializePlayer(videoUrl: String){
@@ -150,7 +151,6 @@ class ClassDetailsFragment : Fragment() {
         player!!.setMediaItem(mediaItem)
         player!!.playWhenReady = viewModel.playWhenReady
         player!!.seekTo(viewModel.currentWindow, viewModel.playbackPosition)
-        player!!.prepare()
     }
 
     private fun releasePlayer(){
