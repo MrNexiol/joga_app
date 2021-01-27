@@ -149,6 +149,8 @@ class ClassDetailsFragment : Fragment() {
             override fun run() {
                 if (player!!.currentPosition > 20000) {
                     viewModel.markAsWatched()
+                    timer.cancel()
+                    timer.purge()
                 }
             }
         }, 0, 5000)

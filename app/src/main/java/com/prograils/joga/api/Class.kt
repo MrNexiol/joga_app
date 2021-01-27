@@ -15,5 +15,6 @@ data class Class(
         @SerializedName("user_like")
         val userLike: UserLike,
         @SerializedName("video_url")
-        val videoUrl: String
+        val videoUrl: String,
+        val watched: Boolean
 )

@@ -23,6 +23,11 @@ class JourneyDetailsAdapter(private var data: List<Class>) : RecyclerView.Adapte
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         Glide.with(holder.itemView).load(data[position].thumbnailUrl).into(holder.binding.journeyClassThumbnail)
         holder.binding.journeyClassName.text = data[position].title
+//        if (data[position].watched){
+//            holder.binding.journeyClassStatus.text = "O"
+//        } else {
+//            holder.binding.journeyClassStatus.text = "X"
+//        }
         holder.binding.journeyClassCategory.text = data[position].focus
         holder.binding.journeyClassMin.text = holder.itemView.context.getString(R.string.min, data[position].duration)
         holder.binding.journeyClassInstructorName.text = data[position].instructor.name
