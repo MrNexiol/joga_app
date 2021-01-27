@@ -148,7 +148,7 @@ class ClassDetailsFragment : Fragment() {
         timer.scheduleAtFixedRate(object : TimerTask(){
             override fun run() {
                 if (player!!.currentPosition > 20000) {
-
+                    viewModel.markAsWatched()
                 }
             }
         }, 0, 5000)
