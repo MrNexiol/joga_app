@@ -43,6 +43,9 @@ interface WebService {
     @POST("api/v1/like/{id}")
     fun toggleLike(@Header("Authorization") userToken: String, @Path("id") id: String): Call<Void>
 
+    @POST("api/v1/classes/{id}/mark_as_watched")
+    fun markClassAsWatched(@Header("Authorization") userToken: String, @Path("id") id: String): Call<Void>
+
     @DELETE("api/v1/sessions")
     fun logout(@Header("Authorization") userToken: String): Call<Void>
 }
