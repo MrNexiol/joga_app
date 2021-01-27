@@ -46,4 +46,5 @@
     <string name="tv_share_icon">TV share icon</string>
     <string name="instructor_no_classes">"This instructor doesn't have any classes"</string>
     <string name="instructor_avatar">Instructor avatar</string>
+    <string name="locked">Locked</string>
 </resources>
