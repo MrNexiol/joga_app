@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -17,6 +18,7 @@ import com.google.android.exoplayer2.util.Util
 import com.prograils.joga.JoGaApplication
 import com.prograils.joga.R
 import com.prograils.joga.databinding.FragmentClassDetailsBinding
+import java.util.*
 
 class ClassDetailsFragment : Fragment() {
     private var _binding: FragmentClassDetailsBinding? = null
@@ -142,6 +144,14 @@ class ClassDetailsFragment : Fragment() {
         binding.videoView.visibility = View.VISIBLE
         viewModel.isPlaying = true
         player!!.prepare()
+        val timer = Timer()
+        timer.scheduleAtFixedRate(object : TimerTask(){
+            override fun run() {
+                if (player!!.currentPosition > 20000) {
+
+                }
+            }
+        }, 0, 5000)
     }
 
     private fun initializePlayer(videoUrl: String){
