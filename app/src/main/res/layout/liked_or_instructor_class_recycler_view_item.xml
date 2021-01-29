@@ -49,7 +49,7 @@
 
     <TextView
         android:id="@+id/liked_class_focus"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:textSize="@dimen/default_text"
         app:layout_constraintBottom_toTopOf="@+id/liked_class_duration"

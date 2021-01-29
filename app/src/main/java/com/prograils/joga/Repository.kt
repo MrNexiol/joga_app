@@ -8,26 +8,6 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class Repository(private val service: WebService) {
-    fun login(username: String, password: String): LiveData<Resource<Login>>{
-        val data = MutableLiveData<Resource<Login>>()
-        service.login(username, password).enqueue(object : Callback<Login>{
-            override fun onResponse(call: Call<Login>, response: Response<Login>) {
-                if (response.body() != null){
-                    val resource = Resource(Status.Success, response.body())
-                    data.value = resource
-                } else {
-                    val resource = Resource(Status.Fail, response.body())
-                    data.value = resource
-                }
-            }
-            override fun onFailure(call: Call<Login>, t: Throwable) {
-                val resource = Resource(Status.Fail, null, t)
-                data.value = resource
-            }
-        })
-        return data
-    }
-
     fun getWelcomePopup(token: String): LiveData<Resource<WelcomePopup>>{
         val data = MutableLiveData<Resource<WelcomePopup>>()
         val auth = "Bearer $token"
@@ -46,25 +26,6 @@ class Repository(private val service: WebService) {
                 data.value = resource
             }
 
-        })
-        return data
-    }
-
-    fun logout(token: String): LiveData<Resource<Void>>{
-        val data = MutableLiveData<Resource<Void>>()
-        val auth = "Bearer $token"
-        service.logout(auth).enqueue(object : Callback<Void>{
-            override fun onResponse(call: Call<Void>, response: Response<Void>) {
-                if (response.code() == 200){
-                    val resource = Resource(Status.Success, response.body())
-                    data.value = resource
-                }
-            }
-
-            override fun onFailure(call: Call<Void>, t: Throwable) {
-                val resource = Resource(Status.Fail, null, t)
-                data.value = resource
-            }
         })
         return data
     }
@@ -281,10 +242,72 @@ class Repository(private val service: WebService) {
         return data
     }
 
+    fun login(username: String, password: String): LiveData<Resource<Login>>{
+        val data = MutableLiveData<Resource<Login>>()
+        service.login(username, password).enqueue(object : Callback<Login>{
+            override fun onResponse(call: Call<Login>, response: Response<Login>) {
+                if (response.body() != null){
+                    val resource = Resource(Status.Success, response.body())
+                    data.value = resource
+                } else {
+                    val resource = Resource(Status.Fail, response.body())
+                    data.value = resource
+                }
+            }
+            override fun onFailure(call: Call<Login>, t: Throwable) {
+                val resource = Resource(Status.Fail, null, t)
+                data.value = resource
+            }
+        })
+        return data
+    }
+
     fun toggleClassLike(token: String, id: String): LiveData<Resource<Void>>{
         val data = MutableLiveData<Resource<Void>>()
         val auth = "Bearer $token"
         service.toggleLike(auth, id).enqueue(object : Callback<Void>{
+            override fun onResponse(call: Call<Void>, response: Response<Void>) {
+                if (response.code() == 200){
+                    val resource = Resource(Status.Success, response.body())
+                    data.value = resource
+                }
+            }
+
+            override fun onFailure(call: Call<Void>, t: Throwable) {
+                val resource = Resource(Status.Fail, null, t)
+                data.value = resource
+            }
+        })
+        return data
+    }
+
+    fun markClassAsWatched(token: String, classId: String): LiveData<Resource<Void>>{
+        val data = MutableLiveData<Resource<Void>>()
+        val auth = "Bearer $token"
+        service.markClassAsWatched(auth, classId).enqueue(object : Callback<Void>{
+            override fun onResponse(call: Call<Void>, response: Response<Void>) {
+                if (response.code() == 201){
+                    val resource = Resource(Status.Success, response.body())
+                    data.value = resource
+                } else {
+                    val resource = Resource(Status.Fail, response.body())
+                    data.value = resource
+                }
+            }
+
+            override fun onFailure(call: Call<Void>, t: Throwable) {
+                val resource = Resource(Status.Success, null, t)
+                data.value = resource
+            }
+
+        })
+        return data
+    }
+
+    fun logout(token: String): LiveData<Resource<Void>>{
+        val data = MutableLiveData<Resource<Void>>()
+        val auth = "Bearer $token"
+        service.logout(auth).enqueue(object : Callback<Void>{
             override fun onResponse(call: Call<Void>, response: Response<Void>) {
                 if (response.code() == 200){
                     val resource = Resource(Status.Success, response.body())
