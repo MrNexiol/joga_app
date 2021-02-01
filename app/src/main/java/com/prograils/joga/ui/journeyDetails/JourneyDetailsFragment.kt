@@ -11,6 +11,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.prograils.joga.JoGaApplication
 import com.prograils.joga.R
 import com.prograils.joga.databinding.FragmentJourneyDetailsBinding
@@ -40,7 +41,10 @@ class JourneyDetailsFragment : Fragment() {
                 val firstClass = it.classes.first()
                 val otherClasses = it.classes - firstClass
                 binding.journeyTitle.text = it.name
-                Glide.with(this).load(firstClass.thumbnailUrl).into(binding.firstClassThumbnail)
+                Glide.with(this)
+                        .load(firstClass.thumbnailUrl)
+                        .transition(DrawableTransitionOptions.withCrossFade())
+                        .into(binding.firstClassThumbnail)
                 binding.firstClassNameTextView.text = firstClass.title
                 binding.firstClassInstructorNameTextView.text = getString(R.string.with, firstClass.instructor.name)
                 binding.firstClassMinTextView.text = getString(R.string.min, firstClass.duration)

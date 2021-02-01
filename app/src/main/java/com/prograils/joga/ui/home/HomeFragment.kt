@@ -11,6 +11,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.prograils.joga.AppContainer
 import com.prograils.joga.JoGaApplication
 import com.prograils.joga.R
@@ -72,7 +73,10 @@ class HomeFragment : Fragment() {
         homeViewModel.getDailyClass().observe(viewLifecycleOwner, { resource ->
             resource.data?.let {
                 dailyClassId = it.id
-                Glide.with(this).load(it.thumbnailUrl).into(binding.todaysPickThumbnail)
+                Glide.with(this)
+                        .load(it.thumbnailUrl)
+                        .transition(DrawableTransitionOptions.withCrossFade())
+                        .into(binding.todaysPickThumbnail)
                 binding.todayPickName.text = it.title
                 binding.todayPickTrainerNameTextView.text = getString(R.string.with, it.instructor.name)
                 binding.todayPickMinTextView.text = getString(R.string.min, it.duration)
