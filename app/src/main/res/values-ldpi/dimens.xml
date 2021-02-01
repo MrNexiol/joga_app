@@ -20,7 +20,7 @@
 
     <dimen name="welcome_text">24sp</dimen>
     <dimen name="screen_title_text">24sp</dimen>
-    <dimen name="header_text">18sp</dimen>
-    <dimen name="default_text">14sp</dimen>
-    <dimen name="secondary_text">12sp</dimen>
+    <dimen name="header_text">16sp</dimen>
+    <dimen name="default_text">12sp</dimen>
+    <dimen name="secondary_text">10sp</dimen>
 </resources>
