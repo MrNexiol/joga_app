@@ -33,7 +33,7 @@
             <ImageButton
                 android:id="@+id/like_button"
                 android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_height="0dp"
                 android:background="@android:color/transparent"
                 android:contentDescription="@string/heart_icon"
                 android:scaleType="fitCenter"
