@@ -2,10 +2,10 @@ package com.prograils.joga.ui.classes
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.prograils.joga.api.Class
 import com.prograils.joga.databinding.ClassesRecyclerViewItemBinding
 
@@ -23,6 +23,7 @@ class ClassesAdapter (private var data: List<Class>) : RecyclerView.Adapter<Clas
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         Glide.with(holder.itemView)
                 .load(data[position].thumbnailUrl)
+                .transition(DrawableTransitionOptions.withCrossFade())
                 .into(holder.binding.classThumbnailImageView)
         holder.binding.classNameTextView.text = data[position].title
         holder.binding.root.setOnClickListener {
