@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.prograils.joga.api.Instructor
 import com.prograils.joga.databinding.HomeInstructorsRecyclerViewItemBinding
 
@@ -26,7 +27,10 @@ class InstructorsAdapter(private var data: List<Instructor>) : RecyclerView.Adap
         for (word in tmp){
             splitName += "$word\n"
         }
-        Glide.with(holder.itemView).load(data[position].avatar_url).into(holder.binding.trainerAvatar)
+        Glide.with(holder.itemView)
+                .load(data[position].avatar_url)
+                .transition(DrawableTransitionOptions.withCrossFade())
+                .into(holder.binding.trainerAvatar)
         holder.binding.trainerName.text = splitName
         holder.binding.root.setOnClickListener {
             val action = HomeFragmentDirections.actionHomeFragmentToTrainerDetailFragment(data[position].id)
