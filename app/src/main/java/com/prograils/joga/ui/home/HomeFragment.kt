@@ -70,8 +70,8 @@ class HomeFragment : Fragment() {
                 instructorAdapter.setData(it)
             }
         })
-        homeViewModel.getDailyClass().observe(viewLifecycleOwner, { resource ->
-            resource.data?.let {
+        homeViewModel.dailyClassWrapper.getData().observe(viewLifecycleOwner, { resource ->
+            resource?.data?.let {
                 dailyClassId = it.id
                 Glide.with(this)
                         .load(it.thumbnailUrl)

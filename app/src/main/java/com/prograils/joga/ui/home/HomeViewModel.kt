@@ -4,25 +4,26 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.prograils.joga.Repository
-import com.prograils.joga.api.Class
-import com.prograils.joga.api.Instructor
-import com.prograils.joga.api.Journey
-import com.prograils.joga.api.Resource
+import com.prograils.joga.api.*
 
 class HomeViewModel(private val repository: Repository, private val token: String) : ViewModel() {
-    private var dailyClass: LiveData<Resource<Class>> = MutableLiveData()
     private var newClasses: LiveData<Resource<List<Class>>> = MutableLiveData()
     private var likedClasses: LiveData<Resource<List<Class>>> = MutableLiveData()
     private var journeys: LiveData<Resource<List<Journey>>> = MutableLiveData()
     private var instructors: LiveData<Resource<List<Instructor>>> = MutableLiveData()
 
-    fun getDailyClass(): LiveData<Resource<Class>>{
+    val dailyClassWrapper = object : RefreshableSource<Class>() {
+        override fun provideLiveData(): LiveData<Resource<Class>> {
+            return repository.getDailyClass(token)
+        }
+    }
+
+    init {
         refreshDailyClass()
-        return dailyClass
     }
 
     fun refreshDailyClass(){
-        dailyClass = repository.getDailyClass(token)
+        dailyClassWrapper.refresh()
     }
 
     fun getNewClasses(): LiveData<Resource<List<Class>>>{
