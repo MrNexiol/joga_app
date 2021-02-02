@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.prograils.joga.GridSpacingItemDecoration
@@ -17,18 +18,21 @@ import com.prograils.joga.databinding.FragmentJourneysBinding
 class JourneysFragment : Fragment() {
     private var _binding: FragmentJourneysBinding? = null
     private val binding get() = _binding!!
+    private lateinit var viewModel: JourneysViewModel
+    private lateinit var viewModelFactory: JourneysViewModelFactory
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentJourneysBinding.inflate(inflater, container, false)
-        val appContainer = (activity?.application as JoGaApplication).appContainer
 
         val sharedPrefs = activity?.getPreferences(Context.MODE_PRIVATE)
         val token = sharedPrefs?.getString(getString(R.string.saved_token_key), null)
 
-        val journeysViewModel: JourneysViewModel by viewModels { JourneysViewModelFactory(appContainer.repository, token!!) }
+        val appContainer = (activity?.application as JoGaApplication).appContainer
+        viewModelFactory = JourneysViewModelFactory(appContainer.repository, token!!)
+        viewModel = ViewModelProvider(this, viewModelFactory).get(JourneysViewModel::class.java)
 
         val recyclerView = binding.journeysRecyclerView
         val adapter = JourneysAdapter(listOf())
@@ -36,7 +40,7 @@ class JourneysFragment : Fragment() {
         recyclerView.layoutManager = GridLayoutManager(context, 2)
         recyclerView.addItemDecoration(GridSpacingItemDecoration(resources.getDimension(R.dimen.journey_list_decoration).toInt()))
 
-        journeysViewModel.journeys.observe(viewLifecycleOwner, { resource ->
+        viewModel.journeysWrapper.getData().observe(viewLifecycleOwner, { resource ->
             resource.data?.let {
                 adapter.setData(it)
             }
@@ -57,6 +61,14 @@ class JourneysFragment : Fragment() {
         }
 
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding.journeysSwipeRefresh.setOnRefreshListener {
+            viewModel.refreshJourneys()
+            binding.journeysSwipeRefresh.isRefreshing = false
+        }
     }
 
     override fun onDestroyView() {

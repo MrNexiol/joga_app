@@ -4,60 +4,48 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.prograils.joga.Repository
-import com.prograils.joga.api.Class
-import com.prograils.joga.api.Instructor
-import com.prograils.joga.api.Journey
-import com.prograils.joga.api.Resource
+import com.prograils.joga.api.*
 
 class HomeViewModel(private val repository: Repository, private val token: String) : ViewModel() {
-    private var dailyClass: LiveData<Resource<Class>> = MutableLiveData()
-    private var newClasses: LiveData<Resource<List<Class>>> = MutableLiveData()
-    private var likedClasses: LiveData<Resource<List<Class>>> = MutableLiveData()
-    private var journeys: LiveData<Resource<List<Journey>>> = MutableLiveData()
-    private var instructors: LiveData<Resource<List<Instructor>>> = MutableLiveData()
-
-    fun getDailyClass(): LiveData<Resource<Class>>{
-        refreshDailyClass()
-        return dailyClass
+    val dailyClassWrapper = object : RefreshableSource<Class>() {
+        override fun provideLiveData(): LiveData<Resource<Class>> {
+            return repository.getDailyClass(token)
+        }
     }
 
-    fun refreshDailyClass(){
-        dailyClass = repository.getDailyClass(token)
+    val newClassesWrapper = object : RefreshableSource<List<Class>>() {
+        override fun provideLiveData(): LiveData<Resource<List<Class>>> {
+            return repository.getNewClasses(token)
+        }
     }
 
-    fun getNewClasses(): LiveData<Resource<List<Class>>>{
-        refreshNewClasses()
-        return newClasses
+    val likedClassesWrapper = object : RefreshableSource<List<Class>>() {
+        override fun provideLiveData(): LiveData<Resource<List<Class>>> {
+            return repository.getLikedClasses(token)
+        }
     }
 
-    fun refreshNewClasses(){
-        newClasses = repository.getNewClasses(token)
+    val journeysWrapper = object : RefreshableSource<List<Journey>>() {
+        override fun provideLiveData(): LiveData<Resource<List<Journey>>> {
+            return repository.getJourneys(token)
+        }
     }
 
-    fun getLikedClasses(): LiveData<Resource<List<Class>>>{
-        refreshLikedClasses()
-        return likedClasses
+    val instructorsWrapper = object : RefreshableSource<List<Instructor>>() {
+        override fun provideLiveData(): LiveData<Resource<List<Instructor>>> {
+            return repository.getInstructors(token)
+        }
     }
 
-    fun refreshLikedClasses(){
-        likedClasses = repository.getLikedClasses(token)
+    init {
+        refreshData()
     }
 
-    fun getJourneys(): LiveData<Resource<List<Journey>>> {
-        refreshJourneys()
-        return journeys
-    }
-
-    fun refreshJourneys() {
-        journeys = repository.getJourneys(token)
-    }
-
-    fun getInstructors(): LiveData<Resource<List<Instructor>>> {
-        refreshInstructors()
-        return instructors
-    }
-
-    fun refreshInstructors() {
-        instructors = repository.getInstructors(token)
+    fun refreshData(){
+        dailyClassWrapper.refresh()
+        newClassesWrapper.refresh()
+        likedClassesWrapper.refresh()
+        journeysWrapper.refresh()
+        instructorsWrapper.refresh()
     }
 }

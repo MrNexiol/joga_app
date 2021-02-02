@@ -78,8 +78,9 @@
                     <androidx.cardview.widget.CardView
                         android:id="@+id/today_pick_thumbnail_card_view"
                         android:layout_width="0dp"
-                        android:layout_height="@dimen/first_journey_class_height"
+                        android:layout_height="0dp"
                         app:cardCornerRadius="@dimen/card_radius"
+                        app:layout_constraintDimensionRatio="H,16:10"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent">

@@ -6,19 +6,21 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/journey_thumbnail_card_view"
-        android:layout_width="match_parent"
-        android:layout_height="104dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         app:cardCornerRadius="@dimen/card_radius"
+        app:layout_constraintDimensionRatio="H,16:10"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
             android:id="@+id/journey_thumbnail_image"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:adjustViewBounds="true"
             android:contentDescription="@string/placeholder"
-            android:scaleType="fitXY"
+            android:scaleType="centerCrop"
             app:srcCompat="@drawable/placeholder_image" />
     </androidx.cardview.widget.CardView>
 
@@ -26,6 +28,8 @@
         android:id="@+id/journey_name_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:singleLine="true"
         android:textSize="@dimen/default_text"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/journey_thumbnail_card_view" />

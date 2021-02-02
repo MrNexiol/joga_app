@@ -33,7 +33,7 @@
             <ImageButton
                 android:id="@+id/like_button"
                 android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_height="0dp"
                 android:background="@android:color/transparent"
                 android:contentDescription="@string/heart_icon"
                 android:scaleType="fitCenter"
@@ -53,13 +53,15 @@
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/cardView4"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/first_journey_class_height"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
                 android:layout_marginTop="@dimen/margin_big"
                 app:cardBackgroundColor="@color/background"
                 app:cardCornerRadius="@dimen/card_radius"
-                app:layout_constraintTop_toBottomOf="@+id/divider6"
-                tools:layout_editor_absoluteX="16dp">
+                app:layout_constraintDimensionRatio="H,16:10"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/divider6">
 
                 <FrameLayout
                     android:layout_width="match_parent"
@@ -73,7 +75,7 @@
                         android:alpha="0.3"
                         android:background="@color/background"
                         android:contentDescription="@string/placeholder"
-                        android:scaleType="fitXY"
+                        android:scaleType="centerCrop"
                         android:src="@drawable/placeholder_image" />
 
                     <ImageButton

@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.prograils.joga.R
 import com.prograils.joga.api.Class
 import com.prograils.joga.databinding.LikedOrInstructorClassRecyclerViewItemBinding
@@ -21,7 +22,10 @@ class TrainerDetailAdapter(private var data: List<Class>) : RecyclerView.Adapter
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        Glide.with(holder.itemView).load(data[position].thumbnailUrl).into(holder.binding.likedClassThumbnail)
+        Glide.with(holder.itemView)
+                .load(data[position].thumbnailUrl)
+                .transition(DrawableTransitionOptions.withCrossFade())
+                .into(holder.binding.likedClassThumbnail)
         holder.binding.likedClassName.text = data[position].title
         if (data[position].userLike.classId != null){
             holder.binding.heartIcon.setImageResource(R.drawable.heart_liked_icon)
