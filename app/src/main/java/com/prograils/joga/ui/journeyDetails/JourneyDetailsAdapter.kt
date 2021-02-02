@@ -1,6 +1,5 @@
 package com.prograils.joga.ui.journeyDetails
 
-import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
@@ -23,17 +22,12 @@ class JourneyDetailsAdapter(private var data: List<Class>) : RecyclerView.Adapte
         return ViewHolder(binding)
     }
 
-    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         Glide.with(holder.itemView)
                 .load(data[position].thumbnailUrl)
                 .transition(DrawableTransitionOptions.withCrossFade())
                 .into(holder.binding.journeyClassThumbnail)
-        if (data[position].title.length <= 12) {
-            holder.binding.journeyClassName.text = data[position].title
-        } else {
-            holder.binding.journeyClassName.text = data[position].title.subSequence(0, 11).toString() + "..."
-        }
+        holder.binding.journeyClassName.text = data[position].title
         holder.binding.journeyClassCategory.text = data[position].focus
         holder.binding.journeyClassMin.text = holder.itemView.context.getString(R.string.min, data[position].duration)
         holder.binding.journeyClassInstructorName.text = data[position].instructor.name
