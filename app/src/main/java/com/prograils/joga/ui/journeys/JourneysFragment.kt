@@ -36,7 +36,7 @@ class JourneysFragment : Fragment() {
         recyclerView.layoutManager = GridLayoutManager(context, 2)
         recyclerView.addItemDecoration(GridSpacingItemDecoration(resources.getDimension(R.dimen.journey_list_decoration).toInt()))
 
-        journeysViewModel.journeys.observe(viewLifecycleOwner, { resource ->
+        journeysViewModel.journeysWrapper.getData().observe(viewLifecycleOwner, { resource ->
             resource.data?.let {
                 adapter.setData(it)
             }
