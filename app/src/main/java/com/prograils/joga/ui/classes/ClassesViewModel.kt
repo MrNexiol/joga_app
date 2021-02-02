@@ -14,7 +14,11 @@ class ClassesViewModel(repository: Repository, token: String) : ViewModel() {
         }
     }
 
-    init {
+    fun refreshClasses(){
         classesWrapper.refresh()
+    }
+
+    init {
+        refreshClasses()
     }
 }
