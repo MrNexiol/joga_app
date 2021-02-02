@@ -47,25 +47,25 @@ class HomeFragment : Fragment() {
         setJourneysRecyclerView()
         setInstructorRecyclerView()
 
-        homeViewModel.getNewClasses().observe(viewLifecycleOwner, { resource ->
+        homeViewModel.newClassesWrapper.getData().observe(viewLifecycleOwner, { resource ->
             if (resource.status == Status.Success){
                 newClassAdapter.setData(resource.data!!)
             }
         })
 
-        homeViewModel.getLikedClasses().observe(viewLifecycleOwner, { resource ->
+        homeViewModel.likedClassesWrapper.getData().observe(viewLifecycleOwner, { resource ->
             if (resource.status == Status.Success){
                 likedClassAdapter.setData(resource.data!!.take(3))
             } else {
                 binding.nothingLikedTextView.visibility = View.VISIBLE
             }
         })
-        homeViewModel.getJourneys().observe(viewLifecycleOwner, { resource ->
+        homeViewModel.journeysWrapper.getData().observe(viewLifecycleOwner, { resource ->
             resource.data?.let {
                 journeyAdapter.setData(it.take(3))
             }
         })
-        homeViewModel.getInstructors().observe(viewLifecycleOwner, { resource ->
+        homeViewModel.instructorsWrapper.getData().observe(viewLifecycleOwner, { resource ->
             resource.data?.let {
                 instructorAdapter.setData(it)
             }
@@ -93,11 +93,7 @@ class HomeFragment : Fragment() {
         val homeViewModel: HomeViewModel by viewModels { HomeViewModelFactory(appContainer.repository, token!!) }
 
         binding.homeRefreshLayout.setOnRefreshListener {
-            homeViewModel.refreshDailyClass()
-            homeViewModel.refreshNewClasses()
-            homeViewModel.refreshLikedClasses()
-            homeViewModel.refreshJourneys()
-            homeViewModel.refreshInstructors()
+            homeViewModel.refreshData()
             binding.homeRefreshLayout.isRefreshing = false
         }
         binding.todaysPickRoot.setOnClickListener {

@@ -7,58 +7,45 @@ import com.prograils.joga.Repository
 import com.prograils.joga.api.*
 
 class HomeViewModel(private val repository: Repository, private val token: String) : ViewModel() {
-    private var newClasses: LiveData<Resource<List<Class>>> = MutableLiveData()
-    private var likedClasses: LiveData<Resource<List<Class>>> = MutableLiveData()
-    private var journeys: LiveData<Resource<List<Journey>>> = MutableLiveData()
-    private var instructors: LiveData<Resource<List<Instructor>>> = MutableLiveData()
-
     val dailyClassWrapper = object : RefreshableSource<Class>() {
         override fun provideLiveData(): LiveData<Resource<Class>> {
             return repository.getDailyClass(token)
         }
     }
 
+    val newClassesWrapper = object : RefreshableSource<List<Class>>() {
+        override fun provideLiveData(): LiveData<Resource<List<Class>>> {
+            return repository.getNewClasses(token)
+        }
+    }
+
+    val likedClassesWrapper = object : RefreshableSource<List<Class>>() {
+        override fun provideLiveData(): LiveData<Resource<List<Class>>> {
+            return repository.getLikedClasses(token)
+        }
+    }
+
+    val journeysWrapper = object : RefreshableSource<List<Journey>>() {
+        override fun provideLiveData(): LiveData<Resource<List<Journey>>> {
+            return repository.getJourneys(token)
+        }
+    }
+
+    val instructorsWrapper = object : RefreshableSource<List<Instructor>>() {
+        override fun provideLiveData(): LiveData<Resource<List<Instructor>>> {
+            return repository.getInstructors(token)
+        }
+    }
+
     init {
-        refreshDailyClass()
+        refreshData()
     }
 
-    fun refreshDailyClass(){
+    fun refreshData(){
         dailyClassWrapper.refresh()
-    }
-
-    fun getNewClasses(): LiveData<Resource<List<Class>>>{
-        refreshNewClasses()
-        return newClasses
-    }
-
-    fun refreshNewClasses(){
-        newClasses = repository.getNewClasses(token)
-    }
-
-    fun getLikedClasses(): LiveData<Resource<List<Class>>>{
-        refreshLikedClasses()
-        return likedClasses
-    }
-
-    fun refreshLikedClasses(){
-        likedClasses = repository.getLikedClasses(token)
-    }
-
-    fun getJourneys(): LiveData<Resource<List<Journey>>> {
-        refreshJourneys()
-        return journeys
-    }
-
-    fun refreshJourneys() {
-        journeys = repository.getJourneys(token)
-    }
-
-    fun getInstructors(): LiveData<Resource<List<Instructor>>> {
-        refreshInstructors()
-        return instructors
-    }
-
-    fun refreshInstructors() {
-        instructors = repository.getInstructors(token)
+        newClassesWrapper.refresh()
+        likedClassesWrapper.refresh()
+        journeysWrapper.refresh()
+        instructorsWrapper.refresh()
     }
 }

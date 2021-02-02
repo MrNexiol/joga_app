@@ -5,7 +5,7 @@ import androidx.lifecycle.MediatorLiveData
 
 abstract class RefreshableSource <T> {
     private val mediator: MediatorLiveData<Resource<T>> = MediatorLiveData()
-    var lastData: LiveData<Resource<T>>? = null
+    private var lastData: LiveData<Resource<T>>? = null
 
     abstract fun provideLiveData(): LiveData<Resource<T>>
 
