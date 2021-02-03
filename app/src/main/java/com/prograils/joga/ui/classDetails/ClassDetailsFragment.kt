@@ -29,6 +29,7 @@ class ClassDetailsFragment : Fragment() {
     private var videoUrl = ""
     private lateinit var viewModel: ClassDetailsViewModel
     private lateinit var viewModelFactory: ClassDetailsViewModelFactory
+    private val timer = Timer()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -128,6 +129,8 @@ class ClassDetailsFragment : Fragment() {
     override fun onPause() {
         super.onPause()
         if (Util.SDK_INT < 24) {
+            timer.cancel()
+            timer.purge()
             releasePlayer()
         }
     }
@@ -135,6 +138,8 @@ class ClassDetailsFragment : Fragment() {
     override fun onStop() {
         super.onStop()
         if (Util.SDK_INT >= 24) {
+            timer.cancel()
+            timer.purge()
             releasePlayer()
         }
     }
@@ -144,7 +149,6 @@ class ClassDetailsFragment : Fragment() {
         binding.videoView.visibility = View.VISIBLE
         viewModel.isPlaying = true
         player!!.prepare()
-        val timer = Timer()
         timer.scheduleAtFixedRate(object : TimerTask(){
             override fun run() {
                 if (player!!.currentPosition > 20000) {
