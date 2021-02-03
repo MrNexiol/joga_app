@@ -114,6 +114,10 @@ class HomeFragment : Fragment() {
         }
         binding.navigationView.setOnNavigationItemSelectedListener {
             when(it.itemId){
+                R.id.navigation_home -> {
+                    binding.homeScrollView.scrollTo(0,0)
+                    true
+                }
                 R.id.navigation_classes -> {
                     val action = HomeFragmentDirections.actionHomeFragmentToClassesFragment()
                     findNavController().navigate(action)
