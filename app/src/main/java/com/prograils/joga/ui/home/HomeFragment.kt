@@ -115,7 +115,7 @@ class HomeFragment : Fragment() {
         binding.navigationView.setOnNavigationItemSelectedListener {
             when(it.itemId){
                 R.id.navigation_home -> {
-                    binding.homeScrollView.scrollTo(0,0)
+                    binding.homeScrollView.smoothScrollTo(0,0)
                     true
                 }
                 R.id.navigation_classes -> {
