@@ -51,6 +51,10 @@ class ClassesFragment : Fragment() {
                     findNavController().navigate(R.id.action_global_homeFragment)
                     true
                 }
+                R.id.navigation_classes -> {
+                    binding.classesRecyclerView.smoothScrollToPosition(0)
+                    true
+                }
                 else -> false
             }
         }
