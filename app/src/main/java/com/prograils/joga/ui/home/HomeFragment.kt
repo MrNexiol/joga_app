@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -31,6 +32,8 @@ class HomeFragment : Fragment() {
     private lateinit var journeyRecyclerView: RecyclerView
     private lateinit var journeyAdapter: JourneysAdapter
     private lateinit var dailyClassId: String
+    private lateinit var viewModelFactory: HomeViewModelFactory
+    private lateinit var viewModel: HomeViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -40,46 +43,57 @@ class HomeFragment : Fragment() {
         appContainer = (activity?.application as JoGaApplication).appContainer
         val sharedPrefs = activity?.getPreferences(Context.MODE_PRIVATE)
         val token = sharedPrefs?.getString(getString(R.string.saved_token_key), null)
-        val homeViewModel: HomeViewModel by viewModels { HomeViewModelFactory(appContainer.repository, token!!) }
+        viewModelFactory = HomeViewModelFactory(appContainer.repository, token!!)
+        viewModel = ViewModelProvider(this, viewModelFactory).get(HomeViewModel::class.java)
 
         setNewClassesRecyclerView()
         setLikedClassesRecyclerView()
         setJourneysRecyclerView()
         setInstructorRecyclerView()
 
-        homeViewModel.newClassesWrapper.getData().observe(viewLifecycleOwner, { resource ->
+        viewModel.newClassesWrapper.getData().observe(viewLifecycleOwner, { resource ->
             if (resource.status == Status.Success){
                 newClassAdapter.setData(resource.data!!)
+            } else if (resource.status == Status.Empty){
+                newClassAdapter.setData(listOf())
             }
         })
-
-        homeViewModel.likedClassesWrapper.getData().observe(viewLifecycleOwner, { resource ->
+        viewModel.likedClassesWrapper.getData().observe(viewLifecycleOwner, { resource ->
             if (resource.status == Status.Success){
                 likedClassAdapter.setData(resource.data!!.take(3))
+                binding.nothingLikedTextView.visibility = View.INVISIBLE
             } else {
+                likedClassAdapter.setData(listOf())
                 binding.nothingLikedTextView.visibility = View.VISIBLE
             }
         })
-        homeViewModel.journeysWrapper.getData().observe(viewLifecycleOwner, { resource ->
-            resource.data?.let {
-                journeyAdapter.setData(it.take(3))
+        viewModel.journeysWrapper.getData().observe(viewLifecycleOwner, { resource ->
+            if (resource.status == Status.Success){
+                journeyAdapter.setData(resource.data!!)
+            } else if (resource.status == Status.Empty){
+                journeyAdapter.setData(listOf())
             }
         })
-        homeViewModel.instructorsWrapper.getData().observe(viewLifecycleOwner, { resource ->
-            resource.data?.let {
-                instructorAdapter.setData(it)
+        viewModel.instructorsWrapper.getData().observe(viewLifecycleOwner, { resource ->
+            if (resource.status == Status.Success){
+                instructorAdapter.setData(resource.data!!)
+            } else if (resource.status == Status.Empty){
+                instructorAdapter.setData(listOf())
             }
         })
-        homeViewModel.dailyClassWrapper.getData().observe(viewLifecycleOwner, { resource ->
-            resource?.data?.let {
-                dailyClassId = it.id
+        viewModel.dailyClassWrapper.getData().observe(viewLifecycleOwner, { resource ->
+            if (resource.status == Status.Success) {
+                binding.todaysPickRoot.visibility = View.VISIBLE
+                dailyClassId = resource.data!!.id
                 Glide.with(this)
-                        .load(it.thumbnailUrl)
-                        .transition(DrawableTransitionOptions.withCrossFade())
-                        .into(binding.todaysPickThumbnail)
-                binding.todayPickName.text = it.title
-                binding.todayPickTrainerNameTextView.text = getString(R.string.with, it.instructor.name)
-                binding.todayPickMinTextView.text = getString(R.string.min, it.duration)
+                    .load(resource.data.thumbnailUrl)
+                    .transition(DrawableTransitionOptions.withCrossFade())
+                    .into(binding.todaysPickThumbnail)
+                binding.todayPickName.text = resource.data.title
+                binding.todayPickTrainerNameTextView.text = getString(R.string.with, resource.data.instructor.name)
+                binding.todayPickMinTextView.text = getString(R.string.min, resource.data.duration)
+            } else if (resource.status == Status.Empty) {
+                binding.todaysPickRoot.visibility = View.INVISIBLE
             }
         })
         return binding.root
@@ -131,6 +145,11 @@ class HomeFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.refreshData()
     }
 
     private fun setNewClassesRecyclerView(){
