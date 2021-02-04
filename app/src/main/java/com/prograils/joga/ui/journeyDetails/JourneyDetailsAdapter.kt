@@ -25,13 +25,14 @@ class JourneyDetailsAdapter(private var data: List<Class>) : RecyclerView.Adapte
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         Glide.with(holder.itemView)
                 .load(data[position].thumbnailUrl)
+                .fallback(R.drawable.placeholder_image)
                 .transition(DrawableTransitionOptions.withCrossFade())
                 .into(holder.binding.journeyClassThumbnail)
         holder.binding.journeyClassName.text = data[position].title
         holder.binding.journeyClassCategory.text = data[position].focus
         holder.binding.journeyClassMin.text = holder.itemView.context.getString(R.string.min, data[position].duration)
         holder.binding.journeyClassInstructorName.text = data[position].instructor.name
-        if (!data[position].watched){
+        if (!data[position].watchable){
             val color = ContextCompat.getColor(holder.itemView.context, R.color.secondary_text)
             holder.binding.journeyClassThumbnail.alpha = 0.3F
             holder.binding.journeyClassName.setTextColor(color)

@@ -157,7 +157,7 @@ class ClassDetailsFragment : Fragment() {
                     timer.purge()
                 }
             }
-        }, 0, 5000)
+        }, 0, 2000)
     }
 
     private fun initializePlayer(videoUrl: String){
