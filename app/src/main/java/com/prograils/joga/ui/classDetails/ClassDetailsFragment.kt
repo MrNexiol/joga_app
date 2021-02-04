@@ -67,7 +67,7 @@ class ClassDetailsFragment : Fragment() {
                             binding.likeButton!!.setImageResource(R.drawable.heart_liked_icon)
                         }
                     }
-                    Glide.with(this).load(it.thumbnailUrl).into(binding.classThumbnail!!)
+                    Glide.with(this).load(it.thumbnailUrl).fallback(R.drawable.placeholder_image).into(binding.classThumbnail!!)
                     binding.classTitleDuration!!.text = getString(R.string.title_duration, it.title, it.duration)
                     binding.classDescription!!.text = it.description
                     Glide.with(this).load(it.instructor.avatar_url).into(binding.classInstructorAvatar!!)

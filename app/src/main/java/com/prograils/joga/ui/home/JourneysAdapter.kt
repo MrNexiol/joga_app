@@ -6,6 +6,7 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
+import com.prograils.joga.R
 import com.prograils.joga.api.Journey
 import com.prograils.joga.databinding.HomeRectangleRecyclerViewItemBinding
 
@@ -23,6 +24,7 @@ class JourneysAdapter(private var data: List<Journey>) : RecyclerView.Adapter<Jo
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         Glide.with(holder.itemView)
                 .load(data[position].coverUrl)
+                .fallback(R.drawable.placeholder_image)
                 .transition(DrawableTransitionOptions.withCrossFade())
                 .into(holder.binding.homeItemThumbnail)
         holder.binding.homeItemName.text = data[position].name

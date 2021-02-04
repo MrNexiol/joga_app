@@ -24,9 +24,11 @@ class TrainerDetailAdapter(private var data: List<Class>) : RecyclerView.Adapter
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         Glide.with(holder.itemView)
                 .load(data[position].thumbnailUrl)
+                .fallback(R.drawable.placeholder_image)
                 .transition(DrawableTransitionOptions.withCrossFade())
                 .into(holder.binding.likedClassThumbnail)
         holder.binding.likedClassName.text = data[position].title
+        @Suppress("SENSELESS_COMPARISON")
         if (data[position].userLike.classId != null){
             holder.binding.heartIcon.setImageResource(R.drawable.heart_liked_icon)
         }
