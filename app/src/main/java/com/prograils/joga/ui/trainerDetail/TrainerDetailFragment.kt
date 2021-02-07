@@ -36,7 +36,7 @@ class TrainerDetailFragment : Fragment() {
 
         viewModel.instructor.observe(viewLifecycleOwner, { resource ->
             resource.data?.let {
-                Glide.with(this).load(it.avatar_url).into(binding.instructorAvatar)
+                Glide.with(this).load(it.avatar_url).fallback(R.drawable.trainer_placeholder_icon).into(binding.instructorAvatar)
                 binding.instructorNameTextView.text = it.name
             }
         })

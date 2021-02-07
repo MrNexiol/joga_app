@@ -87,6 +87,7 @@ class HomeFragment : Fragment() {
                 dailyClassId = resource.data!!.id
                 Glide.with(this)
                     .load(resource.data.thumbnailUrl)
+                    .fallback(R.drawable.placeholder_image)
                     .transition(DrawableTransitionOptions.withCrossFade())
                     .into(binding.todaysPickThumbnail)
                 binding.todayPickName.text = resource.data.title

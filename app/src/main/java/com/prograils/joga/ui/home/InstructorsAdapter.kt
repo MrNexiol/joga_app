@@ -7,6 +7,7 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
+import com.prograils.joga.R
 import com.prograils.joga.api.Instructor
 import com.prograils.joga.databinding.HomeInstructorsRecyclerViewItemBinding
 
@@ -29,6 +30,7 @@ class InstructorsAdapter(private var data: List<Instructor>) : RecyclerView.Adap
         }
         Glide.with(holder.itemView)
                 .load(data[position].avatar_url)
+                .fallback(R.drawable.trainer_placeholder_icon)
                 .transition(DrawableTransitionOptions.withCrossFade())
                 .into(holder.binding.trainerAvatar)
         holder.binding.trainerName.text = splitName
