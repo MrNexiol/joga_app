@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import androidx.navigation.fragment.findNavController
 import com.prograils.joga.JoGaApplication
 import com.prograils.joga.R
@@ -37,6 +38,8 @@ class LoginFragment : Fragment() {
         binding.loginButton.setOnClickListener {
             val username = binding.usernameEditText.text.toString()
             val password = binding.passwordEditText.text.toString()
+            val imm: InputMethodManager = requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.hideSoftInputFromWindow(view.windowToken, 0)
             appContainer.repository.login(username, password).observe(viewLifecycleOwner, { resource ->
                 resource.data?.let {
                     with(sharedPrefs?.edit()){

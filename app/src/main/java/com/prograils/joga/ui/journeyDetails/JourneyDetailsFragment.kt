@@ -6,7 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -20,6 +20,9 @@ class JourneyDetailsFragment : Fragment() {
     private var _binding: FragmentJourneyDetailsBinding? = null
     private val binding get() = _binding!!
     private val args: JourneyDetailsFragmentArgs by navArgs()
+    private lateinit var viewModelFactory: JourneyViewModelFactory
+    private lateinit var viewModel: JourneyViewModel
+    private lateinit var adapter: JourneyDetailsAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -29,20 +32,22 @@ class JourneyDetailsFragment : Fragment() {
         val appContainer = (activity?.application as JoGaApplication).appContainer
         val sharedPrefs = activity?.getPreferences(Context.MODE_PRIVATE)
         val token = sharedPrefs?.getString(getString(R.string.saved_token_key), null)
-        val journeyViewModel: JourneyViewModel by viewModels { JourneyViewModelFactory(appContainer.repository, token!!, args.journeyId) }
+        viewModelFactory = JourneyViewModelFactory(appContainer.repository, token!!, args.journeyId)
+        viewModel = ViewModelProvider(this, viewModelFactory).get(JourneyViewModel::class.java)
 
         val recyclerView = binding.journeysRecyclerView
-        val adapter = JourneyDetailsAdapter(listOf())
+        adapter = JourneyDetailsAdapter(listOf())
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(context)
 
-        journeyViewModel.journey.observe(viewLifecycleOwner, { resource ->
+        viewModel.journeyWrapper.getData().observe(viewLifecycleOwner, { resource ->
             resource.data?.let {
                 val firstClass = it.classes.first()
                 val otherClasses = it.classes - firstClass
                 binding.journeyTitle.text = it.name
                 Glide.with(this)
                         .load(firstClass.thumbnailUrl)
+                        .fallback(R.drawable.placeholder_image)
                         .transition(DrawableTransitionOptions.withCrossFade())
                         .into(binding.firstClassThumbnail)
                 binding.firstClassNameTextView.text = firstClass.title
@@ -70,8 +75,13 @@ class JourneyDetailsFragment : Fragment() {
                 else -> false
             }
         }
-
         return binding.root
+    }
+
+    override fun onStart() {
+        super.onStart()
+        viewModel.refreshData()
+        adapter.notifyDataSetChanged()
     }
 
     override fun onDestroyView() {

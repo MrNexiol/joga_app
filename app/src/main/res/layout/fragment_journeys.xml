@@ -21,7 +21,7 @@
 
             <ImageView
                 android:id="@+id/journeys_icon"
-                android:layout_width="60dp"
+                android:layout_width="@dimen/screen_title_icon"
                 android:layout_height="0dp"
                 android:contentDescription="@string/journeys_icon"
                 android:src="@drawable/journeys_icon"

@@ -17,7 +17,7 @@
 
         <ImageView
             android:id="@+id/like_icon"
-            android:layout_width="60dp"
+            android:layout_width="@dimen/screen_title_icon"
             android:layout_height="0dp"
             android:contentDescription="@string/heart_icon"
             android:src="@drawable/heart_liked_icon"

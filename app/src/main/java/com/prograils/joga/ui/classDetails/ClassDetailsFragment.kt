@@ -67,10 +67,10 @@ class ClassDetailsFragment : Fragment() {
                             binding.likeButton!!.setImageResource(R.drawable.heart_liked_icon)
                         }
                     }
-                    Glide.with(this).load(it.thumbnailUrl).into(binding.classThumbnail!!)
+                    Glide.with(this).load(it.thumbnailUrl).fallback(R.drawable.placeholder_image).into(binding.classThumbnail!!)
                     binding.classTitleDuration!!.text = getString(R.string.title_duration, it.title, it.duration)
                     binding.classDescription!!.text = it.description
-                    Glide.with(this).load(it.instructor.avatar_url).into(binding.classInstructorAvatar!!)
+                    Glide.with(this).load(it.instructor.avatar_url).fallback(R.drawable.trainer_placeholder_icon).into(binding.classInstructorAvatar!!)
                     binding.classInstructorName!!.text = it.instructor.name
                     binding.classInstructorRoot!!.setOnClickListener { _ ->
                         val action = ClassDetailsFragmentDirections.actionClassDetailsFragmentToTrainerDetailFragment(it.instructor.id)
@@ -157,7 +157,7 @@ class ClassDetailsFragment : Fragment() {
                     timer.purge()
                 }
             }
-        }, 0, 5000)
+        }, 0, 2000)
     }
 
     private fun initializePlayer(videoUrl: String){

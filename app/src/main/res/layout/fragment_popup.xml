@@ -20,6 +20,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@drawable/edit_text_style"
+        android:ellipsize="end"
         android:padding="@dimen/default_app_padding"
         android:textSize="@dimen/screen_title_text"
         app:layout_constraintBottom_toTopOf="@+id/lets_go_button"
