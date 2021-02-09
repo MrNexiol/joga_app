@@ -44,6 +44,16 @@ class LikedFragment : Fragment() {
             }
         })
 
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding.likedRefreshLayout.setOnRefreshListener {
+            viewModel.refreshLikedClasses()
+            binding.likedRefreshLayout.isRefreshing = false
+        }
+
         binding.likedBottomNavigation.setOnNavigationItemSelectedListener {
             when(it.itemId){
                 R.id.navigation_home -> {
@@ -57,7 +67,6 @@ class LikedFragment : Fragment() {
                 else -> false
             }
         }
-        return binding.root
     }
 
     override fun onResume() {
