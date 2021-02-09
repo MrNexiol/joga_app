@@ -7,10 +7,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.prograils.joga.R
+import com.prograils.joga.Repository
 import com.prograils.joga.api.Class
 import com.prograils.joga.databinding.LikedOrInstructorClassRecyclerViewItemBinding
 
-class LikedAdapter(private var data: List<Class>) : RecyclerView.Adapter<LikedAdapter.ViewHolder>() {
+class LikedAdapter(private var data: List<Class>, private val repository: Repository, private val token: String) : RecyclerView.Adapter<LikedAdapter.ViewHolder>() {
 
     class ViewHolder(
     val binding: LikedOrInstructorClassRecyclerViewItemBinding) : RecyclerView.ViewHolder(binding.root)

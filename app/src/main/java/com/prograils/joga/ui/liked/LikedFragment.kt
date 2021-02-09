@@ -32,7 +32,7 @@ class LikedFragment : Fragment() {
         viewModel = ViewModelProvider(this, viewModelFactory).get(LikedViewModel::class.java)
 
         val recyclerView = binding.likedClassesRecyclerView
-        val adapter = LikedAdapter(listOf())
+        val adapter = LikedAdapter(listOf(), appContainer.repository, token)
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(context)
 
