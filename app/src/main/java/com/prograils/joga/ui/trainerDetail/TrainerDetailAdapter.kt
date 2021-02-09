@@ -44,6 +44,7 @@ class TrainerDetailAdapter(private var data: List<Class>, private val repository
         Log.d("Like", "LIKE: ${liked[position]}")
         holder.binding.heartIcon.setOnClickListener {
             liked[position] = !liked[position]
+            repository.toggleClassLike(token, data[position].id)
             if (liked[position ]){
                 holder.binding.heartIcon.setImageResource(R.drawable.heart_liked_icon)
             } else {
