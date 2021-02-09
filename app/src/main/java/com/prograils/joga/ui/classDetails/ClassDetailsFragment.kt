@@ -42,7 +42,7 @@ class ClassDetailsFragment : Fragment() {
         viewModelFactory = ClassDetailsViewModelFactory(appContainer.repository, token!!, args.classId)
         viewModel = ViewModelProvider(this, viewModelFactory).get(ClassDetailsViewModel::class.java)
 
-        viewModel.singleClass.observe(viewLifecycleOwner, { resource ->
+        viewModel.classWrapper.getData().observe(viewLifecycleOwner, { resource ->
             resource.data?.let {
                 videoUrl = it.videoUrl
                 initializePlayer(it.videoUrl)
