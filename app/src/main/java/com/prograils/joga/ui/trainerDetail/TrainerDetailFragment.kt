@@ -6,7 +6,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -17,6 +16,7 @@ import com.google.android.exoplayer2.SimpleExoPlayer
 import com.prograils.joga.JoGaApplication
 import com.prograils.joga.R
 import com.prograils.joga.databinding.FragmentTrainerDetailBinding
+import java.util.*
 
 class TrainerDetailFragment : Fragment() {
     private var _binding: FragmentTrainerDetailBinding? = null
@@ -80,7 +80,14 @@ class TrainerDetailFragment : Fragment() {
         _binding = null
     }
 
-    private fun initializePlayer(videoUrl: String){
+    private fun showVideo() {
+        binding.trainerPlayButton.visibility = View.INVISIBLE
+        binding.trainerVideo.visibility = View.VISIBLE
+        viewModel.isPlaying = true
+        player!!.prepare()
+    }
+
+    private fun initializePlayer(videoUrl: String) {
         player = SimpleExoPlayer.Builder(requireContext()).build()
         binding.trainerVideo.player = player
         val mediaItem = MediaItem.fromUri(videoUrl)
