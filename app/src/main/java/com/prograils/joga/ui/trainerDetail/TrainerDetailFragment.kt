@@ -42,13 +42,13 @@ class TrainerDetailFragment : Fragment() {
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(context)
 
-        viewModel.instructor.observe(viewLifecycleOwner, { resource ->
+        viewModel.instructorWrapper.getData().observe(viewLifecycleOwner, { resource ->
             resource.data?.let {
                 Glide.with(this).load(it.avatar_url).fallback(R.drawable.trainer_placeholder_icon).into(binding.instructorAvatar)
                 binding.instructorNameTextView.text = it.name
             }
         })
-        viewModel.trainerClasses.observe(viewLifecycleOwner, { resource ->
+        viewModel.instructorClassesWrapper.getData().observe(viewLifecycleOwner, { resource ->
             resource.data?.let {
                 if (it.isEmpty()){
                     binding.noClassesTextView.visibility = View.VISIBLE
