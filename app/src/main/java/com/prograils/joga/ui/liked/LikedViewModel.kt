@@ -18,7 +18,7 @@ class LikedViewModel(private val repository: Repository, private val token: Stri
         refreshLikedClasses()
     }
 
-    private fun refreshLikedClasses() {
+    fun refreshLikedClasses() {
         likedClassesWrapper.refresh()
     }
 }

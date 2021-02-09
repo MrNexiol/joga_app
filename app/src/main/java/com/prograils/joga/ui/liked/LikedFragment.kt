@@ -6,7 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.prograils.joga.JoGaApplication
@@ -17,6 +17,8 @@ import com.prograils.joga.databinding.FragmentLikedBinding
 class LikedFragment : Fragment() {
     private var _binding: FragmentLikedBinding? = null
     private val binding get() = _binding!!
+    private lateinit var viewModelFactory: LikedViewModelFactory
+    private lateinit var viewModel: LikedViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -26,7 +28,8 @@ class LikedFragment : Fragment() {
         val appContainer = (activity?.application as JoGaApplication).appContainer
         val sharedPrefs = activity?.getPreferences(Context.MODE_PRIVATE)
         val token = sharedPrefs?.getString(getString(R.string.saved_token_key), null)
-        val viewModel: LikedViewModel by viewModels { LikedViewModelFactory(appContainer.repository, token!!) }
+        viewModelFactory = LikedViewModelFactory(appContainer.repository, token!!)
+        viewModel = ViewModelProvider(this, viewModelFactory).get(LikedViewModel::class.java)
 
         val recyclerView = binding.likedClassesRecyclerView
         val adapter = LikedAdapter(listOf())
@@ -54,8 +57,12 @@ class LikedFragment : Fragment() {
                 else -> false
             }
         }
-
         return binding.root
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.refreshLikedClasses()
     }
 
     override fun onDestroyView() {
