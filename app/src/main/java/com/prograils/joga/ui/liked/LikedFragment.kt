@@ -33,7 +33,7 @@ class LikedFragment : Fragment() {
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(context)
 
-        viewModel.getLikedClasses().observe(viewLifecycleOwner, { resource ->
+        viewModel.likedClassesWrapper.getData().observe(viewLifecycleOwner, { resource ->
             if (resource.status == Status.Success){
                 adapter.setData(resource.data!!)
             } else {

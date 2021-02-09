@@ -4,17 +4,21 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import com.prograils.joga.Repository
 import com.prograils.joga.api.Class
+import com.prograils.joga.api.RefreshableSource
 import com.prograils.joga.api.Resource
 
 class LikedViewModel(private val repository: Repository, private val token: String) : ViewModel() {
-    private var likedClasses: LiveData<Resource<List<Class>>> = repository.getLikedClasses(token)
-
-    fun getLikedClasses(): LiveData<Resource<List<Class>>>{
-        refreshLikedClasses()
-        return likedClasses
+    val likedClassesWrapper = object : RefreshableSource<List<Class>>() {
+        override fun provideLiveData(): LiveData<Resource<List<Class>>> {
+            return repository.getLikedClasses(token)
+        }
     }
 
-    fun refreshLikedClasses(){
-        likedClasses = repository.getLikedClasses(token)
+    init {
+        refreshLikedClasses()
+    }
+
+    private fun refreshLikedClasses() {
+        likedClassesWrapper.refresh()
     }
 }
