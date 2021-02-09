@@ -39,7 +39,7 @@ class TrainerDetailFragment : Fragment() {
         viewModel = ViewModelProvider(this, viewModelFactory).get(TrainerDetailViewModel::class.java)
 
         val recyclerView = binding.instructorClassesRecyclerView
-        val adapter = TrainerDetailAdapter(listOf())
+        val adapter = TrainerDetailAdapter(listOf(), appContainer.repository, token)
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(context)
 
@@ -95,6 +95,7 @@ class TrainerDetailFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
+        viewModel.refreshData()
         if ((Util.SDK_INT < 24 || player == null)) {
             initializePlayer(videoUrl)
         }

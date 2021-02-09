@@ -18,6 +18,10 @@ class ClassDetailsViewModel(private val repository: Repository, private val toke
     var currentWindow: Int = 0
     var playbackPosition: Long = 0
 
+    init {
+        classWrapper.refresh()
+    }
+
     fun toggleClassLike(){
         repository.toggleClassLike(token, id)
     }

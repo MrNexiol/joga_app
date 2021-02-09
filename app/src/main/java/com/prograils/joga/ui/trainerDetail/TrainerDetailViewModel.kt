@@ -28,7 +28,7 @@ class TrainerDetailViewModel(repository: Repository, trainerId: String, token: S
         refreshData()
     }
 
-    private fun refreshData() {
+    fun refreshData() {
         instructorClassesWrapper.refresh()
         instructorWrapper.refresh()
     }
