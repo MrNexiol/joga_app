@@ -13,10 +13,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.SimpleExoPlayer
+import com.google.android.exoplayer2.util.Util
 import com.prograils.joga.JoGaApplication
 import com.prograils.joga.R
 import com.prograils.joga.databinding.FragmentTrainerDetailBinding
-import java.util.*
 
 class TrainerDetailFragment : Fragment() {
     private var _binding: FragmentTrainerDetailBinding? = null
@@ -25,6 +25,7 @@ class TrainerDetailFragment : Fragment() {
     private var player: SimpleExoPlayer? = null
     private lateinit var viewModelFactory: TrainerDetailViewModelFactory
     private lateinit var viewModel: TrainerDetailViewModel
+    private var videoUrl = ""
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -46,6 +47,10 @@ class TrainerDetailFragment : Fragment() {
             resource.data?.let {
                 Glide.with(this).load(it.avatar_url).fallback(R.drawable.trainer_placeholder_icon).into(binding.instructorAvatar)
                 binding.instructorNameTextView.text = it.name
+                initializePlayer(it.videoUrl)
+                if (viewModel.isPlaying) {
+                    showVideo()
+                }
             }
         })
         viewModel.instructorClassesWrapper.getData().observe(viewLifecycleOwner, { resource ->
@@ -58,6 +63,14 @@ class TrainerDetailFragment : Fragment() {
             }
         })
 
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding.trainerPlayButton.setOnClickListener {
+            showVideo()
+        }
         binding.trainerDetailsBottomNavigation.setOnNavigationItemSelectedListener {
             when(it.itemId){
                 R.id.navigation_home -> {
@@ -71,8 +84,34 @@ class TrainerDetailFragment : Fragment() {
                 else -> false
             }
         }
+    }
 
-        return binding.root
+    override fun onStart() {
+        super.onStart()
+        if (Util.SDK_INT >= 24) {
+            initializePlayer(videoUrl)
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if ((Util.SDK_INT < 24 || player == null)) {
+            initializePlayer(videoUrl)
+        }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        if (Util.SDK_INT < 24) {
+            releasePlayer()
+        }
+    }
+
+    override fun onStop() {
+        super.onStop()
+        if (Util.SDK_INT >= 24) {
+            releasePlayer()
+        }
     }
 
     override fun onDestroyView() {
@@ -94,5 +133,15 @@ class TrainerDetailFragment : Fragment() {
         player!!.setMediaItem(mediaItem)
         player!!.playWhenReady = viewModel.playWhenReady
         player!!.seekTo(viewModel.currentWindow, viewModel.playbackPosition)
+    }
+
+    private fun releasePlayer() {
+        if (player != null){
+            viewModel.playWhenReady = player!!.playWhenReady
+            viewModel.playbackPosition = player!!.currentPosition
+            viewModel.currentWindow = player!!.currentWindowIndex
+            player!!.release()
+            player = null
+        }
     }
 }

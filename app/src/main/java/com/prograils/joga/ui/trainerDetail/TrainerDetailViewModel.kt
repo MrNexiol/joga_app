@@ -23,4 +23,13 @@ class TrainerDetailViewModel(repository: Repository, trainerId: String, token: S
     var isPlaying: Boolean = false
     var currentWindow: Int = 0
     var playbackPosition: Long = 0
+
+    init {
+        refreshData()
+    }
+
+    private fun refreshData() {
+        instructorClassesWrapper.refresh()
+        instructorWrapper.refresh()
+    }
 }
