@@ -10,4 +10,8 @@ import com.prograils.joga.api.Resource
 class TrainerDetailViewModel(repository: Repository, trainerId: String, token: String) : ViewModel() {
     val instructor: LiveData<Resource<Instructor>> = repository.getInstructor(token, trainerId)
     var trainerClasses: LiveData<Resource<List<Class>>> = repository.getInstructorClasses(token, trainerId)
+    var playWhenReady: Boolean = true
+    var isPlaying: Boolean = false
+    var currentWindow: Int = 0
+    var playbackPosition: Long = 0
 }

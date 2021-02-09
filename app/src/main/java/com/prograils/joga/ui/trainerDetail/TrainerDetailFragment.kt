@@ -7,10 +7,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
+import com.google.android.exoplayer2.MediaItem
+import com.google.android.exoplayer2.SimpleExoPlayer
 import com.prograils.joga.JoGaApplication
 import com.prograils.joga.R
 import com.prograils.joga.databinding.FragmentTrainerDetailBinding
@@ -19,6 +22,9 @@ class TrainerDetailFragment : Fragment() {
     private var _binding: FragmentTrainerDetailBinding? = null
     private val binding get() = _binding!!
     private val args: TrainerDetailFragmentArgs by navArgs()
+    private var player: SimpleExoPlayer? = null
+    private lateinit var viewModelFactory: TrainerDetailViewModelFactory
+    private lateinit var viewModel: TrainerDetailViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -28,7 +34,9 @@ class TrainerDetailFragment : Fragment() {
         val appContainer = (activity?.application as JoGaApplication).appContainer
         val sharedPrefs = activity?.getPreferences(Context.MODE_PRIVATE)
         val token = sharedPrefs?.getString(getString(R.string.saved_token_key), null)
-        val viewModel: TrainerDetailViewModel by viewModels { TrainerDetailViewModelFactory(appContainer.repository, args.trainerId, token!!) }
+        viewModelFactory = TrainerDetailViewModelFactory(appContainer.repository, args.trainerId, token!!)
+        viewModel = ViewModelProvider(this, viewModelFactory).get(TrainerDetailViewModel::class.java)
+
         val recyclerView = binding.instructorClassesRecyclerView
         val adapter = TrainerDetailAdapter(listOf())
         recyclerView.adapter = adapter
@@ -70,5 +78,14 @@ class TrainerDetailFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private fun initializePlayer(videoUrl: String){
+        player = SimpleExoPlayer.Builder(requireContext()).build()
+        binding.trainerVideo.player = player
+        val mediaItem = MediaItem.fromUri(videoUrl)
+        player!!.setMediaItem(mediaItem)
+        player!!.playWhenReady = viewModel.playWhenReady
+        player!!.seekTo(viewModel.currentWindow, viewModel.playbackPosition)
     }
 }
