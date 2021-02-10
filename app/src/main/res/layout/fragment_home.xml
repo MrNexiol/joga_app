@@ -53,6 +53,7 @@
                     android:layout_height="0dp"
                     android:contentDescription="@string/star_icon"
                     android:src="@drawable/star_icon"
+                    android:visibility="gone"
                     app:layout_constraintBottom_toBottomOf="@+id/today_pick_text_view"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/today_pick_text_view" />
@@ -65,6 +66,7 @@
                     android:layout_marginTop="@dimen/margin_medium"
                     android:text="@string/today_pick"
                     android:textSize="@dimen/header_text"
+                    android:visibility="gone"
                     app:layout_constraintStart_toEndOf="@+id/today_pick_icon"
                     app:layout_constraintTop_toBottomOf="@+id/top_divider" />
 
@@ -73,6 +75,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/margin_medium"
+                    android:visibility="gone"
                     app:layout_constraintTop_toBottomOf="@+id/today_pick_text_view"
                     tools:layout_editor_absoluteX="16dp">
 
@@ -133,6 +136,7 @@
                     android:layout_height="@dimen/divider_height"
                     android:layout_marginTop="@dimen/margin_medium"
                     android:background="@color/secondary_text"
+                    android:visibility="gone"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/todays_pick_root" />
