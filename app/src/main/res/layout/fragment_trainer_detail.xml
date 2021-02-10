@@ -61,7 +61,7 @@
                 android:visibility="visible"
                 app:cardBackgroundColor="@color/background"
                 app:cardCornerRadius="@dimen/card_radius"
-                app:layout_constraintDimensionRatio="H,16:10"
+                app:layout_constraintDimensionRatio="H,16:9"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/divider7">
@@ -94,9 +94,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@color/background"
+                        android:visibility="invisible"
                         app:fastforward_increment="10000"
-                        app:rewind_increment="10000"
-                        android:visibility="invisible"/>
+                        app:rewind_increment="10000" />
 
                 </FrameLayout>
             </androidx.cardview.widget.CardView>
