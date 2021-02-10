@@ -32,6 +32,7 @@
     <string name="locked">Låst</string>
     <string name="all_classes">Holdtyper</string>
     <string name="play">Afspil</string>
+    <string name="instructor_no_classes">"This instructor doesn't have any classes"</string>
 
     <string name="saved_token_key">saved_token_key</string>
     <string name="saved_user_id">saved_user_id</string>
@@ -46,6 +47,5 @@
     <string name="play_icon">Play icon</string>
     <string name="journeys_icon">Journeys icon</string>
     <string name="tv_share_icon">TV share icon</string>
-    <string name="instructor_no_classes">"This instructor doesn't have any classes"</string>
     <string name="instructor_avatar">Instructor avatar</string>
 </resources>
