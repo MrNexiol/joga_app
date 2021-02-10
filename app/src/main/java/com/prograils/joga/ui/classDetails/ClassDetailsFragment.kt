@@ -145,6 +145,7 @@ class ClassDetailsFragment : Fragment() {
 
     private fun showVideo(){
         binding.playButton?.visibility = View.INVISIBLE
+        binding.classThumbnail?.visibility = View.INVISIBLE
         binding.videoView.visibility = View.VISIBLE
         viewModel.isPlaying = true
         player!!.prepare()
