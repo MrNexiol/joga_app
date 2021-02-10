@@ -7,10 +7,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.prograils.joga.R
+import com.prograils.joga.Repository
 import com.prograils.joga.api.Class
 import com.prograils.joga.databinding.LikedOrInstructorClassRecyclerViewItemBinding
 
-class LikedAdapter(private var data: List<Class>) : RecyclerView.Adapter<LikedAdapter.ViewHolder>() {
+class LikedAdapter(private var data: List<Class>, private val repository: Repository, private val token: String) : RecyclerView.Adapter<LikedAdapter.ViewHolder>() {
+
+    private var liked = mutableListOf<Boolean>()
 
     class ViewHolder(
     val binding: LikedOrInstructorClassRecyclerViewItemBinding) : RecyclerView.ViewHolder(binding.root)
@@ -22,15 +25,22 @@ class LikedAdapter(private var data: List<Class>) : RecyclerView.Adapter<LikedAd
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        liked.add(position, true)
         Glide.with(holder.itemView)
                 .load(data[position].thumbnailUrl)
                 .fallback(R.drawable.placeholder_image)
                 .transition(DrawableTransitionOptions.withCrossFade())
                 .into(holder.binding.likedClassThumbnail)
         holder.binding.likedClassName.text = data[position].title
-        @Suppress("SENSELESS_COMPARISON")
-        if (data[position].userLike.classId != null){
-            holder.binding.heartIcon.setImageResource(R.drawable.heart_liked_icon)
+        holder.binding.heartIcon.setImageResource(R.drawable.heart_liked_icon)
+        holder.binding.heartIcon.setOnClickListener {
+            liked[position] = !liked[position]
+            repository.toggleClassLike(token, data[position].id)
+            if (liked[position]) {
+                holder.binding.heartIcon.setImageResource(R.drawable.heart_liked_icon)
+            } else {
+                holder.binding.heartIcon.setImageResource(R.drawable.heart_not_liked)
+            }
         }
         holder.binding.likedClassFocus.text = data[position].focus
         holder.binding.likedClassDuration.text = holder.itemView.context.getString(R.string.min, data[position].duration)

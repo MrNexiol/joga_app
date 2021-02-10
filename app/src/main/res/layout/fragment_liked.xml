@@ -4,69 +4,75 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.liked.LikedFragment" >
+    tools:context=".ui.liked.LikedFragment">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="0dp"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/liked_refresh_layout"
+        android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:padding="@dimen/default_app_padding"
         app:layout_constraintBottom_toTopOf="@+id/liked_bottom_navigation"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <ImageView
-            android:id="@+id/like_icon"
-            android:layout_width="@dimen/screen_title_icon"
-            android:layout_height="0dp"
-            android:contentDescription="@string/heart_icon"
-            android:src="@drawable/heart_liked_icon"
-            app:layout_constraintBottom_toBottomOf="@+id/liked_screen_title"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/liked_screen_title" />
-
-        <TextView
-            android:id="@+id/liked_screen_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin_small"
-            android:text="@string/liked_by_you"
-            android:textSize="@dimen/screen_title_text"
-            app:layout_constraintStart_toEndOf="@+id/like_icon"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <View
-            android:id="@+id/divider4"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/divider_height"
-            android:layout_marginTop="@dimen/margin_small"
-            android:background="@color/secondary_text"
-            app:layout_constraintTop_toBottomOf="@+id/liked_screen_title"
-            tools:layout_editor_absoluteX="16dp" />
+            android:layout_height="match_parent"
+            android:padding="@dimen/default_app_padding"
+            app:layout_constraintBottom_toTopOf="@+id/liked_bottom_navigation">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/liked_classes_recycler_view"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginTop="@dimen/margin_medium"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/divider4" />
+            <ImageView
+                android:id="@+id/like_icon"
+                android:layout_width="@dimen/screen_title_icon"
+                android:layout_height="0dp"
+                android:contentDescription="@string/heart_icon"
+                android:src="@drawable/heart_liked_icon"
+                app:layout_constraintBottom_toBottomOf="@+id/liked_screen_title"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/liked_screen_title" />
 
-        <TextView
-            android:id="@+id/no_liked_classes"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/nothing_to_show"
-            android:textSize="@dimen/header_text"
-            android:visibility="invisible"
-            app:layout_constraintBottom_toBottomOf="@+id/liked_classes_recycler_view"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            <TextView
+                android:id="@+id/liked_screen_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_small"
+                android:text="@string/liked_by_you"
+                android:textSize="@dimen/screen_title_text"
+                app:layout_constraintStart_toEndOf="@+id/like_icon"
+                app:layout_constraintTop_toTopOf="parent" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <View
+                android:id="@+id/divider4"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/divider_height"
+                android:layout_marginTop="@dimen/margin_small"
+                android:background="@color/secondary_text"
+                app:layout_constraintTop_toBottomOf="@+id/liked_screen_title"
+                tools:layout_editor_absoluteX="16dp" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/liked_classes_recycler_view"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="@dimen/margin_medium"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/divider4" />
+
+            <TextView
+                android:id="@+id/no_liked_classes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/nothing_to_show"
+                android:textSize="@dimen/header_text"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toBottomOf="@+id/liked_classes_recycler_view"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/liked_bottom_navigation"

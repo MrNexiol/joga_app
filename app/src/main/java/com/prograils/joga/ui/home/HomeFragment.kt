@@ -83,7 +83,10 @@ class HomeFragment : Fragment() {
         })
         viewModel.dailyClassWrapper.getData().observe(viewLifecycleOwner, { resource ->
             if (resource.status == Status.Success) {
+                binding.todayPickIcon.visibility = View.VISIBLE
+                binding.todayPickTextView.visibility = View.VISIBLE
                 binding.todaysPickRoot.visibility = View.VISIBLE
+                binding.secondDivider.visibility = View.VISIBLE
                 dailyClassId = resource.data!!.id
                 Glide.with(this)
                     .load(resource.data.thumbnailUrl)
@@ -93,8 +96,11 @@ class HomeFragment : Fragment() {
                 binding.todayPickName.text = resource.data.title
                 binding.todayPickTrainerNameTextView.text = getString(R.string.with, resource.data.instructor.name)
                 binding.todayPickMinTextView.text = getString(R.string.min, resource.data.duration)
-            } else if (resource.status == Status.Empty) {
-                binding.todaysPickRoot.visibility = View.INVISIBLE
+            } else {
+                binding.todayPickIcon.visibility = View.GONE
+                binding.todayPickTextView.visibility = View.GONE
+                binding.todaysPickRoot.visibility = View.GONE
+                binding.secondDivider.visibility = View.GONE
             }
         })
         return binding.root

@@ -14,6 +14,10 @@ class JourneyViewModel(repository: Repository, token: String, id: String) : View
         }
     }
 
+    init {
+        refreshData()
+    }
+
     fun refreshData() {
         journeyWrapper.refresh()
     }

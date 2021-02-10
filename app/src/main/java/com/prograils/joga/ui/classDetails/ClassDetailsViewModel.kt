@@ -4,14 +4,23 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import com.prograils.joga.Repository
 import com.prograils.joga.api.Class
+import com.prograils.joga.api.RefreshableSource
 import com.prograils.joga.api.Resource
 
 class ClassDetailsViewModel(private val repository: Repository, private val token: String, private val id: String) : ViewModel() {
-    val singleClass: LiveData<Resource<Class>> = repository.getClass(token, id)
+    val classWrapper = object : RefreshableSource<Class>() {
+        override fun provideLiveData(): LiveData<Resource<Class>> {
+            return repository.getClass(token, id)
+        }
+    }
     var playWhenReady: Boolean = true
     var isPlaying: Boolean = false
     var currentWindow: Int = 0
     var playbackPosition: Long = 0
+
+    init {
+        classWrapper.refresh()
+    }
 
     fun toggleClassLike(){
         repository.toggleClassLike(token, id)

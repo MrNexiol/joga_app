@@ -7,7 +7,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -42,7 +41,7 @@ class ClassDetailsFragment : Fragment() {
         viewModelFactory = ClassDetailsViewModelFactory(appContainer.repository, token!!, args.classId)
         viewModel = ViewModelProvider(this, viewModelFactory).get(ClassDetailsViewModel::class.java)
 
-        viewModel.singleClass.observe(viewLifecycleOwner, { resource ->
+        viewModel.classWrapper.getData().observe(viewLifecycleOwner, { resource ->
             resource.data?.let {
                 videoUrl = it.videoUrl
                 initializePlayer(it.videoUrl)
@@ -146,6 +145,7 @@ class ClassDetailsFragment : Fragment() {
 
     private fun showVideo(){
         binding.playButton?.visibility = View.INVISIBLE
+        binding.classThumbnail?.visibility = View.INVISIBLE
         binding.videoView.visibility = View.VISIBLE
         viewModel.isPlaying = true
         player!!.prepare()
