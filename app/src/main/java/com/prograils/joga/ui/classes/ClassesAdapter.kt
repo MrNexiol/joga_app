@@ -29,10 +29,10 @@ class ClassesAdapter (private var data: List<Category>) : RecyclerView.Adapter<C
                 .transition(DrawableTransitionOptions.withCrossFade())
                 .into(holder.binding.classThumbnailImageView)
         holder.binding.classNameTextView.text = data[position].name
-//        holder.binding.root.setOnClickListener {
-//            val action = ClassesFragmentDirections.actionClassesFragmentToClassDetailsFragment(data[position].id)
-//            it.findNavController().navigate(action)
-//        }
+        holder.binding.root.setOnClickListener {
+            val action = ClassesFragmentDirections.actionClassesFragmentToCategoryFragment()
+            it.findNavController().navigate(action)
+        }
     }
 
     override fun getItemCount(): Int {
