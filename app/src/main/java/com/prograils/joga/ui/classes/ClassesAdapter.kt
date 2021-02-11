@@ -29,7 +29,7 @@ class ClassesAdapter (private var data: List<Category>) : RecyclerView.Adapter<C
                 .into(holder.binding.classThumbnailImageView)
         holder.binding.classNameTextView.text = data[position].name
         holder.binding.root.setOnClickListener {
-            val action = ClassesFragmentDirections.actionClassesFragmentToCategoryFragment(data[position].id)
+            val action = ClassesFragmentDirections.actionClassesFragmentToCategoryFragment(data[position].id, data[position].name)
             it.findNavController().navigate(action)
         }
     }

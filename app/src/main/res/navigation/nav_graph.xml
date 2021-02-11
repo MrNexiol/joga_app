@@ -153,5 +153,8 @@
         <argument
             android:name="category_id"
             app:argType="string" />
+        <argument
+            android:name="category_name"
+            app:argType="string" />
     </fragment>
 </navigation>
