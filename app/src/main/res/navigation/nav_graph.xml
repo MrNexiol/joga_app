@@ -150,5 +150,8 @@
         <action
             android:id="@+id/action_categoryFragment_to_classDetailsFragment"
             app:destination="@id/classDetailsFragment" />
+        <argument
+            android:name="category_id"
+            app:argType="string" />
     </fragment>
 </navigation>
