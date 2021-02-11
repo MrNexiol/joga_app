@@ -23,7 +23,7 @@ interface WebService {
     fun getCategories(@Header("Authorization") userToken: String): Call<Categories>
 
     @GET("api/v1/classes")
-    fun getClasses(@Header("Authorization") userToken: String): Call<Classes>
+    fun getClasses(@Header("Authorization") userToken: String, @Query("category_id") categoryId: String): Call<Classes>
 
     @GET("api/v1/interesting_classes")
     fun getNewClasses(@Header("Authorization") userToken: String): Call<Classes>
