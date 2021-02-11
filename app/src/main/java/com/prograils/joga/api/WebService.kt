@@ -19,6 +19,9 @@ interface WebService {
     @GET("api/v1/journeys/{id}")
     fun getJourney(@Header("Authorization") userToken: String, @Path("id") id: String): Call<JourneyResponse>
 
+    @GET("api/v1/categories")
+    fun getCategories(@Header("Authorization") userToken: String): Call<Categories>
+
     @GET("api/v1/classes")
     fun getClasses(@Header("Authorization") userToken: String): Call<Classes>
 
