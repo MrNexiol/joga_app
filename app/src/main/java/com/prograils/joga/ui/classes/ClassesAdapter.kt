@@ -8,7 +8,6 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.prograils.joga.R
 import com.prograils.joga.api.Category
-import com.prograils.joga.api.Class
 import com.prograils.joga.databinding.ClassesRecyclerViewItemBinding
 
 class ClassesAdapter (private var data: List<Category>) : RecyclerView.Adapter<ClassesAdapter.ViewHolder>() {
