@@ -33,16 +33,23 @@ class CategoryAdapter(private var data: List<Class>, private val repository: Rep
             .transition(DrawableTransitionOptions.withCrossFade())
             .into(holder.binding.likedClassThumbnail)
         holder.binding.likedClassName.text = data[position].title
-        holder.binding.heartIcon.setImageResource(R.drawable.heart_liked_icon)
-//        holder.binding.heartIcon.setOnClickListener {
-//            liked[position] = !liked[position]
-//            repository.toggleClassLike(token, data[position].id)
-//            if (liked[position]) {
-//                holder.binding.heartIcon.setImageResource(R.drawable.heart_liked_icon)
-//            } else {
-//                holder.binding.heartIcon.setImageResource(R.drawable.heart_not_liked)
-//            }
-//        }
+        @Suppress("SENSELESS_COMPARISON")
+        if (data[position].userLike.classId != null){
+            liked[position] = true
+            holder.binding.heartIcon.setImageResource(R.drawable.heart_liked_icon)
+        } else {
+            liked[position] = false
+            holder.binding.heartIcon.setImageResource(R.drawable.heart_not_liked)
+        }
+        holder.binding.heartIcon.setOnClickListener {
+            liked[position] = !liked[position]
+            repository.toggleClassLike(token, data[position].id)
+            if (liked[position]){
+                holder.binding.heartIcon.setImageResource(R.drawable.heart_liked_icon)
+            } else {
+                holder.binding.heartIcon.setImageResource(R.drawable.heart_not_liked)
+            }
+        }
         holder.binding.likedClassFocus.text = data[position].focus
         holder.binding.likedClassDuration.text = holder.itemView.context.getString(R.string.min, data[position].duration)
         holder.binding.likedClassInstructorName.text = data[position].instructor.name
