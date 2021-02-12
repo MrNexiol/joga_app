@@ -34,20 +34,20 @@ class CategoryAdapter(private var data: List<Class>, private val repository: Rep
             .into(holder.binding.likedClassThumbnail)
         holder.binding.likedClassName.text = data[position].title
         holder.binding.heartIcon.setImageResource(R.drawable.heart_liked_icon)
-        holder.binding.heartIcon.setOnClickListener {
-            liked[position] = !liked[position]
-            repository.toggleClassLike(token, data[position].id)
-            if (liked[position]) {
-                holder.binding.heartIcon.setImageResource(R.drawable.heart_liked_icon)
-            } else {
-                holder.binding.heartIcon.setImageResource(R.drawable.heart_not_liked)
-            }
-        }
+//        holder.binding.heartIcon.setOnClickListener {
+//            liked[position] = !liked[position]
+//            repository.toggleClassLike(token, data[position].id)
+//            if (liked[position]) {
+//                holder.binding.heartIcon.setImageResource(R.drawable.heart_liked_icon)
+//            } else {
+//                holder.binding.heartIcon.setImageResource(R.drawable.heart_not_liked)
+//            }
+//        }
         holder.binding.likedClassFocus.text = data[position].focus
         holder.binding.likedClassDuration.text = holder.itemView.context.getString(R.string.min, data[position].duration)
         holder.binding.likedClassInstructorName.text = data[position].instructor.name
         holder.binding.root.setOnClickListener {
-            val action = LikedFragmentDirections.actionLikedFragmentToClassDetailsFragment(data[position].id)
+            val action = CategoryFragmentDirections.actionCategoryFragmentToClassDetailsFragment(data[position].id)
             holder.itemView.findNavController().navigate(action)
         }
     }

@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.prograils.joga.JoGaApplication
@@ -32,9 +33,15 @@ class CategoryFragment : Fragment() {
         viewModelFactory = CategoryViewModelFactory(appContainer.repository, token!!, args.categoryId)
         viewModel = ViewModelProvider(this, viewModelFactory).get(CategoryViewModel::class.java)
 
+        val recyclerView = binding.categoryClassesRecyclerView
+        val adapter = CategoryAdapter(listOf(), appContainer.repository, token)
+        recyclerView.adapter = adapter
+        recyclerView.layoutManager = LinearLayoutManager(context)
+
         viewModel.categoryClassesWrapper.getData().observe(viewLifecycleOwner, { resource ->
             if (resource.status == Status.Success) {
                 val firstClass = resource.data!!.first()
+                val otherClasses = resource.data - firstClass
                 binding.categoryName.text = args.categoryName
                 Glide.with(this)
                     .load(firstClass.thumbnailUrl)
@@ -49,6 +56,7 @@ class CategoryFragment : Fragment() {
                     val action = CategoryFragmentDirections.actionCategoryFragmentToClassDetailsFragment(firstClass.id)
                     findNavController().navigate(action)
                 }
+                adapter.setData(otherClasses)
             }
         })
 
