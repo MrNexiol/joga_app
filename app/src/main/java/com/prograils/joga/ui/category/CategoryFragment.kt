@@ -59,8 +59,24 @@ class CategoryFragment : Fragment() {
                 adapter.setData(otherClasses)
             }
         })
-
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding.categoryBottomNavigation.setOnNavigationItemSelectedListener {
+            when(it.itemId) {
+                R.id.navigation_home -> {
+                    findNavController().navigate(R.id.action_global_homeFragment)
+                    true
+                }
+                R.id.navigation_classes -> {
+                    findNavController().navigate(R.id.action_global_classesFragment)
+                    true
+                }
+                else -> false
+            }
+        }
     }
 
     override fun onResume() {
