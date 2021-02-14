@@ -89,8 +89,6 @@ class ClassDetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        Toast.makeText(context, "Next class: ${args.nextClassId}", Toast.LENGTH_LONG).show()
-
         if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT){
             binding.playButton!!.setOnClickListener {
                 showVideo()
@@ -158,7 +156,7 @@ class ClassDetailsFragment : Fragment() {
         player!!.addListener(object : Player.EventListener {
             override fun onPlaybackStateChanged(state: Int) {
                 if (state == Player.STATE_ENDED) {
-                    Toast.makeText(context, "Congratulations! You finished class $classTitle", Toast.LENGTH_LONG).show()
+//                    Toast.makeText(context, "Congratulations! You finished class $classTitle", Toast.LENGTH_LONG).show()
                     if (args.nextClassId != null) {
                         val action = ClassDetailsFragmentDirections.actionClassDetailsFragmentSelf(args.nextClassId!!)
                         findNavController().navigate(action)
