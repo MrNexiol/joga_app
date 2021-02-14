@@ -13,6 +13,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.google.android.exoplayer2.MediaItem
+import com.google.android.exoplayer2.Player
 import com.google.android.exoplayer2.SimpleExoPlayer
 import com.google.android.exoplayer2.util.Util
 import com.prograils.joga.JoGaApplication
@@ -27,6 +28,7 @@ class ClassDetailsFragment : Fragment() {
     private var player: SimpleExoPlayer? = null
     private var liked: Boolean = false
     private var videoUrl = ""
+    private var classTitle = ""
     private lateinit var viewModel: ClassDetailsViewModel
     private lateinit var viewModelFactory: ClassDetailsViewModelFactory
     private val timer = Timer()
@@ -45,6 +47,7 @@ class ClassDetailsFragment : Fragment() {
         viewModel.classWrapper.getData().observe(viewLifecycleOwner, { resource ->
             resource.data?.let {
                 videoUrl = it.videoUrl
+                classTitle = it.title
                 initializePlayer(it.videoUrl)
                 if (viewModel.isPlaying){
                     showVideo()
@@ -152,6 +155,17 @@ class ClassDetailsFragment : Fragment() {
         binding.videoView.visibility = View.VISIBLE
         viewModel.isPlaying = true
         player!!.prepare()
+        player!!.addListener(object : Player.EventListener {
+            override fun onPlaybackStateChanged(state: Int) {
+                if (state == Player.STATE_ENDED) {
+                    Toast.makeText(context, "Congratulations! You finished class $classTitle", Toast.LENGTH_LONG).show()
+                    if (args.nextClassId != null) {
+                        val action = ClassDetailsFragmentDirections.actionClassDetailsFragmentSelf(args.nextClassId!!)
+                        findNavController().navigate(action)
+                    }
+                }
+            }
+        })
         timer.scheduleAtFixedRate(object : TimerTask(){
             override fun run() {
                 if (player!!.currentPosition > 20000) {

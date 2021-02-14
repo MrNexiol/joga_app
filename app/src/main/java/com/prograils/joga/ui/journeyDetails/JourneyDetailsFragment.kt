@@ -62,6 +62,12 @@ class JourneyDetailsFragment : Fragment() {
             }
         })
 
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
         binding.journeysBottomNavigation.setOnNavigationItemSelectedListener {
             when(it.itemId){
                 R.id.navigation_home -> {
@@ -75,7 +81,6 @@ class JourneyDetailsFragment : Fragment() {
                 else -> false
             }
         }
-        return binding.root
     }
 
     override fun onStart() {

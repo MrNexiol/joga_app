@@ -127,7 +127,7 @@
             android:name="next_class_id"
             app:argType="string"
             app:nullable="true"
-            android:defaultValue="null" />
+            android:defaultValue="@null" />
     </fragment>
     <fragment
         android:id="@+id/logoutFragment"
