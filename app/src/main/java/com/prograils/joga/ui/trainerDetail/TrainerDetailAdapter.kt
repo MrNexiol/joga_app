@@ -1,6 +1,5 @@
 package com.prograils.joga.ui.trainerDetail
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.navigation.findNavController
@@ -10,17 +9,17 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.prograils.joga.R
 import com.prograils.joga.Repository
 import com.prograils.joga.api.Class
-import com.prograils.joga.databinding.LikedOrInstructorClassRecyclerViewItemBinding
+import com.prograils.joga.databinding.LikeableRecyclerViewItemBinding
 
 class TrainerDetailAdapter(private var data: List<Class>, private val repository: Repository, private val token: String) : RecyclerView.Adapter<TrainerDetailAdapter.ViewHolder>() {
 
     private var liked = mutableListOf<Boolean>()
 
     class ViewHolder(
-            val binding: LikedOrInstructorClassRecyclerViewItemBinding) : RecyclerView.ViewHolder(binding.root)
+            val binding: LikeableRecyclerViewItemBinding) : RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding = LikedOrInstructorClassRecyclerViewItemBinding
+        val binding = LikeableRecyclerViewItemBinding
                 .inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(binding)
     }
