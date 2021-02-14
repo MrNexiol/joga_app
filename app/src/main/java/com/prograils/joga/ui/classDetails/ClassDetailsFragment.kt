@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -84,6 +85,8 @@ class ClassDetailsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        Toast.makeText(context, "Next class: ${args.nextClassId}", Toast.LENGTH_LONG).show()
 
         if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT){
             binding.playButton!!.setOnClickListener {

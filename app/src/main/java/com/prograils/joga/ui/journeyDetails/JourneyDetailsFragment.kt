@@ -55,7 +55,7 @@ class JourneyDetailsFragment : Fragment() {
                 binding.firstClassMinTextView.text = getString(R.string.min, firstClass.duration)
                 binding.firstClassDescription.text = firstClass.description
                 binding.firstClassRoot.setOnClickListener {
-                    val action = JourneyDetailsFragmentDirections.actionJourneyDetailsFragmentToClassDetailsFragment(firstClass.id)
+                    val action = JourneyDetailsFragmentDirections.actionJourneyDetailsFragmentToClassDetailsFragment(firstClass.id, otherClasses.first().id)
                     findNavController().navigate(action)
                 }
                 adapter.setData(otherClasses)
