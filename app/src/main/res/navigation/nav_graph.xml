@@ -120,6 +120,14 @@
         <action
             android:id="@+id/action_classDetailsFragment_to_trainerDetailFragment"
             app:destination="@id/trainerDetailFragment" />
+        <action
+            android:id="@+id/action_classDetailsFragment_self"
+            app:destination="@id/classDetailsFragment" />
+        <argument
+            android:name="next_class_id"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue="null" />
     </fragment>
     <fragment
         android:id="@+id/logoutFragment"
