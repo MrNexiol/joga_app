@@ -49,9 +49,6 @@ class ClassDetailsFragment : Fragment() {
                 videoUrl = it.videoUrl
                 classTitle = it.title
                 initializePlayer(it.videoUrl)
-                if (viewModel.isPlaying){
-                    showVideo()
-                }
                 if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT){
                     binding.className!!.text = it.title
                     @Suppress("SENSELESS_COMPARISON")
