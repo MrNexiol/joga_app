@@ -29,7 +29,7 @@ class PopupFragment : Fragment() {
         sharedPrefs = activity?.getPreferences(Context.MODE_PRIVATE)
         val wasSeen = sharedPrefs?.getString(getString(R.string.was_seen), null)
         if (wasSeen != null){
-            navigateToHome()
+//            navigateToHome()
         }
         val appContainer = (activity?.application as JoGaApplication).appContainer
         val token = sharedPrefs?.getString(getString(R.string.saved_token_key), null)
@@ -55,12 +55,12 @@ class PopupFragment : Fragment() {
             this?.commit()
         }
         binding.letsGoButton.setOnClickListener {
-            navigateToHome()
+//            navigateToHome()
         }
     }
-
-    private fun navigateToHome(){
-        val action = PopupFragmentDirections.actionPopupFragmentToHomeFragment()
-        findNavController().navigate(action)
-    }
+//
+//    private fun navigateToHome(){
+//        val action = PopupFragmentDirections.actionPopupFragmentToHomeFragment()
+//        findNavController().navigate(action)
+//    }
 }
