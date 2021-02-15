@@ -14,9 +14,8 @@
             android:id="@+id/action_loginFragment_to_loginErrorFragment"
             app:destination="@id/loginErrorFragment" />
         <action
-            android:id="@+id/action_loginFragment_to_popupFragment"
-            app:destination="@id/popupFragment"
-            app:popUpTo="@id/nav_graph" />
+            android:id="@+id/action_loginFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
     </fragment>
     <fragment
         android:id="@+id/homeFragment"
@@ -144,12 +143,7 @@
         android:id="@+id/popupFragment"
         android:name="com.prograils.joga.ui.popup.PopupFragment"
         android:label="fragment_popup"
-        tools:layout="@layout/fragment_popup" >
-        <action
-            android:id="@+id/action_popupFragment_to_homeFragment"
-            app:destination="@id/homeFragment"
-            app:popUpTo="@id/nav_graph" />
-    </fragment>
+        tools:layout="@layout/fragment_popup" />
     <fragment
         android:id="@+id/categoryFragment"
         android:name="com.prograils.joga.ui.category.CategoryFragment"
