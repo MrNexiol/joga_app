@@ -71,7 +71,7 @@ class CategoryFragment : Fragment() {
                     true
                 }
                 R.id.navigation_classes -> {
-                    findNavController().navigate(R.id.action_global_classesFragment)
+                    findNavController().navigateUp()
                     true
                 }
                 else -> false
