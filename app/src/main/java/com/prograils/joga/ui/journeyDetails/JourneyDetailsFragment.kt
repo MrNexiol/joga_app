@@ -44,6 +44,10 @@ class JourneyDetailsFragment : Fragment() {
             resource.data?.let {
                 val firstClass = it.classes.first()
                 val otherClasses = it.classes - firstClass
+                val idList = mutableListOf<String>()
+                otherClasses.forEachIndexed { i, c ->
+                    idList.add(i, c.id)
+                }
                 binding.journeyTitle.text = it.name
                 Glide.with(this)
                         .load(firstClass.thumbnailUrl)
@@ -55,7 +59,7 @@ class JourneyDetailsFragment : Fragment() {
                 binding.firstClassMinTextView.text = getString(R.string.min, firstClass.duration)
                 binding.firstClassDescription.text = firstClass.description
                 binding.firstClassRoot.setOnClickListener {
-                    val action = JourneyDetailsFragmentDirections.actionJourneyDetailsFragmentToClassDetailsFragment(firstClass.id, otherClasses.first().id)
+                    val action = JourneyDetailsFragmentDirections.actionJourneyDetailsFragmentToClassDetailsFragment(firstClass.id, idList.toTypedArray())
                     findNavController().navigate(action)
                 }
                 adapter.setData(otherClasses)

@@ -29,6 +29,7 @@ class ClassDetailsFragment : Fragment() {
     private var liked: Boolean = false
     private var videoUrl = ""
     private var classTitle = ""
+    private var nextClassId: String? = null
     private lateinit var viewModel: ClassDetailsViewModel
     private lateinit var viewModelFactory: ClassDetailsViewModelFactory
     private val timer = Timer()
@@ -43,6 +44,13 @@ class ClassDetailsFragment : Fragment() {
         val appContainer = (activity?.application as JoGaApplication).appContainer
         viewModelFactory = ClassDetailsViewModelFactory(appContainer.repository, token!!, args.classId)
         viewModel = ViewModelProvider(this, viewModelFactory).get(ClassDetailsViewModel::class.java)
+
+        if (args.classIds != null) {
+            val classId = args.classIds!!.indexOf(args.classId)
+            if (args.classIds!!.size > classId + 1) {
+                nextClassId = args.classIds!![classId + 1]
+            }
+        }
 
         viewModel.classWrapper.getData().observe(viewLifecycleOwner, { resource ->
             resource.data?.let {
@@ -154,8 +162,8 @@ class ClassDetailsFragment : Fragment() {
             override fun onPlaybackStateChanged(state: Int) {
                 if (state == Player.STATE_ENDED) {
 //                    Toast.makeText(context, "Congratulations! You finished class $classTitle", Toast.LENGTH_LONG).show()
-                    if (args.nextClassId != null) {
-                        val action = ClassDetailsFragmentDirections.actionClassDetailsFragmentSelf(args.nextClassId!!)
+                    if (nextClassId != null) {
+                        val action = ClassDetailsFragmentDirections.actionClassDetailsFragmentSelf(nextClassId!!, args.classIds)
                         findNavController().navigate(action)
                     }
                 }

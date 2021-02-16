@@ -3,7 +3,6 @@ package com.prograils.joga.ui.journeyDetails
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
-import androidx.navigation.NavDirections
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -43,11 +42,11 @@ class JourneyDetailsAdapter(private var data: List<Class>) : RecyclerView.Adapte
             holder.binding.journeyClassStatus.text = holder.itemView.context.getString(R.string.locked)
         } else {
             holder.binding.root.setOnClickListener {
-                val action: NavDirections = if (position+1 >= data.size){
-                    JourneyDetailsFragmentDirections.actionJourneyDetailsFragmentToClassDetailsFragment(data[position].id, data[position+1].id)
-                } else {
-                    JourneyDetailsFragmentDirections.actionJourneyDetailsFragmentToClassDetailsFragment(data[position].id)
+                val idList = mutableListOf<String>()
+                data.forEachIndexed { i, c ->
+                    idList.add(i, c.id)
                 }
+                val action = JourneyDetailsFragmentDirections.actionJourneyDetailsFragmentToClassDetailsFragment(data[position].id, idList.toTypedArray())
                 holder.itemView.findNavController().navigate(action)
             }
         }
