@@ -14,9 +14,8 @@
             android:id="@+id/action_loginFragment_to_loginErrorFragment"
             app:destination="@id/loginErrorFragment" />
         <action
-            android:id="@+id/action_loginFragment_to_popupFragment"
-            app:destination="@id/popupFragment"
-            app:popUpTo="@id/nav_graph" />
+            android:id="@+id/action_loginFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
     </fragment>
     <fragment
         android:id="@+id/homeFragment"
@@ -106,8 +105,8 @@
         android:label="fragment_classes"
         tools:layout="@layout/fragment_classes" >
         <action
-            android:id="@+id/action_classesFragment_to_classDetailsFragment"
-            app:destination="@id/classDetailsFragment" />
+            android:id="@+id/action_classesFragment_to_categoryFragment"
+            app:destination="@id/categoryFragment" />
     </fragment>
     <fragment
         android:id="@+id/classDetailsFragment"
@@ -120,6 +119,15 @@
         <action
             android:id="@+id/action_classDetailsFragment_to_trainerDetailFragment"
             app:destination="@id/trainerDetailFragment" />
+        <action
+            android:id="@+id/action_classDetailsFragment_self"
+            app:destination="@id/classDetailsFragment"
+            app:launchSingleTop="true" />
+        <argument
+            android:name="class_ids"
+            app:argType="string[]"
+            app:nullable="true"
+            android:defaultValue="@null" />
     </fragment>
     <fragment
         android:id="@+id/logoutFragment"
@@ -136,10 +144,20 @@
         android:id="@+id/popupFragment"
         android:name="com.prograils.joga.ui.popup.PopupFragment"
         android:label="fragment_popup"
-        tools:layout="@layout/fragment_popup" >
+        tools:layout="@layout/fragment_popup" />
+    <fragment
+        android:id="@+id/categoryFragment"
+        android:name="com.prograils.joga.ui.category.CategoryFragment"
+        android:label="fragment_category"
+        tools:layout="@layout/fragment_category" >
         <action
-            android:id="@+id/action_popupFragment_to_homeFragment"
-            app:destination="@id/homeFragment"
-            app:popUpTo="@id/nav_graph" />
+            android:id="@+id/action_categoryFragment_to_classDetailsFragment"
+            app:destination="@id/classDetailsFragment" />
+        <argument
+            android:name="category_id"
+            app:argType="string" />
+        <argument
+            android:name="category_name"
+            app:argType="string" />
     </fragment>
 </navigation>

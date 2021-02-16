@@ -39,7 +39,9 @@ class LikedFragment : Fragment() {
         viewModel.likedClassesWrapper.getData().observe(viewLifecycleOwner, { resource ->
             if (resource.status == Status.Success){
                 adapter.setData(resource.data!!)
+                binding.noLikedClasses.visibility = View.INVISIBLE
             } else {
+                adapter.setData(listOf())
                 binding.noLikedClasses.visibility = View.VISIBLE
             }
         })

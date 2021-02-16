@@ -7,11 +7,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.google.android.exoplayer2.MediaItem
+import com.google.android.exoplayer2.Player
 import com.google.android.exoplayer2.SimpleExoPlayer
 import com.google.android.exoplayer2.util.Util
 import com.prograils.joga.JoGaApplication
@@ -26,6 +28,8 @@ class ClassDetailsFragment : Fragment() {
     private var player: SimpleExoPlayer? = null
     private var liked: Boolean = false
     private var videoUrl = ""
+    private var classTitle = ""
+    private var nextClassId: String? = null
     private lateinit var viewModel: ClassDetailsViewModel
     private lateinit var viewModelFactory: ClassDetailsViewModelFactory
     private val timer = Timer()
@@ -41,13 +45,18 @@ class ClassDetailsFragment : Fragment() {
         viewModelFactory = ClassDetailsViewModelFactory(appContainer.repository, token!!, args.classId)
         viewModel = ViewModelProvider(this, viewModelFactory).get(ClassDetailsViewModel::class.java)
 
+        if (args.classIds != null) {
+            val classId = args.classIds!!.indexOf(args.classId)
+            if (args.classIds!!.size > classId + 1) {
+                nextClassId = args.classIds!![classId + 1]
+            }
+        }
+
         viewModel.classWrapper.getData().observe(viewLifecycleOwner, { resource ->
             resource.data?.let {
                 videoUrl = it.videoUrl
+                classTitle = it.title
                 initializePlayer(it.videoUrl)
-                if (viewModel.isPlaying){
-                    showVideo()
-                }
                 if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT){
                     binding.className!!.text = it.title
                     @Suppress("SENSELESS_COMPARISON")
@@ -149,6 +158,17 @@ class ClassDetailsFragment : Fragment() {
         binding.videoView.visibility = View.VISIBLE
         viewModel.isPlaying = true
         player!!.prepare()
+        player!!.addListener(object : Player.EventListener {
+            override fun onPlaybackStateChanged(state: Int) {
+                if (state == Player.STATE_ENDED) {
+//                    Toast.makeText(context, "Congratulations! You finished class $classTitle", Toast.LENGTH_LONG).show()
+                    if (nextClassId != null) {
+                        val action = ClassDetailsFragmentDirections.actionClassDetailsFragmentSelf(nextClassId!!, args.classIds)
+                        findNavController().navigate(action)
+                    }
+                }
+            }
+        })
         timer.scheduleAtFixedRate(object : TimerTask(){
             override fun run() {
                 if (player!!.currentPosition > 20000) {

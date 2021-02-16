@@ -1,4 +1,4 @@
-package com.prograils.joga.ui.liked
+package com.prograils.joga.ui.category
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -11,7 +11,7 @@ import com.prograils.joga.Repository
 import com.prograils.joga.api.Class
 import com.prograils.joga.databinding.LikeableRecyclerViewItemBinding
 
-class LikedAdapter(private var data: List<Class>, private val repository: Repository, private val token: String) : RecyclerView.Adapter<LikedAdapter.ViewHolder>() {
+class CategoryAdapter(private var data: List<Class>, private val repository: Repository, private val token: String) : RecyclerView.Adapter<CategoryAdapter.ViewHolder>() {
 
     private var liked = mutableListOf<Boolean>()
 
@@ -27,16 +27,23 @@ class LikedAdapter(private var data: List<Class>, private val repository: Reposi
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         liked.add(position, true)
         Glide.with(holder.itemView)
-                .load(data[position].thumbnailUrl)
-                .fallback(R.drawable.placeholder_image)
-                .transition(DrawableTransitionOptions.withCrossFade())
-                .into(holder.binding.likedClassThumbnail)
+            .load(data[position].thumbnailUrl)
+            .fallback(R.drawable.placeholder_image)
+            .transition(DrawableTransitionOptions.withCrossFade())
+            .into(holder.binding.likedClassThumbnail)
         holder.binding.likedClassName.text = data[position].title
-        holder.binding.heartIcon.setImageResource(R.drawable.heart_liked_icon)
+        @Suppress("SENSELESS_COMPARISON")
+        if (data[position].userLike.classId != null){
+            liked[position] = true
+            holder.binding.heartIcon.setImageResource(R.drawable.heart_liked_icon)
+        } else {
+            liked[position] = false
+            holder.binding.heartIcon.setImageResource(R.drawable.heart_not_liked)
+        }
         holder.binding.heartIcon.setOnClickListener {
             liked[position] = !liked[position]
             repository.toggleClassLike(token, data[position].id)
-            if (liked[position]) {
+            if (liked[position]){
                 holder.binding.heartIcon.setImageResource(R.drawable.heart_liked_icon)
             } else {
                 holder.binding.heartIcon.setImageResource(R.drawable.heart_not_liked)
@@ -46,7 +53,7 @@ class LikedAdapter(private var data: List<Class>, private val repository: Reposi
         holder.binding.likedClassDuration.text = holder.itemView.context.getString(R.string.min, data[position].duration)
         holder.binding.likedClassInstructorName.text = data[position].instructor.name
         holder.binding.root.setOnClickListener {
-            val action = LikedFragmentDirections.actionLikedFragmentToClassDetailsFragment(data[position].id)
+            val action = CategoryFragmentDirections.actionCategoryFragmentToClassDetailsFragment(data[position].id)
             holder.itemView.findNavController().navigate(action)
         }
     }

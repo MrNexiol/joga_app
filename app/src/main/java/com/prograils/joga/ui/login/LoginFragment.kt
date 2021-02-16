@@ -64,7 +64,7 @@ class LoginFragment : Fragment() {
     }
 
     private fun navigateToPopup() {
-        val action = LoginFragmentDirections.actionLoginFragmentToPopupFragment()
+        val action = LoginFragmentDirections.actionLoginFragmentToHomeFragment()
         findNavController().navigate(action)
     }
 }
