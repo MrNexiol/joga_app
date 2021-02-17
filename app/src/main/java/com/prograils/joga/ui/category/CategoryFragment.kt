@@ -44,10 +44,10 @@ class CategoryFragment : Fragment() {
                 val otherClasses = resource.data - firstClass
                 binding.categoryName.text = args.categoryName
                 Glide.with(this)
-                    .load(firstClass.thumbnailUrl)
-                    .fallback(R.drawable.placeholder_image)
-                    .transition(DrawableTransitionOptions.withCrossFade())
-                    .into(binding.categoryClassThumbnail)
+                        .load(firstClass.thumbnailUrl)
+                        .fallback(R.drawable.placeholder_image)
+                        .transition(DrawableTransitionOptions.withCrossFade())
+                        .into(binding.categoryClassThumbnail)
                 binding.firstClassName.text = firstClass.title
                 binding.firstClassInstructorName.text = firstClass.instructor.name
                 binding.firstClassDuration.text = getString(R.string.min, firstClass.duration)

@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.Player
 import com.google.android.exoplayer2.SimpleExoPlayer
@@ -75,7 +76,11 @@ class ClassDetailsFragment : Fragment() {
                             binding.likeButton!!.setImageResource(R.drawable.heart_liked_icon)
                         }
                     }
-                    Glide.with(this).load(it.thumbnailUrl).fallback(R.drawable.placeholder_image).into(binding.classThumbnail!!)
+                    Glide.with(this)
+                            .load(it.thumbnailUrl)
+                            .fallback(R.drawable.placeholder_image)
+                            .transition(DrawableTransitionOptions.withCrossFade())
+                            .into(binding.classThumbnail!!)
                     binding.classTitleDuration!!.text = getString(R.string.title_duration, it.title, it.duration)
                     binding.classDescription!!.text = it.description
                     Glide.with(this).load(it.instructor.avatar_url).fallback(R.drawable.trainer_placeholder_icon).into(binding.classInstructorAvatar!!)
@@ -162,6 +167,7 @@ class ClassDetailsFragment : Fragment() {
             override fun onPlaybackStateChanged(state: Int) {
                 if (state == Player.STATE_ENDED) {
 //                    Toast.makeText(context, "Congratulations! You finished class $classTitle", Toast.LENGTH_LONG).show()
+                    viewModel.markAsWatched()
                     if (nextClassId != null) {
                         val action = ClassDetailsFragmentDirections.actionClassDetailsFragmentSelf(nextClassId!!, args.classIds)
                         findNavController().navigate(action)
