@@ -3,11 +3,10 @@ package com.prograils.joga.ui.classDetails
 import android.content.Context
 import android.content.res.Configuration
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -16,11 +15,13 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.Player
 import com.google.android.exoplayer2.SimpleExoPlayer
+import com.google.android.exoplayer2.source.hls.HlsMediaSource
+import com.google.android.exoplayer2.upstream.DataSource
+import com.google.android.exoplayer2.upstream.DefaultHttpDataSource
 import com.google.android.exoplayer2.util.Util
 import com.prograils.joga.JoGaApplication
 import com.prograils.joga.R
 import com.prograils.joga.databinding.FragmentClassDetailsBinding
-import java.util.*
 
 class ClassDetailsFragment : Fragment() {
     private var _binding: FragmentClassDetailsBinding? = null
@@ -33,11 +34,10 @@ class ClassDetailsFragment : Fragment() {
     private var nextClassId: String? = null
     private lateinit var viewModel: ClassDetailsViewModel
     private lateinit var viewModelFactory: ClassDetailsViewModelFactory
-    private val timer = Timer()
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater, container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View {
         _binding = FragmentClassDetailsBinding.inflate(inflater, container, false)
         val sharedPrefs = activity?.getPreferences(Context.MODE_PRIVATE)
@@ -58,15 +58,15 @@ class ClassDetailsFragment : Fragment() {
                 videoUrl = it.videoUrl
                 classTitle = it.title
                 initializePlayer(it.videoUrl)
-                if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT){
+                if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
                     binding.className!!.text = it.title
                     @Suppress("SENSELESS_COMPARISON")
-                    if (it.userLike.classId != null){
+                    if (it.userLike.classId != null) {
                         liked = true
                         binding.likeButton!!.setImageResource(R.drawable.heart_liked_icon)
                     }
                     binding.likeButton!!.setOnClickListener {
-                        if (liked){
+                        if (liked) {
                             liked = false
                             viewModel.toggleClassLike()
                             binding.likeButton!!.setImageResource(R.drawable.heart_not_liked)
@@ -142,8 +142,6 @@ class ClassDetailsFragment : Fragment() {
     override fun onPause() {
         super.onPause()
         if (Util.SDK_INT < 24) {
-            timer.cancel()
-            timer.purge()
             releasePlayer()
         }
     }
@@ -151,8 +149,6 @@ class ClassDetailsFragment : Fragment() {
     override fun onStop() {
         super.onStop()
         if (Util.SDK_INT >= 24) {
-            timer.cancel()
-            timer.purge()
             releasePlayer()
         }
     }
@@ -163,10 +159,14 @@ class ClassDetailsFragment : Fragment() {
         binding.videoView.visibility = View.VISIBLE
         viewModel.isPlaying = true
         player!!.prepare()
+        player!!.createMessage { _: Int, _: Any? ->
+                    viewModel.markAsWatched()
+                }
+                .setPosition(0,20000)
+                .send()
         player!!.addListener(object : Player.EventListener {
             override fun onPlaybackStateChanged(state: Int) {
                 if (state == Player.STATE_ENDED) {
-//                    Toast.makeText(context, "Congratulations! You finished class $classTitle", Toast.LENGTH_LONG).show()
                     viewModel.markAsWatched()
                     if (nextClassId != null) {
                         val action = ClassDetailsFragmentDirections.actionClassDetailsFragmentSelf(nextClassId!!, args.classIds)
@@ -175,22 +175,14 @@ class ClassDetailsFragment : Fragment() {
                 }
             }
         })
-        timer.scheduleAtFixedRate(object : TimerTask(){
-            override fun run() {
-                if (player!!.currentPosition > 20000) {
-                    viewModel.markAsWatched()
-                    timer.cancel()
-                    timer.purge()
-                }
-            }
-        }, 0, 2000)
     }
 
     private fun initializePlayer(videoUrl: String){
+        val dataSourceFactory: DataSource.Factory = DefaultHttpDataSource.Factory()
+        val hlsMediaSource: HlsMediaSource = HlsMediaSource.Factory(dataSourceFactory).createMediaSource(MediaItem.fromUri(videoUrl))
         player = SimpleExoPlayer.Builder(requireContext()).build()
         binding.videoView.player = player
-        val mediaItem = MediaItem.fromUri(videoUrl)
-        player!!.setMediaItem(mediaItem)
+        player!!.setMediaSource(hlsMediaSource)
         player!!.playWhenReady = viewModel.playWhenReady
         player!!.seekTo(viewModel.currentWindow, viewModel.playbackPosition)
     }
