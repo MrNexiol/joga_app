@@ -159,6 +159,7 @@ class ClassDetailsFragment : Fragment() {
         binding.videoView.visibility = View.VISIBLE
         viewModel.isPlaying = true
         player!!.prepare()
+        player!!.play()
         player!!.createMessage { _: Int, _: Any? ->
                     viewModel.markAsWatched()
                 }
@@ -185,6 +186,9 @@ class ClassDetailsFragment : Fragment() {
         player!!.setMediaSource(hlsMediaSource)
         player!!.playWhenReady = viewModel.playWhenReady
         player!!.seekTo(viewModel.currentWindow, viewModel.playbackPosition)
+        if (viewModel.isPlaying) {
+            showVideo()
+        }
     }
 
     private fun releasePlayer(){
@@ -192,6 +196,7 @@ class ClassDetailsFragment : Fragment() {
             viewModel.playWhenReady = player!!.playWhenReady
             viewModel.playbackPosition = player!!.currentPosition
             viewModel.currentWindow = player!!.currentWindowIndex
+            player!!.pause()
             player!!.release()
             player = null
         }
