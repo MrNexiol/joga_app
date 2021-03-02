@@ -1,5 +1,6 @@
 <resources>
     <string name="placeholder">Placeholder</string>
+    <string name="go">GO</string>
     <string name="welcome_to_yoga">Welcome to</string>
     <string name="app_name">[jo:ga]</string>
     <string name="username">Username</string>
@@ -48,6 +49,4 @@
     <string name="journeys_icon">Journeys icon</string>
     <string name="tv_share_icon">TV share icon</string>
     <string name="instructor_avatar">Instructor avatar</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

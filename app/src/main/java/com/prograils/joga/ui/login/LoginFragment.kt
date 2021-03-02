@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.findNavController
 import com.prograils.joga.JoGaApplication
 import com.prograils.joga.R
@@ -29,11 +30,14 @@ class LoginFragment : Fragment() {
         if (token != null){
             navigateToPopup()
         }
+        requireActivity().window.statusBarColor = ContextCompat.getColor(requireContext(), R.color.background_alternative)
+        requireActivity().window.navigationBarColor = ContextCompat.getColor(requireContext(), R.color.background_alternative)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.loginButton.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.background_alternative))
         val appContainer = (activity?.application as JoGaApplication).appContainer
         binding.loginButton.setOnClickListener {
             val username = binding.usernameEditText.text.toString()
