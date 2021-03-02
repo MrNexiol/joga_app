@@ -48,9 +48,17 @@ class TrainerDetailFragment : Fragment() {
                 Glide.with(this).load(it.avatar_url).fallback(R.drawable.trainer_placeholder_icon).into(binding.instructorAvatar)
                 Glide.with(this).load(it.avatar_url).fallback(R.drawable.placeholder_image).into(binding.trainerThumbnail)
                 binding.instructorNameTextView.text = it.name
-                initializePlayer(it.videoUrl)
-                if (viewModel.isPlaying) {
-                    showVideo()
+                @Suppress("SENSELESS_COMPARISON")
+                if (it.videoUrl != "" && it.videoUrl != null) {
+                    binding.trainerVideoRoot.visibility = View.VISIBLE
+                    binding.trainerThumbnailAndListDivider.visibility = View.VISIBLE
+                    initializePlayer(it.videoUrl)
+                    if (viewModel.isPlaying) {
+                        showVideo()
+                    }
+                } else {
+                    binding.trainerVideoRoot.visibility = View.INVISIBLE
+                    binding.trainerThumbnailAndListDivider.visibility = View.INVISIBLE
                 }
             }
         })
