@@ -46,6 +46,7 @@ class TrainerDetailFragment : Fragment() {
         viewModel.instructorWrapper.getData().observe(viewLifecycleOwner, { resource ->
             resource.data?.let {
                 Glide.with(this).load(it.avatar_url).fallback(R.drawable.trainer_placeholder_icon).into(binding.instructorAvatar)
+                Glide.with(this).load(it.avatar_url).fallback(R.drawable.placeholder_image).into(binding.trainerThumbnail)
                 binding.instructorNameTextView.text = it.name
                 initializePlayer(it.videoUrl)
                 if (viewModel.isPlaying) {
