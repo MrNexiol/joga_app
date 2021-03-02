@@ -1,5 +1,6 @@
 <resources>
     <string name="placeholder">Placeholder</string>
+    <string name="go">GO</string>
     <string name="welcome_to_yoga">Velkommen til</string>
     <string name="app_name">[jo:ga]</string>
     <string name="username">Medlemsnummer</string>
