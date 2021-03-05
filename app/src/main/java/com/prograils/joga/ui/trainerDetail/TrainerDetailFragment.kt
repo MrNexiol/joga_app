@@ -57,8 +57,8 @@ class TrainerDetailFragment : Fragment() {
                         showVideo()
                     }
                 } else {
-                    binding.trainerVideoRoot.visibility = View.INVISIBLE
-                    binding.trainerThumbnailAndListDivider.visibility = View.INVISIBLE
+                    binding.trainerVideoRoot.visibility = View.GONE
+                    binding.trainerThumbnailAndListDivider.visibility = View.GONE
                 }
             }
         })
