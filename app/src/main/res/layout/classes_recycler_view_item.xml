@@ -24,13 +24,4 @@
             app:srcCompat="@drawable/placeholder_image" />
     </androidx.cardview.widget.CardView>
 
-    <TextView
-        android:id="@+id/class_name_text_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ellipsize="end"
-        android:singleLine="true"
-        android:textSize="@dimen/default_text"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/class_thumbnail_card_view" />
 </androidx.constraintlayout.widget.ConstraintLayout>

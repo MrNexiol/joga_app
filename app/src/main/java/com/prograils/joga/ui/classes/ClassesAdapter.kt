@@ -27,7 +27,6 @@ class ClassesAdapter (private var data: List<Category>) : RecyclerView.Adapter<C
                 .fallback(R.drawable.placeholder_image)
                 .transition(DrawableTransitionOptions.withCrossFade())
                 .into(holder.binding.classThumbnailImageView)
-        holder.binding.classNameTextView.text = data[position].name
         holder.binding.root.setOnClickListener {
             val action = ClassesFragmentDirections.actionClassesFragmentToCategoryFragment(data[position].id, data[position].name)
             it.findNavController().navigate(action)

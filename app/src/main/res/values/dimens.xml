@@ -16,7 +16,7 @@
     <dimen name="instructor_avatar_size">88dp</dimen>
     <dimen name="instructor_avatar_radius">44dp</dimen>
 
-    <dimen name="journey_list_decoration">80dp</dimen>
+    <dimen name="journey_list_decoration">12dp</dimen>
 
     <dimen name="welcome_text">48sp</dimen>
     <dimen name="screen_title_text">36sp</dimen>
