@@ -71,8 +71,10 @@ class HomeFragment : Fragment() {
         viewModel.journeysWrapper.getData().observe(viewLifecycleOwner, { resource ->
             if (resource.status == Status.Success){
                 journeyAdapter.setData(resource.data!!)
+                journeySectionVisibility(true)
             } else if (resource.status == Status.Empty){
                 journeyAdapter.setData(listOf())
+                journeySectionVisibility(false)
             }
         })
         viewModel.instructorsWrapper.getData().observe(viewLifecycleOwner, { resource ->
@@ -84,10 +86,7 @@ class HomeFragment : Fragment() {
         })
         viewModel.dailyClassWrapper.getData().observe(viewLifecycleOwner, { resource ->
             if (resource.status == Status.Success) {
-                binding.todayPickIcon.visibility = View.VISIBLE
-                binding.todayPickTextView.visibility = View.VISIBLE
-                binding.todaysPickRoot.visibility = View.VISIBLE
-                binding.secondDivider.visibility = View.VISIBLE
+                todaysPickVisibility(true)
                 dailyClassId = resource.data!!.id
                 Glide.with(this)
                     .load(resource.data.thumbnailUrl)
@@ -98,10 +97,7 @@ class HomeFragment : Fragment() {
                 binding.todayPickTrainerNameTextView.text = getString(R.string.with, resource.data.instructor.name)
                 binding.todayPickMinTextView.text = getString(R.string.min, resource.data.duration)
             } else {
-                binding.todayPickIcon.visibility = View.GONE
-                binding.todayPickTextView.visibility = View.GONE
-                binding.todaysPickRoot.visibility = View.GONE
-                binding.secondDivider.visibility = View.GONE
+                todaysPickVisibility(false)
             }
         })
 
@@ -189,5 +185,22 @@ class HomeFragment : Fragment() {
         instructorAdapter = InstructorsAdapter(listOf())
         instructorRecyclerView.adapter = instructorAdapter
         instructorRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+    }
+
+    private fun journeySectionVisibility(visibility: Boolean){
+        val showing = if (visibility) View.VISIBLE else View.GONE
+        binding.betweenLikedAndJourneysDivider.visibility = showing
+        binding.journeysIconHome.visibility = showing
+        binding.journeysTextView.visibility = showing
+        binding.seeJourneysButton.visibility = showing
+        binding.journeyRecyclerView.visibility = showing
+    }
+
+    private fun todaysPickVisibility(visibility: Boolean){
+        val showing = if (visibility) View.VISIBLE else View.GONE
+        binding.todayPickIcon.visibility = showing
+        binding.todayPickTextView.visibility = showing
+        binding.todaysPickRoot.visibility = showing
+        binding.secondDivider.visibility = showing
     }
 }

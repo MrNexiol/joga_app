@@ -74,10 +74,15 @@ class Repository(private val service: WebService) {
         service.getJourneys(auth).enqueue(object : Callback<Journeys>{
             override fun onResponse(call: Call<Journeys>, response: Response<Journeys>) {
                 if (response.body() != null){
-                    val resource = Resource(Status.Success, response.body()!!.journeys)
-                    data.value = resource
+                    if (response.body()!!.journeys.isNotEmpty()) {
+                        val resource = Resource(Status.Success, response.body()!!.journeys)
+                        data.value = resource
+                    } else {
+                        val resource = Resource(Status.Empty, null)
+                        data.value = resource
+                    }
                 } else {
-                    val resource = Resource(Status.Empty, null)
+                    val resource = Resource(Status.Fail, null)
                     data.value = resource
                 }
             }
