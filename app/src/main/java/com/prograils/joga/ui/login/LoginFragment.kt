@@ -45,16 +45,15 @@ class LoginFragment : Fragment() {
             val imm: InputMethodManager = requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
             imm.hideSoftInputFromWindow(view.windowToken, 0)
             appContainer.repository.login(username, password).observe(viewLifecycleOwner, { resource ->
-                resource.data?.let {
+                if(resource.status == Status.Success) {
                     with(sharedPrefs?.edit()){
-                        this?.putString(getString(R.string.saved_token_key), it.token)
-                        this?.putString(getString(R.string.saved_user_id), it.userId)
+                        this?.putString(getString(R.string.saved_token_key), resource.data!!.token)
+                        this?.putString(getString(R.string.saved_user_id), resource.data!!.userId)
                         this?.putString(getString(R.string.saved_username), username)
                         this?.commit()
                     }
                     navigateToPopup()
-                }
-                if (resource.status == Status.Fail){
+                } else {
                     val action = LoginFragmentDirections.actionLoginFragmentToLoginErrorFragment()
                     findNavController().navigate(action)
                 }
