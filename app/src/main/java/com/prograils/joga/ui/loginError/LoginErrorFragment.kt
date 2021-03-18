@@ -20,8 +20,6 @@ class LoginErrorFragment : Fragment() {
     ): View {
         _binding = FragmentLoginErrorBinding.inflate(inflater, container, false)
 
-        requireActivity().window.statusBarColor = ContextCompat.getColor(requireContext(), R.color.background)
-        requireActivity().window.navigationBarColor = ContextCompat.getColor(requireContext(), R.color.background)
         return binding.root
     }
 

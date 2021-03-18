@@ -30,14 +30,11 @@ class LoginFragment : Fragment() {
         if (token != null){
             navigateToPopup()
         }
-        requireActivity().window.statusBarColor = ContextCompat.getColor(requireContext(), R.color.background_alternative)
-        requireActivity().window.navigationBarColor = ContextCompat.getColor(requireContext(), R.color.background_alternative)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.loginButton.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.background_alternative))
         val appContainer = (activity?.application as JoGaApplication).appContainer
         binding.loginButton.setOnClickListener {
             val username = binding.usernameEditText.text.toString()

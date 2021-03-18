@@ -101,8 +101,6 @@ class HomeFragment : Fragment() {
             }
         })
 
-        requireActivity().window.statusBarColor = ContextCompat.getColor(requireContext(), R.color.background)
-        requireActivity().window.navigationBarColor = ContextCompat.getColor(requireContext(), R.color.background)
         return binding.root
     }
 
