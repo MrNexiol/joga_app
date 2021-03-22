@@ -24,8 +24,7 @@ class LoginErrorFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.backToLoginButton.setOnClickListener {
-            val action = LoginErrorFragmentDirections.actionLoginErrorFragmentToLoginFragment()
-            findNavController().navigate(action)
+            findNavController().navigateUp()
         }
     }
 

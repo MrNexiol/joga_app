@@ -46,12 +46,7 @@
         android:id="@+id/loginErrorFragment"
         android:name="dk.joga.jogago.ui.loginError.LoginErrorFragment"
         android:label="fragment_login_error"
-        tools:layout="@layout/fragment_login_error" >
-        <action
-            android:id="@+id/action_loginErrorFragment_to_loginFragment"
-            app:destination="@id/loginFragment"
-            app:popUpTo="@id/nav_graph" />
-    </fragment>
+        tools:layout="@layout/fragment_login_error" />
     <fragment
         android:id="@+id/journeysFragment"
         android:name="dk.joga.jogago.ui.journeys.JourneysFragment"
