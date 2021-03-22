@@ -45,20 +45,6 @@ class JourneysFragment : Fragment() {
             }
         })
 
-        binding.journeysBottomNavigation.setOnNavigationItemSelectedListener {
-            when(it.itemId){
-                R.id.navigation_home -> {
-                    findNavController().navigate(R.id.action_global_homeFragment)
-                    true
-                }
-                R.id.navigation_classes -> {
-                    findNavController().navigate(R.id.action_global_classesFragment)
-                    true
-                }
-                else -> false
-            }
-        }
-
         return binding.root
     }
 
