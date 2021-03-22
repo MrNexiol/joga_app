@@ -35,6 +35,16 @@ class HomeFragment : Fragment() {
     private lateinit var viewModelFactory: HomeViewModelFactory
     private lateinit var viewModel: HomeViewModel
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        val sharedPrefs = activity?.getPreferences(Context.MODE_PRIVATE)
+        val token = sharedPrefs?.getString(getString(R.string.saved_token_key), null)
+        if (token == null){
+            val action = HomeFragmentDirections.actionHomeFragmentToLoginFragment()
+            findNavController().navigate(action)
+        }
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?

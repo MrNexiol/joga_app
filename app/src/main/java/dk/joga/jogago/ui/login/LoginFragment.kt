@@ -25,10 +25,6 @@ class LoginFragment : Fragment() {
     ): View {
         _binding = FragmentLoginBinding.inflate(inflater, container, false)
         sharedPrefs = activity?.getPreferences(Context.MODE_PRIVATE)
-        val token = sharedPrefs?.getString(getString(R.string.saved_token_key), null)
-        if (token != null){
-            navigateToPopup()
-        }
         return binding.root
     }
 
@@ -48,7 +44,7 @@ class LoginFragment : Fragment() {
                         this?.putString(getString(R.string.saved_username), username)
                         this?.commit()
                     }
-                    navigateToPopup()
+                    navigateToHome()
                 } else {
                     val action = LoginFragmentDirections.actionLoginFragmentToLoginErrorFragment()
                     findNavController().navigate(action)
@@ -62,8 +58,8 @@ class LoginFragment : Fragment() {
         _binding = null
     }
 
-    private fun navigateToPopup() {
-        val action = LoginFragmentDirections.actionLoginFragmentToHomeFragment()
+    private fun navigateToHome() {
+        val action = LoginFragmentDirections.actionGlobalHomeFragment()
         findNavController().navigate(action)
     }
 }
