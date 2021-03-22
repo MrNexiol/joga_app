@@ -4,24 +4,14 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/class_thumbnail_card_view"
+    <ImageView
+        android:id="@+id/class_thumbnail_image_view"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:cardCornerRadius="@dimen/card_radius"
-        app:layout_constraintDimensionRatio="H,16:9"
+        android:layout_height="120dp"
+        android:contentDescription="@string/placeholder"
+        app:srcCompat="@drawable/placeholder_image"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <ImageView
-            android:id="@+id/class_thumbnail_image_view"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:adjustViewBounds="true"
-            android:contentDescription="@string/placeholder"
-            android:scaleType="centerCrop"
-            app:srcCompat="@drawable/placeholder_image" />
-    </androidx.cardview.widget.CardView>
+        app:layout_constraintTop_toTopOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
