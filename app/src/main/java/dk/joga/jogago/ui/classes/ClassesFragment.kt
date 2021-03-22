@@ -45,20 +45,6 @@ class ClassesFragment : Fragment() {
             }
         })
 
-        binding.classesBottomNavigation.setOnNavigationItemSelectedListener {
-            when(it.itemId){
-                R.id.navigation_home -> {
-                    findNavController().navigate(R.id.action_global_homeFragment)
-                    true
-                }
-                R.id.navigation_classes -> {
-                    binding.classesRecyclerView.smoothScrollToPosition(0)
-                    true
-                }
-                else -> false
-            }
-        }
-
         return binding.root
     }
 
