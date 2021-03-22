@@ -130,20 +130,6 @@ class HomeFragment : Fragment() {
             val action = HomeFragmentDirections.actionHomeFragmentToLogoutFragment()
             findNavController().navigate(action)
         }
-        binding.navigationView.setOnNavigationItemSelectedListener {
-            when(it.itemId){
-                R.id.navigation_home -> {
-                    binding.homeScrollView.smoothScrollTo(0,0)
-                    true
-                }
-                R.id.navigation_classes -> {
-                    val action = HomeFragmentDirections.actionHomeFragmentToClassesFragment()
-                    findNavController().navigate(action)
-                    true
-                }
-                else -> false
-            }
-        }
     }
 
     override fun onDestroyView() {
