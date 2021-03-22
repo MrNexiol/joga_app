@@ -64,11 +64,7 @@ class TrainerDetailFragment : Fragment() {
         })
         viewModel.instructorClassesWrapper.getData().observe(viewLifecycleOwner, { resource ->
             resource.data?.let {
-                if (it.isEmpty()){
-                    binding.noClassesTextView.visibility = View.VISIBLE
-                } else {
-                    adapter.setData(it)
-                }
+                adapter.setData(it)
             }
         })
 
