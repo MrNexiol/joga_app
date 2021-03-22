@@ -2,7 +2,9 @@ package dk.joga.jogago.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
 import dk.joga.jogago.R
 import dk.joga.jogago.databinding.ActivityMainBinding
 
@@ -15,14 +17,24 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        val navController = navHostFragment.navController
+
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            when (destination.id) {
+                R.id.loginFragment, R.id.loginErrorFragment, R.id.popupFragment, R.id.logoutFragment -> binding.mainBottomNav.visibility = View.GONE
+                else -> binding.mainBottomNav.visibility = View.VISIBLE
+            }
+        }
+
         binding.mainBottomNav.setOnNavigationItemSelectedListener {
             when(it.itemId){
                 R.id.navigation_home -> {
-                    findNavController(binding.navHostFragment.id).navigate(R.id.action_global_homeFragment)
+                    navController.navigate(R.id.action_global_homeFragment)
                     true
                 }
                 R.id.navigation_classes -> {
-                    findNavController(binding.navHostFragment.id).navigate(R.id.action_global_classesFragment)
+                    navController.navigate(R.id.action_global_classesFragment)
                     true
                 }
                 else -> false
