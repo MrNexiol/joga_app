@@ -101,8 +101,8 @@ class HomeFragment : Fragment() {
                 Glide.with(this)
                         .load(resource.data.thumbnailUrl)
                         .fallback(R.drawable.placeholder_image)
-                        .transition(DrawableTransitionOptions.withCrossFade())
                         .transform(RoundedCorners(resources.getDimensionPixelSize(R.dimen.card_radius)))
+                        .transition(DrawableTransitionOptions.withCrossFade())
                         .into(binding.todaysPickThumbnail)
                 binding.todayPickName.text = resource.data.title
                 binding.todayPickTrainerNameTextView.text = getString(R.string.with, resource.data.instructor.name)
