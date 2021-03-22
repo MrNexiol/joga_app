@@ -11,7 +11,7 @@ android {
     buildToolsVersion "30.0.2"
 
     defaultConfig {
-        applicationId "com.prograils.joga"
+        applicationId "dk.joga.jogago"
         minSdkVersion 21
         targetSdkVersion 30
         versionCode 1
@@ -25,10 +25,12 @@ android {
         debug {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            buildConfigField("String", "BASE_URL", "\"https://joga-go.prograils.net/api/v1/\"")
         }
         release {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            buildConfigField("String", "BASE_URL", "\"https://joga-go-backend.herokuapp.com/api/v1/\"")
         }
     }
 

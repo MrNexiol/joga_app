@@ -20,5 +20,5 @@
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
 
--keep class com.prograils.joga.AppContainer {*;}
--keep class com.prograils.joga.api.* {*;}
+-keep class dk.joga.jogago.AppContainer {*;}
+-keep class dk.joga.jogago.api.* {*;}
