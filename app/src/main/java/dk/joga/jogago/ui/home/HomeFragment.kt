@@ -12,6 +12,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import dk.joga.jogago.AppContainer
 import dk.joga.jogago.JoGaApplication
@@ -98,10 +99,11 @@ class HomeFragment : Fragment() {
                 todaysPickVisibility(true)
                 dailyClassId = resource.data!!.id
                 Glide.with(this)
-                    .load(resource.data.thumbnailUrl)
-                    .fallback(R.drawable.placeholder_image)
-                    .transition(DrawableTransitionOptions.withCrossFade())
-                    .into(binding.todaysPickThumbnail)
+                        .load(resource.data.thumbnailUrl)
+                        .fallback(R.drawable.placeholder_image)
+                        .transition(DrawableTransitionOptions.withCrossFade())
+                        .transform(RoundedCorners(resources.getDimensionPixelSize(R.dimen.card_radius)))
+                        .into(binding.todaysPickThumbnail)
                 binding.todayPickName.text = resource.data.title
                 binding.todayPickTrainerNameTextView.text = getString(R.string.with, resource.data.instructor.name)
                 binding.todayPickMinTextView.text = getString(R.string.min, resource.data.duration)
