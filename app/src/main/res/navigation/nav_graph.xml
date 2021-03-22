@@ -33,9 +33,6 @@
             app:destination="@id/loginFragment"
             app:popUpTo="@id/nav_graph" />
         <action
-            android:id="@+id/action_homeFragment_to_classesFragment"
-            app:destination="@id/classesFragment" />
-        <action
             android:id="@+id/action_homeFragment_to_classDetailsFragment"
             app:destination="@id/classDetailsFragment" />
         <action
@@ -140,7 +137,11 @@
     <action
         android:id="@+id/action_global_homeFragment"
         app:destination="@id/homeFragment"
-        app:popUpTo="@id/nav_graph" /><action android:id="@+id/action_global_classesFragment" app:destination="@id/classesFragment"/>
+        app:popUpTo="@id/nav_graph" />
+    <action
+        android:id="@+id/action_global_classesFragment"
+        app:destination="@id/classesFragment"
+        app:popUpTo="@id/nav_graph" />
     <fragment
         android:id="@+id/popupFragment"
         android:name="dk.joga.jogago.ui.popup.PopupFragment"
