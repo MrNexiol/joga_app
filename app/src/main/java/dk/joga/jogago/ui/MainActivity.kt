@@ -3,7 +3,6 @@ package dk.joga.jogago.ui
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.findNavController
 import dk.joga.jogago.R
 import dk.joga.jogago.databinding.ActivityMainBinding
 
