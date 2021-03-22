@@ -7,7 +7,7 @@
     app:startDestination="@id/loginFragment">
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.prograils.joga.ui.login.LoginFragment"
+        android:name="dk.joga.jogago.ui.login.LoginFragment"
         android:label="LoginFragment"
         tools:layout="@layout/fragment_login">
         <action
@@ -19,7 +19,7 @@
     </fragment>
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.prograils.joga.ui.home.HomeFragment"
+        android:name="dk.joga.jogago.ui.home.HomeFragment"
         android:label="HomeFragment"
         tools:layout="@layout/fragment_home">
         <action
@@ -49,7 +49,7 @@
     </fragment>
     <fragment
         android:id="@+id/loginErrorFragment"
-        android:name="com.prograils.joga.ui.loginError.LoginErrorFragment"
+        android:name="dk.joga.jogago.ui.loginError.LoginErrorFragment"
         android:label="fragment_login_error"
         tools:layout="@layout/fragment_login_error" >
         <action
@@ -59,7 +59,7 @@
     </fragment>
     <fragment
         android:id="@+id/journeysFragment"
-        android:name="com.prograils.joga.ui.journeys.JourneysFragment"
+        android:name="dk.joga.jogago.ui.journeys.JourneysFragment"
         android:label="JourneysFragment"
         tools:layout="@layout/fragment_journeys">
         <action
@@ -68,7 +68,7 @@
     </fragment>
     <fragment
         android:id="@+id/likedFragment"
-        android:name="com.prograils.joga.ui.liked.LikedFragment"
+        android:name="dk.joga.jogago.ui.liked.LikedFragment"
         android:label="fragment_liked"
         tools:layout="@layout/fragment_liked" >
         <action
@@ -77,7 +77,7 @@
     </fragment>
     <fragment
         android:id="@+id/trainerDetailFragment"
-        android:name="com.prograils.joga.ui.trainerDetail.TrainerDetailFragment"
+        android:name="dk.joga.jogago.ui.trainerDetail.TrainerDetailFragment"
         android:label="fragment_trainer_detail"
         tools:layout="@layout/fragment_trainer_detail" >
         <argument
@@ -89,7 +89,7 @@
     </fragment>
     <fragment
         android:id="@+id/journeyDetailsFragment"
-        android:name="com.prograils.joga.ui.journeyDetails.JourneyDetailsFragment"
+        android:name="dk.joga.jogago.ui.journeyDetails.JourneyDetailsFragment"
         android:label="fragment_journey_details"
         tools:layout="@layout/fragment_journey_details" >
         <argument
@@ -101,7 +101,7 @@
     </fragment>
     <fragment
         android:id="@+id/classesFragment"
-        android:name="com.prograils.joga.ui.classes.ClassesFragment"
+        android:name="dk.joga.jogago.ui.classes.ClassesFragment"
         android:label="fragment_classes"
         tools:layout="@layout/fragment_classes" >
         <action
@@ -110,7 +110,7 @@
     </fragment>
     <fragment
         android:id="@+id/classDetailsFragment"
-        android:name="com.prograils.joga.ui.classDetails.ClassDetailsFragment"
+        android:name="dk.joga.jogago.ui.classDetails.ClassDetailsFragment"
         android:label="fragment_class_details"
         tools:layout="@layout/fragment_class_details" >
         <argument
@@ -131,7 +131,7 @@
     </fragment>
     <fragment
         android:id="@+id/logoutFragment"
-        android:name="com.prograils.joga.ui.logout.LogoutFragment"
+        android:name="dk.joga.jogago.ui.logout.LogoutFragment"
         android:label="fragment_logout"
         tools:layout="@layout/fragment_logout" >
         <action
@@ -142,12 +142,12 @@
     <action android:id="@+id/action_global_homeFragment" app:destination="@id/homeFragment"/><action android:id="@+id/action_global_classesFragment" app:destination="@id/classesFragment"/>
     <fragment
         android:id="@+id/popupFragment"
-        android:name="com.prograils.joga.ui.popup.PopupFragment"
+        android:name="dk.joga.jogago.ui.popup.PopupFragment"
         android:label="fragment_popup"
         tools:layout="@layout/fragment_popup" />
     <fragment
         android:id="@+id/categoryFragment"
-        android:name="com.prograils.joga.ui.category.CategoryFragment"
+        android:name="dk.joga.jogago.ui.category.CategoryFragment"
         android:label="fragment_category"
         tools:layout="@layout/fragment_category" >
         <action

@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.prograils.joga">
+    package="dk.joga.jogago">
 
     <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
-        android:name=".JoGaApplication"
+        android:name="dk.joga.jogago.JoGaApplication"
         android:allowBackup="true"
         android:icon="@drawable/app_icon"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/Theme.JoGa"
         tools:ignore="AllowBackup">
-        <activity android:name=".ui.MainActivity"
+        <activity android:name="dk.joga.jogago.ui.MainActivity"
             android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
