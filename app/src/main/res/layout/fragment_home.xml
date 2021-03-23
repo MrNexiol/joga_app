@@ -116,6 +116,14 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/today_pick_name" />
 
+                    <TextView
+                        android:id="@+id/today_pick_category"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/secondary_text"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/today_pick_trainer_name_text_view" />
+
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <View
