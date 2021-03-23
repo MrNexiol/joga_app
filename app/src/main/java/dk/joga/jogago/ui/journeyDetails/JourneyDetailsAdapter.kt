@@ -39,7 +39,6 @@ class JourneyDetailsAdapter(private var data: List<Class>) : RecyclerView.Adapte
             holder.binding.journeyClassFocus.setTextColor(color)
             holder.binding.journeyClassMin.setTextColor(color)
             holder.binding.journeyClassInstructorName.setTextColor(color)
-//            holder.binding.journeyClassStatus.text = holder.itemView.context.getString(R.string.locked)
         } else {
             holder.binding.root.setOnClickListener {
                 val idList = mutableListOf<String>()
