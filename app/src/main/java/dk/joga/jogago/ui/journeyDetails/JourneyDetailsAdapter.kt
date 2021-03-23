@@ -29,17 +29,17 @@ class JourneyDetailsAdapter(private var data: List<Class>) : RecyclerView.Adapte
                 .transition(DrawableTransitionOptions.withCrossFade())
                 .into(holder.binding.journeyClassThumbnail)
         holder.binding.journeyClassName.text = data[position].title
-        holder.binding.journeyClassCategory.text = data[position].focus
+        holder.binding.journeyClassFocus.text = data[position].focus
         holder.binding.journeyClassMin.text = holder.itemView.context.getString(R.string.min, data[position].duration)
         holder.binding.journeyClassInstructorName.text = data[position].instructor.name
         if (!data[position].watchable){
             val color = ContextCompat.getColor(holder.itemView.context, R.color.secondary_text)
             holder.binding.journeyClassThumbnail.alpha = 0.3F
             holder.binding.journeyClassName.setTextColor(color)
-            holder.binding.journeyClassCategory.setTextColor(color)
+            holder.binding.journeyClassFocus.setTextColor(color)
             holder.binding.journeyClassMin.setTextColor(color)
             holder.binding.journeyClassInstructorName.setTextColor(color)
-            holder.binding.journeyClassStatus.text = holder.itemView.context.getString(R.string.locked)
+//            holder.binding.journeyClassStatus.text = holder.itemView.context.getString(R.string.locked)
         } else {
             holder.binding.root.setOnClickListener {
                 val idList = mutableListOf<String>()

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -12,7 +11,6 @@
         android:layout_height="0dp"
         app:cardBackgroundColor="@color/background"
         app:cardCornerRadius="@dimen/card_radius"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintDimensionRatio="H,16:9"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0"
@@ -31,6 +29,51 @@
     </androidx.cardview.widget.CardView>
 
     <TextView
+        android:id="@+id/journey_class_focus_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_small"
+        android:text="@string/focus"
+        android:textColor="@color/secondary_text"
+        app:layout_constraintStart_toEndOf="@+id/cardView2"
+        app:layout_constraintTop_toTopOf="@+id/cardView2" />
+
+    <TextView
+        android:id="@+id/journey_class_focus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_small"
+        app:layout_constraintBottom_toTopOf="@+id/journey_class_min"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintStart_toEndOf="@+id/cardView2"
+        app:layout_constraintTop_toBottomOf="@+id/journey_class_focus_textview"
+        app:layout_constraintVertical_bias="0" />
+
+    <TextView
+        android:id="@+id/journey_class_min"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="start"
+        android:textColor="@color/secondary_text"
+        android:textSize="@dimen/default_text"
+        app:layout_constraintBottom_toTopOf="@+id/journey_class_instructor_name"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/journey_class_instructor_name" />
+
+    <TextView
+        android:id="@+id/journey_class_instructor_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_small"
+        android:gravity="start"
+        android:textColor="@color/secondary_text"
+        android:textSize="@dimen/default_text"
+        app:layout_constraintBottom_toTopOf="@+id/journey_class_name"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/cardView2" />
+
+    <TextView
         android:id="@+id/journey_class_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -39,50 +82,7 @@
         android:singleLine="true"
         android:textSize="@dimen/header_text"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/journey_class_status"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cardView2" />
 
-    <TextView
-        android:id="@+id/journey_class_status"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:gravity="start"
-        android:textColor="@color/secondary_text"
-        android:textSize="@dimen/default_text"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/journey_class_category"
-        app:layout_constraintTop_toBottomOf="@+id/journey_class_name" />
-
-    <TextView
-        android:id="@+id/journey_class_category"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:ellipsize="end"
-        android:gravity="start"
-        android:singleLine="true"
-        android:textSize="@dimen/default_text"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/journey_class_min"
-        app:layout_constraintTop_toBottomOf="@+id/journey_class_status" />
-
-    <TextView
-        android:id="@+id/journey_class_min"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:gravity="start"
-        android:textSize="@dimen/default_text"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/journey_class_instructor_name"
-        app:layout_constraintTop_toBottomOf="@+id/journey_class_category" />
-
-    <TextView
-        android:id="@+id/journey_class_instructor_name"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/margin_small"
-        android:gravity="start"
-        android:textSize="@dimen/default_text"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/cardView2"
-        app:layout_constraintTop_toBottomOf="@+id/journey_class_min" />
 </androidx.constraintlayout.widget.ConstraintLayout>
