@@ -28,6 +28,7 @@ class LikedClassAdapter(private var data: List<Class>) : RecyclerView.Adapter<Li
                 .transition(DrawableTransitionOptions.withCrossFade())
                 .into(holder.binding.homeItemThumbnail)
         holder.binding.homeItemName.text = data[position].title
+        holder.binding.homeItemCategory.text = data[position].categories.joinToString()
         holder.binding.root.setOnClickListener {
             val action = HomeFragmentDirections.actionHomeFragmentToClassDetailsFragment(data[position].id)
             holder.itemView.findNavController().navigate(action)
