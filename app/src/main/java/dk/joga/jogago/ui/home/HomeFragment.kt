@@ -107,6 +107,7 @@ class HomeFragment : Fragment() {
                 binding.todayPickName.text = resource.data.title
                 binding.todayPickTrainerNameTextView.text = getString(R.string.with, resource.data.instructor.name)
                 binding.todayPickMinTextView.text = getString(R.string.min, resource.data.duration)
+                binding.todayPickCategory.text = resource.data.categories.joinToString()
             } else {
                 todaysPickVisibility(false)
             }
