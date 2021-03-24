@@ -72,10 +72,10 @@ class HomeFragment : Fragment() {
         viewModel.likedClassesWrapper.getData().observe(viewLifecycleOwner, { resource ->
             if (resource.status == Status.Success){
                 likedClassAdapter.setData(resource.data!!.take(3))
-                binding.nothingLikedTextView.visibility = View.INVISIBLE
+                likedClassesSectionVisibility(true)
             } else {
                 likedClassAdapter.setData(listOf())
-                binding.nothingLikedTextView.visibility = View.VISIBLE
+                likedClassesSectionVisibility(false)
             }
         })
         viewModel.journeysWrapper.getData().observe(viewLifecycleOwner, { resource ->
@@ -183,6 +183,23 @@ class HomeFragment : Fragment() {
         instructorRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
     }
 
+    private fun todaysPickVisibility(visibility: Boolean){
+        val showing = if (visibility) View.VISIBLE else View.GONE
+        binding.todayPickIcon.visibility = showing
+        binding.todayPickTextView.visibility = showing
+        binding.todaysPickRoot.visibility = showing
+        binding.secondDivider.visibility = showing
+    }
+
+    private fun likedClassesSectionVisibility(visibility: Boolean){
+        val showing = if (visibility) View.VISIBLE else View.GONE
+        binding.betweenNewAndLikedClassesDivider.visibility = showing
+        binding.likedIcon.visibility = showing
+        binding.likedTextView.visibility = showing
+        binding.seeLikedButton.visibility = showing
+        binding.likedRecyclerView.visibility = showing
+    }
+
     private fun journeySectionVisibility(visibility: Boolean){
         val showing = if (visibility) View.VISIBLE else View.GONE
         binding.betweenLikedAndJourneysDivider.visibility = showing
@@ -190,13 +207,5 @@ class HomeFragment : Fragment() {
         binding.journeysTextView.visibility = showing
         binding.seeJourneysButton.visibility = showing
         binding.journeyRecyclerView.visibility = showing
-    }
-
-    private fun todaysPickVisibility(visibility: Boolean){
-        val showing = if (visibility) View.VISIBLE else View.GONE
-        binding.todayPickIcon.visibility = showing
-        binding.todayPickTextView.visibility = showing
-        binding.todaysPickRoot.visibility = showing
-        binding.secondDivider.visibility = showing
     }
 }

@@ -173,6 +173,7 @@
                     android:layout_height="@dimen/divider_height"
                     android:layout_marginTop="@dimen/margin_medium"
                     android:background="@color/secondary_text"
+                    android:visibility="gone"
                     app:layout_constraintTop_toBottomOf="@+id/new_classes_recycler_view"
                     tools:layout_editor_absoluteX="16dp" />
 
@@ -182,6 +183,7 @@
                     android:layout_height="0dp"
                     android:contentDescription="@string/heart_icon"
                     android:src="@drawable/heart_liked_icon"
+                    android:visibility="gone"
                     app:layout_constraintBottom_toBottomOf="@+id/liked_text_view"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/liked_text_view" />
@@ -194,6 +196,7 @@
                     android:drawablePadding="@dimen/drawable_padding"
                     android:text="@string/by_you"
                     android:textSize="@dimen/header_text"
+                    android:visibility="gone"
                     app:layout_constraintBottom_toBottomOf="@+id/see_liked_button"
                     app:layout_constraintStart_toEndOf="@+id/liked_icon"
                     app:layout_constraintTop_toTopOf="@+id/see_liked_button" />
@@ -206,26 +209,16 @@
                     android:textAllCaps="false"
                     android:textColor="@color/light_blue"
                     android:textSize="@dimen/header_text"
+                    android:visibility="gone"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/between_new_and_liked_classes_divider" />
-
-                <TextView
-                    android:id="@+id/nothing_liked_text_view"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/nothing_to_show"
-                    android:textSize="@dimen/default_text"
-                    android:visibility="invisible"
-                    app:layout_constraintBottom_toTopOf="@+id/between_liked_and_journeys_divider"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/see_liked_button" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/liked_recycler_view"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/margin_small"
+                    android:visibility="gone"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/see_liked_button" />
