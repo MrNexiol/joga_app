@@ -1,5 +1,6 @@
 package dk.joga.jogago.ui
 
+import android.content.res.Configuration
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -23,6 +24,11 @@ class MainActivity : AppCompatActivity() {
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
                 R.id.loginFragment, R.id.loginErrorFragment, R.id.popupFragment, R.id.logoutFragment -> binding.mainBottomNav.visibility = View.GONE
+                R.id.classDetailsFragment -> {
+                    if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                        binding.mainBottomNav.visibility = View.GONE
+                    }
+                }
                 else -> binding.mainBottomNav.visibility = View.VISIBLE
             }
         }
