@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "654485839042",
-    "project_id": "joga-go-staging",
-    "storage_bucket": "joga-go-staging.appspot.com"
+    "project_number": "369404080054",
+    "project_id": "joga-go",
+    "storage_bucket": "joga-go.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:654485839042:android:34a4aa3ede09b4f48eaf5b",
+        "mobilesdk_app_id": "1:369404080054:android:47b8c82ea88b4ebdca5b17",
         "android_client_info": {
           "package_name": "dk.joga.jogago"
         }
       },
       "oauth_client": [
         {
-          "client_id": "654485839042-3qih0o0rqoq720j6blp138j6adqofdcj.apps.googleusercontent.com",
+          "client_id": "369404080054-kmk0j28s55srv9bd8gu4ecsr0p3nq6ej.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAdHSLZRAouJyfF1McRWESPowc82UmO2qc"
+          "current_key": "AIzaSyDN6dDUiRrS5j4IQbCCLs8j1pBZ_kVYDeE"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "654485839042-3qih0o0rqoq720j6blp138j6adqofdcj.apps.googleusercontent.com",
+              "client_id": "369404080054-kmk0j28s55srv9bd8gu4ecsr0p3nq6ej.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
