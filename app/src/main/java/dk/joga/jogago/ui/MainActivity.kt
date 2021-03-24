@@ -35,11 +35,15 @@ class MainActivity : AppCompatActivity() {
         binding.mainBottomNav.setOnNavigationItemSelectedListener {
             when(it.itemId){
                 R.id.navigation_home -> {
-                    navController.navigate(R.id.action_global_homeFragment)
+                    if (navController.currentDestination!!.id != R.id.homeFragment) {
+                        navController.navigate(R.id.action_global_homeFragment)
+                    }
                     true
                 }
                 R.id.navigation_classes -> {
-                    navController.navigate(R.id.action_global_classesFragment)
+                    if (navController.currentDestination!!.id != R.id.classesFragment) {
+                        navController.navigate(R.id.action_global_classesFragment)
+                    }
                     true
                 }
                 else -> false
