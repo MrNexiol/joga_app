@@ -81,6 +81,7 @@
         android:ellipsize="end"
         android:gravity="start"
         android:singleLine="true"
+        android:textColor="@color/joga_green"
         android:textSize="@dimen/header_text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
