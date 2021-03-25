@@ -45,7 +45,7 @@
 
                 <ImageView
                     android:id="@+id/today_pick_icon"
-                    android:layout_width="30dp"
+                    android:layout_width="@dimen/home_section_icon"
                     android:layout_height="0dp"
                     android:contentDescription="@string/star_icon"
                     android:src="@drawable/star_icon"
@@ -100,6 +100,7 @@
                         android:id="@+id/today_pick_trainer_name_text_view"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-light"
                         android:textColor="@color/secondary_text"
                         android:textSize="@dimen/default_text"
                         app:layout_constraintEnd_toStartOf="@+id/today_pick_min_text_view"
@@ -111,6 +112,7 @@
                         android:id="@+id/today_pick_min_text_view"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-light"
                         android:textColor="@color/secondary_text"
                         android:textSize="@dimen/default_text"
                         app:layout_constraintBottom_toBottomOf="@+id/today_pick_trainer_name_text_view"
@@ -121,6 +123,7 @@
                         android:id="@+id/today_pick_category"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-light"
                         android:textColor="@color/secondary_text"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/today_pick_trainer_name_text_view" />
@@ -140,7 +143,7 @@
 
                 <ImageView
                     android:id="@+id/new_classes_icon"
-                    android:layout_width="30dp"
+                    android:layout_width="@dimen/home_section_icon"
                     android:layout_height="0dp"
                     android:contentDescription="@string/clock_icon"
                     android:src="@drawable/clock_icon"
@@ -154,6 +157,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/margin_small"
                     android:layout_marginTop="@dimen/margin_medium"
+                    android:fontFamily="sans-serif-medium"
                     android:text="@string/new_classes"
                     android:textSize="@dimen/header_text"
                     app:layout_constraintStart_toEndOf="@+id/new_classes_icon"
@@ -179,7 +183,7 @@
 
                 <ImageView
                     android:id="@+id/liked_icon"
-                    android:layout_width="30dp"
+                    android:layout_width="@dimen/home_section_icon"
                     android:layout_height="0dp"
                     android:contentDescription="@string/heart_icon"
                     android:src="@drawable/heart_liked_icon"
@@ -194,6 +198,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/margin_small"
                     android:drawablePadding="@dimen/drawable_padding"
+                    android:fontFamily="sans-serif-medium"
                     android:text="@string/by_you"
                     android:textSize="@dimen/header_text"
                     android:visibility="gone"
@@ -235,7 +240,7 @@
 
                 <ImageView
                     android:id="@+id/journeys_icon_home"
-                    android:layout_width="30dp"
+                    android:layout_width="@dimen/home_section_icon"
                     android:layout_height="0dp"
                     android:contentDescription="@string/journeys_icon"
                     android:src="@drawable/journeys_icon"
@@ -249,6 +254,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/margin_small"
                     android:drawablePadding="@dimen/drawable_padding"
+                    android:fontFamily="sans-serif-medium"
                     android:text="@string/journeys"
                     android:textSize="@dimen/header_text"
                     app:layout_constraintBottom_toBottomOf="@+id/see_journeys_button"
@@ -287,7 +293,7 @@
 
                 <ImageView
                     android:id="@+id/trainers_icon"
-                    android:layout_width="30dp"
+                    android:layout_width="@dimen/home_section_icon"
                     android:layout_height="0dp"
                     android:contentDescription="@string/trainer_icon"
                     android:src="@drawable/trainer_placeholder_icon"
@@ -303,6 +309,7 @@
                     android:layout_marginStart="@dimen/margin_small"
                     android:layout_marginTop="@dimen/margin_medium"
                     android:drawablePadding="@dimen/drawable_padding"
+                    android:fontFamily="sans-serif-medium"
                     android:text="@string/trainers"
                     android:textSize="@dimen/header_text"
                     app:layout_constraintStart_toEndOf="@+id/trainers_icon"
