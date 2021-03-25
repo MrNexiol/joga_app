@@ -182,7 +182,7 @@ class ClassDetailsFragment : Fragment() {
             viewModel.playWhenReady = player!!.playWhenReady
             viewModel.playbackPosition = player!!.currentPosition
             viewModel.currentWindow = player!!.currentWindowIndex
-            player!!.pause()
+            player!!.stop()
             player!!.release()
             player = null
         }
