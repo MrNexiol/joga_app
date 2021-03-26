@@ -8,16 +8,12 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 object AppContainer {
-    private lateinit var retrofitInterceptor: RetrofitInterceptor
-    private lateinit var okHttpClient: OkHttpClient
-    private lateinit var retrofit: WebService
-
     lateinit var repository: Repository
 
     fun init(context: Context) {
-        retrofitInterceptor = RetrofitInterceptor(context)
-        okHttpClient = OkHttpClient().newBuilder().addInterceptor(retrofitInterceptor).build()
-        retrofit = Retrofit.Builder()
+        val retrofitInterceptor = RetrofitInterceptor(context)
+        val okHttpClient = OkHttpClient().newBuilder().addInterceptor(retrofitInterceptor).build()
+        val retrofit = Retrofit.Builder()
             .baseUrl(BuildConfig.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .client(okHttpClient)
