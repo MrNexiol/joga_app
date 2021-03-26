@@ -20,5 +20,6 @@
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
 
+-keep class dk.joga.jogago.JoGaApplication {*;}
 -keep class dk.joga.jogago.AppContainer {*;}
 -keep class dk.joga.jogago.api.* {*;}
