@@ -5,28 +5,23 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import dk.joga.jogago.AppContainer
 import dk.joga.jogago.api.Status
 import dk.joga.jogago.databinding.FragmentLikedBinding
 
 class LikedFragment : Fragment() {
     private var _binding: FragmentLikedBinding? = null
     private val binding get() = _binding!!
-    private lateinit var viewModelFactory: LikedViewModelFactory
-    private lateinit var viewModel: LikedViewModel
+    private val viewModel: LikedViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentLikedBinding.inflate(inflater, container, false)
-        viewModelFactory = LikedViewModelFactory(AppContainer.repository)
-        viewModel = ViewModelProvider(this, viewModelFactory).get(LikedViewModel::class.java)
-
         val recyclerView = binding.likedClassesRecyclerView
-        val adapter = LikedAdapter(listOf(), AppContainer.repository)
+        val adapter = LikedAdapter(listOf())
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(context)
 
