@@ -339,7 +339,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/instructor_recycler_view"
-                    app:strokeColor="@color/white"
+                    app:strokeColor="@color/joga_green"
                     app:strokeWidth="2dp" />
 
                 <TextView
