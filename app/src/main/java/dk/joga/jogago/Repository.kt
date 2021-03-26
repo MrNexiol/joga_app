@@ -241,9 +241,8 @@ class Repository(private val service: WebService) {
         return data
     }
 
-    fun getClass(token: String, id: String): LiveData<Resource<Class>> {
+    fun getClass(id: String): LiveData<Resource<Class>> {
         val data = MutableLiveData<Resource<Class>>()
-        val auth = "Bearer $token"
         service.getClass(id).enqueue(object : Callback<ClassResponse>{
             override fun onResponse(call: Call<ClassResponse>, response: Response<ClassResponse>) {
                 if (response.body() != null){
@@ -301,9 +300,8 @@ class Repository(private val service: WebService) {
         return data
     }
 
-    fun markClassAsWatched(token: String, classId: String): LiveData<Resource<Void>>{
+    fun markClassAsWatched(classId: String): LiveData<Resource<Void>>{
         val data = MutableLiveData<Resource<Void>>()
-        val auth = "Bearer $token"
         service.markClassAsWatched(classId).enqueue(object : Callback<Void>{
             override fun onResponse(call: Call<Void>, response: Response<Void>) {
                 if (response.code() == 201){

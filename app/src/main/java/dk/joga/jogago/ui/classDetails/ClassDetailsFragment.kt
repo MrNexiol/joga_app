@@ -1,6 +1,5 @@
 package dk.joga.jogago.ui.classDetails
 
-import android.content.Context
 import android.content.res.Configuration
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -40,10 +39,8 @@ class ClassDetailsFragment : Fragment() {
             savedInstanceState: Bundle?
     ): View {
         _binding = FragmentClassDetailsBinding.inflate(inflater, container, false)
-        val sharedPrefs = activity?.getPreferences(Context.MODE_PRIVATE)
-        val token = sharedPrefs?.getString(getString(R.string.saved_token_key), null)
         val appContainer = (activity?.application as JoGaApplication).appContainer
-        viewModelFactory = ClassDetailsViewModelFactory(appContainer.repository, token!!, args.classId)
+        viewModelFactory = ClassDetailsViewModelFactory(appContainer.repository, args.classId)
         viewModel = ViewModelProvider(this, viewModelFactory).get(ClassDetailsViewModel::class.java)
 
         if (args.classIds != null) {

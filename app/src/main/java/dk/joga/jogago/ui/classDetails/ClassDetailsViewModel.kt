@@ -7,10 +7,10 @@ import dk.joga.jogago.api.Class
 import dk.joga.jogago.api.RefreshableSource
 import dk.joga.jogago.api.Resource
 
-class ClassDetailsViewModel(private val repository: Repository, private val token: String, private val id: String) : ViewModel() {
+class ClassDetailsViewModel(private val repository: Repository, private val id: String) : ViewModel() {
     val classWrapper = object : RefreshableSource<Class>() {
         override fun provideLiveData(): LiveData<Resource<Class>> {
-            return repository.getClass(token, id)
+            return repository.getClass(id)
         }
     }
     var playWhenReady: Boolean = true
@@ -27,6 +27,6 @@ class ClassDetailsViewModel(private val repository: Repository, private val toke
     }
 
     fun markAsWatched(){
-        repository.markClassAsWatched(token, id)
+        repository.markClassAsWatched(id)
     }
 }
