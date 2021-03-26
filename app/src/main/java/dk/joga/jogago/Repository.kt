@@ -283,9 +283,8 @@ class Repository(private val service: WebService) {
         return data
     }
 
-    fun toggleClassLike(token: String, id: String): LiveData<Resource<Void>>{
+    fun toggleClassLike(id: String): LiveData<Resource<Void>>{
         val data = MutableLiveData<Resource<Void>>()
-        val auth = "Bearer $token"
         service.toggleLike(id).enqueue(object : Callback<Void>{
             override fun onResponse(call: Call<Void>, response: Response<Void>) {
                 if (response.code() == 200){

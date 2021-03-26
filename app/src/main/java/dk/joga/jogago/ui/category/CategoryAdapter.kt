@@ -11,7 +11,7 @@ import dk.joga.jogago.Repository
 import dk.joga.jogago.api.Class
 import dk.joga.jogago.databinding.LikeableRecyclerViewItemBinding
 
-class CategoryAdapter(private var data: List<Class>, private val repository: Repository, private val token: String) : RecyclerView.Adapter<CategoryAdapter.ViewHolder>() {
+class CategoryAdapter(private var data: List<Class>, private val repository: Repository) : RecyclerView.Adapter<CategoryAdapter.ViewHolder>() {
 
     private var liked = mutableListOf<Boolean>()
 
@@ -42,7 +42,7 @@ class CategoryAdapter(private var data: List<Class>, private val repository: Rep
         }
         holder.binding.heartIcon.setOnClickListener {
             liked[position] = !liked[position]
-            repository.toggleClassLike(token, data[position].id)
+            repository.toggleClassLike(data[position].id)
             if (liked[position]){
                 holder.binding.heartIcon.setImageResource(R.drawable.heart_liked_icon)
             } else {

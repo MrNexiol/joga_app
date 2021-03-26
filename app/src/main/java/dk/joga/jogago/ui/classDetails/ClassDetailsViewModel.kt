@@ -23,7 +23,7 @@ class ClassDetailsViewModel(private val repository: Repository, private val toke
     }
 
     fun toggleClassLike(){
-        repository.toggleClassLike(token, id)
+        repository.toggleClassLike(id)
     }
 
     fun markAsWatched(){
