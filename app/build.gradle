@@ -48,7 +48,6 @@ android {
 }
 
 dependencies {
-    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     def nav_version = "2.3.4"
     def lifecycle_version = "2.3.0"
     def exoplayer_version = "2.13.1"
@@ -69,7 +68,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-crashlytics-ktx'
     implementation 'com.google.firebase:firebase-analytics-ktx'
     implementation 'com.google.firebase:firebase-perf-ktx'
-    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
     implementation "com.google.android.exoplayer:exoplayer-core:$exoplayer_version"
     implementation "com.google.android.exoplayer:exoplayer-dash:$exoplayer_version"
     implementation "com.google.android.exoplayer:exoplayer-ui:$exoplayer_version"
