@@ -47,9 +47,8 @@ class Repository(private val service: WebService) {
         return data
     }
 
-    fun getInstructor(token: String, id: String): LiveData<Resource<Instructor>> {
+    fun getInstructor(id: String): LiveData<Resource<Instructor>> {
         val data = MutableLiveData<Resource<Instructor>>()
-        val auth = "Bearer $token"
         service.getInstructor(id).enqueue(object : Callback<InstructorResponse>{
             override fun onResponse(call: Call<InstructorResponse>, response: Response<InstructorResponse>) {
                 if (response.body() != null){
@@ -198,9 +197,8 @@ class Repository(private val service: WebService) {
         return data
     }
 
-    fun getInstructorClasses(token: String, instructorId: String): LiveData<Resource<List<Class>>> {
+    fun getInstructorClasses(instructorId: String): LiveData<Resource<List<Class>>> {
         val data = MutableLiveData<Resource<List<Class>>>()
-        val auth = "Bearer $token"
         service.getInstructorClasses(instructorId).enqueue(object : Callback<Classes>{
             override fun onResponse(call: Call<Classes>, response: Response<Classes>) {
                 if (response.body() != null){

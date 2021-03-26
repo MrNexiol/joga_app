@@ -8,15 +8,15 @@ import dk.joga.jogago.api.Instructor
 import dk.joga.jogago.api.RefreshableSource
 import dk.joga.jogago.api.Resource
 
-class TrainerDetailViewModel(repository: Repository, trainerId: String, token: String) : ViewModel() {
+class TrainerDetailViewModel(repository: Repository, trainerId: String) : ViewModel() {
     val instructorWrapper = object : RefreshableSource<Instructor>() {
         override fun provideLiveData(): LiveData<Resource<Instructor>> {
-            return repository.getInstructor(token, trainerId)
+            return repository.getInstructor(trainerId)
         }
     }
     val instructorClassesWrapper = object : RefreshableSource<List<Class>>() {
         override fun provideLiveData(): LiveData<Resource<List<Class>>> {
-            return repository.getInstructorClasses(token, trainerId)
+            return repository.getInstructorClasses(trainerId)
         }
     }
     var playWhenReady: Boolean = true

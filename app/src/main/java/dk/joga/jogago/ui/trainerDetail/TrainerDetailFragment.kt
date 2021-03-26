@@ -1,6 +1,5 @@
 package dk.joga.jogago.ui.trainerDetail
 
-import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -32,13 +31,11 @@ class TrainerDetailFragment : Fragment() {
     ): View {
         _binding = FragmentTrainerDetailBinding.inflate(inflater, container, false)
         val appContainer = (activity?.application as JoGaApplication).appContainer
-        val sharedPrefs = activity?.getPreferences(Context.MODE_PRIVATE)
-        val token = sharedPrefs?.getString(getString(R.string.saved_token_key), null)
-        viewModelFactory = TrainerDetailViewModelFactory(appContainer.repository, args.trainerId, token!!)
+        viewModelFactory = TrainerDetailViewModelFactory(appContainer.repository, args.trainerId)
         viewModel = ViewModelProvider(this, viewModelFactory).get(TrainerDetailViewModel::class.java)
 
         val recyclerView = binding.instructorClassesRecyclerView
-        val adapter = TrainerDetailAdapter(listOf(), appContainer.repository, token)
+        val adapter = TrainerDetailAdapter(listOf(), appContainer.repository)
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(context)
 
