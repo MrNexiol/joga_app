@@ -10,7 +10,7 @@ import dk.joga.jogago.api.Resource
 class CategoryDetailsViewModel(repository: Repository, id: String) : ViewModel() {
     val categoryClassesWrapper = object : RefreshableSource<List<Class>>() {
         override fun provideLiveData(): LiveData<Resource<List<Class>>> {
-            return repository.getClasses(id)
+            return repository.getCategory(id)
         }
     }
 

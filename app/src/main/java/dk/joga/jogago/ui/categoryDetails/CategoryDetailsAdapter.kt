@@ -53,7 +53,7 @@ class CategoryDetailsAdapter(private var data: List<Class>, private val reposito
         holder.binding.likedClassDuration.text = holder.itemView.context.getString(R.string.min, data[position].duration)
         holder.binding.likedClassInstructorName.text = data[position].instructor.name
         holder.binding.root.setOnClickListener {
-            val action = CategoryFragmentDirections.actionCategoryFragmentToClassDetailsFragment(data[position].id)
+            val action = CategoryDetailsFragmentDirections.actionCategoryFragmentToClassDetailsFragment(data[position].id)
             holder.itemView.findNavController().navigate(action)
         }
     }

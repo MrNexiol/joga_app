@@ -19,7 +19,7 @@ import dk.joga.jogago.databinding.FragmentCategoryBinding
 class CategoryDetailsFragment : Fragment() {
     private var _binding: FragmentCategoryBinding? = null
     private val binding get() = _binding!!
-    private val args: CategoryFragmentArgs by navArgs()
+    private val args: CategoryDetailsFragmentArgs by navArgs()
     private lateinit var viewModelFactory: CategoryDetailsViewModelFactory
     private lateinit var viewModel: CategoryDetailsViewModel
 
@@ -50,7 +50,7 @@ class CategoryDetailsFragment : Fragment() {
                 binding.firstClassDuration.text = getString(R.string.min, firstClass.duration)
                 binding.categoryFirstClassDescription.text = firstClass.description
                 binding.firstClassThumbnail.setOnClickListener {
-                    val action = CategoryFragmentDirections.actionCategoryFragmentToClassDetailsFragment(firstClass.id)
+                    val action = CategoryDetailsFragmentDirections.actionCategoryFragmentToClassDetailsFragment(firstClass.id)
                     findNavController().navigate(action)
                 }
                 adapter.setData(otherClasses)
