@@ -7,7 +7,7 @@ import dk.joga.jogago.api.Journey
 import dk.joga.jogago.api.RefreshableSource
 import dk.joga.jogago.api.Resource
 
-class JourneysViewModel(repository: Repository, token: String) : ViewModel() {
+class JourneysViewModel(repository: Repository) : ViewModel() {
     val journeysWrapper = object : RefreshableSource<List<Journey>>() {
         override fun provideLiveData(): LiveData<Resource<List<Journey>>> {
             return repository.getJourneys()
