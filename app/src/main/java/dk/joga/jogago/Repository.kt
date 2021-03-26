@@ -129,9 +129,8 @@ class Repository(private val service: WebService) {
         return data
     }
 
-    fun getClasses(token: String, categoryId: String = ""): LiveData<Resource<List<Class>>> {
+    fun getClasses(categoryId: String = ""): LiveData<Resource<List<Class>>> {
         val data = MutableLiveData<Resource<List<Class>>>()
-        val auth = "Bearer $token"
         service.getClasses(categoryId).enqueue(object : Callback<Classes>{
             override fun onResponse(call: Call<Classes>, response: Response<Classes>) {
                 if (response.body() != null){
