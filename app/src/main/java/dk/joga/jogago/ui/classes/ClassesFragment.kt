@@ -1,6 +1,5 @@
 package dk.joga.jogago.ui.classes
 
-import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -25,11 +24,8 @@ class ClassesFragment : Fragment() {
     ): View {
         _binding = FragmentClassesBinding.inflate(inflater, container, false)
 
-        val sharedPrefs = activity?.getPreferences(Context.MODE_PRIVATE)
-        val token = sharedPrefs?.getString(getString(R.string.saved_token_key), null)
-
         val appContainer = (activity?.application as JoGaApplication).appContainer
-        viewModelFactory = ClassesViewModelFactory(appContainer.repository, token!!)
+        viewModelFactory = ClassesViewModelFactory(appContainer.repository)
         viewModel = ViewModelProvider(this, viewModelFactory).get(ClassesViewModel::class.java)
 
         val recyclerView = binding.classesRecyclerView
