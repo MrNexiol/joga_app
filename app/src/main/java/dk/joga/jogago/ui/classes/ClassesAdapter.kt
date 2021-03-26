@@ -5,6 +5,8 @@ import android.view.ViewGroup
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.CenterCrop
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import dk.joga.jogago.R
 import dk.joga.jogago.api.Category
@@ -25,6 +27,7 @@ class ClassesAdapter (private var data: List<Category>) : RecyclerView.Adapter<C
         Glide.with(holder.itemView)
                 .load(data[position].image)
                 .fallback(R.drawable.placeholder_image)
+                .transform(CenterCrop(), RoundedCorners(holder.itemView.context.resources.getDimensionPixelSize(R.dimen.card_radius)))
                 .transition(DrawableTransitionOptions.withCrossFade())
                 .into(holder.binding.classThumbnailImageView)
         holder.binding.root.setOnClickListener {

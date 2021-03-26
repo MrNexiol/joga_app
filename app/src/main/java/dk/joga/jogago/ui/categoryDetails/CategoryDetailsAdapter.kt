@@ -1,4 +1,4 @@
-package dk.joga.jogago.ui.category
+package dk.joga.jogago.ui.categoryDetails
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -6,12 +6,12 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
+import dk.joga.jogago.AppContainer
 import dk.joga.jogago.R
-import dk.joga.jogago.Repository
 import dk.joga.jogago.api.Class
 import dk.joga.jogago.databinding.LikeableRecyclerViewItemBinding
 
-class CategoryAdapter(private var data: List<Class>, private val repository: Repository, private val token: String) : RecyclerView.Adapter<CategoryAdapter.ViewHolder>() {
+class CategoryDetailsAdapter(private var data: List<Class>) : RecyclerView.Adapter<CategoryDetailsAdapter.ViewHolder>() {
 
     private var liked = mutableListOf<Boolean>()
 
@@ -42,7 +42,7 @@ class CategoryAdapter(private var data: List<Class>, private val repository: Rep
         }
         holder.binding.heartIcon.setOnClickListener {
             liked[position] = !liked[position]
-            repository.toggleClassLike(token, data[position].id)
+            AppContainer.repository.toggleClassLike(data[position].id)
             if (liked[position]){
                 holder.binding.heartIcon.setImageResource(R.drawable.heart_liked_icon)
             } else {
@@ -53,7 +53,7 @@ class CategoryAdapter(private var data: List<Class>, private val repository: Rep
         holder.binding.likedClassDuration.text = holder.itemView.context.getString(R.string.min, data[position].duration)
         holder.binding.likedClassInstructorName.text = data[position].instructor.name
         holder.binding.root.setOnClickListener {
-            val action = CategoryFragmentDirections.actionCategoryFragmentToClassDetailsFragment(data[position].id)
+            val action = CategoryDetailsFragmentDirections.actionCategoryFragmentToClassDetailsFragment(data[position].id)
             holder.itemView.findNavController().navigate(action)
         }
     }

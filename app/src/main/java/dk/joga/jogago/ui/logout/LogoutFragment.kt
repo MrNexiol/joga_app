@@ -8,7 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
-import dk.joga.jogago.JoGaApplication
+import dk.joga.jogago.AppContainer
 import dk.joga.jogago.R
 import dk.joga.jogago.api.Status
 import dk.joga.jogago.databinding.FragmentLogoutBinding
@@ -24,31 +24,27 @@ class LogoutFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentLogoutBinding.inflate(inflater, container, false)
-        sharedPrefs = activity?.getPreferences(Context.MODE_PRIVATE)
+        sharedPrefs = requireActivity().getSharedPreferences(getString(R.string.preferences_name), Context.MODE_PRIVATE)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val appContainer = (activity?.application as JoGaApplication).appContainer
         binding.usernameTextView.text = sharedPrefs?.getString(getString(R.string.saved_username), "")
         binding.currentAppVersionTextView.text = BuildConfig.VERSION_NAME
         binding.logMeOutButton.setOnClickListener {
-            val token = sharedPrefs?.getString(getString(R.string.saved_token_key), null)
-            token?.let {
-                appContainer.repository.logout(it).observe(viewLifecycleOwner, { resource ->
-                    if (resource.status == Status.Success){
-                        with(sharedPrefs?.edit()){
-                            this?.remove(getString(R.string.saved_token_key))
-                            this?.remove(getString(R.string.saved_user_id))
-                            this?.remove(getString(R.string.saved_username))
-                            this?.apply()
-                        }
-                        val action = LogoutFragmentDirections.actionLogoutFragmentToLoginFragment()
-                        findNavController().navigate(action)
+            AppContainer.repository.logout().observe(viewLifecycleOwner, { resource ->
+                if (resource.status == Status.Success){
+                    with(sharedPrefs?.edit()){
+                        this?.remove(getString(R.string.saved_token_key))
+                        this?.remove(getString(R.string.saved_user_id))
+                        this?.remove(getString(R.string.saved_username))
+                        this?.apply()
                     }
-                })
-            }
+                    val action = LogoutFragmentDirections.actionLogoutFragmentToLoginFragment()
+                    findNavController().navigate(action)
+                }
+            })
         }
     }
 }

@@ -9,7 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import androidx.navigation.fragment.findNavController
-import dk.joga.jogago.JoGaApplication
+import dk.joga.jogago.AppContainer
 import dk.joga.jogago.R
 import dk.joga.jogago.api.Status
 import dk.joga.jogago.databinding.FragmentLoginBinding
@@ -24,23 +24,18 @@ class LoginFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentLoginBinding.inflate(inflater, container, false)
-        sharedPrefs = activity?.getPreferences(Context.MODE_PRIVATE)
-        val token = sharedPrefs?.getString(getString(R.string.saved_token_key), null)
-        if (token != null){
-            navigateToPopup()
-        }
+        sharedPrefs = activity?.getSharedPreferences(getString(R.string.preferences_name), Context.MODE_PRIVATE)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val appContainer = (activity?.application as JoGaApplication).appContainer
         binding.loginButton.setOnClickListener {
             val username = binding.usernameEditText.text.toString()
             val password = binding.passwordEditText.text.toString()
             val imm: InputMethodManager = requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
             imm.hideSoftInputFromWindow(view.windowToken, 0)
-            appContainer.repository.login(username, password).observe(viewLifecycleOwner, { resource ->
+            AppContainer.repository.login(username, password).observe(viewLifecycleOwner, { resource ->
                 if(resource.status == Status.Success) {
                     with(sharedPrefs?.edit()){
                         this?.putString(getString(R.string.saved_token_key), resource.data!!.token)
@@ -48,7 +43,7 @@ class LoginFragment : Fragment() {
                         this?.putString(getString(R.string.saved_username), username)
                         this?.commit()
                     }
-                    navigateToPopup()
+                    navigateToHome()
                 } else {
                     val action = LoginFragmentDirections.actionLoginFragmentToLoginErrorFragment()
                     findNavController().navigate(action)
@@ -62,8 +57,8 @@ class LoginFragment : Fragment() {
         _binding = null
     }
 
-    private fun navigateToPopup() {
-        val action = LoginFragmentDirections.actionLoginFragmentToHomeFragment()
+    private fun navigateToHome() {
+        val action = LoginFragmentDirections.actionGlobalHomeFragment()
         findNavController().navigate(action)
     }
 }

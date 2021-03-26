@@ -11,17 +11,13 @@
         android:id="@+id/home_refresh_layout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/navigation_view"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <ScrollView
             android:id="@+id/home_scroll_view"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:layout_constraintBottom_toTopOf="@id/navigation_view"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -49,7 +45,7 @@
 
                 <ImageView
                     android:id="@+id/today_pick_icon"
-                    android:layout_width="30dp"
+                    android:layout_width="@dimen/home_section_icon"
                     android:layout_height="0dp"
                     android:contentDescription="@string/star_icon"
                     android:src="@drawable/star_icon"
@@ -79,38 +75,32 @@
                     app:layout_constraintTop_toBottomOf="@+id/today_pick_text_view"
                     tools:layout_editor_absoluteX="16dp">
 
-                    <androidx.cardview.widget.CardView
-                        android:id="@+id/today_pick_thumbnail_card_view"
+                    <ImageView
+                        android:id="@+id/todays_pick_thumbnail"
                         android:layout_width="0dp"
                         android:layout_height="0dp"
-                        app:cardCornerRadius="@dimen/card_radius"
+                        android:contentDescription="@string/placeholder"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/placeholder_image"
                         app:layout_constraintDimensionRatio="H,16:9"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent">
-
-                        <ImageView
-                            android:id="@+id/todays_pick_thumbnail"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:contentDescription="@string/placeholder"
-                            android:scaleType="fitXY"
-                            android:src="@drawable/placeholder_image" />
-
-                    </androidx.cardview.widget.CardView>
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
                         android:id="@+id/today_pick_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:textColor="@color/joga_green"
                         android:textSize="@dimen/header_text"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/today_pick_thumbnail_card_view" />
+                        app:layout_constraintTop_toBottomOf="@+id/todays_pick_thumbnail" />
 
                     <TextView
                         android:id="@+id/today_pick_trainer_name_text_view"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-light"
                         android:textColor="@color/secondary_text"
                         android:textSize="@dimen/default_text"
                         app:layout_constraintEnd_toStartOf="@+id/today_pick_min_text_view"
@@ -122,11 +112,21 @@
                         android:id="@+id/today_pick_min_text_view"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-light"
                         android:textColor="@color/secondary_text"
                         android:textSize="@dimen/default_text"
                         app:layout_constraintBottom_toBottomOf="@+id/today_pick_trainer_name_text_view"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/today_pick_name" />
+
+                    <TextView
+                        android:id="@+id/today_pick_category"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-light"
+                        android:textColor="@color/secondary_text"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/today_pick_trainer_name_text_view" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -143,7 +143,7 @@
 
                 <ImageView
                     android:id="@+id/new_classes_icon"
-                    android:layout_width="30dp"
+                    android:layout_width="@dimen/home_section_icon"
                     android:layout_height="0dp"
                     android:contentDescription="@string/clock_icon"
                     android:src="@drawable/clock_icon"
@@ -157,6 +157,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/margin_small"
                     android:layout_marginTop="@dimen/margin_medium"
+                    android:fontFamily="sans-serif-medium"
                     android:text="@string/new_classes"
                     android:textSize="@dimen/header_text"
                     app:layout_constraintStart_toEndOf="@+id/new_classes_icon"
@@ -176,15 +177,17 @@
                     android:layout_height="@dimen/divider_height"
                     android:layout_marginTop="@dimen/margin_medium"
                     android:background="@color/secondary_text"
+                    android:visibility="gone"
                     app:layout_constraintTop_toBottomOf="@+id/new_classes_recycler_view"
                     tools:layout_editor_absoluteX="16dp" />
 
                 <ImageView
                     android:id="@+id/liked_icon"
-                    android:layout_width="30dp"
+                    android:layout_width="@dimen/home_section_icon"
                     android:layout_height="0dp"
                     android:contentDescription="@string/heart_icon"
                     android:src="@drawable/heart_liked_icon"
+                    android:visibility="gone"
                     app:layout_constraintBottom_toBottomOf="@+id/liked_text_view"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/liked_text_view" />
@@ -195,8 +198,10 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/margin_small"
                     android:drawablePadding="@dimen/drawable_padding"
+                    android:fontFamily="sans-serif-medium"
                     android:text="@string/by_you"
                     android:textSize="@dimen/header_text"
+                    android:visibility="gone"
                     app:layout_constraintBottom_toBottomOf="@+id/see_liked_button"
                     app:layout_constraintStart_toEndOf="@+id/liked_icon"
                     app:layout_constraintTop_toTopOf="@+id/see_liked_button" />
@@ -209,26 +214,16 @@
                     android:textAllCaps="false"
                     android:textColor="@color/light_blue"
                     android:textSize="@dimen/header_text"
+                    android:visibility="gone"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/between_new_and_liked_classes_divider" />
-
-                <TextView
-                    android:id="@+id/nothing_liked_text_view"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/nothing_to_show"
-                    android:textSize="@dimen/default_text"
-                    android:visibility="invisible"
-                    app:layout_constraintBottom_toTopOf="@+id/between_liked_and_journeys_divider"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/see_liked_button" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/liked_recycler_view"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/margin_small"
+                    android:visibility="gone"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/see_liked_button" />
@@ -245,7 +240,7 @@
 
                 <ImageView
                     android:id="@+id/journeys_icon_home"
-                    android:layout_width="30dp"
+                    android:layout_width="@dimen/home_section_icon"
                     android:layout_height="0dp"
                     android:contentDescription="@string/journeys_icon"
                     android:src="@drawable/journeys_icon"
@@ -259,6 +254,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/margin_small"
                     android:drawablePadding="@dimen/drawable_padding"
+                    android:fontFamily="sans-serif-medium"
                     android:text="@string/journeys"
                     android:textSize="@dimen/header_text"
                     app:layout_constraintBottom_toBottomOf="@+id/see_journeys_button"
@@ -297,7 +293,7 @@
 
                 <ImageView
                     android:id="@+id/trainers_icon"
-                    android:layout_width="30dp"
+                    android:layout_width="@dimen/home_section_icon"
                     android:layout_height="0dp"
                     android:contentDescription="@string/trainer_icon"
                     android:src="@drawable/trainer_placeholder_icon"
@@ -313,6 +309,7 @@
                     android:layout_marginStart="@dimen/margin_small"
                     android:layout_marginTop="@dimen/margin_medium"
                     android:drawablePadding="@dimen/drawable_padding"
+                    android:fontFamily="sans-serif-medium"
                     android:text="@string/trainers"
                     android:textSize="@dimen/header_text"
                     app:layout_constraintStart_toEndOf="@+id/trainers_icon"
@@ -362,17 +359,4 @@
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-        <com.google.android.material.bottomnavigation.BottomNavigationView
-            android:id="@+id/navigation_view"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/bottom_navigation_height"
-            android:background="@color/background"
-            app:itemIconTint="@color/white"
-            app:itemRippleColor="@color/white"
-            app:itemTextColor="@color/white"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:menu="@menu/navigation_menu" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

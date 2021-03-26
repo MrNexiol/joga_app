@@ -8,10 +8,9 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class Repository(private val service: WebService) {
-    fun getWelcomePopup(token: String): LiveData<Resource<WelcomePopup>>{
+    fun getWelcomePopup(): LiveData<Resource<WelcomePopup>>{
         val data = MutableLiveData<Resource<WelcomePopup>>()
-        val auth = "Bearer $token"
-        service.getWelcomePopup(auth).enqueue(object : Callback<WelcomePopupResponse>{
+        service.getWelcomePopup().enqueue(object : Callback<WelcomePopupResponse>{
             override fun onResponse(call: Call<WelcomePopupResponse>, response: Response<WelcomePopupResponse>) {
                 if (response.body() != null){
                     val resource = Resource(Status.Success, response.body()!!.welcomePopup)
@@ -30,10 +29,9 @@ class Repository(private val service: WebService) {
         return data
     }
 
-    fun getInstructors(token: String): LiveData<Resource<List<Instructor>>> {
+    fun getInstructors(): LiveData<Resource<List<Instructor>>> {
         val data = MutableLiveData<Resource<List<Instructor>>>()
-        val auth = "Bearer $token"
-        service.getInstructors(auth).enqueue(object : Callback<Instructors>{
+        service.getInstructors().enqueue(object : Callback<Instructors>{
             override fun onResponse(call: Call<Instructors>, response: Response<Instructors>) {
                 if (response.body() != null){
                     val resource = Resource(Status.Success, response.body()!!.instructors)
@@ -48,10 +46,9 @@ class Repository(private val service: WebService) {
         return data
     }
 
-    fun getInstructor(token: String, id: String): LiveData<Resource<Instructor>> {
+    fun getInstructor(id: String): LiveData<Resource<Instructor>> {
         val data = MutableLiveData<Resource<Instructor>>()
-        val auth = "Bearer $token"
-        service.getInstructor(auth, id).enqueue(object : Callback<InstructorResponse>{
+        service.getInstructor(id).enqueue(object : Callback<InstructorResponse>{
             override fun onResponse(call: Call<InstructorResponse>, response: Response<InstructorResponse>) {
                 if (response.body() != null){
                     val resource = Resource(Status.Success, response.body()!!.instructor)
@@ -68,10 +65,9 @@ class Repository(private val service: WebService) {
         return data
     }
 
-    fun getJourneys(token: String): LiveData<Resource<List<Journey>>> {
+    fun getJourneys(): LiveData<Resource<List<Journey>>> {
         val data = MutableLiveData<Resource<List<Journey>>>()
-        val auth = "Bearer $token"
-        service.getJourneys(auth).enqueue(object : Callback<Journeys>{
+        service.getJourneys().enqueue(object : Callback<Journeys>{
             override fun onResponse(call: Call<Journeys>, response: Response<Journeys>) {
                 if (response.body() != null){
                     if (response.body()!!.journeys.isNotEmpty()) {
@@ -94,10 +90,9 @@ class Repository(private val service: WebService) {
         return data
     }
 
-    fun getJourney(token: String, id: String): LiveData<Resource<Journey>> {
+    fun getJourney(id: String): LiveData<Resource<Journey>> {
         val data = MutableLiveData<Resource<Journey>>()
-        val auth = "Bearer $token"
-        service.getJourney(auth, id).enqueue(object : Callback<JourneyResponse>{
+        service.getJourney(id).enqueue(object : Callback<JourneyResponse>{
             override fun onResponse(call: Call<JourneyResponse>, response: Response<JourneyResponse>) {
                 if (response.body() != null){
                     val resource = Resource(Status.Success, response.body()!!.journey)
@@ -114,10 +109,9 @@ class Repository(private val service: WebService) {
         return data
     }
 
-    fun getCategories(token: String): LiveData<Resource<List<Category>>> {
+    fun getCategories(): LiveData<Resource<List<Category>>> {
         val data = MutableLiveData<Resource<List<Category>>>()
-        val auth = "Bearer $token"
-        service.getCategories(auth).enqueue(object : Callback<Categories>{
+        service.getCategories().enqueue(object : Callback<Categories>{
             override fun onResponse(call: Call<Categories>, response: Response<Categories>) {
                 if (response.body()!!.categories.isEmpty()){
                     val resource = Resource(Status.Empty, listOf<Category>())
@@ -135,10 +129,9 @@ class Repository(private val service: WebService) {
         return data
     }
 
-    fun getClasses(token: String, categoryId: String = ""): LiveData<Resource<List<Class>>> {
+    fun getCategory(id: String): LiveData<Resource<List<Class>>> {
         val data = MutableLiveData<Resource<List<Class>>>()
-        val auth = "Bearer $token"
-        service.getClasses(auth, categoryId).enqueue(object : Callback<Classes>{
+        service.getClasses(id).enqueue(object : Callback<Classes>{
             override fun onResponse(call: Call<Classes>, response: Response<Classes>) {
                 if (response.body() != null){
                     val resource = Resource(Status.Success, response.body()!!.classes)
@@ -154,10 +147,9 @@ class Repository(private val service: WebService) {
         return data
     }
 
-    fun getNewClasses(token: String): LiveData<Resource<List<Class>>> {
+    fun getNewClasses(): LiveData<Resource<List<Class>>> {
         val data = MutableLiveData<Resource<List<Class>>>()
-        val auth = "Bearer $token"
-        service.getNewClasses(auth).enqueue(object : Callback<Classes>{
+        service.getNewClasses().enqueue(object : Callback<Classes>{
             override fun onResponse(call: Call<Classes>, response: Response<Classes>) {
                 if (response.body() != null){
                     if (response.body()!!.classes.isEmpty()){
@@ -179,10 +171,9 @@ class Repository(private val service: WebService) {
         return data
     }
 
-    fun getLikedClasses(token: String): LiveData<Resource<List<Class>>> {
+    fun getLikedClasses(): LiveData<Resource<List<Class>>> {
         val data = MutableLiveData<Resource<List<Class>>>()
-        val auth = "Bearer $token"
-        service.getLikedClasses(auth).enqueue(object : Callback<Classes>{
+        service.getLikedClasses().enqueue(object : Callback<Classes>{
             override fun onResponse(call: Call<Classes>, response: Response<Classes>) {
                 if (response.body() != null){
                     if (response.body()!!.classes.isEmpty()){
@@ -204,10 +195,9 @@ class Repository(private val service: WebService) {
         return data
     }
 
-    fun getInstructorClasses(token: String, instructorId: String): LiveData<Resource<List<Class>>> {
+    fun getInstructorClasses(instructorId: String): LiveData<Resource<List<Class>>> {
         val data = MutableLiveData<Resource<List<Class>>>()
-        val auth = "Bearer $token"
-        service.getInstructorClasses(auth, instructorId).enqueue(object : Callback<Classes>{
+        service.getInstructorClasses(instructorId).enqueue(object : Callback<Classes>{
             override fun onResponse(call: Call<Classes>, response: Response<Classes>) {
                 if (response.body() != null){
                     val resource = Resource(Status.Success, response.body()!!.classes)
@@ -224,10 +214,9 @@ class Repository(private val service: WebService) {
         return data
     }
 
-    fun getDailyClass(token: String): LiveData<Resource<Class>> {
+    fun getDailyClass(): LiveData<Resource<Class>> {
         val data = MutableLiveData<Resource<Class>>()
-        val auth = "Bearer $token"
-        service.getDailyClass(auth).enqueue(object : Callback<ClassResponse>{
+        service.getDailyClass().enqueue(object : Callback<ClassResponse>{
             override fun onResponse(call: Call<ClassResponse>, response: Response<ClassResponse>) {
                 if (response.body() != null){
                     val resource = Resource(Status.Success, response.body()!!.lecture)
@@ -246,10 +235,9 @@ class Repository(private val service: WebService) {
         return data
     }
 
-    fun getClass(token: String, id: String): LiveData<Resource<Class>> {
+    fun getClass(id: String): LiveData<Resource<Class>> {
         val data = MutableLiveData<Resource<Class>>()
-        val auth = "Bearer $token"
-        service.getClass(auth, id).enqueue(object : Callback<ClassResponse>{
+        service.getClass(id).enqueue(object : Callback<ClassResponse>{
             override fun onResponse(call: Call<ClassResponse>, response: Response<ClassResponse>) {
                 if (response.body() != null){
                     val resource = Resource(Status.Success, response.body()!!.lecture)
@@ -288,10 +276,9 @@ class Repository(private val service: WebService) {
         return data
     }
 
-    fun toggleClassLike(token: String, id: String): LiveData<Resource<Void>>{
+    fun toggleClassLike(id: String): LiveData<Resource<Void>>{
         val data = MutableLiveData<Resource<Void>>()
-        val auth = "Bearer $token"
-        service.toggleLike(auth, id).enqueue(object : Callback<Void>{
+        service.toggleLike(id).enqueue(object : Callback<Void>{
             override fun onResponse(call: Call<Void>, response: Response<Void>) {
                 if (response.code() == 200){
                     val resource = Resource(Status.Success, response.body())
@@ -307,10 +294,9 @@ class Repository(private val service: WebService) {
         return data
     }
 
-    fun markClassAsWatched(token: String, classId: String): LiveData<Resource<Void>>{
+    fun markClassAsWatched(classId: String): LiveData<Resource<Void>>{
         val data = MutableLiveData<Resource<Void>>()
-        val auth = "Bearer $token"
-        service.markClassAsWatched(auth, classId).enqueue(object : Callback<Void>{
+        service.markClassAsWatched(classId).enqueue(object : Callback<Void>{
             override fun onResponse(call: Call<Void>, response: Response<Void>) {
                 if (response.code() == 201){
                     val resource = Resource(Status.Success, response.body())
@@ -330,10 +316,9 @@ class Repository(private val service: WebService) {
         return data
     }
 
-    fun logout(token: String): LiveData<Resource<Void>>{
+    fun logout(): LiveData<Resource<Void>>{
         val data = MutableLiveData<Resource<Void>>()
-        val auth = "Bearer $token"
-        service.logout(auth).enqueue(object : Callback<Void>{
+        service.logout().enqueue(object : Callback<Void>{
             override fun onResponse(call: Call<Void>, response: Response<Void>) {
                 if (response.code() == 200){
                     val resource = Resource(Status.Success, response.body())

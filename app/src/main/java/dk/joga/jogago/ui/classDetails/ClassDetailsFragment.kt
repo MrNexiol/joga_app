@@ -1,6 +1,5 @@
 package dk.joga.jogago.ui.classDetails
 
-import android.content.Context
 import android.content.res.Configuration
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -19,7 +18,6 @@ import com.google.android.exoplayer2.source.hls.HlsMediaSource
 import com.google.android.exoplayer2.upstream.DataSource
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSource
 import com.google.android.exoplayer2.util.Util
-import dk.joga.jogago.JoGaApplication
 import dk.joga.jogago.R
 import dk.joga.jogago.databinding.FragmentClassDetailsBinding
 
@@ -40,10 +38,7 @@ class ClassDetailsFragment : Fragment() {
             savedInstanceState: Bundle?
     ): View {
         _binding = FragmentClassDetailsBinding.inflate(inflater, container, false)
-        val sharedPrefs = activity?.getPreferences(Context.MODE_PRIVATE)
-        val token = sharedPrefs?.getString(getString(R.string.saved_token_key), null)
-        val appContainer = (activity?.application as JoGaApplication).appContainer
-        viewModelFactory = ClassDetailsViewModelFactory(appContainer.repository, token!!, args.classId)
+        viewModelFactory = ClassDetailsViewModelFactory(args.classId)
         viewModel = ViewModelProvider(this, viewModelFactory).get(ClassDetailsViewModel::class.java)
 
         if (args.classIds != null) {
@@ -102,20 +97,6 @@ class ClassDetailsFragment : Fragment() {
         if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT){
             binding.playButton!!.setOnClickListener {
                 showVideo()
-            }
-
-            binding.bottomNavigationClassDetails!!.setOnNavigationItemSelectedListener {
-                when(it.itemId){
-                    R.id.navigation_home -> {
-                        findNavController().navigate(R.id.action_global_homeFragment)
-                        true
-                    }
-                    R.id.navigation_classes -> {
-                        findNavController().navigate(R.id.action_global_classesFragment)
-                        true
-                    }
-                    else -> false
-                }
             }
         }
     }
@@ -196,7 +177,7 @@ class ClassDetailsFragment : Fragment() {
             viewModel.playWhenReady = player!!.playWhenReady
             viewModel.playbackPosition = player!!.currentPosition
             viewModel.currentWindow = player!!.currentWindowIndex
-            player!!.pause()
+            player!!.stop()
             player!!.release()
             player = null
         }

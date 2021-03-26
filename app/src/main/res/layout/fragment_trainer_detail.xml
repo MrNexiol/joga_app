@@ -6,22 +6,11 @@
     android:layout_height="match_parent"
     tools:context=".ui.trainerDetail.TrainerDetailFragment" >
 
-    <TextView
-        android:id="@+id/no_classes_text_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="@string/instructor_no_classes"
-        android:textSize="@dimen/header_text"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="@+id/scrollView2"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <ScrollView
         android:id="@+id/scrollView2"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/trainer_details_bottom_navigation"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -136,14 +125,4 @@
 
     </ScrollView>
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/trainer_details_bottom_navigation"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/bottom_navigation_height"
-        android:background="@color/background"
-        app:itemIconTint="@color/white"
-        app:itemRippleColor="@color/white"
-        app:itemTextColor="@color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:menu="@menu/navigation_menu" />
 </androidx.constraintlayout.widget.ConstraintLayout>

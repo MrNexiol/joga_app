@@ -6,12 +6,12 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
+import dk.joga.jogago.AppContainer
 import dk.joga.jogago.R
-import dk.joga.jogago.Repository
 import dk.joga.jogago.api.Class
 import dk.joga.jogago.databinding.LikeableRecyclerViewItemBinding
 
-class LikedAdapter(private var data: List<Class>, private val repository: Repository, private val token: String) : RecyclerView.Adapter<LikedAdapter.ViewHolder>() {
+class LikedAdapter(private var data: List<Class>) : RecyclerView.Adapter<LikedAdapter.ViewHolder>() {
 
     private var liked = mutableListOf<Boolean>()
 
@@ -35,7 +35,7 @@ class LikedAdapter(private var data: List<Class>, private val repository: Reposi
         holder.binding.heartIcon.setImageResource(R.drawable.heart_liked_icon)
         holder.binding.heartIcon.setOnClickListener {
             liked[position] = !liked[position]
-            repository.toggleClassLike(token, data[position].id)
+            AppContainer.repository.toggleClassLike(data[position].id)
             if (liked[position]) {
                 holder.binding.heartIcon.setImageResource(R.drawable.heart_liked_icon)
             } else {

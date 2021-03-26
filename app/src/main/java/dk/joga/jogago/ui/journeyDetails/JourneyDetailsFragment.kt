@@ -1,6 +1,5 @@
 package dk.joga.jogago.ui.journeyDetails
 
-import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -12,7 +11,6 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
-import dk.joga.jogago.JoGaApplication
 import dk.joga.jogago.R
 import dk.joga.jogago.databinding.FragmentJourneyDetailsBinding
 
@@ -29,10 +27,7 @@ class JourneyDetailsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentJourneyDetailsBinding.inflate(inflater, container, false)
-        val appContainer = (activity?.application as JoGaApplication).appContainer
-        val sharedPrefs = activity?.getPreferences(Context.MODE_PRIVATE)
-        val token = sharedPrefs?.getString(getString(R.string.saved_token_key), null)
-        viewModelFactory = JourneyViewModelFactory(appContainer.repository, token!!, args.journeyId)
+        viewModelFactory = JourneyViewModelFactory(args.journeyId)
         viewModel = ViewModelProvider(this, viewModelFactory).get(JourneyViewModel::class.java)
 
         val recyclerView = binding.journeysRecyclerView
@@ -67,24 +62,6 @@ class JourneyDetailsFragment : Fragment() {
         })
 
         return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        binding.journeysBottomNavigation.setOnNavigationItemSelectedListener {
-            when(it.itemId){
-                R.id.navigation_home -> {
-                    findNavController().navigate(R.id.action_global_homeFragment)
-                    true
-                }
-                R.id.navigation_classes -> {
-                    findNavController().navigate(R.id.action_global_classesFragment)
-                    true
-                }
-                else -> false
-            }
-        }
     }
 
     override fun onStart() {

@@ -2,13 +2,14 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="188dp"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:layout_marginEnd="@dimen/margin_medium">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/home_item_thumbnail_container"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        app:cardBackgroundColor="@color/background"
         app:cardCornerRadius="@dimen/card_radius"
         app:layout_constraintDimensionRatio="H,16:9"
         app:layout_constraintEnd_toEndOf="parent"
@@ -32,7 +33,17 @@
         android:layout_marginTop="@dimen/margin_small"
         android:ellipsize="end"
         android:singleLine="true"
+        android:textColor="@color/joga_green"
         android:textSize="@dimen/default_text"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/home_item_thumbnail_container" />
+
+    <TextView
+        android:id="@+id/home_item_category"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-light"
+        android:textColor="@color/secondary_text"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/home_item_name" />
 </androidx.constraintlayout.widget.ConstraintLayout>

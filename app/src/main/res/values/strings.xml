@@ -33,6 +33,7 @@
     <string name="locked">Locked</string>
     <string name="all_classes">All classes</string>
     <string name="play">Play</string>
+    <string name="focus">focus: </string>
     <string name="instructor_no_classes">"This instructor doesn't have any classes"</string>
 
     <string name="saved_token_key">saved_token_key</string>
@@ -49,4 +50,5 @@
     <string name="journeys_icon">Journeys icon</string>
     <string name="tv_share_icon">TV share icon</string>
     <string name="instructor_avatar">Instructor avatar</string>
+    <string name="preferences_name">preferences</string>
 </resources>

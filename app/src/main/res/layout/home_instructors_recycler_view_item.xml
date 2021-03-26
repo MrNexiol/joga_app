@@ -11,6 +11,7 @@
         android:layout_width="@dimen/instructor_avatar_size"
         android:layout_height="@dimen/instructor_avatar_size"
         android:foregroundGravity="center"
+        app:cardBackgroundColor="@color/background"
         app:cardCornerRadius="@dimen/instructor_avatar_radius"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

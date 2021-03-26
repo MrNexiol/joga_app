@@ -1,20 +1,17 @@
 package dk.joga.jogago.ui.trainerDetail
 
-import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.SimpleExoPlayer
 import com.google.android.exoplayer2.util.Util
-import dk.joga.jogago.JoGaApplication
 import dk.joga.jogago.R
 import dk.joga.jogago.databinding.FragmentTrainerDetailBinding
 
@@ -32,14 +29,11 @@ class TrainerDetailFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentTrainerDetailBinding.inflate(inflater, container, false)
-        val appContainer = (activity?.application as JoGaApplication).appContainer
-        val sharedPrefs = activity?.getPreferences(Context.MODE_PRIVATE)
-        val token = sharedPrefs?.getString(getString(R.string.saved_token_key), null)
-        viewModelFactory = TrainerDetailViewModelFactory(appContainer.repository, args.trainerId, token!!)
+        viewModelFactory = TrainerDetailViewModelFactory(args.trainerId)
         viewModel = ViewModelProvider(this, viewModelFactory).get(TrainerDetailViewModel::class.java)
 
         val recyclerView = binding.instructorClassesRecyclerView
-        val adapter = TrainerDetailAdapter(listOf(), appContainer.repository, token)
+        val adapter = TrainerDetailAdapter(listOf())
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(context)
 
@@ -64,11 +58,7 @@ class TrainerDetailFragment : Fragment() {
         })
         viewModel.instructorClassesWrapper.getData().observe(viewLifecycleOwner, { resource ->
             resource.data?.let {
-                if (it.isEmpty()){
-                    binding.noClassesTextView.visibility = View.VISIBLE
-                } else {
-                    adapter.setData(it)
-                }
+                adapter.setData(it)
             }
         })
 
@@ -79,19 +69,6 @@ class TrainerDetailFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.trainerPlayButton.setOnClickListener {
             showVideo()
-        }
-        binding.trainerDetailsBottomNavigation.setOnNavigationItemSelectedListener {
-            when(it.itemId){
-                R.id.navigation_home -> {
-                    findNavController().navigate(R.id.action_global_homeFragment)
-                    true
-                }
-                R.id.navigation_classes -> {
-                    findNavController().navigate(R.id.action_global_classesFragment)
-                    true
-                }
-                else -> false
-            }
         }
     }
 
