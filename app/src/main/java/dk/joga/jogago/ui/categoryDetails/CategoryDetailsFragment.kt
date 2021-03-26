@@ -16,22 +16,22 @@ import dk.joga.jogago.R
 import dk.joga.jogago.api.Status
 import dk.joga.jogago.databinding.FragmentCategoryBinding
 
-class CategoryFragment : Fragment() {
+class CategoryDetailsFragment : Fragment() {
     private var _binding: FragmentCategoryBinding? = null
     private val binding get() = _binding!!
     private val args: CategoryFragmentArgs by navArgs()
-    private lateinit var viewModelFactory: CategoryViewModelFactory
-    private lateinit var viewModel: CategoryViewModel
+    private lateinit var viewModelFactory: CategoryDetailsViewModelFactory
+    private lateinit var viewModel: CategoryDetailsViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
         _binding = FragmentCategoryBinding.inflate(inflater, container, false)
         val appContainer = (activity?.application as JoGaApplication).appContainer
-        viewModelFactory = CategoryViewModelFactory(appContainer.repository, args.categoryId)
-        viewModel = ViewModelProvider(this, viewModelFactory).get(CategoryViewModel::class.java)
+        viewModelFactory = CategoryDetailsViewModelFactory(appContainer.repository, args.categoryId)
+        viewModel = ViewModelProvider(this, viewModelFactory).get(CategoryDetailsViewModel::class.java)
 
         val recyclerView = binding.categoryClassesRecyclerView
-        val adapter = CategoryAdapter(listOf(), appContainer.repository)
+        val adapter = CategoryDetailsAdapter(listOf(), appContainer.repository)
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(context)
 
