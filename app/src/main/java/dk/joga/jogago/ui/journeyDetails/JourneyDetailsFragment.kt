@@ -11,7 +11,7 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
-import dk.joga.jogago.JoGaApplication
+import dk.joga.jogago.AppContainer
 import dk.joga.jogago.R
 import dk.joga.jogago.databinding.FragmentJourneyDetailsBinding
 
@@ -28,8 +28,7 @@ class JourneyDetailsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentJourneyDetailsBinding.inflate(inflater, container, false)
-        val appContainer = (activity?.application as JoGaApplication).appContainer
-        viewModelFactory = JourneyViewModelFactory(appContainer.repository, args.journeyId)
+        viewModelFactory = JourneyViewModelFactory(AppContainer.repository, args.journeyId)
         viewModel = ViewModelProvider(this, viewModelFactory).get(JourneyViewModel::class.java)
 
         val recyclerView = binding.journeysRecyclerView

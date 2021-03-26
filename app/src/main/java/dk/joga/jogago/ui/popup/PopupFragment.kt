@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import dk.joga.jogago.AppContainer
 import dk.joga.jogago.JoGaApplication
 import dk.joga.jogago.R
 import dk.joga.jogago.api.Status
@@ -30,8 +31,7 @@ class PopupFragment : Fragment() {
 //        if (wasSeen != null){
 //            navigateToHome()
 //        }
-        val appContainer = (activity?.application as JoGaApplication).appContainer
-        val viewModel: PopupViewModel by viewModels { PopupViewModelFactory(appContainer.repository) }
+        val viewModel: PopupViewModel by viewModels { PopupViewModelFactory(AppContainer.repository) }
         viewModel.welcomePopup.observe(viewLifecycleOwner, { resource ->
             if (resource.status == Status.Success){
                 if (Locale.getDefault().language == "da"){

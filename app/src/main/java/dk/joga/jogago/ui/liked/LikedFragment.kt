@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import dk.joga.jogago.JoGaApplication
+import dk.joga.jogago.AppContainer
 import dk.joga.jogago.api.Status
 import dk.joga.jogago.databinding.FragmentLikedBinding
 
@@ -22,12 +22,11 @@ class LikedFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentLikedBinding.inflate(inflater, container, false)
-        val appContainer = (activity?.application as JoGaApplication).appContainer
-        viewModelFactory = LikedViewModelFactory(appContainer.repository)
+        viewModelFactory = LikedViewModelFactory(AppContainer.repository)
         viewModel = ViewModelProvider(this, viewModelFactory).get(LikedViewModel::class.java)
 
         val recyclerView = binding.likedClassesRecyclerView
-        val adapter = LikedAdapter(listOf(), appContainer.repository)
+        val adapter = LikedAdapter(listOf(), AppContainer.repository)
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(context)
 

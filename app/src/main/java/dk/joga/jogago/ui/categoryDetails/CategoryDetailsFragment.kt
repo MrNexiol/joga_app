@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import dk.joga.jogago.AppContainer
-import dk.joga.jogago.JoGaApplication
 import dk.joga.jogago.R
 import dk.joga.jogago.api.Status
 import dk.joga.jogago.databinding.FragmentCategoryBinding

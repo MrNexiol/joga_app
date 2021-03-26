@@ -12,7 +12,7 @@ import com.bumptech.glide.Glide
 import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.SimpleExoPlayer
 import com.google.android.exoplayer2.util.Util
-import dk.joga.jogago.JoGaApplication
+import dk.joga.jogago.AppContainer
 import dk.joga.jogago.R
 import dk.joga.jogago.databinding.FragmentTrainerDetailBinding
 
@@ -30,12 +30,11 @@ class TrainerDetailFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentTrainerDetailBinding.inflate(inflater, container, false)
-        val appContainer = (activity?.application as JoGaApplication).appContainer
-        viewModelFactory = TrainerDetailViewModelFactory(appContainer.repository, args.trainerId)
+        viewModelFactory = TrainerDetailViewModelFactory(AppContainer.repository, args.trainerId)
         viewModel = ViewModelProvider(this, viewModelFactory).get(TrainerDetailViewModel::class.java)
 
         val recyclerView = binding.instructorClassesRecyclerView
-        val adapter = TrainerDetailAdapter(listOf(), appContainer.repository)
+        val adapter = TrainerDetailAdapter(listOf(), AppContainer.repository)
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(context)
 

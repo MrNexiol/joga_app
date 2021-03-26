@@ -7,8 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
+import dk.joga.jogago.AppContainer
 import dk.joga.jogago.GridSpacingItemDecoration
-import dk.joga.jogago.JoGaApplication
 import dk.joga.jogago.R
 import dk.joga.jogago.databinding.FragmentClassesBinding
 
@@ -23,9 +23,7 @@ class ClassesFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentClassesBinding.inflate(inflater, container, false)
-
-        val appContainer = (activity?.application as JoGaApplication).appContainer
-        viewModelFactory = ClassesViewModelFactory(appContainer.repository)
+        viewModelFactory = ClassesViewModelFactory(AppContainer.repository)
         viewModel = ViewModelProvider(this, viewModelFactory).get(ClassesViewModel::class.java)
 
         val recyclerView = binding.classesRecyclerView
