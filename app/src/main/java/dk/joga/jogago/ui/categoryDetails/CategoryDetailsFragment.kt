@@ -11,6 +11,7 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
+import dk.joga.jogago.AppContainer
 import dk.joga.jogago.JoGaApplication
 import dk.joga.jogago.R
 import dk.joga.jogago.api.Status
@@ -26,12 +27,11 @@ class CategoryDetailsFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
         _binding = FragmentCategoryBinding.inflate(inflater, container, false)
-        val appContainer = (activity?.application as JoGaApplication).appContainer
-        viewModelFactory = CategoryDetailsViewModelFactory(appContainer.repository, args.categoryId)
+        viewModelFactory = CategoryDetailsViewModelFactory(AppContainer.repository, args.categoryId)
         viewModel = ViewModelProvider(this, viewModelFactory).get(CategoryDetailsViewModel::class.java)
 
         val recyclerView = binding.categoryClassesRecyclerView
-        val adapter = CategoryDetailsAdapter(listOf(), appContainer.repository)
+        val adapter = CategoryDetailsAdapter(listOf(), AppContainer.repository)
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(context)
 

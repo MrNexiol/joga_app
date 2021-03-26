@@ -25,7 +25,6 @@ class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
     private lateinit var sharedPreferences: SharedPreferences
-    private lateinit var appContainer: AppContainer
     private lateinit var newClassRecyclerView: RecyclerView
     private lateinit var newClassAdapter: NewClassesAdapter
     private lateinit var likedClassRecyclerView: RecyclerView
@@ -53,8 +52,7 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
-        appContainer = (activity?.application as JoGaApplication).appContainer
-        viewModelFactory = HomeViewModelFactory(appContainer.repository)
+        viewModelFactory = HomeViewModelFactory(AppContainer.repository)
         viewModel = ViewModelProvider(this, viewModelFactory).get(HomeViewModel::class.java)
 
         setNewClassesRecyclerView()
@@ -118,8 +116,7 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        appContainer = (activity?.application as JoGaApplication).appContainer
-        val homeViewModel: HomeViewModel by viewModels { HomeViewModelFactory(appContainer.repository) }
+        val homeViewModel: HomeViewModel by viewModels { HomeViewModelFactory(AppContainer.repository) }
 
         binding.homeRefreshLayout.setOnRefreshListener {
             homeViewModel.refreshData()
