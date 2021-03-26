@@ -1,4 +1,4 @@
-package dk.joga.jogago.ui.category
+package dk.joga.jogago.ui.categoryDetails
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel

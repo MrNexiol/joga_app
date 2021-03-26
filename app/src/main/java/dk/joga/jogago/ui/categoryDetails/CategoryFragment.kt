@@ -1,4 +1,4 @@
-package dk.joga.jogago.ui.category
+package dk.joga.jogago.ui.categoryDetails
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

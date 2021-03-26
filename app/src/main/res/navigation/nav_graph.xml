@@ -144,7 +144,7 @@
         tools:layout="@layout/fragment_popup" />
     <fragment
         android:id="@+id/categoryFragment"
-        android:name="dk.joga.jogago.ui.category.CategoryFragment"
+        android:name="dk.joga.jogago.ui.categoryDetails.CategoryFragment"
         android:label="fragment_category"
         tools:layout="@layout/fragment_category" >
         <action
