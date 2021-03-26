@@ -70,7 +70,7 @@
                     android:id="@+id/todays_pick_root"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/margin_medium"
+                    android:layout_marginTop="12dp"
                     android:visibility="gone"
                     app:layout_constraintTop_toBottomOf="@+id/today_pick_text_view"
                     tools:layout_editor_absoluteX="16dp">
@@ -168,7 +168,7 @@
                     android:id="@+id/new_classes_recycler_view"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/margin_medium"
+                    android:layout_marginTop="12dp"
                     app:layout_constraintTop_toBottomOf="@+id/new_classes_text_view"
                     tools:layout_editor_absoluteX="16dp" />
 
@@ -223,7 +223,6 @@
                     android:id="@+id/liked_recycler_view"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/margin_small"
                     android:visibility="gone"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -277,7 +276,6 @@
                     android:id="@+id/journey_recycler_view"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/margin_small"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/see_journeys_button" />
@@ -320,7 +318,7 @@
                     android:id="@+id/instructor_recycler_view"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/margin_big"
+                    android:layout_marginTop="@dimen/margin_medium"
                     android:orientation="horizontal"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
