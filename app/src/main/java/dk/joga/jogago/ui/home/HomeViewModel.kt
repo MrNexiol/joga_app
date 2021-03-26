@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import dk.joga.jogago.AppContainer
 import dk.joga.jogago.api.*
 
-class HomeViewModel() : ViewModel() {
+class HomeViewModel : ViewModel() {
     val dailyClassWrapper = object : RefreshableSource<Class>() {
         override fun provideLiveData(): LiveData<Resource<Class>> {
             return AppContainer.repository.getDailyClass()
