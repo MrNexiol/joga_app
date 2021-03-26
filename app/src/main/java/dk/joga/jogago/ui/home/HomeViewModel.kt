@@ -5,34 +5,34 @@ import androidx.lifecycle.ViewModel
 import dk.joga.jogago.Repository
 import dk.joga.jogago.api.*
 
-class HomeViewModel(private val repository: Repository, private val token: String) : ViewModel() {
+class HomeViewModel(private val repository: Repository) : ViewModel() {
     val dailyClassWrapper = object : RefreshableSource<Class>() {
         override fun provideLiveData(): LiveData<Resource<Class>> {
-            return repository.getDailyClass(token)
+            return repository.getDailyClass()
         }
     }
 
     val newClassesWrapper = object : RefreshableSource<List<Class>>() {
         override fun provideLiveData(): LiveData<Resource<List<Class>>> {
-            return repository.getNewClasses(token)
+            return repository.getNewClasses()
         }
     }
 
     val likedClassesWrapper = object : RefreshableSource<List<Class>>() {
         override fun provideLiveData(): LiveData<Resource<List<Class>>> {
-            return repository.getLikedClasses(token)
+            return repository.getLikedClasses()
         }
     }
 
     val journeysWrapper = object : RefreshableSource<List<Journey>>() {
         override fun provideLiveData(): LiveData<Resource<List<Journey>>> {
-            return repository.getJourneys(token)
+            return repository.getJourneys()
         }
     }
 
     val instructorsWrapper = object : RefreshableSource<List<Instructor>>() {
         override fun provideLiveData(): LiveData<Resource<List<Instructor>>> {
-            return repository.getInstructors(token)
+            return repository.getInstructors()
         }
     }
 

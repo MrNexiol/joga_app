@@ -6,10 +6,10 @@ import dk.joga.jogago.Repository
 import java.lang.IllegalArgumentException
 
 @Suppress("UNCHECKED_CAST")
-class HomeViewModelFactory(private val repository: Repository, private val token: String) : ViewModelProvider.Factory {
+class HomeViewModelFactory(private val repository: Repository) : ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(HomeViewModel::class.java)){
-            return HomeViewModel(repository, token) as T
+            return HomeViewModel(repository) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

@@ -54,8 +54,7 @@ class HomeFragment : Fragment() {
     ): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         appContainer = (activity?.application as JoGaApplication).appContainer
-        val token = sharedPreferences.getString(getString(R.string.saved_token_key), null)
-        viewModelFactory = HomeViewModelFactory(appContainer.repository, token!!)
+        viewModelFactory = HomeViewModelFactory(appContainer.repository)
         viewModel = ViewModelProvider(this, viewModelFactory).get(HomeViewModel::class.java)
 
         setNewClassesRecyclerView()
@@ -120,9 +119,7 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         appContainer = (activity?.application as JoGaApplication).appContainer
-        val sharedPrefs = activity?.getPreferences(Context.MODE_PRIVATE)
-        val token = sharedPrefs?.getString(getString(R.string.saved_token_key), null)
-        val homeViewModel: HomeViewModel by viewModels { HomeViewModelFactory(appContainer.repository, token!!) }
+        val homeViewModel: HomeViewModel by viewModels { HomeViewModelFactory(appContainer.repository) }
 
         binding.homeRefreshLayout.setOnRefreshListener {
             homeViewModel.refreshData()
