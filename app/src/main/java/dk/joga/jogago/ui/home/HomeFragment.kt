@@ -1,6 +1,7 @@
 package dk.joga.jogago.ui.home
 
 import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -23,6 +24,7 @@ import dk.joga.jogago.databinding.FragmentHomeBinding
 class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
+    private lateinit var sharedPreferences: SharedPreferences
     private lateinit var appContainer: AppContainer
     private lateinit var newClassRecyclerView: RecyclerView
     private lateinit var newClassAdapter: NewClassesAdapter
@@ -38,8 +40,8 @@ class HomeFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val sharedPrefs = activity?.getSharedPreferences(getString(R.string.preferences_name), Context.MODE_PRIVATE)
-        val token = sharedPrefs?.getString(getString(R.string.saved_token_key), null)
+        sharedPreferences = requireActivity().getSharedPreferences(getString(R.string.preferences_name), Context.MODE_PRIVATE)
+        val token = sharedPreferences.getString(getString(R.string.saved_token_key), null)
         if (token == null){
             val action = HomeFragmentDirections.actionHomeFragmentToLoginFragment()
             findNavController().navigate(action)
@@ -52,8 +54,7 @@ class HomeFragment : Fragment() {
     ): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         appContainer = (activity?.application as JoGaApplication).appContainer
-        val sharedPrefs = activity?.getSharedPreferences(getString(R.string.preferences_name), Context.MODE_PRIVATE)
-        val token = sharedPrefs?.getString(getString(R.string.saved_token_key), null)
+        val token = sharedPreferences.getString(getString(R.string.saved_token_key), null)
         viewModelFactory = HomeViewModelFactory(appContainer.repository, token!!)
         viewModel = ViewModelProvider(this, viewModelFactory).get(HomeViewModel::class.java)
 
