@@ -8,7 +8,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -16,7 +15,6 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import dk.joga.jogago.AppContainer
-import dk.joga.jogago.JoGaApplication
 import dk.joga.jogago.R
 import dk.joga.jogago.api.Status
 import dk.joga.jogago.databinding.FragmentHomeBinding
@@ -34,8 +32,7 @@ class HomeFragment : Fragment() {
     private lateinit var journeyRecyclerView: RecyclerView
     private lateinit var journeyAdapter: JourneysAdapter
     private lateinit var dailyClassId: String
-    private lateinit var viewModelFactory: HomeViewModelFactory
-    private lateinit var viewModel: HomeViewModel
+    private val viewModel: HomeViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,8 +49,6 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
-        viewModelFactory = HomeViewModelFactory(AppContainer.repository)
-        viewModel = ViewModelProvider(this, viewModelFactory).get(HomeViewModel::class.java)
 
         setNewClassesRecyclerView()
         setLikedClassesRecyclerView()
@@ -116,10 +111,9 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val homeViewModel: HomeViewModel by viewModels { HomeViewModelFactory(AppContainer.repository) }
 
         binding.homeRefreshLayout.setOnRefreshListener {
-            homeViewModel.refreshData()
+            viewModel.refreshData()
             binding.homeRefreshLayout.isRefreshing = false
         }
         binding.todaysPickRoot.setOnClickListener {
