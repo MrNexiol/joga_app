@@ -7,7 +7,7 @@ import dk.joga.jogago.api.Class
 import dk.joga.jogago.api.RefreshableSource
 import dk.joga.jogago.api.Resource
 
-class LikedViewModel(private val repository: Repository, private val token: String) : ViewModel() {
+class LikedViewModel(private val repository: Repository) : ViewModel() {
     val likedClassesWrapper = object : RefreshableSource<List<Class>>() {
         override fun provideLiveData(): LiveData<Resource<List<Class>>> {
             return repository.getLikedClasses()

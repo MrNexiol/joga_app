@@ -1,6 +1,5 @@
 package dk.joga.jogago.ui.liked
 
-import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -9,7 +8,6 @@ import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import dk.joga.jogago.JoGaApplication
-import dk.joga.jogago.R
 import dk.joga.jogago.api.Status
 import dk.joga.jogago.databinding.FragmentLikedBinding
 
@@ -25,13 +23,11 @@ class LikedFragment : Fragment() {
     ): View {
         _binding = FragmentLikedBinding.inflate(inflater, container, false)
         val appContainer = (activity?.application as JoGaApplication).appContainer
-        val sharedPrefs = activity?.getPreferences(Context.MODE_PRIVATE)
-        val token = sharedPrefs?.getString(getString(R.string.saved_token_key), null)
-        viewModelFactory = LikedViewModelFactory(appContainer.repository, token!!)
+        viewModelFactory = LikedViewModelFactory(appContainer.repository)
         viewModel = ViewModelProvider(this, viewModelFactory).get(LikedViewModel::class.java)
 
         val recyclerView = binding.likedClassesRecyclerView
-        val adapter = LikedAdapter(listOf(), appContainer.repository, token)
+        val adapter = LikedAdapter(listOf(), appContainer.repository)
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(context)
 

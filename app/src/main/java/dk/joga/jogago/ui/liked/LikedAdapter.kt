@@ -11,7 +11,7 @@ import dk.joga.jogago.Repository
 import dk.joga.jogago.api.Class
 import dk.joga.jogago.databinding.LikeableRecyclerViewItemBinding
 
-class LikedAdapter(private var data: List<Class>, private val repository: Repository, private val token: String) : RecyclerView.Adapter<LikedAdapter.ViewHolder>() {
+class LikedAdapter(private var data: List<Class>, private val repository: Repository) : RecyclerView.Adapter<LikedAdapter.ViewHolder>() {
 
     private var liked = mutableListOf<Boolean>()
 

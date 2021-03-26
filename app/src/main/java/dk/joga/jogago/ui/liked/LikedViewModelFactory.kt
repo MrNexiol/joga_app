@@ -5,10 +5,10 @@ import androidx.lifecycle.ViewModelProvider
 import dk.joga.jogago.Repository
 
 @Suppress("UNCHECKED_CAST")
-class LikedViewModelFactory(private val repository: Repository, private val token: String) : ViewModelProvider.Factory {
+class LikedViewModelFactory(private val repository: Repository) : ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(LikedViewModel::class.java)){
-            return LikedViewModel(repository, token) as T
+            return LikedViewModel(repository) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }
