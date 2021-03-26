@@ -5,50 +5,50 @@ import retrofit2.http.*
 
 interface WebService {
     @GET("welcome_popup")
-    fun getWelcomePopup(@Header("Authorization") userToken: String): Call<WelcomePopupResponse>
+    fun getWelcomePopup(): Call<WelcomePopupResponse>
 
     @GET("instructors")
-    fun getInstructors(@Header("Authorization") userToken: String): Call<Instructors>
+    fun getInstructors(): Call<Instructors>
 
     @GET("instructors/{id}")
-    fun getInstructor(@Header("Authorization") userToken: String, @Path("id") id: String): Call<InstructorResponse>
+    fun getInstructor(@Path("id") id: String): Call<InstructorResponse>
 
     @GET("journeys")
-    fun getJourneys(@Header("Authorization") userToken: String): Call<Journeys>
+    fun getJourneys(): Call<Journeys>
 
     @GET("journeys/{id}")
-    fun getJourney(@Header("Authorization") userToken: String, @Path("id") id: String): Call<JourneyResponse>
+    fun getJourney(@Path("id") id: String): Call<JourneyResponse>
 
     @GET("categories")
-    fun getCategories(@Header("Authorization") userToken: String): Call<Categories>
+    fun getCategories(): Call<Categories>
 
     @GET("classes")
-    fun getClasses(@Header("Authorization") userToken: String, @Query("category_id") categoryId: String): Call<Classes>
+    fun getClasses(@Query("category_id") categoryId: String): Call<Classes>
 
     @GET("interesting_classes")
-    fun getNewClasses(@Header("Authorization") userToken: String): Call<Classes>
+    fun getNewClasses(): Call<Classes>
 
     @GET("liked_classes")
-    fun getLikedClasses(@Header("Authorization") userToken: String): Call<Classes>
+    fun getLikedClasses(): Call<Classes>
 
     @GET("classes")
-    fun getInstructorClasses(@Header("Authorization") userToken: String, @Query("instructor_id") instructorId: String): Call<Classes>
+    fun getInstructorClasses(@Query("instructor_id") instructorId: String): Call<Classes>
 
     @GET("daily_class")
-    fun getDailyClass(@Header("Authorization") userToken: String): Call<ClassResponse>
+    fun getDailyClass(): Call<ClassResponse>
 
     @GET("classes/{id}")
-    fun getClass(@Header("Authorization") userToken: String, @Path("id") id: String): Call<ClassResponse>
+    fun getClass(@Path("id") id: String): Call<ClassResponse>
 
     @POST("sessions")
     fun login(@Query("username") username: String, @Query("password") password: String): Call<Login>
 
     @POST("like/{id}")
-    fun toggleLike(@Header("Authorization") userToken: String, @Path("id") id: String): Call<Void>
+    fun toggleLike(@Path("id") id: String): Call<Void>
 
     @POST("classes/{id}/mark_as_watched")
-    fun markClassAsWatched(@Header("Authorization") userToken: String, @Path("id") id: String): Call<Void>
+    fun markClassAsWatched(@Path("id") id: String): Call<Void>
 
     @DELETE("sessions")
-    fun logout(@Header("Authorization") userToken: String): Call<Void>
+    fun logout(): Call<Void>
 }
