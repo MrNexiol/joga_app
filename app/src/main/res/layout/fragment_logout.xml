@@ -83,11 +83,12 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="@string/log_me_out"
+        android:textAllCaps="false"
         android:textSize="@dimen/default_text"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:strokeColor="@color/white"
+        app:strokeColor="@color/joga_green"
         app:strokeWidth="2dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>
