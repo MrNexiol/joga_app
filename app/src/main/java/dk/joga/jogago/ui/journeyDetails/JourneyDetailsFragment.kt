@@ -1,6 +1,5 @@
 package dk.joga.jogago.ui.journeyDetails
 
-import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -30,9 +29,7 @@ class JourneyDetailsFragment : Fragment() {
     ): View {
         _binding = FragmentJourneyDetailsBinding.inflate(inflater, container, false)
         val appContainer = (activity?.application as JoGaApplication).appContainer
-        val sharedPrefs = activity?.getPreferences(Context.MODE_PRIVATE)
-        val token = sharedPrefs?.getString(getString(R.string.saved_token_key), null)
-        viewModelFactory = JourneyViewModelFactory(appContainer.repository, token!!, args.journeyId)
+        viewModelFactory = JourneyViewModelFactory(appContainer.repository, args.journeyId)
         viewModel = ViewModelProvider(this, viewModelFactory).get(JourneyViewModel::class.java)
 
         val recyclerView = binding.journeysRecyclerView

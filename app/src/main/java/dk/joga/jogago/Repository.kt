@@ -92,9 +92,8 @@ class Repository(private val service: WebService) {
         return data
     }
 
-    fun getJourney(token: String, id: String): LiveData<Resource<Journey>> {
+    fun getJourney(id: String): LiveData<Resource<Journey>> {
         val data = MutableLiveData<Resource<Journey>>()
-        val auth = "Bearer $token"
         service.getJourney(id).enqueue(object : Callback<JourneyResponse>{
             override fun onResponse(call: Call<JourneyResponse>, response: Response<JourneyResponse>) {
                 if (response.body() != null){
