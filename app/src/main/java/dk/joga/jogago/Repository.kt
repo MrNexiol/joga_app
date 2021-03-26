@@ -8,9 +8,8 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class Repository(private val service: WebService) {
-    fun getWelcomePopup(token: String): LiveData<Resource<WelcomePopup>>{
+    fun getWelcomePopup(): LiveData<Resource<WelcomePopup>>{
         val data = MutableLiveData<Resource<WelcomePopup>>()
-        val auth = "Bearer $token"
         service.getWelcomePopup().enqueue(object : Callback<WelcomePopupResponse>{
             override fun onResponse(call: Call<WelcomePopupResponse>, response: Response<WelcomePopupResponse>) {
                 if (response.body() != null){

@@ -26,13 +26,12 @@ class PopupFragment : Fragment() {
     ): View {
         _binding = FragmentPopupBinding.inflate(inflater, container, false)
         sharedPrefs = activity?.getPreferences(Context.MODE_PRIVATE)
-        val wasSeen = sharedPrefs?.getString(getString(R.string.was_seen), null)
-        if (wasSeen != null){
+//        val wasSeen = sharedPrefs?.getString(getString(R.string.was_seen), null)
+//        if (wasSeen != null){
 //            navigateToHome()
-        }
+//        }
         val appContainer = (activity?.application as JoGaApplication).appContainer
-        val token = sharedPrefs?.getString(getString(R.string.saved_token_key), null)
-        val viewModel: PopupViewModel by viewModels { PopupViewModelFactory(appContainer.repository, token!!) }
+        val viewModel: PopupViewModel by viewModels { PopupViewModelFactory(appContainer.repository) }
         viewModel.welcomePopup.observe(viewLifecycleOwner, { resource ->
             if (resource.status == Status.Success){
                 if (Locale.getDefault().language == "da"){

@@ -5,10 +5,10 @@ import androidx.lifecycle.ViewModelProvider
 import dk.joga.jogago.Repository
 
 @Suppress("UNCHECKED_CAST")
-class PopupViewModelFactory(private val repository: Repository, private val token: String): ViewModelProvider.Factory {
+class PopupViewModelFactory(private val repository: Repository): ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(PopupViewModel::class.java)){
-            return PopupViewModel(repository, token) as T
+            return PopupViewModel(repository) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }
