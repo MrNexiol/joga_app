@@ -91,6 +91,7 @@
                         android:id="@+id/today_pick_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin_small"
                         android:textColor="@color/joga_green"
                         android:textSize="@dimen/header_text"
                         app:layout_constraintStart_toStartOf="parent"
