@@ -18,7 +18,6 @@ import com.google.android.exoplayer2.source.hls.HlsMediaSource
 import com.google.android.exoplayer2.upstream.DataSource
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSource
 import com.google.android.exoplayer2.util.Util
-import dk.joga.jogago.AppContainer
 import dk.joga.jogago.R
 import dk.joga.jogago.databinding.FragmentClassDetailsBinding
 
@@ -39,7 +38,7 @@ class ClassDetailsFragment : Fragment() {
             savedInstanceState: Bundle?
     ): View {
         _binding = FragmentClassDetailsBinding.inflate(inflater, container, false)
-        viewModelFactory = ClassDetailsViewModelFactory(AppContainer.repository, args.classId)
+        viewModelFactory = ClassDetailsViewModelFactory(args.classId)
         viewModel = ViewModelProvider(this, viewModelFactory).get(ClassDetailsViewModel::class.java)
 
         if (args.classIds != null) {

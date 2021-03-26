@@ -2,7 +2,6 @@ package dk.joga.jogago.ui.categoryDetails
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import dk.joga.jogago.Repository
 import java.lang.IllegalArgumentException
 
 @Suppress("UNCHECKED_CAST")
