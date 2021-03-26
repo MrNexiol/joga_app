@@ -13,7 +13,7 @@ class RetrofitInterceptor(val context: Context) : Interceptor {
         val originalRequest: Request = chain.request()
         val preferences = context.getSharedPreferences(context.getString(R.string.preferences_name), Context.MODE_PRIVATE)
 
-        if ((originalRequest.url().toString().contains("sessions"))) {
+        if (originalRequest.url().toString().contains("sessions") && originalRequest.method().equals("POST")) {
             return chain.proceed(originalRequest)
         }
         val tokenKey = preferences.getString(context.getString(R.string.saved_token_key), "")

@@ -320,9 +320,8 @@ class Repository(private val service: WebService) {
         return data
     }
 
-    fun logout(token: String): LiveData<Resource<Void>>{
+    fun logout(): LiveData<Resource<Void>>{
         val data = MutableLiveData<Resource<Void>>()
-        val auth = "Bearer $token"
         service.logout().enqueue(object : Callback<Void>{
             override fun onResponse(call: Call<Void>, response: Response<Void>) {
                 if (response.code() == 200){
