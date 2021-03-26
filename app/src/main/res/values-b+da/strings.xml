@@ -50,4 +50,5 @@
     <string name="journeys_icon">Journeys icon</string>
     <string name="tv_share_icon">TV share icon</string>
     <string name="instructor_avatar">Instructor avatar</string>
+    <string name="preferences_name">preferences</string>
 </resources>

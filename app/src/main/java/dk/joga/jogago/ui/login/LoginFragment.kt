@@ -24,7 +24,7 @@ class LoginFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentLoginBinding.inflate(inflater, container, false)
-        sharedPrefs = activity?.getPreferences(Context.MODE_PRIVATE)
+        sharedPrefs = activity?.getSharedPreferences(getString(R.string.preferences_name), Context.MODE_PRIVATE)
         return binding.root
     }
 

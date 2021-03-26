@@ -38,7 +38,7 @@ class HomeFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val sharedPrefs = activity?.getPreferences(Context.MODE_PRIVATE)
+        val sharedPrefs = activity?.getSharedPreferences(getString(R.string.preferences_name), Context.MODE_PRIVATE)
         val token = sharedPrefs?.getString(getString(R.string.saved_token_key), null)
         if (token == null){
             val action = HomeFragmentDirections.actionHomeFragmentToLoginFragment()
@@ -52,7 +52,7 @@ class HomeFragment : Fragment() {
     ): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         appContainer = (activity?.application as JoGaApplication).appContainer
-        val sharedPrefs = activity?.getPreferences(Context.MODE_PRIVATE)
+        val sharedPrefs = activity?.getSharedPreferences(getString(R.string.preferences_name), Context.MODE_PRIVATE)
         val token = sharedPrefs?.getString(getString(R.string.saved_token_key), null)
         viewModelFactory = HomeViewModelFactory(appContainer.repository, token!!)
         viewModel = ViewModelProvider(this, viewModelFactory).get(HomeViewModel::class.java)
