@@ -7,15 +7,22 @@ import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-class AppContainer(context: Context) {
-    private val retrofitInterceptor: RetrofitInterceptor = RetrofitInterceptor(context)
-    private val okHttpClient: OkHttpClient = OkHttpClient().newBuilder().addInterceptor(retrofitInterceptor).build()
-    private val retrofit = Retrofit.Builder()
-        .baseUrl(BuildConfig.BASE_URL)
-        .addConverterFactory(GsonConverterFactory.create())
-        .client(okHttpClient)
-        .build()
-        .create(WebService::class.java)
+object AppContainer {
+    private lateinit var retrofitInterceptor: RetrofitInterceptor
+    private lateinit var okHttpClient: OkHttpClient
+    private lateinit var retrofit: WebService
 
-    val repository = Repository(retrofit)
+    lateinit var repository: Repository
+
+    fun init(context: Context) {
+        retrofitInterceptor = RetrofitInterceptor(context)
+        okHttpClient = OkHttpClient().newBuilder().addInterceptor(retrofitInterceptor).build()
+        retrofit = Retrofit.Builder()
+            .baseUrl(BuildConfig.BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .client(okHttpClient)
+            .build()
+            .create(WebService::class.java)
+        repository = Repository(retrofit)
+    }
 }
