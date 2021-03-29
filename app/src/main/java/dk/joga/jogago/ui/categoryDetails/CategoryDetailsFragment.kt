@@ -20,6 +20,7 @@ class CategoryDetailsFragment : Fragment() {
     private var _binding: FragmentCategoryBinding? = null
     private val binding get() = _binding!!
     private val args: CategoryDetailsFragmentArgs by navArgs()
+    private val adapter = CategoryDetailsAdapter()
     private var like = false
     private lateinit var viewModelFactory: CategoryDetailsViewModelFactory
     private lateinit var viewModel: CategoryDetailsViewModel
@@ -31,7 +32,6 @@ class CategoryDetailsFragment : Fragment() {
         viewModel = ViewModelProvider(this, viewModelFactory).get(CategoryDetailsViewModel::class.java)
 
         val recyclerView = binding.categoryClassesRecyclerView
-        val adapter = CategoryDetailsAdapter(listOf())
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(context)
 

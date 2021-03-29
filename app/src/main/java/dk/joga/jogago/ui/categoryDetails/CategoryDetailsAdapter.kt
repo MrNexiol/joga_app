@@ -11,8 +11,9 @@ import dk.joga.jogago.R
 import dk.joga.jogago.api.Class
 import dk.joga.jogago.databinding.LikeableRecyclerViewItemBinding
 
-class CategoryDetailsAdapter(private var data: List<Class>) : RecyclerView.Adapter<CategoryDetailsAdapter.ViewHolder>() {
+class CategoryDetailsAdapter : RecyclerView.Adapter<CategoryDetailsAdapter.ViewHolder>() {
 
+    private var data: List<Class> = listOf()
     private var liked = mutableListOf<Boolean>()
 
     class ViewHolder(
