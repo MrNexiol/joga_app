@@ -20,7 +20,7 @@ class JourneyDetailsFragment : Fragment() {
     private val args: JourneyDetailsFragmentArgs by navArgs()
     private lateinit var viewModelFactory: JourneyViewModelFactory
     private lateinit var viewModel: JourneyViewModel
-    private lateinit var adapter: JourneyDetailsAdapter
+    private val adapter = JourneyDetailsAdapter()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -31,7 +31,6 @@ class JourneyDetailsFragment : Fragment() {
         viewModel = ViewModelProvider(this, viewModelFactory).get(JourneyViewModel::class.java)
 
         val recyclerView = binding.journeysRecyclerView
-        adapter = JourneyDetailsAdapter(listOf())
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(context)
 

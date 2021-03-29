@@ -11,7 +11,9 @@ import dk.joga.jogago.R
 import dk.joga.jogago.api.Class
 import dk.joga.jogago.databinding.JourneyClassesRecyclerViewItemBinding
 
-class JourneyDetailsAdapter(private var data: List<Class>) : RecyclerView.Adapter<JourneyDetailsAdapter.ViewHolder>() {
+class JourneyDetailsAdapter : RecyclerView.Adapter<JourneyDetailsAdapter.ViewHolder>() {
+
+    private var data: List<Class> = listOf()
 
     class ViewHolder(
             val binding: JourneyClassesRecyclerViewItemBinding) : RecyclerView.ViewHolder(binding.root)
