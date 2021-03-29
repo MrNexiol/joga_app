@@ -20,6 +20,7 @@ class TrainerDetailFragment : Fragment() {
     private val binding get() = _binding!!
     private val args: TrainerDetailFragmentArgs by navArgs()
     private var player: SimpleExoPlayer? = null
+    private val adapter = TrainerDetailAdapter()
     private lateinit var viewModelFactory: TrainerDetailViewModelFactory
     private lateinit var viewModel: TrainerDetailViewModel
     private var videoUrl = ""
@@ -33,7 +34,6 @@ class TrainerDetailFragment : Fragment() {
         viewModel = ViewModelProvider(this, viewModelFactory).get(TrainerDetailViewModel::class.java)
 
         val recyclerView = binding.instructorClassesRecyclerView
-        val adapter = TrainerDetailAdapter(listOf())
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(context)
 
