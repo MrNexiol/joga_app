@@ -7,5 +7,9 @@ data class Instructor(
         val avatar_url: String,
         val name: String,
         @SerializedName("video_url")
-        val videoUrl: String
+        val videoUrl: String,
+        @SerializedName("video_duration")
+        val videoDuration: Int,
+        @SerializedName("video_title")
+        val videoTitle: String
 )
