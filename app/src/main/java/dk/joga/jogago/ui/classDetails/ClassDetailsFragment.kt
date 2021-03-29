@@ -58,18 +58,12 @@ class ClassDetailsFragment : Fragment() {
                     @Suppress("SENSELESS_COMPARISON")
                     if (it.userLike.classId != null) {
                         liked = true
-                        binding.likeButton!!.setImageResource(R.drawable.heart_liked_icon)
+                        binding.likeButton!!.isSelected = liked
                     }
                     binding.likeButton!!.setOnClickListener {
-                        if (liked) {
-                            liked = false
-                            viewModel.toggleClassLike()
-                            binding.likeButton!!.setImageResource(R.drawable.heart_not_liked)
-                        } else {
-                            liked = true
-                            viewModel.toggleClassLike()
-                            binding.likeButton!!.setImageResource(R.drawable.heart_liked_icon)
-                        }
+                        liked = !liked
+                        viewModel.toggleClassLike()
+                        binding.likeButton!!.isSelected = liked
                     }
                     Glide.with(this)
                             .load(it.thumbnailUrl)

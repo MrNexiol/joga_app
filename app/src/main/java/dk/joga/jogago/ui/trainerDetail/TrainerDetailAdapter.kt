@@ -35,18 +35,18 @@ class TrainerDetailAdapter(private var data: List<Class>) : RecyclerView.Adapter
         @Suppress("SENSELESS_COMPARISON")
         if (data[position].userLike.classId != null){
             liked[position] = true
-            holder.binding.heartIcon.setImageResource(R.drawable.heart_liked_icon)
+            holder.binding.heartIcon.isSelected = liked[position]
         } else {
             liked[position] = false
-            holder.binding.heartIcon.setImageResource(R.drawable.heart_not_liked)
+            holder.binding.heartIcon.isSelected = liked[position]
         }
         holder.binding.heartIcon.setOnClickListener {
             liked[position] = !liked[position]
             AppContainer.repository.toggleClassLike(data[position].id)
             if (liked[position]){
-                holder.binding.heartIcon.setImageResource(R.drawable.heart_liked_icon)
+                holder.binding.heartIcon.isSelected = liked[position]
             } else {
-                holder.binding.heartIcon.setImageResource(R.drawable.heart_not_liked)
+                holder.binding.heartIcon.isSelected = liked[position]
             }
         }
         holder.binding.likedClassFocus.text = data[position].focus

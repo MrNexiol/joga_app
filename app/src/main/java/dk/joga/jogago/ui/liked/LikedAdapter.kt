@@ -32,15 +32,11 @@ class LikedAdapter(private var data: List<Class>) : RecyclerView.Adapter<LikedAd
                 .transition(DrawableTransitionOptions.withCrossFade())
                 .into(holder.binding.likedClassThumbnail)
         holder.binding.likedClassName.text = data[position].title
-        holder.binding.heartIcon.setImageResource(R.drawable.heart_liked_icon)
+        holder.binding.heartIcon.isSelected = true
         holder.binding.heartIcon.setOnClickListener {
             liked[position] = !liked[position]
             AppContainer.repository.toggleClassLike(data[position].id)
-            if (liked[position]) {
-                holder.binding.heartIcon.setImageResource(R.drawable.heart_liked_icon)
-            } else {
-                holder.binding.heartIcon.setImageResource(R.drawable.heart_not_liked)
-            }
+            holder.binding.heartIcon.isSelected = liked[position]
         }
         holder.binding.likedClassFocus.text = data[position].focus
         holder.binding.likedClassDuration.text = holder.itemView.context.getString(R.string.min, data[position].duration)
