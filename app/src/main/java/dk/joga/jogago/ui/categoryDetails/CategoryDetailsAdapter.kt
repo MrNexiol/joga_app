@@ -33,13 +33,8 @@ class CategoryDetailsAdapter(private var data: List<Class>) : RecyclerView.Adapt
             .into(holder.binding.likedClassThumbnail)
         holder.binding.likedClassName.text = data[position].title
         @Suppress("SENSELESS_COMPARISON")
-        if (data[position].userLike.classId != null){
-            liked[position] = true
-            holder.binding.heartIcon.isSelected = liked[position]
-        } else {
-            liked[position] = false
-            holder.binding.heartIcon.isSelected = liked[position]
-        }
+        liked[position] = data[position].userLike.classId != null
+        holder.binding.heartIcon.isSelected = liked[position]
         holder.binding.heartIcon.setOnClickListener {
             liked[position] = !liked[position]
             AppContainer.repository.toggleClassLike(data[position].id)

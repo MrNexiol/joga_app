@@ -33,21 +33,12 @@ class TrainerDetailAdapter(private var data: List<Class>) : RecyclerView.Adapter
                 .into(holder.binding.likedClassThumbnail)
         holder.binding.likedClassName.text = data[position].title
         @Suppress("SENSELESS_COMPARISON")
-        if (data[position].userLike.classId != null){
-            liked[position] = true
-            holder.binding.heartIcon.isSelected = liked[position]
-        } else {
-            liked[position] = false
-            holder.binding.heartIcon.isSelected = liked[position]
-        }
+        liked[position] = data[position].userLike.classId != null
+        holder.binding.heartIcon.isSelected = liked[position]
         holder.binding.heartIcon.setOnClickListener {
             liked[position] = !liked[position]
             AppContainer.repository.toggleClassLike(data[position].id)
-            if (liked[position]){
-                holder.binding.heartIcon.isSelected = liked[position]
-            } else {
-                holder.binding.heartIcon.isSelected = liked[position]
-            }
+            holder.binding.heartIcon.isSelected = liked[position]
         }
         holder.binding.likedClassFocus.text = data[position].focus
         holder.binding.likedClassDuration.text = holder.itemView.context.getString(R.string.min, data[position].duration)
