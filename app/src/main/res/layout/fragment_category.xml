@@ -68,7 +68,7 @@
                     android:layout_marginTop="@dimen/margin_small"
                     android:contentDescription="@string/heart_icon"
                     android:elevation="2dp"
-                    android:src="@drawable/heart_not_liked"
+                    android:src="@drawable/like_icon"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 

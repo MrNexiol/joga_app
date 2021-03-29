@@ -48,19 +48,19 @@ class CategoryDetailsFragment : Fragment() {
                 @Suppress("SENSELESS_COMPARISON")
                 if (firstClass.userLike.classId != null) {
                     like = true
-                    binding.categoryFirstClassLike.setImageResource(R.drawable.heart_liked_icon)
+                    binding.categoryFirstClassLike.isSelected = like
                 } else {
                     like = false
-                    binding.categoryFirstClassLike.setImageResource(R.drawable.heart_not_liked)
+                    binding.categoryFirstClassLike.isSelected = like
                 }
                 binding.categoryFirstClassLike.setOnClickListener {
                     AppContainer.repository.toggleClassLike(firstClass.id)
                     if (like){
                         like = false
-                        binding.categoryFirstClassLike.setImageResource(R.drawable.heart_not_liked)
+                        binding.categoryFirstClassLike.isSelected = like
                     } else {
                         like = true
-                        binding.categoryFirstClassLike.setImageResource(R.drawable.heart_liked_icon)
+                        binding.categoryFirstClassLike.isSelected = like
                     }
                 }
                 binding.firstClassName.text = firstClass.title
