@@ -60,12 +60,26 @@
                         android:scaleType="centerCrop" />
                 </androidx.cardview.widget.CardView>
 
+                <ImageView
+                    android:id="@+id/imageView"
+                    android:layout_width="@dimen/screen_title_icon"
+                    android:layout_height="@dimen/screen_title_icon"
+                    android:layout_marginStart="@dimen/margin_small"
+                    android:layout_marginTop="@dimen/margin_small"
+                    android:contentDescription="@string/heart_icon"
+                    android:elevation="2dp"
+                    android:src="@drawable/heart_not_liked"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
                 <TextView
                     android:id="@+id/first_class_name"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/margin_small"
+                    android:textColor="@color/joga_green"
                     android:textSize="@dimen/header_text"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/category_card_view" />
 
