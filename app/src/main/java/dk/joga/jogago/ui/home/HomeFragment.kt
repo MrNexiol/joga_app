@@ -23,13 +23,13 @@ class HomeFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var sharedPreferences: SharedPreferences
     private lateinit var newClassRecyclerView: RecyclerView
-    private lateinit var newClassAdapter: NewClassesAdapter
+    private val newClassAdapter = NewClassesAdapter()
     private lateinit var likedClassRecyclerView: RecyclerView
-    private lateinit var likedClassAdapter: LikedClassAdapter
+    private val likedClassAdapter = LikedClassAdapter()
     private lateinit var instructorRecyclerView: RecyclerView
-    private lateinit var instructorAdapter: InstructorsAdapter
+    private val instructorAdapter = InstructorsAdapter()
     private lateinit var journeyRecyclerView: RecyclerView
-    private lateinit var journeyAdapter: JourneysAdapter
+    private val journeyAdapter = JourneysAdapter()
     private lateinit var dailyClassId: String
     private val viewModel: HomeViewModel by viewModels()
 
@@ -145,28 +145,24 @@ class HomeFragment : Fragment() {
 
     private fun setNewClassesRecyclerView(){
         newClassRecyclerView = binding.newClassesRecyclerView
-        newClassAdapter = NewClassesAdapter(listOf())
         newClassRecyclerView.adapter = newClassAdapter
         newClassRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
     }
 
     private fun setLikedClassesRecyclerView(){
         likedClassRecyclerView = binding.likedRecyclerView
-        likedClassAdapter = LikedClassAdapter(listOf())
         likedClassRecyclerView.adapter = likedClassAdapter
         likedClassRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
     }
 
     private fun setJourneysRecyclerView(){
         journeyRecyclerView = binding.journeyRecyclerView
-        journeyAdapter = JourneysAdapter(listOf())
         journeyRecyclerView.adapter = journeyAdapter
         journeyRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
     }
 
     private fun setInstructorRecyclerView(){
         instructorRecyclerView = binding.instructorRecyclerView
-        instructorAdapter = InstructorsAdapter(listOf())
         instructorRecyclerView.adapter = instructorAdapter
         instructorRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
     }

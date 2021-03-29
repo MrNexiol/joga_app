@@ -11,7 +11,9 @@ import dk.joga.jogago.R
 import dk.joga.jogago.api.Journey
 import dk.joga.jogago.databinding.HomeRectangleRecyclerViewItemBinding
 
-class JourneysAdapter(private var data: List<Journey>) : RecyclerView.Adapter<JourneysAdapter.ViewHolder>() {
+class JourneysAdapter : RecyclerView.Adapter<JourneysAdapter.ViewHolder>() {
+
+    private var data: List<Journey> = listOf()
 
     class ViewHolder(
             val binding: HomeRectangleRecyclerViewItemBinding) : RecyclerView.ViewHolder(binding.root)
