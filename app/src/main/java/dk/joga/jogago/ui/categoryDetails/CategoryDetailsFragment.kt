@@ -11,6 +11,7 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
+import dk.joga.jogago.AppContainer
 import dk.joga.jogago.R
 import dk.joga.jogago.api.Status
 import dk.joga.jogago.databinding.FragmentCategoryBinding
@@ -19,6 +20,7 @@ class CategoryDetailsFragment : Fragment() {
     private var _binding: FragmentCategoryBinding? = null
     private val binding get() = _binding!!
     private val args: CategoryDetailsFragmentArgs by navArgs()
+    private var like = false
     private lateinit var viewModelFactory: CategoryDetailsViewModelFactory
     private lateinit var viewModel: CategoryDetailsViewModel
 
@@ -45,9 +47,21 @@ class CategoryDetailsFragment : Fragment() {
                         .into(binding.categoryClassThumbnail)
                 @Suppress("SENSELESS_COMPARISON")
                 if (firstClass.userLike.classId != null) {
+                    like = true
                     binding.categoryFirstClassLike.setImageResource(R.drawable.heart_liked_icon)
                 } else {
+                    like = false
                     binding.categoryFirstClassLike.setImageResource(R.drawable.heart_not_liked)
+                }
+                binding.categoryFirstClassLike.setOnClickListener {
+                    AppContainer.repository.toggleClassLike(firstClass.id)
+                    if (like){
+                        like = false
+                        binding.categoryFirstClassLike.setImageResource(R.drawable.heart_not_liked)
+                    } else {
+                        like = true
+                        binding.categoryFirstClassLike.setImageResource(R.drawable.heart_liked_icon)
+                    }
                 }
                 binding.firstClassName.text = firstClass.title
                 binding.firstClassInstructorName.text = firstClass.instructor.name
