@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="@dimen/margin_medium">
@@ -55,17 +56,13 @@
 
     <TextView
         android:id="@+id/liked_class_focus"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_small"
-        android:lines="2"
         android:textSize="@dimen/default_text"
-        app:layout_constraintBottom_toTopOf="@+id/liked_class_instructor_name"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0"
         app:layout_constraintStart_toEndOf="@+id/cardView3"
-        app:layout_constraintTop_toBottomOf="@+id/liked_class_focus_textview"
-        app:layout_constraintVertical_bias="0" />
+        app:layout_constraintTop_toBottomOf="@+id/liked_class_focus_textview" />
 
     <TextView
         android:id="@+id/liked_class_duration"
@@ -74,8 +71,8 @@
         android:fontFamily="sans-serif-light"
         android:textColor="@color/secondary_text"
         android:textSize="@dimen/secondary_text"
-        app:layout_constraintBottom_toTopOf="@+id/liked_class_instructor_name"
-        app:layout_constraintStart_toStartOf="@+id/liked_class_instructor_name" />
+        app:layout_constraintStart_toStartOf="@+id/liked_class_instructor_name"
+        app:layout_constraintTop_toBottomOf="@+id/liked_class_focus" />
 
     <TextView
         android:id="@+id/liked_class_instructor_name"
@@ -85,10 +82,18 @@
         android:fontFamily="sans-serif-light"
         android:textColor="@color/secondary_text"
         android:textSize="@dimen/secondary_text"
-        app:layout_constraintBottom_toTopOf="@+id/liked_class_name"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0"
-        app:layout_constraintStart_toEndOf="@+id/cardView3" />
+        app:layout_constraintStart_toEndOf="@+id/cardView3"
+        app:layout_constraintTop_toBottomOf="@+id/liked_class_duration" />
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/barrier"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="bottom"
+        app:constraint_referenced_ids="liked_class_instructor_name, cardView3"
+        tools:layout_editor_absoluteY="116dp" />
 
     <TextView
         android:id="@+id/liked_class_name"
@@ -100,7 +105,7 @@
         android:textSize="@dimen/header_text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cardView3" />
+        app:layout_constraintTop_toBottomOf="@id/barrier" />
 
     <View
         android:id="@+id/divider10"
