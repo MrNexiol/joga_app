@@ -15,6 +15,7 @@ class ClassesFragment : Fragment() {
     private var _binding: FragmentClassesBinding? = null
     private val binding get() = _binding!!
     private val viewModel: ClassesViewModel by viewModels()
+    private val adapter = ClassesAdapter()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -22,7 +23,6 @@ class ClassesFragment : Fragment() {
     ): View {
         _binding = FragmentClassesBinding.inflate(inflater, container, false)
         val recyclerView = binding.classesRecyclerView
-        val adapter = ClassesAdapter(listOf())
         recyclerView.adapter = adapter
         recyclerView.layoutManager = GridLayoutManager(context, 2)
         recyclerView.addItemDecoration(GridSpacingItemDecoration(resources.getDimension(R.dimen.journey_list_decoration).toInt()))
