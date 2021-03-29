@@ -43,6 +43,12 @@ class CategoryDetailsFragment : Fragment() {
                         .fallback(R.drawable.placeholder_image)
                         .transition(DrawableTransitionOptions.withCrossFade())
                         .into(binding.categoryClassThumbnail)
+                @Suppress("SENSELESS_COMPARISON")
+                if (firstClass.userLike.classId != null) {
+                    binding.categoryFirstClassLike.setImageResource(R.drawable.heart_liked_icon)
+                } else {
+                    binding.categoryFirstClassLike.setImageResource(R.drawable.heart_not_liked)
+                }
                 binding.firstClassName.text = firstClass.title
                 binding.firstClassInstructorName.text = firstClass.instructor.name
                 binding.firstClassDuration.text = getString(R.string.min, firstClass.duration)

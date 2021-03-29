@@ -61,7 +61,7 @@
                 </androidx.cardview.widget.CardView>
 
                 <ImageView
-                    android:id="@+id/imageView"
+                    android:id="@+id/category_first_class_like"
                     android:layout_width="@dimen/screen_title_icon"
                     android:layout_height="@dimen/screen_title_icon"
                     android:layout_marginStart="@dimen/margin_small"
