@@ -3,8 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="@dimen/default_app_padding">
+    android:layout_height="wrap_content">
 
     <TextView
         android:id="@+id/category_first_item_name_header"
@@ -43,7 +42,7 @@
         android:layout_marginTop="@dimen/margin_small"
         android:contentDescription="@string/heart_icon"
         app:layout_constraintStart_toStartOf="@+id/category_first_item_thumbnail"
-        app:layout_constraintTop_toBottomOf="@+id/category_first_item_top_divider"
+        app:layout_constraintTop_toTopOf="@+id/category_first_item_thumbnail"
         app:srcCompat="@drawable/like_icon" />
 
     <TextView
@@ -89,6 +88,7 @@
         android:id="@+id/category_first_item_bottom_divider"
         android:layout_width="match_parent"
         android:layout_height="@dimen/divider_height"
+        android:layout_marginTop="@dimen/margin_medium"
         android:background="@color/secondary_text"
         app:layout_constraintTop_toBottomOf="@+id/category_first_item_description"
         tools:layout_editor_absoluteX="16dp" />
