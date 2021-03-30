@@ -81,6 +81,7 @@
         android:id="@+id/journey_class_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_small"
         android:ellipsize="end"
         android:gravity="start"
         android:singleLine="true"
