@@ -14,7 +14,7 @@ import dk.joga.jogago.databinding.LikeableRecyclerViewItemBinding
 class TrainerDetailAdapter : RecyclerView.Adapter<TrainerDetailAdapter.ViewHolder>() {
 
     private var data: List<Class> = listOf()
-    private var liked = mutableListOf<Boolean>()
+    private var liked: Array<Boolean> = emptyArray()
 
     class ViewHolder(
             val binding: LikeableRecyclerViewItemBinding) : RecyclerView.ViewHolder(binding.root)
@@ -26,7 +26,6 @@ class TrainerDetailAdapter : RecyclerView.Adapter<TrainerDetailAdapter.ViewHolde
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        liked.add(position, false)
         Glide.with(holder.itemView)
                 .load(data[position].thumbnailUrl)
                 .fallback(R.drawable.placeholder_image)
@@ -56,6 +55,7 @@ class TrainerDetailAdapter : RecyclerView.Adapter<TrainerDetailAdapter.ViewHolde
 
     fun setData(data: List<Class>) {
         this.data = data
+        liked = Array(data.size) { false }
         notifyDataSetChanged()
     }
 }
