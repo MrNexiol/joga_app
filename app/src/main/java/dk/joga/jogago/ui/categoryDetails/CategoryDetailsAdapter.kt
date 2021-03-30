@@ -1,6 +1,7 @@
 package dk.joga.jogago.ui.categoryDetails
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
@@ -48,6 +49,18 @@ class CategoryDetailsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                 .transform(CenterCrop(), RoundedCorners(holder.itemView.resources.getDimensionPixelSize(R.dimen.card_radius)))
                 .transition(DrawableTransitionOptions.withCrossFade())
                 .into(holder.binding.categoryFirstItemThumbnail)
+            holder.binding.categoryFirstItemThumbnail.setOnClickListener {
+                val action = CategoryDetailsFragmentDirections.actionCategoryFragmentToClassDetailsFragment(data[position].id)
+                holder.itemView.findNavController().navigate(action)
+            }
+            @Suppress("SENSELESS_COMPARISON")
+            liked[position] = data[position].userLike.classId != null
+            holder.binding.categoryFirstItemLikeIcon.isSelected = liked[position]
+            holder.binding.categoryFirstItemLikeIcon.setOnClickListener {
+                liked[position] = !liked[position]
+                AppContainer.repository.toggleClassLike(data[position].id)
+                holder.binding.categoryFirstItemLikeIcon.isSelected = liked[position]
+            }
             holder.binding.categoryFirstItemName.text = data[position].title
             holder.binding.categoryFirstItemInstructorName.text = data[position].instructor.name
             holder.binding.categoryFirstItemDuration.text = holder.itemView.resources.getString(R.string.min, data[position].duration)
@@ -59,22 +72,27 @@ class CategoryDetailsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                 .fallback(R.drawable.placeholder_image)
                 .transition(DrawableTransitionOptions.withCrossFade())
                 .into(holder.binding.likedClassThumbnail)
-        holder.binding.likedClassName.text = data[position].title
-        @Suppress("SENSELESS_COMPARISON")
-        liked[position] = data[position].userLike.classId != null
-        holder.binding.heartIcon.isSelected = liked[position]
-        holder.binding.heartIcon.setOnClickListener {
-            liked[position] = !liked[position]
-            AppContainer.repository.toggleClassLike(data[position].id)
+            holder.binding.likedClassName.text = data[position].title
+            @Suppress("SENSELESS_COMPARISON")
+            liked[position] = data[position].userLike.classId != null
             holder.binding.heartIcon.isSelected = liked[position]
-        }
-        holder.binding.likedClassFocus.text = data[position].focus
-        holder.binding.likedClassDuration.text = holder.itemView.context.getString(R.string.min, data[position].duration)
-        holder.binding.likedClassInstructorName.text = data[position].instructor.name
-        holder.binding.root.setOnClickListener {
-            val action = CategoryDetailsFragmentDirections.actionCategoryFragmentToClassDetailsFragment(data[position].id)
-            holder.itemView.findNavController().navigate(action)
-        }
+            holder.binding.heartIcon.setOnClickListener {
+                liked[position] = !liked[position]
+                AppContainer.repository.toggleClassLike(data[position].id)
+                holder.binding.heartIcon.isSelected = liked[position]
+            }
+            holder.binding.likedClassFocus.text = data[position].focus
+            holder.binding.likedClassDuration.text = holder.itemView.context.getString(R.string.min, data[position].duration)
+            holder.binding.likedClassInstructorName.text = data[position].instructor.name
+            holder.binding.root.setOnClickListener {
+                val action = CategoryDetailsFragmentDirections.actionCategoryFragmentToClassDetailsFragment(data[position].id)
+                holder.itemView.findNavController().navigate(action)
+            }
+            if (position == itemCount-1) {
+                holder.binding.divider10.visibility = View.GONE
+            } else {
+                holder.binding.divider10.visibility = View.VISIBLE
+            }
         }
     }
 
