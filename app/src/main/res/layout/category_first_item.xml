@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/default_app_padding">
+
+    <TextView
+        android:id="@+id/category_first_item_name_header"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/screen_title_text"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/category_first_item_top_divider"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/divider_height"
+        android:layout_marginTop="@dimen/margin_small"
+        android:background="@color/secondary_text"
+        app:layout_constraintTop_toBottomOf="@+id/category_first_item_name_header"
+        tools:layout_editor_absoluteX="16dp" />
+
+    <ImageView
+        android:id="@+id/category_first_item_thumbnail"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/margin_medium"
+        android:contentDescription="@string/placeholder"
+        app:layout_constraintDimensionRatio="H,16:9"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/category_first_item_top_divider"
+        app:srcCompat="@drawable/placeholder_image" />
+
+    <ImageView
+        android:id="@+id/category_first_item_like_icon"
+        android:layout_width="@dimen/screen_title_icon"
+        android:layout_height="@dimen/screen_title_icon"
+        android:layout_marginStart="@dimen/margin_small"
+        android:layout_marginTop="@dimen/margin_small"
+        android:contentDescription="@string/heart_icon"
+        app:layout_constraintStart_toStartOf="@+id/category_first_item_thumbnail"
+        app:layout_constraintTop_toBottomOf="@+id/category_first_item_top_divider"
+        app:srcCompat="@drawable/like_icon" />
+
+    <TextView
+        android:id="@+id/category_first_item_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_small"
+        android:textColor="@color/joga_green"
+        android:textSize="@dimen/header_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/category_first_item_thumbnail" />
+
+    <TextView
+        android:id="@+id/category_first_item_instructor_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textColor="@color/secondary_text"
+        android:textSize="@dimen/default_text"
+        app:layout_constraintEnd_toStartOf="@+id/category_first_item_duration"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/category_first_item_name" />
+
+    <TextView
+        android:id="@+id/category_first_item_duration"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/secondary_text"
+        android:textSize="@dimen/default_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/category_first_item_name" />
+
+    <TextView
+        android:id="@+id/category_first_item_description"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/default_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/category_first_item_instructor_name" />
+
+    <View
+        android:id="@+id/category_first_item_bottom_divider"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/divider_height"
+        android:background="@color/secondary_text"
+        app:layout_constraintTop_toBottomOf="@+id/category_first_item_description"
+        tools:layout_editor_absoluteX="16dp" />
+</androidx.constraintlayout.widget.ConstraintLayout>
