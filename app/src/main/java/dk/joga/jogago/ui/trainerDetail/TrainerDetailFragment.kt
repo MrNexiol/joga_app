@@ -20,6 +20,7 @@ class TrainerDetailFragment : Fragment() {
     private val binding get() = _binding!!
     private val args: TrainerDetailFragmentArgs by navArgs()
     private var player: SimpleExoPlayer? = null
+    private val adapter = TrainerDetailAdapter()
     private lateinit var viewModelFactory: TrainerDetailViewModelFactory
     private lateinit var viewModel: TrainerDetailViewModel
     private var videoUrl = ""
@@ -33,7 +34,6 @@ class TrainerDetailFragment : Fragment() {
         viewModel = ViewModelProvider(this, viewModelFactory).get(TrainerDetailViewModel::class.java)
 
         val recyclerView = binding.instructorClassesRecyclerView
-        val adapter = TrainerDetailAdapter(listOf())
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(context)
 
@@ -46,6 +46,10 @@ class TrainerDetailFragment : Fragment() {
                 if (it.videoUrl != "" && it.videoUrl != null) {
                     binding.trainerVideoRoot.visibility = View.VISIBLE
                     binding.trainerThumbnailAndListDivider.visibility = View.VISIBLE
+                    binding.trainerVideoTitle.visibility = View.VISIBLE
+                    binding.trainerVideoDuration.visibility = View.VISIBLE
+                    binding.trainerVideoTitle.text = it.videoTitle
+                    binding.trainerVideoDuration.text = getString(R.string.min, it.videoDuration)
                     initializePlayer(it.videoUrl)
                     if (viewModel.isPlaying) {
                         showVideo()
@@ -53,6 +57,8 @@ class TrainerDetailFragment : Fragment() {
                 } else {
                     binding.trainerVideoRoot.visibility = View.GONE
                     binding.trainerThumbnailAndListDivider.visibility = View.GONE
+                    binding.trainerVideoTitle.visibility = View.GONE
+                    binding.trainerVideoDuration.visibility = View.GONE
                 }
             }
         })

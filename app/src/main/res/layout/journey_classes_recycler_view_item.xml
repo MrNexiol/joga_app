@@ -42,15 +42,15 @@
 
     <TextView
         android:id="@+id/journey_class_focus"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:layout_marginStart="@dimen/margin_small"
+        android:ellipsize="end"
+        android:maxLines="2"
         app:layout_constraintBottom_toTopOf="@+id/journey_class_min"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0"
         app:layout_constraintStart_toEndOf="@+id/cardView2"
-        app:layout_constraintTop_toBottomOf="@+id/journey_class_focus_textview"
-        app:layout_constraintVertical_bias="0" />
+        app:layout_constraintTop_toBottomOf="@+id/journey_class_focus_textview" />
 
     <TextView
         android:id="@+id/journey_class_min"
@@ -73,7 +73,7 @@
         android:gravity="start"
         android:textColor="@color/secondary_text"
         android:textSize="@dimen/default_text"
-        app:layout_constraintBottom_toTopOf="@+id/journey_class_name"
+        app:layout_constraintBottom_toBottomOf="@+id/cardView2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/cardView2" />
 
@@ -81,6 +81,7 @@
         android:id="@+id/journey_class_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_small"
         android:ellipsize="end"
         android:gravity="start"
         android:singleLine="true"

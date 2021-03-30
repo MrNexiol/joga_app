@@ -11,6 +11,7 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
+import dk.joga.jogago.AppContainer
 import dk.joga.jogago.R
 import dk.joga.jogago.api.Status
 import dk.joga.jogago.databinding.FragmentCategoryBinding
@@ -19,6 +20,8 @@ class CategoryDetailsFragment : Fragment() {
     private var _binding: FragmentCategoryBinding? = null
     private val binding get() = _binding!!
     private val args: CategoryDetailsFragmentArgs by navArgs()
+    private val adapter = CategoryDetailsAdapter()
+    private var like = false
     private lateinit var viewModelFactory: CategoryDetailsViewModelFactory
     private lateinit var viewModel: CategoryDetailsViewModel
 
@@ -29,7 +32,6 @@ class CategoryDetailsFragment : Fragment() {
         viewModel = ViewModelProvider(this, viewModelFactory).get(CategoryDetailsViewModel::class.java)
 
         val recyclerView = binding.categoryClassesRecyclerView
-        val adapter = CategoryDetailsAdapter(listOf())
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(context)
 
@@ -43,6 +45,24 @@ class CategoryDetailsFragment : Fragment() {
                         .fallback(R.drawable.placeholder_image)
                         .transition(DrawableTransitionOptions.withCrossFade())
                         .into(binding.categoryClassThumbnail)
+                @Suppress("SENSELESS_COMPARISON")
+                if (firstClass.userLike.classId != null) {
+                    like = true
+                    binding.categoryFirstClassLike.isSelected = like
+                } else {
+                    like = false
+                    binding.categoryFirstClassLike.isSelected = like
+                }
+                binding.categoryFirstClassLike.setOnClickListener {
+                    AppContainer.repository.toggleClassLike(firstClass.id)
+                    if (like){
+                        like = false
+                        binding.categoryFirstClassLike.isSelected = like
+                    } else {
+                        like = true
+                        binding.categoryFirstClassLike.isSelected = like
+                    }
+                }
                 binding.firstClassName.text = firstClass.title
                 binding.firstClassInstructorName.text = firstClass.instructor.name
                 binding.firstClassDuration.text = getString(R.string.min, firstClass.duration)

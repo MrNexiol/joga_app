@@ -14,6 +14,7 @@ class LikedFragment : Fragment() {
     private var _binding: FragmentLikedBinding? = null
     private val binding get() = _binding!!
     private val viewModel: LikedViewModel by viewModels()
+    private val adapter = LikedAdapter()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -21,7 +22,6 @@ class LikedFragment : Fragment() {
     ): View {
         _binding = FragmentLikedBinding.inflate(inflater, container, false)
         val recyclerView = binding.likedClassesRecyclerView
-        val adapter = LikedAdapter(listOf())
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(context)
 

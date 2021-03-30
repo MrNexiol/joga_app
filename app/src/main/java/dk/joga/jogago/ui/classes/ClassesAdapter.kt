@@ -12,7 +12,9 @@ import dk.joga.jogago.R
 import dk.joga.jogago.api.Category
 import dk.joga.jogago.databinding.ClassesRecyclerViewItemBinding
 
-class ClassesAdapter (private var data: List<Category>) : RecyclerView.Adapter<ClassesAdapter.ViewHolder>() {
+class ClassesAdapter : RecyclerView.Adapter<ClassesAdapter.ViewHolder>() {
+
+    private var data: List<Category> = listOf()
 
     class ViewHolder (
             val binding: ClassesRecyclerViewItemBinding) : RecyclerView.ViewHolder(binding.root)

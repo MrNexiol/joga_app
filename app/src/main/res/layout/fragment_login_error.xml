@@ -23,12 +23,13 @@
         android:layout_height="60dp"
         android:drawablePadding="@dimen/drawable_padding"
         android:text="@string/X"
+        android:textColor="@color/joga_green"
         android:textSize="@dimen/header_text"
         app:cornerRadius="25dp"
         app:iconGravity="textStart"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/oops_text_view"
-        app:strokeColor="@color/white"
+        app:strokeColor="@color/joga_green"
         app:strokeWidth="2dp" />
 
     <TextView

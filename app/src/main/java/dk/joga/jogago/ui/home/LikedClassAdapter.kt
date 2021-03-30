@@ -10,7 +10,9 @@ import dk.joga.jogago.R
 import dk.joga.jogago.api.Class
 import dk.joga.jogago.databinding.HomeRectangleRecyclerViewItemBinding
 
-class LikedClassAdapter(private var data: List<Class>) : RecyclerView.Adapter<LikedClassAdapter.ViewHolder>() {
+class LikedClassAdapter : RecyclerView.Adapter<LikedClassAdapter.ViewHolder>() {
+
+    private var data: List<Class> = listOf()
 
     class ViewHolder(
             val binding: HomeRectangleRecyclerViewItemBinding) : RecyclerView.ViewHolder(binding.root)

@@ -11,9 +11,10 @@ import dk.joga.jogago.R
 import dk.joga.jogago.api.Class
 import dk.joga.jogago.databinding.LikeableRecyclerViewItemBinding
 
-class LikedAdapter(private var data: List<Class>) : RecyclerView.Adapter<LikedAdapter.ViewHolder>() {
+class LikedAdapter : RecyclerView.Adapter<LikedAdapter.ViewHolder>() {
 
-    private var liked = mutableListOf<Boolean>()
+    private var data: List<Class> = listOf()
+    private var liked: Array<Boolean> = emptyArray()
 
     class ViewHolder(
     val binding: LikeableRecyclerViewItemBinding) : RecyclerView.ViewHolder(binding.root)
@@ -25,22 +26,17 @@ class LikedAdapter(private var data: List<Class>) : RecyclerView.Adapter<LikedAd
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        liked.add(position, true)
         Glide.with(holder.itemView)
                 .load(data[position].thumbnailUrl)
                 .fallback(R.drawable.placeholder_image)
                 .transition(DrawableTransitionOptions.withCrossFade())
                 .into(holder.binding.likedClassThumbnail)
         holder.binding.likedClassName.text = data[position].title
-        holder.binding.heartIcon.setImageResource(R.drawable.heart_liked_icon)
+        holder.binding.heartIcon.isSelected = true
         holder.binding.heartIcon.setOnClickListener {
             liked[position] = !liked[position]
             AppContainer.repository.toggleClassLike(data[position].id)
-            if (liked[position]) {
-                holder.binding.heartIcon.setImageResource(R.drawable.heart_liked_icon)
-            } else {
-                holder.binding.heartIcon.setImageResource(R.drawable.heart_not_liked)
-            }
+            holder.binding.heartIcon.isSelected = liked[position]
         }
         holder.binding.likedClassFocus.text = data[position].focus
         holder.binding.likedClassDuration.text = holder.itemView.context.getString(R.string.min, data[position].duration)
@@ -57,6 +53,7 @@ class LikedAdapter(private var data: List<Class>) : RecyclerView.Adapter<LikedAd
 
     fun setData(data: List<Class>){
         this.data = data
+        liked = Array(data.size) { true }
         notifyDataSetChanged()
     }
 }

@@ -10,7 +10,9 @@ import dk.joga.jogago.R
 import dk.joga.jogago.api.Instructor
 import dk.joga.jogago.databinding.HomeInstructorsRecyclerViewItemBinding
 
-class InstructorsAdapter(private var data: List<Instructor>) : RecyclerView.Adapter<InstructorsAdapter.ViewHolder>() {
+class InstructorsAdapter : RecyclerView.Adapter<InstructorsAdapter.ViewHolder>() {
+
+    private var data: List<Instructor> = listOf()
 
     class ViewHolder(
             val binding: HomeInstructorsRecyclerViewItemBinding) : RecyclerView.ViewHolder(binding.root)

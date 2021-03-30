@@ -39,7 +39,7 @@
         android:elevation="2dp"
         app:layout_constraintStart_toStartOf="@+id/cardView3"
         app:layout_constraintTop_toTopOf="@+id/cardView3"
-        app:srcCompat="@drawable/heart_not_liked" />
+        app:srcCompat="@drawable/like_icon" />
 
     <TextView
         android:id="@+id/liked_class_focus_textview"
@@ -55,17 +55,16 @@
 
     <TextView
         android:id="@+id/liked_class_focus"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:layout_marginStart="@dimen/margin_small"
-        android:lines="2"
+        android:ellipsize="end"
+        android:maxLines="2"
         android:textSize="@dimen/default_text"
-        app:layout_constraintBottom_toTopOf="@+id/liked_class_instructor_name"
+        app:layout_constraintBottom_toTopOf="@+id/liked_class_duration"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0"
         app:layout_constraintStart_toEndOf="@+id/cardView3"
-        app:layout_constraintTop_toBottomOf="@+id/liked_class_focus_textview"
-        app:layout_constraintVertical_bias="0" />
+        app:layout_constraintTop_toBottomOf="@+id/liked_class_focus_textview" />
 
     <TextView
         android:id="@+id/liked_class_duration"
@@ -85,7 +84,7 @@
         android:fontFamily="sans-serif-light"
         android:textColor="@color/secondary_text"
         android:textSize="@dimen/secondary_text"
-        app:layout_constraintBottom_toTopOf="@+id/liked_class_name"
+        app:layout_constraintBottom_toBottomOf="@+id/cardView3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0"
         app:layout_constraintStart_toEndOf="@+id/cardView3" />
@@ -94,6 +93,7 @@
         android:id="@+id/liked_class_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_small"
         android:ellipsize="end"
         android:singleLine="true"
         android:textColor="@color/joga_green"
