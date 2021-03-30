@@ -99,6 +99,7 @@
         android:id="@+id/liked_class_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_small"
         android:ellipsize="end"
         android:singleLine="true"
         android:textColor="@color/joga_green"
