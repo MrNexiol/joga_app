@@ -70,7 +70,7 @@ class CategoryDetailsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         Glide.with(holder.itemView)
             .load(data[position].thumbnailUrl)
             .fallback(R.drawable.placeholder_image)
-            .transform(CenterCrop(), RoundedCorners(holder.itemView.resources.getDimensionPixelSize(R.dimen.card_radius)))
+            .transform(CenterCrop(),RoundedCorners(holder.itemView.resources.getDimensionPixelSize(R.dimen.card_radius)))
             .transition(DrawableTransitionOptions.withCrossFade())
             .into(holder.binding.categoryFirstItemThumbnail)
         holder.binding.categoryFirstItemThumbnail.setOnClickListener {
