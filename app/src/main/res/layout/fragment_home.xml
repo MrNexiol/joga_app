@@ -127,6 +127,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="sans-serif-light"
                         android:textColor="@color/secondary_text"
+                        android:textSize="@dimen/default_text"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/today_pick_trainer_name_text_view" />
 

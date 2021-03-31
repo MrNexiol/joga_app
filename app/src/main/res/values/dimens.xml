@@ -18,12 +18,12 @@
 
     <dimen name="journey_list_decoration">12dp</dimen>
 
-    <dimen name="go">100sp</dimen>
-    <dimen name="welcome_text">48sp</dimen>
-    <dimen name="screen_title_text">24sp</dimen>
-    <dimen name="header_text">16sp</dimen>
-    <dimen name="default_text">14sp</dimen>
-    <dimen name="secondary_text">14sp</dimen>
+    <dimen name="go">90sp</dimen>
+    <dimen name="welcome_text">40sp</dimen>
+    <dimen name="screen_title_text">20sp</dimen>
+    <dimen name="header_text">14sp</dimen>
+    <dimen name="default_text">12sp</dimen>
+    <dimen name="secondary_text">12sp</dimen>
 
     <dimen name="screen_title_icon">35dp</dimen>
     <dimen name="home_section_icon">20dp</dimen>
