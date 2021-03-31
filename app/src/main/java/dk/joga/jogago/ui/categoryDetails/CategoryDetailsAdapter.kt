@@ -42,57 +42,10 @@ class CategoryDetailsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (getItemViewType(position) == 0) {
             holder as ViewHolderFirst
-            holder.binding.categoryFirstItemNameHeader.text = title
-            Glide.with(holder.itemView)
-                .load(data[position].thumbnailUrl)
-                .fallback(R.drawable.placeholder_image)
-                .transform(CenterCrop(), RoundedCorners(holder.itemView.resources.getDimensionPixelSize(R.dimen.card_radius)))
-                .transition(DrawableTransitionOptions.withCrossFade())
-                .into(holder.binding.categoryFirstItemThumbnail)
-            holder.binding.categoryFirstItemThumbnail.setOnClickListener {
-                val action = CategoryDetailsFragmentDirections.actionCategoryFragmentToClassDetailsFragment(data[position].id)
-                holder.itemView.findNavController().navigate(action)
-            }
-            @Suppress("SENSELESS_COMPARISON")
-            liked[position] = data[position].userLike.classId != null
-            holder.binding.categoryFirstItemLikeIcon.isSelected = liked[position]
-            holder.binding.categoryFirstItemLikeIcon.setOnClickListener {
-                liked[position] = !liked[position]
-                AppContainer.repository.toggleClassLike(data[position].id)
-                holder.binding.categoryFirstItemLikeIcon.isSelected = liked[position]
-            }
-            holder.binding.categoryFirstItemName.text = data[position].title
-            holder.binding.categoryFirstItemInstructorName.text = data[position].instructor.name
-            holder.binding.categoryFirstItemDuration.text = holder.itemView.resources.getString(R.string.min, data[position].duration)
-            holder.binding.categoryFirstItemDescription.text = data[position].description
+            bindFirstItem(holder)
         } else {
             holder as ViewHolderRest
-            Glide.with(holder.itemView)
-                .load(data[position].thumbnailUrl)
-                .fallback(R.drawable.placeholder_image)
-                .transition(DrawableTransitionOptions.withCrossFade())
-                .into(holder.binding.likedClassThumbnail)
-            holder.binding.likedClassName.text = data[position].title
-            @Suppress("SENSELESS_COMPARISON")
-            liked[position] = data[position].userLike.classId != null
-            holder.binding.heartIcon.isSelected = liked[position]
-            holder.binding.heartIcon.setOnClickListener {
-                liked[position] = !liked[position]
-                AppContainer.repository.toggleClassLike(data[position].id)
-                holder.binding.heartIcon.isSelected = liked[position]
-            }
-            holder.binding.likedClassFocus.text = data[position].focus
-            holder.binding.likedClassDuration.text = holder.itemView.context.getString(R.string.min, data[position].duration)
-            holder.binding.likedClassInstructorName.text = data[position].instructor.name
-            holder.binding.root.setOnClickListener {
-                val action = CategoryDetailsFragmentDirections.actionCategoryFragmentToClassDetailsFragment(data[position].id)
-                holder.itemView.findNavController().navigate(action)
-            }
-            if (position == itemCount-1) {
-                holder.binding.divider10.visibility = View.GONE
-            } else {
-                holder.binding.divider10.visibility = View.VISIBLE
-            }
+            bindItem(holder, position)
         }
     }
 
@@ -101,11 +54,7 @@ class CategoryDetailsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     }
 
     override fun getItemViewType(position: Int): Int {
-        return if (position == 0) {
-            0
-        } else {
-            1
-        }
+        return if (position == 0) 0 else 1
     }
 
     fun setData(data: List<Class>, title: String){
@@ -113,5 +62,61 @@ class CategoryDetailsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         this.title = title
         liked = Array(data.size) { false }
         notifyDataSetChanged()
+    }
+
+    private fun bindFirstItem(holder: ViewHolderFirst) {
+        val position = 0
+        holder.binding.categoryFirstItemNameHeader.text = title
+        Glide.with(holder.itemView)
+            .load(data[position].thumbnailUrl)
+            .fallback(R.drawable.placeholder_image)
+            .transform(CenterCrop(), RoundedCorners(holder.itemView.resources.getDimensionPixelSize(R.dimen.card_radius)))
+            .transition(DrawableTransitionOptions.withCrossFade())
+            .into(holder.binding.categoryFirstItemThumbnail)
+        holder.binding.categoryFirstItemThumbnail.setOnClickListener {
+            val action = CategoryDetailsFragmentDirections.actionCategoryFragmentToClassDetailsFragment(data[position].id)
+            holder.itemView.findNavController().navigate(action)
+        }
+        @Suppress("SENSELESS_COMPARISON")
+        liked[position] = data[position].userLike.classId != null
+        holder.binding.categoryFirstItemLikeIcon.isSelected = liked[position]
+        holder.binding.categoryFirstItemLikeIcon.setOnClickListener {
+            liked[position] = !liked[position]
+            AppContainer.repository.toggleClassLike(data[position].id)
+            holder.binding.categoryFirstItemLikeIcon.isSelected = liked[position]
+        }
+        holder.binding.categoryFirstItemName.text = data[position].title
+        holder.binding.categoryFirstItemInstructorName.text = data[position].instructor.name
+        holder.binding.categoryFirstItemDuration.text = holder.itemView.resources.getString(R.string.min, data[position].duration)
+        holder.binding.categoryFirstItemDescription.text = data[position].description
+    }
+
+    private fun bindItem(holder: ViewHolderRest, position: Int) {
+        Glide.with(holder.itemView)
+            .load(data[position].thumbnailUrl)
+            .fallback(R.drawable.placeholder_image)
+            .transition(DrawableTransitionOptions.withCrossFade())
+            .into(holder.binding.likedClassThumbnail)
+        holder.binding.likedClassName.text = data[position].title
+        @Suppress("SENSELESS_COMPARISON")
+        liked[position] = data[position].userLike.classId != null
+        holder.binding.heartIcon.isSelected = liked[position]
+        holder.binding.heartIcon.setOnClickListener {
+            liked[position] = !liked[position]
+            AppContainer.repository.toggleClassLike(data[position].id)
+            holder.binding.heartIcon.isSelected = liked[position]
+        }
+        holder.binding.likedClassFocus.text = data[position].focus
+        holder.binding.likedClassDuration.text = holder.itemView.context.getString(R.string.min, data[position].duration)
+        holder.binding.likedClassInstructorName.text = data[position].instructor.name
+        holder.binding.root.setOnClickListener {
+            val action = CategoryDetailsFragmentDirections.actionCategoryFragmentToClassDetailsFragment(data[position].id)
+            holder.itemView.findNavController().navigate(action)
+        }
+        if (position == itemCount-1) {
+            holder.binding.divider10.visibility = View.GONE
+        } else {
+            holder.binding.divider10.visibility = View.VISIBLE
+        }
     }
 }
