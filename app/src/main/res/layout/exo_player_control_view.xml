@@ -38,7 +38,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
         android:gravity="center_vertical"
-        android:orientation="horizontal">
+        android:paddingStart="@dimen/margin_small"
+        android:orientation="horizontal"
+        tools:ignore="RtlSymmetry">
 
         <TextView android:id="@id/exo_position"
             android:layout_width="wrap_content"
@@ -64,6 +66,11 @@
             android:paddingRight="4dp"
             android:includeFontPadding="false"
             android:textColor="#FFBEBEBE"/>
+
+        <ImageButton
+            android:id="@+id/exo_fullscreen"
+            style="@style/ExoStyledControls.Button.Bottom.FullScreen"
+            android:contentDescription="@string/exo_fullscreen" />
 
     </LinearLayout>
 
