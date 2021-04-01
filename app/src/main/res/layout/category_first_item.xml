@@ -22,27 +22,30 @@
         app:layout_constraintTop_toBottomOf="@+id/category_first_item_name_header"
         tools:layout_editor_absoluteX="16dp" />
 
-    <ImageView
-        android:id="@+id/category_first_item_thumbnail"
-        android:layout_width="0dp"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/category_first_item_thumbnail_root"
+        android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="@dimen/margin_medium"
-        android:contentDescription="@string/placeholder"
+        app:cardBackgroundColor="@color/background"
+        app:cardCornerRadius="@dimen/card_radius"
         app:layout_constraintDimensionRatio="H,16:9"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/category_first_item_top_divider"
-        app:srcCompat="@drawable/placeholder_image" />
+        app:layout_constraintTop_toBottomOf="@+id/category_first_item_top_divider">
+
+        <ImageView
+            android:id="@+id/category_first_item_thumbnail"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:contentDescription="@string/placeholder" />
+    </androidx.cardview.widget.CardView>
 
     <ImageView
         android:id="@+id/category_first_item_like_icon"
         android:layout_width="@dimen/screen_title_icon"
         android:layout_height="@dimen/screen_title_icon"
-        android:layout_marginStart="@dimen/margin_small"
-        android:layout_marginTop="@dimen/margin_small"
         android:contentDescription="@string/heart_icon"
-        app:layout_constraintStart_toStartOf="@+id/category_first_item_thumbnail"
-        app:layout_constraintTop_toTopOf="@+id/category_first_item_thumbnail"
+        app:layout_constraintStart_toStartOf="@+id/category_first_item_thumbnail_root"
+        app:layout_constraintTop_toTopOf="@+id/category_first_item_thumbnail_root"
         app:srcCompat="@drawable/like_icon" />
 
     <TextView
@@ -54,7 +57,7 @@
         android:textSize="@dimen/header_text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/category_first_item_thumbnail" />
+        app:layout_constraintTop_toBottomOf="@+id/category_first_item_thumbnail_root" />
 
     <TextView
         android:id="@+id/category_first_item_instructor_name"
