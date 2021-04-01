@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -92,6 +94,11 @@ class ClassDetailsFragment : Fragment() {
             binding.playButton!!.setOnClickListener {
                 showVideo()
             }
+        }
+
+        val fullscreen: ImageView = view.findViewById(R.id.exo_fullscreen)
+        fullscreen.setOnClickListener {
+            Toast.makeText(context, "Działa!", Toast.LENGTH_LONG).show()
         }
     }
 
