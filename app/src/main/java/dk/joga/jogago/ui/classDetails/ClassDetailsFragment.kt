@@ -1,5 +1,6 @@
 package dk.joga.jogago.ui.classDetails
 
+import android.content.pm.ActivityInfo
 import android.content.res.Configuration
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -98,7 +99,11 @@ class ClassDetailsFragment : Fragment() {
 
         val fullscreen: ImageView = view.findViewById(R.id.exo_fullscreen)
         fullscreen.setOnClickListener {
-            Toast.makeText(context, "Działa!", Toast.LENGTH_LONG).show()
+            if (requireActivity().requestedOrientation == ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE) {
+                requireActivity().requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+            } else {
+                requireActivity().requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
+            }
         }
     }
 
