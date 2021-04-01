@@ -19,9 +19,6 @@ class ClassDetailsFragment : Fragment() {
     private val binding get() = _binding!!
     private val args: ClassDetailsFragmentArgs by navArgs()
     private var liked: Boolean = false
-    private var videoUrl = ""
-    private var classTitle = ""
-    private var nextClassId: String? = null
     private lateinit var viewModel: ClassDetailsViewModel
     private lateinit var viewModelFactory: ClassDetailsViewModelFactory
 
@@ -37,15 +34,13 @@ class ClassDetailsFragment : Fragment() {
         if (args.classIds != null) {
             val classId = args.classIds!!.indexOf(args.classId)
             if (args.classIds!!.size > classId + 1) {
-                nextClassId = args.classIds!![classId + 1]
+                viewModel.nextClassId = args.classIds!![classId + 1]
             }
         }
 
         viewModel.classWrapper.getData().observe(viewLifecycleOwner, { resource ->
             resource.data?.let {
-                videoUrl = it.videoUrl
-                classTitle = it.title
-                viewModel.initializePlayer(videoUrl, requireContext())
+                viewModel.initializePlayer(it.videoUrl, requireContext())
                 binding.videoView.player = viewModel.player
                 if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
                     binding.className!!.text = it.title
@@ -90,7 +85,6 @@ class ClassDetailsFragment : Fragment() {
                 playVideo()
             }
         }
-        requireActivity().window.addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
 
         val fullscreen: ImageView = view.findViewById(R.id.exo_fullscreen)
         fullscreen.setOnClickListener {
