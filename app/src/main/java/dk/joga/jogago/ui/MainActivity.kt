@@ -1,5 +1,6 @@
 package dk.joga.jogago.ui
 
+import android.content.pm.ActivityInfo
 import android.content.res.Configuration
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
@@ -7,6 +8,7 @@ import android.os.Bundle
 import android.view.View
 import android.view.WindowInsets
 import android.view.WindowInsetsController
+import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import dk.joga.jogago.R
 import dk.joga.jogago.databinding.ActivityMainBinding
@@ -14,14 +16,16 @@ import dk.joga.jogago.databinding.ActivityMainBinding
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
+    private lateinit var navHostFragment: NavHostFragment
+    private lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
-        val navController = navHostFragment.navController
+        navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        navController = navHostFragment.navController
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
@@ -52,6 +56,18 @@ class MainActivity : AppCompatActivity() {
                 }
                 else -> false
             }
+        }
+    }
+
+    override fun onBackPressed() {
+        if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            if (navController.currentDestination!!.id == R.id.classDetailsFragment) {
+                requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+            } else {
+                super.onBackPressed()
+            }
+        } else {
+            super.onBackPressed()
         }
     }
 
