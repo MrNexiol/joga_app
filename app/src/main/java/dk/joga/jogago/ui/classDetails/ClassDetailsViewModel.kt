@@ -67,4 +67,9 @@ class ClassDetailsViewModel(private val id: String) : ViewModel() {
             }
         })
     }
+
+    override fun onCleared() {
+        player!!.stop()
+        player!!.release()
+    }
 }
