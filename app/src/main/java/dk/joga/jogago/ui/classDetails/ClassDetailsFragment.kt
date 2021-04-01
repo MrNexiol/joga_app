@@ -11,13 +11,6 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
-import com.google.android.exoplayer2.MediaItem
-import com.google.android.exoplayer2.Player
-import com.google.android.exoplayer2.SimpleExoPlayer
-import com.google.android.exoplayer2.source.hls.HlsMediaSource
-import com.google.android.exoplayer2.upstream.DataSource
-import com.google.android.exoplayer2.upstream.DefaultHttpDataSource
-import com.google.android.exoplayer2.util.Util
 import dk.joga.jogago.R
 import dk.joga.jogago.databinding.FragmentClassDetailsBinding
 
@@ -25,7 +18,6 @@ class ClassDetailsFragment : Fragment() {
     private var _binding: FragmentClassDetailsBinding? = null
     private val binding get() = _binding!!
     private val args: ClassDetailsFragmentArgs by navArgs()
-    private var player: SimpleExoPlayer? = null
     private var liked: Boolean = false
     private var videoUrl = ""
     private var classTitle = ""
@@ -40,6 +32,7 @@ class ClassDetailsFragment : Fragment() {
         _binding = FragmentClassDetailsBinding.inflate(inflater, container, false)
         viewModelFactory = ClassDetailsViewModelFactory(args.classId)
         viewModel = ViewModelProvider(this, viewModelFactory).get(ClassDetailsViewModel::class.java)
+        viewModel.classIds = args.classIds
 
         if (args.classIds != null) {
             val classId = args.classIds!!.indexOf(args.classId)
@@ -52,7 +45,8 @@ class ClassDetailsFragment : Fragment() {
             resource.data?.let {
                 videoUrl = it.videoUrl
                 classTitle = it.title
-                initializePlayer(it.videoUrl)
+                viewModel.initializePlayer(videoUrl, requireContext())
+                binding.videoView.player = viewModel.player
                 if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
                     binding.className!!.text = it.title
                     @Suppress("SENSELESS_COMPARISON")
@@ -89,8 +83,11 @@ class ClassDetailsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT){
+            if (viewModel.isPlaying) {
+                showVideoControls()
+            }
             binding.playButton!!.setOnClickListener {
-                showVideo()
+                playVideo()
             }
         }
         requireActivity().window.addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
@@ -105,85 +102,20 @@ class ClassDetailsFragment : Fragment() {
         }
     }
 
-    override fun onStart() {
-        super.onStart()
-        if (Util.SDK_INT >= 24) {
-            initializePlayer(videoUrl)
-        }
-    }
-
-    override fun onResume() {
-        super.onResume()
-        if ((Util.SDK_INT < 24 || player == null)) {
-            initializePlayer(videoUrl)
-        }
-    }
-
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
 
-    override fun onPause() {
-        super.onPause()
-        if (Util.SDK_INT < 24) {
-            releasePlayer()
-        }
+    private fun playVideo() {
+        showVideoControls()
+        viewModel.isPlaying = true
+        viewModel.showVideo(findNavController())
     }
 
-    override fun onStop() {
-        super.onStop()
-        if (Util.SDK_INT >= 24) {
-            releasePlayer()
-        }
-    }
-
-    private fun showVideo(){
+    private fun showVideoControls() {
         binding.playButton?.visibility = View.INVISIBLE
         binding.classThumbnail?.visibility = View.INVISIBLE
         binding.videoView.visibility = View.VISIBLE
-        viewModel.isPlaying = true
-        player!!.prepare()
-        player!!.play()
-        player!!.createMessage { _: Int, _: Any? ->
-                    viewModel.markAsWatched()
-                }
-                .setPosition(0,20000)
-                .send()
-        player!!.addListener(object : Player.EventListener {
-            override fun onPlaybackStateChanged(state: Int) {
-                if (state == Player.STATE_ENDED) {
-                    viewModel.markAsWatched()
-                    if (nextClassId != null) {
-                        val action = ClassDetailsFragmentDirections.actionClassDetailsFragmentSelf(nextClassId!!, args.classIds)
-                        findNavController().navigate(action)
-                    }
-                }
-            }
-        })
-    }
-
-    private fun initializePlayer(videoUrl: String){
-        val dataSourceFactory: DataSource.Factory = DefaultHttpDataSource.Factory()
-        val hlsMediaSource: HlsMediaSource = HlsMediaSource.Factory(dataSourceFactory).createMediaSource(MediaItem.fromUri(videoUrl))
-        player = SimpleExoPlayer.Builder(requireContext()).build()
-        binding.videoView.player = player
-        player!!.setMediaSource(hlsMediaSource)
-        player!!.playWhenReady = viewModel.playWhenReady
-        player!!.seekTo(viewModel.currentWindow, viewModel.playbackPosition)
-        if (viewModel.isPlaying) {
-            showVideo()
-        }
-    }
-
-    private fun releasePlayer(){
-        if (player != null){
-            viewModel.playWhenReady = player!!.playWhenReady
-            viewModel.playbackPosition = player!!.currentPosition
-            viewModel.currentWindow = player!!.currentWindowIndex
-            player!!.stop()
-            player!!.release()
-            player = null
-        }
     }
 }
