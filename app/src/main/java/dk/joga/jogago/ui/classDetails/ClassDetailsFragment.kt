@@ -78,6 +78,7 @@ class ClassDetailsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT){
+            requireActivity().requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_SENSOR
             if (viewModel.isPlaying) {
                 showVideoControls()
             }
@@ -88,10 +89,10 @@ class ClassDetailsFragment : Fragment() {
 
         val fullscreen: ImageView = view.findViewById(R.id.exo_fullscreen)
         fullscreen.setOnClickListener {
-            if (requireActivity().requestedOrientation == ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE) {
-                requireActivity().requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+            if (requireActivity().requestedOrientation == ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE) {
+                requireActivity().requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT
             } else {
-                requireActivity().requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
+                requireActivity().requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE
             }
         }
     }
