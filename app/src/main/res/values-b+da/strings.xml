@@ -51,4 +51,10 @@
     <string name="tv_share_icon">TV share icon</string>
     <string name="instructor_avatar">Instructor avatar</string>
     <string name="preferences_name">preferences</string>
+
+    <string name="exo_rewind">Rewind</string>
+    <string name="exo_play">Play</string>
+    <string name="exo_pause">Pause</string>
+    <string name="exo_fast_forward">Fast forward</string>
+    <string name="exo_fullscreen">Fullscreen</string>
 </resources>

@@ -16,25 +16,20 @@
         android:orientation="horizontal">
 
         <ImageButton android:id="@id/exo_rew"
-            style="@style/ExoMediaButton.Rewind"/>
-
-        <ImageButton android:id="@id/exo_shuffle"
-            style="@style/ExoMediaButton"/>
-
-        <ImageButton android:id="@id/exo_repeat_toggle"
-            style="@style/ExoMediaButton"/>
+            style="@style/ExoMediaButton.Rewind"
+            android:contentDescription="@string/exo_rewind" />
 
         <ImageButton android:id="@id/exo_play"
-            style="@style/ExoMediaButton.Play"/>
+            style="@style/ExoMediaButton.Play"
+            android:contentDescription="@string/exo_play" />
 
         <ImageButton android:id="@id/exo_pause"
-            style="@style/ExoMediaButton.Pause"/>
+            style="@style/ExoMediaButton.Pause"
+            android:contentDescription="@string/exo_pause" />
 
         <ImageButton android:id="@id/exo_ffwd"
-            style="@style/ExoMediaButton.FastForward"/>
-
-        <ImageButton android:id="@id/exo_vr"
-            style="@style/ExoMediaButton.VR"/>
+            style="@style/ExoMediaButton.FastForward"
+            android:contentDescription="@string/exo_fast_forward" />
 
     </LinearLayout>
 
@@ -43,7 +38,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
         android:gravity="center_vertical"
-        android:orientation="horizontal">
+        android:paddingStart="@dimen/margin_small"
+        android:orientation="horizontal"
+        tools:ignore="RtlSymmetry">
 
         <TextView android:id="@id/exo_position"
             android:layout_width="wrap_content"
@@ -69,6 +66,11 @@
             android:paddingRight="4dp"
             android:includeFontPadding="false"
             android:textColor="#FFBEBEBE"/>
+
+        <ImageButton
+            android:id="@+id/exo_fullscreen"
+            style="@style/ExoStyledControls.Button.Bottom.FullScreen"
+            android:contentDescription="@string/exo_fullscreen" />
 
     </LinearLayout>
 
