@@ -23,3 +23,4 @@
 -keep class dk.joga.jogago.JoGaApplication {*;}
 -keep class dk.joga.jogago.AppContainer {*;}
 -keep class dk.joga.jogago.api.* {*;}
+-keep class dk.joga.jogago.ui.CastOptionsProvider {*;}

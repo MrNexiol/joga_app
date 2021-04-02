@@ -10,6 +10,7 @@ import android.view.WindowInsets
 import android.view.WindowInsetsController
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
+import com.google.android.gms.cast.framework.CastButtonFactory
 import com.google.android.gms.cast.framework.CastContext
 import dk.joga.jogago.R
 import dk.joga.jogago.databinding.ActivityMainBinding
@@ -25,6 +26,10 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        CastButtonFactory.setUpMediaRouteButton(this, binding.mediaRouteButton)
+
+        castContext = CastContext.getSharedInstance(this)
 
         navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         navController = navHostFragment.navController
@@ -43,7 +48,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.mainBottomNav.setOnNavigationItemSelectedListener {
-            when(it.itemId){
+            when (it.itemId) {
                 R.id.navigation_home -> {
                     if (navController.currentDestination!!.id != R.id.homeFragment) {
                         navController.navigate(R.id.action_global_homeFragment)
@@ -59,8 +64,6 @@ class MainActivity : AppCompatActivity() {
                 else -> false
             }
         }
-
-        castContext = CastContext.getSharedInstance(this)
     }
 
     override fun onBackPressed() {
