@@ -41,7 +41,7 @@ class ClassDetailsFragment : Fragment() {
         viewModel.classWrapper.getData().observe(viewLifecycleOwner, { resource ->
             resource.data?.let {
                 viewModel.initializePlayer(it.videoUrl, requireContext())
-                binding.videoView.player = viewModel.player
+                binding.localVideoView.player = viewModel.player
                 if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
                     binding.className!!.text = it.title
                     @Suppress("SENSELESS_COMPARISON")
@@ -111,6 +111,6 @@ class ClassDetailsFragment : Fragment() {
     private fun showVideoControls() {
         binding.playButton?.visibility = View.INVISIBLE
         binding.classThumbnail?.visibility = View.INVISIBLE
-        binding.videoView.visibility = View.VISIBLE
+        binding.localVideoView.visibility = View.VISIBLE
     }
 }
