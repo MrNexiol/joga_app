@@ -97,6 +97,16 @@
                         app:fastforward_increment="10000"
                         app:rewind_increment="10000" />
 
+                    <com.google.android.exoplayer2.ui.PlayerControlView
+                        android:id="@+id/remote_video_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:background="@color/background"
+                        android:visibility="invisible"
+                        app:fastforward_increment="10000"
+                        app:rewind_increment="10000" />
+
                 </FrameLayout>
 
             </androidx.cardview.widget.CardView>
