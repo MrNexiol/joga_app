@@ -112,8 +112,6 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        CastButtonFactory.setUpMediaRouteButton(requireContext(), binding.homeCastButton)
-
         binding.homeRefreshLayout.setOnRefreshListener {
             viewModel.refreshData()
             binding.homeRefreshLayout.isRefreshing = false

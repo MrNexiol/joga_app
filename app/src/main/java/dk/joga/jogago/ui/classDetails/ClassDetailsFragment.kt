@@ -11,6 +11,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
+import com.google.android.gms.cast.framework.CastButtonFactory
 import com.google.android.gms.cast.framework.CastContext
 import dk.joga.jogago.R
 import dk.joga.jogago.api.Status
@@ -84,6 +85,7 @@ class ClassDetailsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT){
+            CastButtonFactory.setUpMediaRouteButton(requireContext(), binding.castButton)
             requireActivity().requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_SENSOR
             if (viewModel.isPlaying) {
                 if (viewModel.playRemote) {
