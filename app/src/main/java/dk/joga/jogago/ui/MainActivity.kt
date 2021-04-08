@@ -10,6 +10,7 @@ import android.view.WindowInsets
 import android.view.WindowInsetsController
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
+import com.google.android.gms.cast.framework.CastButtonFactory
 import dk.joga.jogago.R
 import dk.joga.jogago.databinding.ActivityMainBinding
 
@@ -24,16 +25,34 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        CastButtonFactory.setUpMediaRouteButton(this, binding.castButton)
+
         navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         navController = navHostFragment.navController
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
-                R.id.loginFragment, R.id.loginErrorFragment, R.id.popupFragment, R.id.logoutFragment -> binding.mainBottomNav.visibility = View.GONE
+                R.id.homeFragment -> {
+                    changeScreenTitle(getString(R.string.train_now))
+                    likeIconVisible(false)
+                }
+                R.id.classesFragment -> {
+                    changeScreenTitle(getString(R.string.classes))
+                    likeIconVisible(false)
+                }
+                R.id.likedFragment -> {
+                    changeScreenTitle(getString(R.string.liked_by_you))
+                    likeIconVisible(false)
+                }
+                R.id.loginFragment, R.id.loginErrorFragment, R.id.popupFragment, R.id.logoutFragment -> {
+                    binding.mainBottomNav.visibility = View.GONE
+                }
                 R.id.classDetailsFragment -> {
                     if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
                         binding.mainBottomNav.visibility = View.GONE
                         hideSystemUi()
+                    } else {
+                        likeIconVisible(true)
                     }
                 }
                 else -> binding.mainBottomNav.visibility = View.VISIBLE
@@ -87,5 +106,14 @@ class MainActivity : AppCompatActivity() {
                     or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
                     or View.SYSTEM_UI_FLAG_FULLSCREEN)
         }
+    }
+
+    private fun likeIconVisible(visible: Boolean) {
+        val modifier = if (visible) View.VISIBLE else View.GONE
+        binding.likeIcon.visibility = modifier
+    }
+
+    fun changeScreenTitle(title: String) {
+        binding.screenTitle.text = title
     }
 }

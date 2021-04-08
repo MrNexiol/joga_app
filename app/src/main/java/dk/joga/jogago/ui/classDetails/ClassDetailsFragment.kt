@@ -11,17 +11,16 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
-import com.google.android.gms.cast.framework.CastButtonFactory
 import com.google.android.gms.cast.framework.CastContext
 import dk.joga.jogago.R
 import dk.joga.jogago.api.Status
 import dk.joga.jogago.databinding.FragmentClassDetailsBinding
+import dk.joga.jogago.ui.MainActivity
 
 class ClassDetailsFragment : Fragment() {
     private var _binding: FragmentClassDetailsBinding? = null
     private val binding get() = _binding!!
     private val args: ClassDetailsFragmentArgs by navArgs()
-    private var liked: Boolean = false
     private lateinit var viewModel: ClassDetailsViewModel
     private lateinit var viewModelFactory: ClassDetailsViewModelFactory
 
@@ -45,7 +44,8 @@ class ClassDetailsFragment : Fragment() {
 
         viewModel.classWrapper.getData().observe(viewLifecycleOwner, { resource ->
             if (resource.status == Status.Success) {
-                viewModel.classTitle = resource.data!!.title
+                (requireActivity() as MainActivity).changeScreenTitle(resource.data!!.title)
+                viewModel.classTitle = resource.data.title
                 viewModel.initializePlayers(resource.data.videoUrl, requireContext())
                 binding.videoView.player = if (viewModel.playRemote) {
                     viewModel.remotePlayer
@@ -53,17 +53,6 @@ class ClassDetailsFragment : Fragment() {
                     viewModel.localPlayer
                 }
                 if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
-                    binding.className!!.text = resource.data.title
-                    @Suppress("SENSELESS_COMPARISON")
-                    if (resource.data.userLike.classId != null) {
-                        liked = true
-                        binding.likeButton!!.isSelected = liked
-                    }
-                    binding.likeButton!!.setOnClickListener {
-                        liked = !liked
-                        viewModel.toggleClassLike()
-                        binding.likeButton!!.isSelected = liked
-                    }
                     Glide.with(this)
                             .load(resource.data.thumbnailUrl)
                             .fallback(R.drawable.placeholder_image)
@@ -88,7 +77,6 @@ class ClassDetailsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT){
-            CastButtonFactory.setUpMediaRouteButton(requireContext(), binding.castButton)
             requireActivity().requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_SENSOR
             if (viewModel.isPlaying) showVideoControls()
             binding.playButton!!.setOnClickListener {

@@ -18,7 +18,6 @@ import dk.joga.jogago.databinding.LikeableRecyclerViewItemBinding
 class CategoryDetailsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private var data: List<Class> = listOf()
-    private var title: String = ""
     private var liked: Array<Boolean> = emptyArray()
 
     class ViewHolderFirst(
@@ -57,16 +56,14 @@ class CategoryDetailsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         return if (position == 0) 0 else 1
     }
 
-    fun setData(data: List<Class>, title: String){
+    fun setData(data: List<Class>){
         this.data = data
-        this.title = title
         liked = Array(data.size) { false }
         notifyDataSetChanged()
     }
 
     private fun bindFirstItem(holder: ViewHolderFirst) {
         val position = 0
-        holder.binding.categoryFirstItemNameHeader.text = title
         Glide.with(holder.itemView)
             .load(data[position].thumbnailUrl)
             .fallback(R.drawable.placeholder_image)

@@ -14,6 +14,7 @@ import com.google.android.exoplayer2.SimpleExoPlayer
 import com.google.android.exoplayer2.util.Util
 import dk.joga.jogago.R
 import dk.joga.jogago.databinding.FragmentTrainerDetailBinding
+import dk.joga.jogago.ui.MainActivity
 
 class TrainerDetailFragment : Fragment() {
     private var _binding: FragmentTrainerDetailBinding? = null
@@ -39,9 +40,8 @@ class TrainerDetailFragment : Fragment() {
 
         viewModel.instructorWrapper.getData().observe(viewLifecycleOwner, { resource ->
             resource.data?.let {
-                Glide.with(this).load(it.avatar_url).fallback(R.drawable.trainer_placeholder_icon).into(binding.instructorAvatar)
+                (requireActivity() as MainActivity).changeScreenTitle(it.name)
                 Glide.with(this).load(it.avatar_url).fallback(R.drawable.placeholder_image).into(binding.trainerThumbnail)
-                binding.instructorNameTextView.text = it.name
                 @Suppress("SENSELESS_COMPARISON")
                 if (it.videoUrl != "" && it.videoUrl != null) {
                     binding.trainerVideoRoot.visibility = View.VISIBLE

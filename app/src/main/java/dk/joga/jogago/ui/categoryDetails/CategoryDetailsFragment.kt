@@ -10,6 +10,7 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import dk.joga.jogago.api.Status
 import dk.joga.jogago.databinding.FragmentCategoryBinding
+import dk.joga.jogago.ui.MainActivity
 
 class CategoryDetailsFragment : Fragment() {
     private var _binding: FragmentCategoryBinding? = null
@@ -31,7 +32,8 @@ class CategoryDetailsFragment : Fragment() {
 
         viewModel.categoryClassesWrapper.getData().observe(viewLifecycleOwner, { resource ->
             if (resource.status == Status.Success) {
-                adapter.setData(resource.data!!, args.categoryName)
+                (requireActivity() as MainActivity).changeScreenTitle(args.categoryName)
+                adapter.setData(resource.data!!)
             }
         })
         return binding.root
