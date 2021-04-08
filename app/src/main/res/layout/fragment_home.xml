@@ -33,6 +33,14 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
+                <androidx.mediarouter.app.MediaRouteButton
+                    android:id="@+id/home_cast_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/home_section_icon"
+                    app:layout_constraintBottom_toBottomOf="@+id/train_now_text_view"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/train_now_text_view" />
+
                 <View
                     android:id="@+id/top_divider"
                     android:layout_width="0dp"
