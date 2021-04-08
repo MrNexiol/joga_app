@@ -34,24 +34,34 @@ class MainActivity : AppCompatActivity() {
             when (destination.id) {
                 R.id.homeFragment -> {
                     changeScreenTitle(getString(R.string.train_now))
+                    headerVisible(true)
+                    bottomNavVisible(true)
                     likeIconVisible(false)
                 }
                 R.id.classesFragment -> {
                     changeScreenTitle(getString(R.string.classes))
+                    headerVisible(true)
+                    bottomNavVisible(true)
                     likeIconVisible(false)
                 }
                 R.id.likedFragment -> {
                     changeScreenTitle(getString(R.string.liked_by_you))
+                    headerVisible(true)
+                    bottomNavVisible(true)
                     likeIconVisible(false)
                 }
                 R.id.loginFragment, R.id.loginErrorFragment, R.id.popupFragment, R.id.logoutFragment -> {
-                    binding.mainBottomNav.visibility = View.GONE
+                    bottomNavVisible(false)
+                    headerVisible(false)
                 }
                 R.id.classDetailsFragment -> {
                     if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-                        binding.mainBottomNav.visibility = View.GONE
+                        headerVisible(false)
+                        bottomNavVisible(false)
                         hideSystemUi()
                     } else {
+                        headerVisible(true)
+                        bottomNavVisible(true)
                         likeIconVisible(true)
                     }
                 }
@@ -111,6 +121,18 @@ class MainActivity : AppCompatActivity() {
     private fun likeIconVisible(visible: Boolean) {
         val modifier = if (visible) View.VISIBLE else View.GONE
         binding.likeIcon.visibility = modifier
+    }
+
+    private fun headerVisible(visible: Boolean) {
+        val modifier = if (visible) View.VISIBLE else View.GONE
+        binding.screenTitle.visibility = modifier
+        binding.castButton.visibility = modifier
+        binding.topDivider.visibility = modifier
+    }
+
+    private fun bottomNavVisible(visible: Boolean) {
+        val modifier = if (visible) View.VISIBLE else View.GONE
+        binding.mainBottomNav.visibility = modifier
     }
 
     fun changeScreenTitle(title: String) {
