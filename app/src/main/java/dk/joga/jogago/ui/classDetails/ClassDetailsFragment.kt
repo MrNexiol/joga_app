@@ -11,7 +11,9 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
+import com.google.android.gms.cast.framework.CastContext
 import dk.joga.jogago.R
+import dk.joga.jogago.api.Status
 import dk.joga.jogago.databinding.FragmentClassDetailsBinding
 
 class ClassDetailsFragment : Fragment() {
@@ -30,6 +32,8 @@ class ClassDetailsFragment : Fragment() {
         viewModelFactory = ClassDetailsViewModelFactory(args.classId)
         viewModel = ViewModelProvider(this, viewModelFactory).get(ClassDetailsViewModel::class.java)
         viewModel.classIds = args.classIds
+        viewModel.castContext = CastContext.getSharedInstance(requireActivity())
+        viewModel.navController = findNavController()
 
         if (args.classIds != null) {
             val classId = args.classIds!!.indexOf(args.classId)
@@ -39,13 +43,15 @@ class ClassDetailsFragment : Fragment() {
         }
 
         viewModel.classWrapper.getData().observe(viewLifecycleOwner, { resource ->
-            resource.data?.let {
-                viewModel.initializePlayer(it.videoUrl, requireContext())
-                binding.localVideoView.player = viewModel.player
+            if (resource.status == Status.Success) {
+                viewModel.classTitle = resource.data!!.title
+                viewModel.initializePlayers(resource.data.videoUrl, requireContext())
+                binding.localVideoView.player = viewModel.localPlayer
                 if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
-                    binding.className!!.text = it.title
+                    binding.remoteVideoView!!.player = viewModel.remotePlayer
+                    binding.className!!.text = resource.data.title
                     @Suppress("SENSELESS_COMPARISON")
-                    if (it.userLike.classId != null) {
+                    if (resource.data.userLike.classId != null) {
                         liked = true
                         binding.likeButton!!.isSelected = liked
                     }
@@ -55,16 +61,16 @@ class ClassDetailsFragment : Fragment() {
                         binding.likeButton!!.isSelected = liked
                     }
                     Glide.with(this)
-                            .load(it.thumbnailUrl)
+                            .load(resource.data.thumbnailUrl)
                             .fallback(R.drawable.placeholder_image)
                             .transition(DrawableTransitionOptions.withCrossFade())
                             .into(binding.classThumbnail!!)
-                    binding.classTitleDuration!!.text = getString(R.string.title_duration, it.title, it.duration)
-                    binding.classDescription!!.text = it.description
-                    Glide.with(this).load(it.instructor.avatar_url).fallback(R.drawable.trainer_placeholder_icon).into(binding.classInstructorAvatar!!)
-                    binding.classInstructorName!!.text = it.instructor.name
-                    binding.classInstructorRoot!!.setOnClickListener { _ ->
-                        val action = ClassDetailsFragmentDirections.actionClassDetailsFragmentToTrainerDetailFragment(it.instructor.id)
+                    binding.classTitleDuration!!.text = getString(R.string.title_duration, resource.data.title, resource.data.duration)
+                    binding.classDescription!!.text = resource.data.description
+                    Glide.with(this).load(resource.data.instructor.avatar_url).fallback(R.drawable.trainer_placeholder_icon).into(binding.classInstructorAvatar!!)
+                    binding.classInstructorName!!.text = resource.data.instructor.name
+                    binding.classInstructorRoot!!.setOnClickListener {
+                        val action = ClassDetailsFragmentDirections.actionClassDetailsFragmentToTrainerDetailFragment(resource.data.instructor.id)
                         findNavController().navigate(action)
                     }
                 }
@@ -80,7 +86,11 @@ class ClassDetailsFragment : Fragment() {
         if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT){
             requireActivity().requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_SENSOR
             if (viewModel.isPlaying) {
-                showVideoControls()
+                if (viewModel.playRemote) {
+                    showRemoteVideoControls()
+                } else {
+                    showLocalVideoControls()
+                }
             }
             binding.playButton!!.setOnClickListener {
                 playVideo()
@@ -103,14 +113,26 @@ class ClassDetailsFragment : Fragment() {
     }
 
     private fun playVideo() {
-        showVideoControls()
-        viewModel.isPlaying = true
-        viewModel.showVideo(findNavController())
+        if (viewModel.playRemote) {
+            showRemoteVideoControls()
+            viewModel.showRemoteVideo()
+        } else {
+            showLocalVideoControls()
+            viewModel.showLocalVideo()
+        }
     }
 
-    private fun showVideoControls() {
+    private fun showLocalVideoControls() {
         binding.playButton?.visibility = View.INVISIBLE
+        binding.remoteVideoView?.visibility = View.INVISIBLE
         binding.classThumbnail?.visibility = View.INVISIBLE
         binding.localVideoView.visibility = View.VISIBLE
+    }
+
+    private fun showRemoteVideoControls() {
+        binding.playButton?.visibility = View.INVISIBLE
+        binding.classThumbnail?.visibility = View.INVISIBLE
+        binding.localVideoView.visibility = View.INVISIBLE
+        binding.remoteVideoView?.visibility = View.VISIBLE
     }
 }
