@@ -47,9 +47,12 @@ class ClassDetailsFragment : Fragment() {
             if (resource.status == Status.Success) {
                 viewModel.classTitle = resource.data!!.title
                 viewModel.initializePlayers(resource.data.videoUrl, requireContext())
-                binding.localVideoView.player = viewModel.localPlayer
+                binding.videoView.player = if (viewModel.playRemote) {
+                    viewModel.remotePlayer
+                } else {
+                    viewModel.localPlayer
+                }
                 if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
-                    binding.remoteVideoView!!.player = viewModel.remotePlayer
                     binding.className!!.text = resource.data.title
                     @Suppress("SENSELESS_COMPARISON")
                     if (resource.data.userLike.classId != null) {
@@ -87,13 +90,7 @@ class ClassDetailsFragment : Fragment() {
         if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT){
             CastButtonFactory.setUpMediaRouteButton(requireContext(), binding.castButton)
             requireActivity().requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_SENSOR
-            if (viewModel.isPlaying) {
-                if (viewModel.playRemote) {
-                    showRemoteVideoControls()
-                } else {
-                    showLocalVideoControls()
-                }
-            }
+            if (viewModel.isPlaying) showVideoControls()
             binding.playButton!!.setOnClickListener {
                 playVideo()
             }
@@ -115,26 +112,13 @@ class ClassDetailsFragment : Fragment() {
     }
 
     private fun playVideo() {
-        if (viewModel.playRemote) {
-            showRemoteVideoControls()
-            viewModel.showRemoteVideo()
-        } else {
-            showLocalVideoControls()
-            viewModel.showLocalVideo()
-        }
+        showVideoControls()
+        viewModel.showVideo()
     }
 
-    private fun showLocalVideoControls() {
-        binding.playButton?.visibility = View.INVISIBLE
-        binding.remoteVideoView?.visibility = View.INVISIBLE
-        binding.classThumbnail?.visibility = View.INVISIBLE
-        binding.localVideoView.visibility = View.VISIBLE
-    }
-
-    private fun showRemoteVideoControls() {
+    private fun showVideoControls() {
         binding.playButton?.visibility = View.INVISIBLE
         binding.classThumbnail?.visibility = View.INVISIBLE
-        binding.localVideoView.visibility = View.INVISIBLE
-        binding.remoteVideoView?.visibility = View.VISIBLE
+        binding.videoView.visibility = View.VISIBLE
     }
 }

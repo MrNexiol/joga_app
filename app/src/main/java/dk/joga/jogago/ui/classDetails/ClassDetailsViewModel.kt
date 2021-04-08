@@ -88,19 +88,18 @@ class ClassDetailsViewModel(private val id: String) : ViewModel() {
         }
     }
 
-    fun showLocalVideo() {
-        localPlayer!!.play()
+    fun showVideo() {
+        if (playRemote) {
+            remotePlayer!!.play()
+            remotePlayer!!.addListener(playerListener)
+        } else {
+            localPlayer!!.play()
+            localPlayer!!.createMessage { _, _ ->
+                markAsWatched()
+            }.setPosition(0,20000).send()
+            localPlayer!!.addListener(playerListener)
+        }
         isPlaying = true
-        localPlayer!!.createMessage { _: Int, _: Any? ->
-            markAsWatched()
-        }.setPosition(0,20000).send()
-        localPlayer!!.addListener(playerListener)
-    }
-
-    fun showRemoteVideo() {
-        remotePlayer!!.play()
-        isPlaying = true
-        remotePlayer!!.addListener(playerListener)
     }
 
     override fun onCleared() {
