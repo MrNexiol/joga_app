@@ -30,6 +30,7 @@ class PlayerManager(var playerView: PlayerView, val context: Context, castContex
 
         castPlayer = CastPlayer(castContext)
         castPlayer!!.setSessionAvailabilityListener(this)
+        castPlayer!!.addListener(this)
         castPlayer!!.addMediaItem(mediaItem!!)
         castPlayer!!.prepare()
 
@@ -61,8 +62,6 @@ class PlayerManager(var playerView: PlayerView, val context: Context, castContex
             return
         }
 
-        this.playerView.player = currentPlayer
-
         var playbackPositionMs = C.TIME_UNSET
         var windowIndex = C.INDEX_UNSET
         var playWhenReady = false
@@ -80,6 +79,7 @@ class PlayerManager(var playerView: PlayerView, val context: Context, castContex
         }
 
         this.currentPlayer = currentPlayer
+        this.playerView.player = currentPlayer
 
         if (windowIndex != C.INDEX_UNSET) {
             this.currentPlayer!!.playWhenReady = playWhenReady
@@ -88,12 +88,18 @@ class PlayerManager(var playerView: PlayerView, val context: Context, castContex
 
         if (isPlaying) {
             startVideo()
+        } else {
+            if (currentPlayer == castPlayer) {
+                currentPlayer.setMediaItem(mediaItem!!)
+                currentPlayer.prepare()
+            }
         }
     }
 
     fun startVideo() {
         if (currentPlayer == castPlayer) {
             currentPlayer!!.setMediaItem(mediaItem!!)
+            currentPlayer!!.prepare()
             currentPlayer!!.play()
         } else {
             currentPlayer!!.play()
