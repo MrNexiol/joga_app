@@ -100,10 +100,8 @@ class PlayerManager(var playerView: PlayerView, val context: Context, castContex
         if (currentPlayer == castPlayer) {
             currentPlayer!!.setMediaItem(mediaItem!!)
             currentPlayer!!.prepare()
-            currentPlayer!!.play()
-        } else {
-            currentPlayer!!.play()
         }
+        currentPlayer!!.play()
     }
 
     fun isPlaying(): Boolean {
