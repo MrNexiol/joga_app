@@ -59,10 +59,12 @@ class MainActivity : AppCompatActivity() {
                         headerVisible(false)
                         bottomNavVisible(false)
                         hideSystemUi()
+                        binding.navHostFragment.setPadding(0,0,0,0)
                     } else {
                         headerVisible(true)
                         bottomNavVisible(true)
                         likeIconVisible(true)
+                        binding.navHostFragment.setPadding(resources.getDimensionPixelSize(R.dimen.default_app_padding),0,resources.getDimensionPixelSize(R.dimen.default_app_padding),0)
                     }
                 }
                 else -> binding.mainBottomNav.visibility = View.VISIBLE

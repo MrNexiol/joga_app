@@ -1,13 +1,14 @@
 package dk.joga.jogago.ui.classDetails
 
+import android.app.Application
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 
 @Suppress("UNCHECKED_CAST")
-class ClassDetailsViewModelFactory(private val id: String) : ViewModelProvider.Factory {
+class ClassDetailsViewModelFactory(private val id: String, private val application: Application) : ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(ClassDetailsViewModel::class.java)){
-            return ClassDetailsViewModel(id) as T
+            return ClassDetailsViewModel(id, application) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

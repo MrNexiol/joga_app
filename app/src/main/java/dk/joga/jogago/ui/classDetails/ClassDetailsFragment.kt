@@ -29,11 +29,8 @@ class ClassDetailsFragment : Fragment() {
             savedInstanceState: Bundle?
     ): View {
         _binding = FragmentClassDetailsBinding.inflate(inflater, container, false)
-        viewModelFactory = ClassDetailsViewModelFactory(args.classId)
+        viewModelFactory = ClassDetailsViewModelFactory(args.classId, requireActivity().application)
         viewModel = ViewModelProvider(this, viewModelFactory).get(ClassDetailsViewModel::class.java)
-        viewModel.classIds = args.classIds
-        viewModel.castContext = CastContext.getSharedInstance(requireActivity())
-        viewModel.navController = findNavController()
 
         if (args.classIds != null) {
             val classId = args.classIds!!.indexOf(args.classId)
@@ -45,13 +42,7 @@ class ClassDetailsFragment : Fragment() {
         viewModel.classWrapper.getData().observe(viewLifecycleOwner, { resource ->
             if (resource.status == Status.Success) {
                 (requireActivity() as MainActivity).changeScreenTitle(resource.data!!.title)
-                viewModel.classTitle = resource.data.title
-                viewModel.initializePlayers(resource.data.videoUrl, requireContext())
-                binding.videoView.player = if (viewModel.playRemote) {
-                    viewModel.remotePlayer
-                } else {
-                    viewModel.localPlayer
-                }
+                viewModel.initializePlayerManager(binding.videoView, CastContext.getSharedInstance(requireActivity()), resource.data.videoUrl, resource.data.title)
                 if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
                     Glide.with(this)
                             .load(resource.data.thumbnailUrl)
@@ -78,7 +69,7 @@ class ClassDetailsFragment : Fragment() {
 
         if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT){
             requireActivity().requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_SENSOR
-            if (viewModel.isPlaying) showVideoControls()
+            if (viewModel.isPlaying()) showVideoControls()
             binding.playButton!!.setOnClickListener {
                 playVideo()
             }
