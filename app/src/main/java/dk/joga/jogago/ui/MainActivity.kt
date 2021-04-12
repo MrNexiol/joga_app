@@ -11,11 +11,13 @@ import android.view.WindowInsetsController
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.google.android.gms.cast.framework.CastButtonFactory
+import dk.joga.jogago.AppContainer
 import dk.joga.jogago.R
 import dk.joga.jogago.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
 
+    private var likeId = ""
     private lateinit var binding: ActivityMainBinding
     private lateinit var navHostFragment: NavHostFragment
     private lateinit var navController: NavController
@@ -40,14 +42,16 @@ class MainActivity : AppCompatActivity() {
                 }
                 R.id.classesFragment -> {
                     changeScreenTitle(getString(R.string.classes))
-                    headerVisible(true)
-                    bottomNavVisible(true)
+                    likeIconVisible(false)
+                }
+                R.id.categoryFragment -> {
                     likeIconVisible(false)
                 }
                 R.id.likedFragment -> {
                     changeScreenTitle(getString(R.string.liked_by_you))
-                    headerVisible(true)
-                    bottomNavVisible(true)
+                    likeIconVisible(false)
+                }
+                R.id.trainerDetailFragment -> {
                     likeIconVisible(false)
                 }
                 R.id.loginFragment, R.id.loginErrorFragment, R.id.popupFragment, R.id.logoutFragment -> {
@@ -87,6 +91,11 @@ class MainActivity : AppCompatActivity() {
                 }
                 else -> false
             }
+        }
+
+        binding.likeIcon.setOnClickListener {
+            AppContainer.repository.toggleClassLike(likeId)
+            binding.likeIcon.isSelected = !binding.likeIcon.isSelected
         }
     }
 
@@ -139,5 +148,13 @@ class MainActivity : AppCompatActivity() {
 
     fun changeScreenTitle(title: String) {
         binding.screenTitle.text = title
+    }
+
+    fun setClassId(id: String) {
+        this.likeId = id
+    }
+
+    fun setLikeIcon(liked: Boolean) {
+        binding.likeIcon.isSelected = liked
     }
 }

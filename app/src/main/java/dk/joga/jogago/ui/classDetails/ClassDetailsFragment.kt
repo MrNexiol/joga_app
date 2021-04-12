@@ -42,6 +42,11 @@ class ClassDetailsFragment : Fragment() {
         viewModel.classWrapper.getData().observe(viewLifecycleOwner, { resource ->
             if (resource.status == Status.Success) {
                 (requireActivity() as MainActivity).changeScreenTitle(resource.data!!.title)
+                (requireActivity() as MainActivity).setClassId(resource.data.id)
+                @Suppress("SENSELESS_COMPARISON")
+                if (resource.data.userLike.classId != null) {
+                    (requireActivity() as MainActivity).setLikeIcon(true)
+                }
                 viewModel.initializePlayerManager(binding.videoView, CastContext.getSharedInstance(requireActivity()), resource.data.videoUrl, resource.data.title)
                 if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
                     Glide.with(this)
@@ -87,6 +92,8 @@ class ClassDetailsFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
+        (requireActivity() as MainActivity).setLikeIcon(false)
+        (requireActivity() as MainActivity).setClassId("")
         _binding = null
     }
 
