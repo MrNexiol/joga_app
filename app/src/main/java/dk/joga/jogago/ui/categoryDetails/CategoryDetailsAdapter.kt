@@ -76,6 +76,7 @@ class CategoryDetailsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         }
         @Suppress("SENSELESS_COMPARISON")
         liked[position] = data[position].userLike.classId != null
+        holder.binding.categoryFirstItemWatchedIcon.visibility = if (data[position].watched) View.VISIBLE else View.GONE
         holder.binding.categoryFirstItemLikeIcon.isSelected = liked[position]
         holder.binding.categoryFirstItemLikeIcon.setOnClickListener {
             liked[position] = !liked[position]

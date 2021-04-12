@@ -26,10 +26,26 @@
         android:id="@+id/category_first_item_like_icon"
         android:layout_width="@dimen/screen_title_icon"
         android:layout_height="@dimen/screen_title_icon"
+        android:layout_marginStart="@dimen/margin_small"
+        android:layout_marginTop="@dimen/margin_small"
         android:contentDescription="@string/heart_icon"
+        android:elevation="2dp"
         app:layout_constraintStart_toStartOf="@+id/category_first_item_thumbnail_root"
         app:layout_constraintTop_toTopOf="@+id/category_first_item_thumbnail_root"
         app:srcCompat="@drawable/like_icon" />
+
+    <ImageView
+        android:id="@+id/category_first_item_watched_icon"
+        android:layout_width="@dimen/screen_title_icon"
+        android:layout_height="@dimen/screen_title_icon"
+        android:layout_marginStart="@dimen/margin_small"
+        android:layout_marginTop="@dimen/margin_small"
+        android:contentDescription="@string/watched_icon"
+        android:elevation="2dp"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/category_first_item_like_icon"
+        app:srcCompat="@drawable/watched_icon" />
 
     <TextView
         android:id="@+id/category_first_item_name"
