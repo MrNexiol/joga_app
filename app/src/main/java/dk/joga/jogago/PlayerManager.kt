@@ -16,6 +16,7 @@ import com.google.android.gms.cast.framework.CastContext
 class PlayerManager(var playerView: PlayerView, val context: Context, castContext: CastContext, videoUrl: String, classTitle: String) : SessionAvailabilityListener {
 
     private var classId = ""
+    private var playbackPositionMs: Long = 0
     private var currentPlayer: Player? = null
     private var castPlayer: CastPlayer? = null
     private var localPlayer: SimpleExoPlayer? = null
@@ -36,7 +37,6 @@ class PlayerManager(var playerView: PlayerView, val context: Context, castContex
         castPlayer = CastPlayer(castContext)
         castPlayer!!.setSessionAvailabilityListener(this)
         castPlayer!!.addMediaItem(mediaItem!!)
-        castPlayer!!.prepare()
 
         localPlayer = SimpleExoPlayer.Builder(context).build()
         localPlayer!!.setMediaSource(hlsMediaSource)
@@ -62,7 +62,7 @@ class PlayerManager(var playerView: PlayerView, val context: Context, castContex
             return
         }
 
-        var playbackPositionMs = C.TIME_UNSET
+        playbackPositionMs = C.TIME_UNSET
         var windowIndex = C.INDEX_UNSET
         var playWhenReady = false
         var isPlaying = false
@@ -88,19 +88,14 @@ class PlayerManager(var playerView: PlayerView, val context: Context, castContex
 
         if (isPlaying) {
             startVideo()
-        } else {
-            if (currentPlayer == castPlayer) {
-                currentPlayer.setMediaItem(mediaItem!!)
-                currentPlayer.prepare()
-            }
         }
     }
 
     fun startVideo() {
         if (currentPlayer == castPlayer) {
-            currentPlayer!!.setMediaItem(mediaItem!!)
-            currentPlayer!!.prepare()
+            (currentPlayer as CastPlayer).setMediaItem(mediaItem!!)
         }
+        currentPlayer!!.prepare()
         currentPlayer!!.play()
         if (classId.isNotEmpty()) {
             handler.postDelayed(runnable, 5000)
