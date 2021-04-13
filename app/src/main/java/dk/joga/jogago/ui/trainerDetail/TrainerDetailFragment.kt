@@ -13,6 +13,7 @@ import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.SimpleExoPlayer
 import com.google.android.exoplayer2.util.Util
 import dk.joga.jogago.R
+import dk.joga.jogago.api.Status
 import dk.joga.jogago.databinding.FragmentTrainerDetailBinding
 import dk.joga.jogago.ui.MainActivity
 
@@ -39,18 +40,18 @@ class TrainerDetailFragment : Fragment() {
         recyclerView.layoutManager = LinearLayoutManager(context)
 
         viewModel.instructorWrapper.getData().observe(viewLifecycleOwner, { resource ->
-            resource.data?.let {
-                (requireActivity() as MainActivity).changeScreenTitle(it.name)
-                Glide.with(this).load(it.avatar_url).fallback(R.drawable.placeholder_image).into(binding.trainerThumbnail)
+            if (resource.status == Status.Success) {
+                (requireActivity() as MainActivity).changeScreenTitle(resource.data!!.name)
+                Glide.with(this).load(resource.data.avatar_url).fallback(R.drawable.placeholder_image).into(binding.trainerThumbnail)
                 @Suppress("SENSELESS_COMPARISON")
-                if (it.videoUrl != "" && it.videoUrl != null) {
+                if (resource.data.videoUrl != "" && resource.data.videoUrl != null) {
                     binding.trainerVideoRoot.visibility = View.VISIBLE
                     binding.trainerThumbnailAndListDivider.visibility = View.VISIBLE
                     binding.trainerVideoTitle.visibility = View.VISIBLE
                     binding.trainerVideoDuration.visibility = View.VISIBLE
-                    binding.trainerVideoTitle.text = it.videoTitle
-                    binding.trainerVideoDuration.text = getString(R.string.min, it.videoDuration)
-                    initializePlayer(it.videoUrl)
+                    binding.trainerVideoTitle.text = resource.data.videoTitle
+                    binding.trainerVideoDuration.text = getString(R.string.min, resource.data.videoDuration)
+                    initializePlayer(resource.data.videoUrl)
                     if (viewModel.isPlaying) {
                         showVideo()
                     }
@@ -63,8 +64,8 @@ class TrainerDetailFragment : Fragment() {
             }
         })
         viewModel.instructorClassesWrapper.getData().observe(viewLifecycleOwner, { resource ->
-            resource.data?.let {
-                adapter.setData(it)
+            if (resource.status == Status.Success) {
+                adapter.setData(resource.data!!)
             }
         })
 

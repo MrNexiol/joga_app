@@ -26,8 +26,8 @@ android {
         debug {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-//            buildConfigField("String", "BASE_URL", "\"https://joga-go.prograils.net/api/v1/\"")
-            buildConfigField("String", "BASE_URL", "\"https://joga-go-backend.herokuapp.com/api/v1/\"")
+            buildConfigField("String", "BASE_URL", "\"https://joga-go.prograils.net/api/v1/\"")
+//            buildConfigField("String", "BASE_URL", "\"https://joga-go-backend.herokuapp.com/api/v1/\"")
         }
         release {
             minifyEnabled true
@@ -49,7 +49,7 @@ android {
 }
 
 dependencies {
-    def nav_version = "2.3.4"
+    def nav_version = "2.3.5"
     def lifecycle_version = "2.3.1"
     def exoplayer_version = "2.13.1"
     //noinspection DifferentStdlibGradleVersion
