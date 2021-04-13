@@ -51,6 +51,9 @@ class MainActivity : AppCompatActivity() {
                     changeScreenTitle(getString(R.string.liked_by_you))
                     likeIconVisible(false)
                 }
+                R.id.journeyDetailsFragment -> {
+                    likeIconVisible(false)
+                }
                 R.id.trainerDetailFragment -> {
                     likeIconVisible(false)
                 }
