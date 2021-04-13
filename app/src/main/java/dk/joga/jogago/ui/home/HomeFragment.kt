@@ -97,6 +97,7 @@ class HomeFragment : Fragment() {
                         .transform(RoundedCorners(resources.getDimensionPixelSize(R.dimen.card_radius)))
                         .transition(DrawableTransitionOptions.withCrossFade())
                         .into(binding.todaysPickThumbnail)
+                binding.todayPickWatchedIcon.visibility = if (resource.data.watched) View.VISIBLE else View.GONE
                 binding.todayPickName.text = resource.data.title
                 binding.todayPickTrainerNameTextView.text = getString(R.string.with, resource.data.instructor.name)
                 binding.todayPickMinTextView.text = getString(R.string.min, resource.data.duration)

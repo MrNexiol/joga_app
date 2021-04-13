@@ -51,7 +51,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/margin_medium"
-                    android:visibility="gone"
+                    android:visibility="visible"
                     app:layout_constraintTop_toBottomOf="@+id/today_pick_icon"
                     tools:layout_editor_absoluteX="16dp">
 
@@ -66,6 +66,19 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageView
+                        android:id="@+id/today_pick_watched_icon"
+                        android:layout_width="@dimen/home_section_icon"
+                        android:layout_height="@dimen/home_section_icon"
+                        android:layout_marginStart="@dimen/margin_small"
+                        android:layout_marginTop="@dimen/margin_small"
+                        android:contentDescription="@string/watched_icon"
+                        android:elevation="2dp"
+                        android:src="@drawable/watched_icon"
+                        android:visibility="gone"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/todays_pick_thumbnail" />
 
                     <TextView
                         android:id="@+id/today_pick_name"
