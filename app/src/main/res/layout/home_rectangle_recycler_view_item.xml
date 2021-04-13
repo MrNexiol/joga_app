@@ -26,6 +26,19 @@
             app:srcCompat="@drawable/placeholder_image" />
     </androidx.cardview.widget.CardView>
 
+    <ImageView
+        android:id="@+id/home_item_watched_icon"
+        android:layout_width="@dimen/home_section_icon"
+        android:layout_height="@dimen/home_section_icon"
+        android:layout_marginStart="@dimen/margin_small"
+        android:layout_marginTop="@dimen/margin_small"
+        android:contentDescription="@string/watched_icon"
+        android:elevation="2dp"
+        android:visibility="visible"
+        app:layout_constraintStart_toStartOf="@+id/home_item_thumbnail_container"
+        app:layout_constraintTop_toTopOf="@+id/home_item_thumbnail_container"
+        app:srcCompat="@drawable/watched_icon" />
+
     <TextView
         android:id="@+id/home_item_name"
         android:layout_width="wrap_content"
