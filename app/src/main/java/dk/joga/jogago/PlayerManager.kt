@@ -1,6 +1,8 @@
 package dk.joga.jogago
 
 import android.content.Context
+import android.os.Handler
+import android.os.Looper
 import com.google.android.exoplayer2.*
 import com.google.android.exoplayer2.ext.cast.CastPlayer
 import com.google.android.exoplayer2.ext.cast.SessionAvailabilityListener
@@ -13,10 +15,13 @@ import com.google.android.gms.cast.framework.CastContext
 
 class PlayerManager(var playerView: PlayerView, val context: Context, castContext: CastContext, videoUrl: String, classTitle: String) : SessionAvailabilityListener {
 
+    private var classId = ""
     private var currentPlayer: Player? = null
     private var castPlayer: CastPlayer? = null
     private var localPlayer: SimpleExoPlayer? = null
     private var mediaItem: MediaItem? = null
+    private val handler = Handler(Looper.getMainLooper())
+    private val runnable = Runnable { runnableTask() }
 
     init {
         val dataSourceFactory: DataSource.Factory = DefaultHttpDataSource.Factory()
@@ -97,6 +102,9 @@ class PlayerManager(var playerView: PlayerView, val context: Context, castContex
             currentPlayer!!.prepare()
         }
         currentPlayer!!.play()
+        if (classId.isNotEmpty()) {
+            handler.postDelayed(runnable, 5000)
+        }
     }
 
     fun isPlaying(): Boolean {
@@ -110,6 +118,23 @@ class PlayerManager(var playerView: PlayerView, val context: Context, castContex
     fun changePlayer(playerView: PlayerView) {
         this.playerView = playerView
         this.playerView.player = currentPlayer
+    }
+
+    private fun removeHandlerCallback() {
+        handler.removeCallbacks(runnable)
+    }
+
+    private fun runnableTask() {
+        if (currentPlayer!!.currentPosition > 20000) {
+            AppContainer.repository.markClassAsWatched(classId)
+            removeHandlerCallback()
+        } else {
+            handler.postDelayed(runnable, 5000)
+        }
+    }
+
+    fun setClassId(id: String) {
+        this.classId = id
     }
 
     fun release() {

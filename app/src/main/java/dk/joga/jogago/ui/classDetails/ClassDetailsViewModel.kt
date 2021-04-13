@@ -25,14 +25,6 @@ class ClassDetailsViewModel(private val id: String, application: Application) : 
         classWrapper.refresh()
     }
 
-//    fun toggleClassLike(){
-//        AppContainer.repository.toggleClassLike(id)
-//    }
-//
-//    fun markAsWatched(){
-//        AppContainer.repository.markClassAsWatched(id)
-//    }
-
     fun showVideo() {
         playerManager!!.startVideo()
     }
@@ -52,6 +44,7 @@ class ClassDetailsViewModel(private val id: String, application: Application) : 
     fun initializePlayerManager(playerView: PlayerView, castContext: CastContext, videoUrl: String, classTitle: String) {
         if (playerManager == null) {
             playerManager = PlayerManager(playerView, getApplication(), castContext, videoUrl, classTitle)
+            playerManager!!.setClassId(id)
         } else {
             playerManager!!.changePlayer(playerView)
         }
