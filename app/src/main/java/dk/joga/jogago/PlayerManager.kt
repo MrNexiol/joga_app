@@ -11,7 +11,7 @@ import com.google.android.exoplayer2.upstream.DefaultHttpDataSource
 import com.google.android.exoplayer2.util.MimeTypes
 import com.google.android.gms.cast.framework.CastContext
 
-class PlayerManager(var playerView: PlayerView, val context: Context, castContext: CastContext, videoUrl: String, classTitle: String) : SessionAvailabilityListener, Player.EventListener {
+class PlayerManager(var playerView: PlayerView, val context: Context, castContext: CastContext, videoUrl: String, classTitle: String) : SessionAvailabilityListener {
 
     private var currentPlayer: Player? = null
     private var castPlayer: CastPlayer? = null
@@ -30,7 +30,6 @@ class PlayerManager(var playerView: PlayerView, val context: Context, castContex
 
         castPlayer = CastPlayer(castContext)
         castPlayer!!.setSessionAvailabilityListener(this)
-        castPlayer!!.addListener(this)
         castPlayer!!.addMediaItem(mediaItem!!)
         castPlayer!!.prepare()
 
@@ -51,10 +50,6 @@ class PlayerManager(var playerView: PlayerView, val context: Context, castContex
 
     override fun onCastSessionUnavailable() {
         setCurrentPlayer(localPlayer!!)
-    }
-
-    override fun onPlaybackStateChanged(state: Int) {
-        // will do that one later
     }
 
     private fun setCurrentPlayer(currentPlayer: Player) {
