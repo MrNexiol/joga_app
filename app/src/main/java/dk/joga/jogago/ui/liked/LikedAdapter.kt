@@ -1,6 +1,7 @@
 package dk.joga.jogago.ui.liked
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
@@ -31,6 +32,7 @@ class LikedAdapter : RecyclerView.Adapter<LikedAdapter.ViewHolder>() {
                 .fallback(R.drawable.placeholder_image)
                 .transition(DrawableTransitionOptions.withCrossFade())
                 .into(holder.binding.likedClassThumbnail)
+        holder.binding.likedClassWatchedIcon.visibility = if (data[position].watched) View.VISIBLE else View.GONE
         holder.binding.likedClassName.text = data[position].title
         holder.binding.heartIcon.isSelected = true
         holder.binding.heartIcon.setOnClickListener {
