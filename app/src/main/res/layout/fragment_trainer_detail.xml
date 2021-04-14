@@ -21,7 +21,7 @@
                 android:id="@+id/trainer_video_root"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:visibility="gone"
+                android:visibility="visible"
                 app:cardBackgroundColor="@color/background"
                 app:cardCornerRadius="@dimen/card_radius"
                 app:layout_constraintDimensionRatio="H,16:9"
@@ -71,7 +71,7 @@
                 android:layout_marginTop="@dimen/margin_small"
                 android:textColor="@color/joga_green"
                 android:textSize="@dimen/header_text"
-                android:visibility="gone"
+                android:visibility="visible"
                 app:layout_constraintEnd_toStartOf="@+id/trainer_video_duration"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/trainer_video_root" />
@@ -82,7 +82,7 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/secondary_text"
                 android:textSize="@dimen/default_text"
-                android:visibility="gone"
+                android:visibility="visible"
                 app:layout_constraintBottom_toBottomOf="@+id/trainer_video_title"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/trainer_video_title" />
@@ -93,7 +93,7 @@
                 android:layout_height="@dimen/divider_height"
                 android:layout_marginTop="@dimen/margin_medium"
                 android:background="@color/secondary_text"
-                android:visibility="gone"
+                android:visibility="visible"
                 app:layout_constraintTop_toBottomOf="@+id/trainer_video_title"
                 tools:layout_editor_absoluteX="16dp" />
 

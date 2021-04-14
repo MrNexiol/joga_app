@@ -6,12 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
-import dk.joga.jogago.R
 import dk.joga.jogago.api.Status
 import dk.joga.jogago.databinding.FragmentJourneyDetailsBinding
 import dk.joga.jogago.ui.MainActivity
@@ -39,25 +35,11 @@ class JourneyDetailsFragment : Fragment() {
         viewModel.journeyWrapper.getData().observe(viewLifecycleOwner, { resource ->
             if (resource.status == Status.Success) {
                 (requireActivity() as MainActivity).changeScreenTitle(resource.data!!.name)
-//                val idList = mutableListOf<String>()
-//                otherClasses.forEachIndexed { i, c ->
-//                    idList.add(i, c.id)
-//                }
-//                binding.firstClassRoot.setOnClickListener {
-//                    val action = JourneyDetailsFragmentDirections.actionJourneyDetailsFragmentToClassDetailsFragment(firstClass.id, idList.toTypedArray())
-//                    findNavController().navigate(action)
-//                }
                 adapter.setData(resource.data.classes)
             }
         })
 
         return binding.root
-    }
-
-    override fun onStart() {
-        super.onStart()
-        viewModel.refreshData()
-        adapter.notifyDataSetChanged()
     }
 
     override fun onDestroyView() {
