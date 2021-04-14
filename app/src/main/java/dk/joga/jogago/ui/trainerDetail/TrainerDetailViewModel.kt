@@ -48,7 +48,7 @@ class TrainerDetailViewModel(trainerId: String, application: Application) : Andr
     }
 
     override fun onCleared() {
-        playerManager!!.release()
+        playerManager?.release()
     }
 
     fun initializePlayerManager(playerView: PlayerView, castContext: CastContext, videoUrl: String, classTitle: String) {

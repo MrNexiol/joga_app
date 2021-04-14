@@ -38,24 +38,19 @@ class TrainerDetailFragment : Fragment() {
         viewModel.instructorWrapper.getData().observe(viewLifecycleOwner, { resource ->
             if (resource.status == Status.Success) {
                 (requireActivity() as MainActivity).changeScreenTitle(resource.data!!.name)
-                viewModel.initializePlayerManager(binding.trainerVideo, CastContext.getSharedInstance(requireActivity()), resource.data.videoUrl, resource.data.videoTitle)
-                Glide.with(this).load(resource.data.avatar_url).fallback(R.drawable.placeholder_image).into(binding.trainerThumbnail)
                 @Suppress("SENSELESS_COMPARISON")
                 if (resource.data.videoUrl != "" && resource.data.videoUrl != null) {
-                    binding.trainerVideoRoot.visibility = View.VISIBLE
-                    binding.trainerThumbnailAndListDivider.visibility = View.VISIBLE
-                    binding.trainerVideoTitle.visibility = View.VISIBLE
-                    binding.trainerVideoDuration.visibility = View.VISIBLE
+                    Glide.with(this).load(resource.data.avatar_url).fallback(R.drawable.placeholder_image).into(binding.trainerThumbnail)
+                    viewModel.initializePlayerManager(binding.trainerVideo, CastContext.getSharedInstance(requireActivity()), resource.data.videoUrl, resource.data.videoTitle)
+                    binding.root.transitionToStart()
                     binding.trainerVideoTitle.text = resource.data.videoTitle
                     binding.trainerVideoDuration.text = getString(R.string.min, resource.data.videoDuration)
                     if (viewModel.isPlaying()) {
                         showVideo()
                     }
                 } else {
-                    binding.trainerVideoRoot.visibility = View.GONE
-                    binding.trainerThumbnailAndListDivider.visibility = View.GONE
-                    binding.trainerVideoTitle.visibility = View.GONE
-                    binding.trainerVideoDuration.visibility = View.GONE
+                    binding.root.setTransition(R.id.collapsed, R.id.collapsed)
+                    binding.root.getTransition(R.id.video_transition).setEnable(false)
                 }
             }
         })
