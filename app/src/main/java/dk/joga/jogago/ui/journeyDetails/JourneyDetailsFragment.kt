@@ -39,26 +39,15 @@ class JourneyDetailsFragment : Fragment() {
         viewModel.journeyWrapper.getData().observe(viewLifecycleOwner, { resource ->
             if (resource.status == Status.Success) {
                 (requireActivity() as MainActivity).changeScreenTitle(resource.data!!.name)
-                val firstClass = resource.data.classes.first()
-                val otherClasses = resource.data.classes - firstClass
-                val idList = mutableListOf<String>()
-                otherClasses.forEachIndexed { i, c ->
-                    idList.add(i, c.id)
-                }
-                Glide.with(this)
-                    .load(firstClass.thumbnailUrl)
-                    .fallback(R.drawable.placeholder_image)
-                    .transition(DrawableTransitionOptions.withCrossFade())
-                    .into(binding.firstClassThumbnail)
-                binding.firstClassNameTextView.text = firstClass.title
-                binding.firstClassInstructorNameTextView.text = getString(R.string.with, firstClass.instructor.name)
-                binding.firstClassMinTextView.text = getString(R.string.min, firstClass.duration)
-                binding.firstClassDescription.text = firstClass.description
-                binding.firstClassRoot.setOnClickListener {
-                    val action = JourneyDetailsFragmentDirections.actionJourneyDetailsFragmentToClassDetailsFragment(firstClass.id, idList.toTypedArray())
-                    findNavController().navigate(action)
-                }
-                adapter.setData(otherClasses)
+//                val idList = mutableListOf<String>()
+//                otherClasses.forEachIndexed { i, c ->
+//                    idList.add(i, c.id)
+//                }
+//                binding.firstClassRoot.setOnClickListener {
+//                    val action = JourneyDetailsFragmentDirections.actionJourneyDetailsFragmentToClassDetailsFragment(firstClass.id, idList.toTypedArray())
+//                    findNavController().navigate(action)
+//                }
+                adapter.setData(resource.data.classes)
             }
         })
 
