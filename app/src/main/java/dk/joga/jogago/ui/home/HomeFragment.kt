@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
+import com.google.android.gms.cast.framework.CastButtonFactory
 import dk.joga.jogago.R
 import dk.joga.jogago.api.Status
 import dk.joga.jogago.databinding.FragmentHomeBinding
@@ -21,17 +22,17 @@ import dk.joga.jogago.databinding.FragmentHomeBinding
 class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
+    private val newClassAdapter = NewClassesAdapter()
+    private val likedClassAdapter = LikedClassAdapter()
+    private val instructorAdapter = InstructorsAdapter()
+    private val journeyAdapter = JourneysAdapter()
+    private val viewModel: HomeViewModel by viewModels()
     private lateinit var sharedPreferences: SharedPreferences
     private lateinit var newClassRecyclerView: RecyclerView
-    private val newClassAdapter = NewClassesAdapter()
     private lateinit var likedClassRecyclerView: RecyclerView
-    private val likedClassAdapter = LikedClassAdapter()
     private lateinit var instructorRecyclerView: RecyclerView
-    private val instructorAdapter = InstructorsAdapter()
     private lateinit var journeyRecyclerView: RecyclerView
-    private val journeyAdapter = JourneysAdapter()
     private lateinit var dailyClassId: String
-    private val viewModel: HomeViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -96,6 +97,7 @@ class HomeFragment : Fragment() {
                         .transform(RoundedCorners(resources.getDimensionPixelSize(R.dimen.card_radius)))
                         .transition(DrawableTransitionOptions.withCrossFade())
                         .into(binding.todaysPickThumbnail)
+                binding.todayPickWatchedIcon.visibility = if (resource.data.watched) View.VISIBLE else View.GONE
                 binding.todayPickName.text = resource.data.title
                 binding.todayPickTrainerNameTextView.text = getString(R.string.with, resource.data.instructor.name)
                 binding.todayPickMinTextView.text = getString(R.string.min, resource.data.duration)

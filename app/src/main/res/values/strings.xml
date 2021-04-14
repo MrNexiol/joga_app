@@ -47,6 +47,7 @@
     <string name="heart_icon">Heart icon</string>
     <string name="share_icon">Share icon</string>
     <string name="play_icon">Play icon</string>
+    <string name="watched_icon">Watched icon</string>
     <string name="journeys_icon">Journeys icon</string>
     <string name="tv_share_icon">TV share icon</string>
     <string name="instructor_avatar">Instructor avatar</string>
@@ -57,4 +58,6 @@
     <string name="exo_pause">Pause</string>
     <string name="exo_fast_forward">Fast forward</string>
     <string name="exo_fullscreen">Fullscreen</string>
+
+    <string name="app_id">CC1AD845</string>
 </resources>

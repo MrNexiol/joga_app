@@ -21,27 +21,7 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/default_app_padding">
-
-                <TextView
-                    android:id="@+id/train_now_text_view"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/train_now"
-                    android:textSize="@dimen/screen_title_text"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <View
-                    android:id="@+id/top_divider"
-                    android:layout_width="0dp"
-                    android:layout_height="@dimen/divider_height"
-                    android:layout_marginTop="@dimen/margin_very_small"
-                    android:background="@color/secondary_text"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/train_now_text_view" />
+                android:layout_height="wrap_content">
 
                 <ImageView
                     android:id="@+id/today_pick_icon"
@@ -59,13 +39,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/margin_small"
-                    android:layout_marginTop="@dimen/margin_medium"
                     android:fontFamily="sans-serif-medium"
                     android:text="@string/today_pick"
                     android:textSize="@dimen/header_text"
                     android:visibility="gone"
                     app:layout_constraintStart_toEndOf="@+id/today_pick_icon"
-                    app:layout_constraintTop_toBottomOf="@+id/top_divider" />
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/todays_pick_root"
@@ -87,6 +66,19 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageView
+                        android:id="@+id/today_pick_watched_icon"
+                        android:layout_width="@dimen/home_section_icon"
+                        android:layout_height="@dimen/home_section_icon"
+                        android:layout_marginStart="@dimen/margin_small"
+                        android:layout_marginTop="@dimen/margin_small"
+                        android:contentDescription="@string/watched_icon"
+                        android:elevation="2dp"
+                        android:src="@drawable/watched_icon"
+                        android:visibility="gone"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/todays_pick_thumbnail" />
 
                     <TextView
                         android:id="@+id/today_pick_name"

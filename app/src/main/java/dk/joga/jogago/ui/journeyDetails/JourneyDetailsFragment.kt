@@ -12,7 +12,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import dk.joga.jogago.R
+import dk.joga.jogago.api.Status
 import dk.joga.jogago.databinding.FragmentJourneyDetailsBinding
+import dk.joga.jogago.ui.MainActivity
 
 class JourneyDetailsFragment : Fragment() {
     private var _binding: FragmentJourneyDetailsBinding? = null
@@ -35,19 +37,19 @@ class JourneyDetailsFragment : Fragment() {
         recyclerView.layoutManager = LinearLayoutManager(context)
 
         viewModel.journeyWrapper.getData().observe(viewLifecycleOwner, { resource ->
-            resource.data?.let {
-                val firstClass = it.classes.first()
-                val otherClasses = it.classes - firstClass
+            if (resource.status == Status.Success) {
+                (requireActivity() as MainActivity).changeScreenTitle(resource.data!!.name)
+                val firstClass = resource.data.classes.first()
+                val otherClasses = resource.data.classes - firstClass
                 val idList = mutableListOf<String>()
                 otherClasses.forEachIndexed { i, c ->
                     idList.add(i, c.id)
                 }
-                binding.journeyTitle.text = it.name
                 Glide.with(this)
-                        .load(firstClass.thumbnailUrl)
-                        .fallback(R.drawable.placeholder_image)
-                        .transition(DrawableTransitionOptions.withCrossFade())
-                        .into(binding.firstClassThumbnail)
+                    .load(firstClass.thumbnailUrl)
+                    .fallback(R.drawable.placeholder_image)
+                    .transition(DrawableTransitionOptions.withCrossFade())
+                    .into(binding.firstClassThumbnail)
                 binding.firstClassNameTextView.text = firstClass.title
                 binding.firstClassInstructorNameTextView.text = getString(R.string.with, firstClass.instructor.name)
                 binding.firstClassMinTextView.text = getString(R.string.min, firstClass.duration)

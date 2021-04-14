@@ -1,6 +1,7 @@
 package dk.joga.jogago.ui.home
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
@@ -29,6 +30,7 @@ class LikedClassAdapter : RecyclerView.Adapter<LikedClassAdapter.ViewHolder>() {
                 .fallback(R.drawable.placeholder_image)
                 .transition(DrawableTransitionOptions.withCrossFade())
                 .into(holder.binding.homeItemThumbnail)
+        holder.binding.homeItemWatchedIcon.visibility = if (data[position].watched) View.VISIBLE else View.GONE
         holder.binding.homeItemName.text = data[position].title
         holder.binding.homeItemCategory.text = data[position].categories.joinToString()
         holder.binding.root.setOnClickListener {

@@ -1,6 +1,7 @@
 package dk.joga.jogago.ui.trainerDetail
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
@@ -31,6 +32,7 @@ class TrainerDetailAdapter : RecyclerView.Adapter<TrainerDetailAdapter.ViewHolde
                 .fallback(R.drawable.placeholder_image)
                 .transition(DrawableTransitionOptions.withCrossFade())
                 .into(holder.binding.likedClassThumbnail)
+        holder.binding.likedClassWatchedIcon.visibility = if (data[position].watched) View.VISIBLE else View.GONE
         holder.binding.likedClassName.text = data[position].title
         @Suppress("SENSELESS_COMPARISON")
         liked[position] = data[position].userLike.classId != null
