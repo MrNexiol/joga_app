@@ -23,7 +23,7 @@ interface WebService {
     fun getCategories(): Call<Categories>
 
     @GET("classes")
-    fun getClasses(@Query("category_id") categoryId: String): Call<Classes>
+    fun getClasses(@Query("category_id") categoryId: String, @Query("page") page: Int = 1): Call<Classes>
 
     @GET("interesting_classes")
     fun getNewClasses(): Call<Classes>
