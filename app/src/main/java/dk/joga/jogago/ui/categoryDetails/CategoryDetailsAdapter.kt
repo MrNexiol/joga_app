@@ -57,6 +57,7 @@ class CategoryDetailsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     }
 
     fun setData(data: List<Class>){
+        this.data.removeAll(this.data)
         this.data.addAll(data)
         liked = Array(this.data.size) { false }
         notifyDataSetChanged()
