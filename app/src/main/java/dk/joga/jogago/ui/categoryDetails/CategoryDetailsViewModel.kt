@@ -30,4 +30,9 @@ class CategoryDetailsViewModel(id: String) : ViewModel() {
             refreshData()
         }
     }
+
+    fun resetData() {
+        categoryClassesWrapper.page = 1
+        refreshData()
+    }
 }
