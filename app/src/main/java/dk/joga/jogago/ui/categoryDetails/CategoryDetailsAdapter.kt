@@ -21,10 +21,10 @@ class CategoryDetailsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private var liked: Array<Boolean> = emptyArray()
 
     class ViewHolderFirst(
-        val binding: CategoryFirstItemBinding) : RecyclerView.ViewHolder(binding.root)
+            val binding: CategoryFirstItemBinding) : RecyclerView.ViewHolder(binding.root)
 
     class ViewHolderRest(
-    val binding: LikeableRecyclerViewItemBinding) : RecyclerView.ViewHolder(binding.root)
+            val binding: LikeableRecyclerViewItemBinding) : RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return if (viewType == 0) {
@@ -60,6 +60,13 @@ class CategoryDetailsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         this.data = data
         liked = Array(data.size) { false }
         notifyDataSetChanged()
+    }
+
+    fun addData(data: List<Class>) {
+        val tmp = this.data.count()
+        this.data += data
+        liked = Array(this.data.size) { false }
+        notifyItemInserted(tmp)
     }
 
     private fun bindFirstItem(holder: ViewHolderFirst) {

@@ -9,7 +9,7 @@ data class Class(
         val focus: String,
         val id: String,
         val instructor: Instructor,
-        @SerializedName("thumbnail_url_resized")
+        @SerializedName("thumbnail_url")
         val thumbnailUrl: String,
         val title: String,
         @SerializedName("user_like")
