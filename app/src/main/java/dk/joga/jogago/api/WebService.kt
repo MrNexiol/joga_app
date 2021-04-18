@@ -14,13 +14,13 @@ interface WebService {
     fun getInstructor(@Path("id") id: String): Call<InstructorResponse>
 
     @GET("journeys")
-    fun getJourneys(): Call<Journeys>
+    fun getJourneys(@Query("page") page: Int = 1): Call<Journeys>
 
     @GET("journeys/{id}")
     fun getJourney(@Path("id") id: String): Call<JourneyResponse>
 
     @GET("categories")
-    fun getCategories(): Call<Categories>
+    fun getCategories(@Query("page") page: Int = 1): Call<Categories>
 
     @GET("classes")
     fun getClasses(@Query("category_id") categoryId: String, @Query("page") page: Int = 1): Call<Classes>
@@ -29,10 +29,10 @@ interface WebService {
     fun getNewClasses(): Call<Classes>
 
     @GET("liked_classes")
-    fun getLikedClasses(): Call<Classes>
+    fun getLikedClasses(@Query("page") page: Int = 1): Call<Classes>
 
     @GET("classes")
-    fun getInstructorClasses(@Query("instructor_id") instructorId: String): Call<Classes>
+    fun getInstructorClasses(@Query("instructor_id") instructorId: String, @Query("page") page: Int = 1): Call<Classes>
 
     @GET("daily_class")
     fun getDailyClass(): Call<ClassResponse>

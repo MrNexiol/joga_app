@@ -65,9 +65,9 @@ class Repository(private val service: WebService) {
         return data
     }
 
-    fun getJourneys(): LiveData<Resource<List<Journey>>> {
+    fun getJourneys(page: Int = 1): LiveData<Resource<List<Journey>>> {
         val data = MutableLiveData<Resource<List<Journey>>>()
-        service.getJourneys().enqueue(object : Callback<Journeys>{
+        service.getJourneys(page).enqueue(object : Callback<Journeys>{
             override fun onResponse(call: Call<Journeys>, response: Response<Journeys>) {
                 if (response.body() != null){
                     if (response.body()!!.journeys.isNotEmpty()) {
@@ -109,9 +109,9 @@ class Repository(private val service: WebService) {
         return data
     }
 
-    fun getCategories(): LiveData<Resource<List<Category>>> {
+    fun getCategories(page: Int = 1): LiveData<Resource<List<Category>>> {
         val data = MutableLiveData<Resource<List<Category>>>()
-        service.getCategories().enqueue(object : Callback<Categories>{
+        service.getCategories(page).enqueue(object : Callback<Categories>{
             override fun onResponse(call: Call<Categories>, response: Response<Categories>) {
                 if (response.body()!!.categories.isEmpty()){
                     val resource = Resource(Status.Empty, listOf<Category>())
@@ -171,9 +171,9 @@ class Repository(private val service: WebService) {
         return data
     }
 
-    fun getLikedClasses(): LiveData<Resource<List<Class>>> {
+    fun getLikedClasses(page: Int = 1): LiveData<Resource<List<Class>>> {
         val data = MutableLiveData<Resource<List<Class>>>()
-        service.getLikedClasses().enqueue(object : Callback<Classes>{
+        service.getLikedClasses(page).enqueue(object : Callback<Classes>{
             override fun onResponse(call: Call<Classes>, response: Response<Classes>) {
                 if (response.body() != null){
                     if (response.body()!!.classes.isEmpty()){
@@ -195,9 +195,9 @@ class Repository(private val service: WebService) {
         return data
     }
 
-    fun getInstructorClasses(instructorId: String): LiveData<Resource<List<Class>>> {
+    fun getInstructorClasses(instructorId: String, page: Int = 1): LiveData<Resource<List<Class>>> {
         val data = MutableLiveData<Resource<List<Class>>>()
-        service.getInstructorClasses(instructorId).enqueue(object : Callback<Classes>{
+        service.getInstructorClasses(instructorId, page).enqueue(object : Callback<Classes>{
             override fun onResponse(call: Call<Classes>, response: Response<Classes>) {
                 if (response.body() != null){
                     val resource = Resource(Status.Success, response.body()!!.classes)
