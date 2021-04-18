@@ -57,11 +57,6 @@ class CategoryDetailsFragment : Fragment() {
         return binding.root
     }
 
-    override fun onResume() {
-        super.onResume()
-        viewModel.refreshData()
-    }
-
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

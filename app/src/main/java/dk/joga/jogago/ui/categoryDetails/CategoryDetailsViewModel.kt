@@ -19,7 +19,7 @@ class CategoryDetailsViewModel(id: String) : ViewModel() {
         refreshData()
     }
 
-    fun refreshData() {
+    private fun refreshData() {
         categoryClassesWrapper.refresh()
     }
 

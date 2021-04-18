@@ -17,7 +17,7 @@ import dk.joga.jogago.databinding.LikeableRecyclerViewItemBinding
 
 class CategoryDetailsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    private var data: List<Class> = listOf()
+    private var data = mutableListOf<Class>()
     private var liked: Array<Boolean> = emptyArray()
 
     class ViewHolderFirst(
@@ -57,14 +57,14 @@ class CategoryDetailsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     }
 
     fun setData(data: List<Class>){
-        this.data = data
-        liked = Array(data.size) { false }
+        this.data.addAll(data)
+        liked = Array(this.data.size) { false }
         notifyDataSetChanged()
     }
 
     fun addData(data: List<Class>) {
         val tmp = this.data.count()
-        this.data += data
+        this.data.addAll(data)
         liked = Array(this.data.size) { false }
         notifyItemInserted(tmp)
     }
