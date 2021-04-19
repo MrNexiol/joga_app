@@ -42,6 +42,14 @@ class JourneyDetailsFragment : Fragment() {
         return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding.root.setOnRefreshListener {
+            viewModel.refreshData()
+            binding.root.isRefreshing = false
+        }
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
