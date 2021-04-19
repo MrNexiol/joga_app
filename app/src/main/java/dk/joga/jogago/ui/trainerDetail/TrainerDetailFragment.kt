@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.google.android.gms.cast.framework.CastContext
 import dk.joga.jogago.R
@@ -20,6 +21,8 @@ class TrainerDetailFragment : Fragment() {
     private val binding get() = _binding!!
     private val args: TrainerDetailFragmentArgs by navArgs()
     private val adapter = TrainerDetailAdapter()
+    private var itemsCount = 0
+    private var videoShown = false
     private lateinit var viewModelFactory: TrainerDetailViewModelFactory
     private lateinit var viewModel: TrainerDetailViewModel
 
@@ -31,10 +34,6 @@ class TrainerDetailFragment : Fragment() {
         viewModelFactory = TrainerDetailViewModelFactory(args.trainerId, requireActivity().application)
         viewModel = ViewModelProvider(this, viewModelFactory).get(TrainerDetailViewModel::class.java)
 
-        val recyclerView = binding.instructorClassesRecyclerView
-        recyclerView.adapter = adapter
-        recyclerView.layoutManager = LinearLayoutManager(context)
-
         viewModel.instructorWrapper.getData().observe(viewLifecycleOwner, { resource ->
             if (resource.status == Status.Success) {
                 (requireActivity() as MainActivity).changeScreenTitle(resource.data!!.name)
@@ -42,7 +41,10 @@ class TrainerDetailFragment : Fragment() {
                 if (resource.data.videoUrl != "" && resource.data.videoUrl != null) {
                     Glide.with(this).load(resource.data.avatar_url).fallback(R.drawable.placeholder_image).into(binding.trainerThumbnail)
                     viewModel.initializePlayerManager(binding.trainerVideo, CastContext.getSharedInstance(requireActivity()), resource.data.videoUrl, resource.data.videoTitle)
-                    binding.root.transitionToStart()
+                    if (!videoShown) {
+                        binding.root.transitionToStart()
+                        videoShown = true
+                    }
                     binding.trainerVideoTitle.text = resource.data.videoTitle
                     binding.trainerVideoDuration.text = getString(R.string.min, resource.data.videoDuration)
                     if (viewModel.isPlaying()) {
@@ -56,7 +58,14 @@ class TrainerDetailFragment : Fragment() {
         })
         viewModel.instructorClassesWrapper.getData().observe(viewLifecycleOwner, { resource ->
             if (resource.status == Status.Success) {
-                adapter.setData(resource.data!!)
+                if (viewModel.isLoading) {
+                    adapter.addData(resource.data!!)
+                    itemsCount += resource.data.count()
+                    viewModel.isLoading = false
+                } else {
+                    adapter.setData(resource.data!!)
+                    itemsCount = resource.data.count()
+                }
             }
         })
 
@@ -68,6 +77,19 @@ class TrainerDetailFragment : Fragment() {
         binding.trainerPlayButton.setOnClickListener {
             showVideo()
         }
+
+        val recyclerView = binding.instructorClassesRecyclerView
+        recyclerView.adapter = adapter
+        recyclerView.layoutManager = LinearLayoutManager(context)
+        recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener(){
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                val layoutManager: LinearLayoutManager = recyclerView.layoutManager as LinearLayoutManager
+                if (layoutManager.findLastVisibleItemPosition() >= itemsCount - 1) {
+                    viewModel.changePageNumber()
+                }
+            }
+        })
     }
 
     override fun onResume() {
