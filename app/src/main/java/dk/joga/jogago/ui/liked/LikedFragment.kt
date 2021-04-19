@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import dk.joga.jogago.api.Status
 import dk.joga.jogago.databinding.FragmentLikedBinding
 
@@ -15,19 +16,28 @@ class LikedFragment : Fragment() {
     private val binding get() = _binding!!
     private val viewModel: LikedViewModel by viewModels()
     private val adapter = LikedAdapter()
+    private var itemsCount = 0
+    private var isMore = true
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentLikedBinding.inflate(inflater, container, false)
-        val recyclerView = binding.likedClassesRecyclerView
-        recyclerView.adapter = adapter
-        recyclerView.layoutManager = LinearLayoutManager(context)
 
         viewModel.likedClassesWrapper.getData().observe(viewLifecycleOwner, { resource ->
             if (resource.status == Status.Success){
-                adapter.setData(resource.data!!)
+                if (viewModel.isLoading) {
+                    adapter.addData(resource.data!!)
+                    itemsCount += resource.data.count()
+                    viewModel.isLoading = false
+                } else {
+                    adapter.setData(resource.data!!)
+                    itemsCount = resource.data.count()
+                }
+                if (itemsCount == resource.totalCount) {
+                    isMore = false
+                }
             } else {
                 adapter.setData(listOf())
             }
@@ -39,14 +49,22 @@ class LikedFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.likedRefreshLayout.setOnRefreshListener {
-            viewModel.refreshLikedClasses()
+            viewModel.resetData()
             binding.likedRefreshLayout.isRefreshing = false
         }
-    }
 
-    override fun onResume() {
-        super.onResume()
-        viewModel.refreshLikedClasses()
+        val recyclerView = binding.likedClassesRecyclerView
+        recyclerView.adapter = adapter
+        recyclerView.layoutManager = LinearLayoutManager(context)
+        recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener(){
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                val layoutManager: LinearLayoutManager = recyclerView.layoutManager as LinearLayoutManager
+                if (layoutManager.findLastVisibleItemPosition() >= itemsCount - 1 && isMore) {
+                    viewModel.changePageNumber()
+                }
+            }
+        })
     }
 
     override fun onDestroyView() {

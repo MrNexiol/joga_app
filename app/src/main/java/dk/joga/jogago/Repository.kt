@@ -180,7 +180,7 @@ class Repository(private val service: WebService) {
                         val resource = Resource(Status.Empty, listOf<Class>())
                         data.value = resource
                     } else {
-                        val resource = Resource(Status.Success, response.body()!!.classes)
+                        val resource = Resource(Status.Success, response.body()!!.classes, null, response.body()!!.totalCount)
                         data.value = resource
                     }
                 }
