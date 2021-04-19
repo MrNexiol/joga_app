@@ -67,4 +67,9 @@ class TrainerDetailViewModel(trainerId: String, application: Application) : Andr
             refreshData()
         }
     }
+
+    fun resetData() {
+        instructorClassesWrapper.page = 1
+        refreshData()
+    }
 }

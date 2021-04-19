@@ -42,7 +42,7 @@ class TrainerDetailFragment : Fragment() {
                     Glide.with(this).load(resource.data.avatar_url).fallback(R.drawable.placeholder_image).into(binding.trainerThumbnail)
                     viewModel.initializePlayerManager(binding.trainerVideo, CastContext.getSharedInstance(requireActivity()), resource.data.videoUrl, resource.data.videoTitle)
                     if (!videoShown) {
-                        binding.root.transitionToStart()
+                        binding.trainerMotionLayout.transitionToStart()
                         videoShown = true
                     }
                     binding.trainerVideoTitle.text = resource.data.videoTitle
@@ -51,8 +51,8 @@ class TrainerDetailFragment : Fragment() {
                         showVideo()
                     }
                 } else {
-                    binding.root.setTransition(R.id.collapsed, R.id.collapsed)
-                    binding.root.getTransition(R.id.video_transition).setEnable(false)
+                    binding.trainerMotionLayout.setTransition(R.id.collapsed, R.id.collapsed)
+                    binding.trainerMotionLayout.getTransition(R.id.video_transition).setEnable(false)
                 }
             }
         })
@@ -78,6 +78,11 @@ class TrainerDetailFragment : Fragment() {
             showVideo()
         }
 
+        binding.root.setOnRefreshListener {
+            viewModel.resetData()
+            binding.root.isRefreshing = false
+        }
+
         val recyclerView = binding.instructorClassesRecyclerView
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(context)
@@ -88,6 +93,8 @@ class TrainerDetailFragment : Fragment() {
                 if (layoutManager.findLastVisibleItemPosition() >= itemsCount - 1) {
                     viewModel.changePageNumber()
                 }
+                val refreshEnabled = layoutManager.findFirstCompletelyVisibleItemPosition() == 0
+                binding.root.isEnabled = refreshEnabled
             }
         })
     }
