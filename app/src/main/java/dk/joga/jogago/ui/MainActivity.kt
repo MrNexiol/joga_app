@@ -106,12 +106,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            if (navController.currentDestination!!.id == R.id.classDetailsFragment) {
-                requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
-            } else {
-                super.onBackPressed()
-            }
+        if (navController.currentDestination!!.id == R.id.classDetailsFragment && resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         } else {
             super.onBackPressed()
         }
