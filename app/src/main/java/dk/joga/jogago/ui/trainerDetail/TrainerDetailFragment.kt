@@ -22,6 +22,7 @@ class TrainerDetailFragment : Fragment() {
     private val args: TrainerDetailFragmentArgs by navArgs()
     private val adapter = TrainerDetailAdapter()
     private var itemsCount = 0
+    private var isMore = true
     private var videoShown = false
     private lateinit var viewModelFactory: TrainerDetailViewModelFactory
     private lateinit var viewModel: TrainerDetailViewModel
@@ -66,6 +67,7 @@ class TrainerDetailFragment : Fragment() {
                     adapter.setData(resource.data!!)
                     itemsCount = resource.data.count()
                 }
+                isMore = itemsCount != resource.totalCount
             }
         })
 
@@ -90,18 +92,14 @@ class TrainerDetailFragment : Fragment() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
                 val layoutManager: LinearLayoutManager = recyclerView.layoutManager as LinearLayoutManager
-                if (layoutManager.findLastVisibleItemPosition() >= itemsCount - 1) {
+                if (layoutManager.findLastVisibleItemPosition() >= itemsCount - 1 && isMore) {
                     viewModel.changePageNumber()
+                } else if (layoutManager.findFirstCompletelyVisibleItemPosition() >= 1) {
+                    binding.trainerMotionLayout.progress = 1f
                 }
-                val refreshEnabled = layoutManager.findFirstCompletelyVisibleItemPosition() == 0
-                binding.root.isEnabled = refreshEnabled
+                binding.root.isEnabled = layoutManager.findLastVisibleItemPosition() <= 1
             }
         })
-    }
-
-    override fun onResume() {
-        super.onResume()
-        viewModel.refreshData()
     }
 
     override fun onDestroyView() {
