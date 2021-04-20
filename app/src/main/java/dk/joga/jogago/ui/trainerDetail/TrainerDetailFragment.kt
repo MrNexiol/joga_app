@@ -5,6 +5,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -79,6 +81,11 @@ class TrainerDetailFragment : Fragment() {
         binding.trainerPlayButton.setOnClickListener {
             showVideo()
         }
+
+        val fullscreen: ImageView = view.findViewById(R.id.exo_fullscreen)
+        val durationTextView: TextView = view.findViewById(R.id.exo_duration)
+        fullscreen.visibility = View.GONE
+        durationTextView.setPaddingRelative(0,0,resources.getDimensionPixelSize(R.dimen.margin_small),0)
 
         binding.root.setOnRefreshListener {
             viewModel.resetData()
