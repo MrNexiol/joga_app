@@ -3,6 +3,7 @@ package dk.joga.jogago.ui.classDetails
 import android.content.pm.ActivityInfo
 import android.content.res.Configuration
 import android.os.Bundle
+import android.provider.Settings
 import android.view.*
 import android.widget.ImageView
 import androidx.fragment.app.Fragment
@@ -73,8 +74,7 @@ class ClassDetailsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT){
-            requireActivity().requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_SENSOR
-            if (viewModel.isPlaying()) showVideoControls()
+            if (viewModel.isPlaying() || viewModel.startedVideo) showVideoControls()
             binding.playButton!!.setOnClickListener {
                 playVideo()
             }
@@ -82,10 +82,17 @@ class ClassDetailsFragment : Fragment() {
 
         val fullscreen: ImageView = view.findViewById(R.id.exo_fullscreen)
         fullscreen.setOnClickListener {
-            if (requireActivity().requestedOrientation == ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE) {
-                requireActivity().requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT
+            if (requireActivity().requestedOrientation == ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT ||
+                requireActivity().requestedOrientation == ActivityInfo.SCREEN_ORIENTATION_PORTRAIT) {
+                requireActivity().requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
             } else {
-                requireActivity().requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE
+                if (Settings.System.getInt(requireActivity().contentResolver, Settings.System.ACCELEROMETER_ROTATION, 0) == 1) {
+                    // Rotation ON
+                    requireActivity().requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT
+                } else {
+                    // Rotation OFF
+                    requireActivity().requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+                }
             }
         }
     }
@@ -100,6 +107,7 @@ class ClassDetailsFragment : Fragment() {
     private fun playVideo() {
         showVideoControls()
         viewModel.showVideo()
+        viewModel.startedVideo = true
     }
 
     private fun showVideoControls() {

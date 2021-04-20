@@ -9,6 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import dk.joga.jogago.GridSpacingItemDecoration
 import dk.joga.jogago.R
+import dk.joga.jogago.api.Status
 import dk.joga.jogago.databinding.FragmentClassesBinding
 
 class ClassesFragment : Fragment() {
@@ -28,8 +29,8 @@ class ClassesFragment : Fragment() {
         recyclerView.addItemDecoration(GridSpacingItemDecoration(resources.getDimension(R.dimen.journey_list_decoration).toInt()))
 
         viewModel.categoriesWrapper.getData().observe(viewLifecycleOwner, { resource ->
-            resource.data?.let {
-                adapter.setData(it)
+            if (resource.status == Status.Success) {
+                adapter.setData(resource.data!!)
             }
         })
 

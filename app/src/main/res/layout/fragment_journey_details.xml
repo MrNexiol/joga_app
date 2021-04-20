@@ -1,103 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.journeyDetails.JourneyDetailsFragment">
 
-    <ScrollView
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/journeys_recycler_view"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_height="match_parent" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/constraintLayout2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/first_class_root"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:layout_editor_absoluteX="16dp">
-
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/journey_card_view"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    app:cardBackgroundColor="@color/background"
-                    app:cardCornerRadius="@dimen/card_radius"
-                    app:layout_constraintDimensionRatio="H,16:9"
-                    app:layout_constraintTop_toTopOf="parent">
-
-                    <ImageView
-                        android:id="@+id/first_class_thumbnail"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:adjustViewBounds="true"
-                        android:contentDescription="@string/placeholder"
-                        android:scaleType="centerCrop" />
-                </androidx.cardview.widget.CardView>
-
-                <TextView
-                    android:id="@+id/first_class_name_text_view"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/margin_small"
-                    android:textColor="@color/joga_green"
-                    android:textSize="@dimen/header_text"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/journey_card_view" />
-
-                <TextView
-                    android:id="@+id/first_class_instructor_name_text_view"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/secondary_text"
-                    android:textSize="@dimen/default_text"
-                    app:layout_constraintEnd_toStartOf="@+id/first_class_min_text_view"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/first_class_name_text_view" />
-
-                <TextView
-                    android:id="@+id/first_class_min_text_view"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/secondary_text"
-                    app:layout_constraintBottom_toBottomOf="@+id/first_class_instructor_name_text_view"
-                    app:layout_constraintEnd_toEndOf="parent" />
-
-                <TextView
-                    android:id="@+id/first_class_description"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="@dimen/default_text"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/first_class_instructor_name_text_view" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <View
-                android:id="@+id/divider3"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/divider_height"
-                android:layout_marginTop="@dimen/margin_medium"
-                android:background="@color/secondary_text"
-                app:layout_constraintTop_toBottomOf="@+id/first_class_root"
-                tools:layout_editor_absoluteX="16dp" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/journeys_recycler_view"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_medium"
-                app:layout_constraintTop_toBottomOf="@+id/divider3"
-                tools:layout_editor_absoluteX="16dp" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </ScrollView>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

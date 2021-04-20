@@ -1,358 +1,350 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".ui.home.HomeFragment">
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/home_refresh_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.home.HomeFragment">
 
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:id="@+id/home_refresh_layout"
+    <ScrollView
+        android:id="@+id/home_scroll_view"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_height="match_parent">
 
-        <ScrollView
-            android:id="@+id/home_scroll_view"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/today_pick_icon"
+                android:layout_width="@dimen/home_section_icon"
+                android:layout_height="0dp"
+                android:contentDescription="@string/star_icon"
+                android:src="@drawable/star_icon"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="@+id/today_pick_text_view"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/today_pick_text_view" />
+
+            <TextView
+                android:id="@+id/today_pick_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_small"
+                android:fontFamily="sans-serif-medium"
+                android:text="@string/today_pick"
+                android:textSize="@dimen/header_text"
+                android:visibility="gone"
+                app:layout_constraintStart_toEndOf="@+id/today_pick_icon"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/todays_pick_root"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_medium"
+                android:visibility="gone"
+                app:layout_constraintTop_toBottomOf="@+id/today_pick_icon"
+                tools:layout_editor_absoluteX="16dp">
 
                 <ImageView
-                    android:id="@+id/today_pick_icon"
-                    android:layout_width="@dimen/home_section_icon"
+                    android:id="@+id/todays_pick_thumbnail"
+                    android:layout_width="0dp"
                     android:layout_height="0dp"
-                    android:contentDescription="@string/star_icon"
-                    android:src="@drawable/star_icon"
-                    android:visibility="gone"
-                    app:layout_constraintBottom_toBottomOf="@+id/today_pick_text_view"
+                    android:contentDescription="@string/placeholder"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/placeholder_image"
+                    app:layout_constraintDimensionRatio="H,16:9"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/today_pick_text_view" />
-
-                <TextView
-                    android:id="@+id/today_pick_text_view"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/margin_small"
-                    android:fontFamily="sans-serif-medium"
-                    android:text="@string/today_pick"
-                    android:textSize="@dimen/header_text"
-                    android:visibility="gone"
-                    app:layout_constraintStart_toEndOf="@+id/today_pick_icon"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/todays_pick_root"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/margin_medium"
-                    android:visibility="gone"
-                    app:layout_constraintTop_toBottomOf="@+id/today_pick_icon"
-                    tools:layout_editor_absoluteX="16dp">
-
-                    <ImageView
-                        android:id="@+id/todays_pick_thumbnail"
-                        android:layout_width="0dp"
-                        android:layout_height="0dp"
-                        android:contentDescription="@string/placeholder"
-                        android:scaleType="fitXY"
-                        android:src="@drawable/placeholder_image"
-                        app:layout_constraintDimensionRatio="H,16:9"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <ImageView
-                        android:id="@+id/today_pick_watched_icon"
-                        android:layout_width="@dimen/home_section_icon"
-                        android:layout_height="@dimen/home_section_icon"
-                        android:layout_marginStart="@dimen/margin_small"
-                        android:layout_marginTop="@dimen/margin_small"
-                        android:contentDescription="@string/watched_icon"
-                        android:elevation="2dp"
-                        android:src="@drawable/watched_icon"
-                        android:visibility="gone"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="@+id/todays_pick_thumbnail" />
-
-                    <TextView
-                        android:id="@+id/today_pick_name"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/margin_small"
-                        android:textColor="@color/joga_green"
-                        android:textSize="@dimen/header_text"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/todays_pick_thumbnail" />
-
-                    <TextView
-                        android:id="@+id/today_pick_trainer_name_text_view"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="sans-serif-light"
-                        android:textColor="@color/secondary_text"
-                        android:textSize="@dimen/default_text"
-                        app:layout_constraintEnd_toStartOf="@+id/today_pick_min_text_view"
-                        app:layout_constraintHorizontal_bias="0"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/today_pick_name" />
-
-                    <TextView
-                        android:id="@+id/today_pick_min_text_view"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="sans-serif-light"
-                        android:textColor="@color/secondary_text"
-                        android:textSize="@dimen/default_text"
-                        app:layout_constraintBottom_toBottomOf="@+id/today_pick_trainer_name_text_view"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/today_pick_name" />
-
-                    <TextView
-                        android:id="@+id/today_pick_category"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="sans-serif-light"
-                        android:textColor="@color/secondary_text"
-                        android:textSize="@dimen/default_text"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/today_pick_trainer_name_text_view" />
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-                <View
-                    android:id="@+id/second_divider"
-                    android:layout_width="0dp"
-                    android:layout_height="@dimen/divider_height"
-                    android:layout_marginTop="@dimen/margin_medium"
-                    android:background="@color/secondary_text"
-                    android:visibility="gone"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/todays_pick_root" />
-
                 <ImageView
-                    android:id="@+id/new_classes_icon"
+                    android:id="@+id/today_pick_watched_icon"
                     android:layout_width="@dimen/home_section_icon"
-                    android:layout_height="0dp"
-                    android:contentDescription="@string/clock_icon"
-                    android:src="@drawable/clock_icon"
-                    app:layout_constraintBottom_toBottomOf="@+id/new_classes_text_view"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/new_classes_text_view" />
-
-                <TextView
-                    android:id="@+id/new_classes_text_view"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="@dimen/home_section_icon"
                     android:layout_marginStart="@dimen/margin_small"
-                    android:layout_marginTop="@dimen/margin_medium"
-                    android:fontFamily="sans-serif-medium"
-                    android:text="@string/new_classes"
-                    android:textSize="@dimen/header_text"
-                    app:layout_constraintStart_toEndOf="@+id/new_classes_icon"
-                    app:layout_constraintTop_toBottomOf="@+id/second_divider" />
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/new_classes_recycler_view"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/margin_medium"
-                    app:layout_constraintTop_toBottomOf="@+id/new_classes_icon"
-                    tools:layout_editor_absoluteX="16dp" />
-
-                <View
-                    android:id="@+id/between_new_and_liked_classes_divider"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/divider_height"
-                    android:layout_marginTop="@dimen/margin_medium"
-                    android:background="@color/secondary_text"
+                    android:layout_marginTop="@dimen/margin_small"
+                    android:contentDescription="@string/watched_icon"
+                    android:elevation="2dp"
+                    android:src="@drawable/watched_icon"
                     android:visibility="gone"
-                    app:layout_constraintTop_toBottomOf="@+id/new_classes_recycler_view"
-                    tools:layout_editor_absoluteX="16dp" />
-
-                <ImageView
-                    android:id="@+id/liked_icon"
-                    android:layout_width="@dimen/home_section_icon"
-                    android:layout_height="0dp"
-                    android:contentDescription="@string/heart_icon"
-                    android:src="@drawable/heart_liked_icon"
-                    android:visibility="gone"
-                    app:layout_constraintBottom_toBottomOf="@+id/liked_text_view"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/liked_text_view" />
+                    app:layout_constraintTop_toTopOf="@+id/todays_pick_thumbnail" />
 
                 <TextView
-                    android:id="@+id/liked_text_view"
+                    android:id="@+id/today_pick_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/margin_small"
-                    android:layout_marginTop="@dimen/margin_medium"
-                    android:fontFamily="sans-serif-medium"
-                    android:text="@string/by_you"
+                    android:layout_marginTop="@dimen/margin_small"
+                    android:textColor="@color/joga_green"
                     android:textSize="@dimen/header_text"
-                    android:visibility="gone"
-                    app:layout_constraintStart_toEndOf="@+id/liked_icon"
-                    app:layout_constraintTop_toBottomOf="@+id/between_new_and_liked_classes_divider" />
-
-                <Button
-                    android:id="@+id/see_liked_button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/see_all"
-                    android:textAllCaps="false"
-                    android:textColor="@color/light_blue"
-                    android:textSize="@dimen/header_text"
-                    android:visibility="gone"
-                    app:layout_constraintBottom_toBottomOf="@+id/liked_text_view"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/liked_text_view" />
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/liked_recycler_view"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/margin_medium"
-                    android:visibility="gone"
-                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/liked_icon" />
-
-                <View
-                    android:id="@+id/between_liked_and_journeys_divider"
-                    android:layout_width="0dp"
-                    android:layout_height="@dimen/divider_height"
-                    android:layout_marginTop="@dimen/margin_medium"
-                    android:background="@color/secondary_text"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/liked_recycler_view" />
-
-                <ImageView
-                    android:id="@+id/journeys_icon_home"
-                    android:layout_width="@dimen/home_section_icon"
-                    android:layout_height="0dp"
-                    android:contentDescription="@string/journeys_icon"
-                    android:src="@drawable/journeys_icon"
-                    app:layout_constraintBottom_toBottomOf="@+id/journeys_text_view"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/journeys_text_view" />
+                    app:layout_constraintTop_toBottomOf="@+id/todays_pick_thumbnail" />
 
                 <TextView
-                    android:id="@+id/journeys_text_view"
+                    android:id="@+id/today_pick_trainer_name_text_view"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/margin_small"
-                    android:layout_marginTop="@dimen/margin_medium"
-                    android:drawablePadding="@dimen/drawable_padding"
-                    android:fontFamily="sans-serif-medium"
-                    android:text="@string/journeys"
-                    android:textSize="@dimen/header_text"
-                    app:layout_constraintStart_toEndOf="@+id/journeys_icon_home"
-                    app:layout_constraintTop_toBottomOf="@+id/between_liked_and_journeys_divider" />
-
-                <Button
-                    android:id="@+id/see_journeys_button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/see_all"
-                    android:textAllCaps="false"
-                    android:textColor="@color/light_blue"
-                    android:textSize="@dimen/header_text"
-                    app:layout_constraintBottom_toBottomOf="@+id/journeys_text_view"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/journeys_text_view" />
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/journey_recycler_view"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/margin_medium"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/journeys_icon_home" />
-
-                <View
-                    android:id="@+id/fourth_divider"
-                    android:layout_width="0dp"
-                    android:layout_height="@dimen/divider_height"
-                    android:layout_marginTop="@dimen/margin_medium"
-                    android:background="@color/secondary_text"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/journey_recycler_view" />
-
-                <ImageView
-                    android:id="@+id/trainers_icon"
-                    android:layout_width="@dimen/home_section_icon"
-                    android:layout_height="0dp"
-                    android:contentDescription="@string/trainer_icon"
-                    android:src="@drawable/trainer_placeholder_icon"
-                    app:layout_constraintBottom_toBottomOf="@+id/trainers_text_view"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/trainers_text_view"
-                    app:tint="@color/white" />
-
-                <TextView
-                    android:id="@+id/trainers_text_view"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/margin_small"
-                    android:layout_marginTop="@dimen/margin_medium"
-                    android:drawablePadding="@dimen/drawable_padding"
-                    android:fontFamily="sans-serif-medium"
-                    android:text="@string/trainers"
-                    android:textSize="@dimen/header_text"
-                    app:layout_constraintStart_toEndOf="@+id/trainers_icon"
-                    app:layout_constraintTop_toBottomOf="@id/fourth_divider" />
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/instructor_recycler_view"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/margin_medium"
-                    android:orientation="horizontal"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/trainers_icon" />
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/logout_button"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/margin_big"
-                    android:drawablePadding="@dimen/drawable_padding"
-                    android:text="@string/logout"
-                    android:textSize="@dimen/default_text"
-                    app:icon="@drawable/logout_icon"
-                    app:iconGravity="textStart"
-                    app:iconSize="20dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/instructor_recycler_view"
-                    app:strokeColor="@color/joga_green"
-                    app:strokeWidth="2dp" />
-
-                <TextView
-                    android:id="@+id/copyright_text_view"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/margin_very_small"
-                    android:text="@string/copyright"
+                    android:fontFamily="sans-serif-light"
                     android:textColor="@color/secondary_text"
-                    android:textSize="@dimen/secondary_text"
-                    app:layout_constraintEnd_toEndOf="parent"
+                    android:textSize="@dimen/default_text"
+                    app:layout_constraintEnd_toStartOf="@+id/today_pick_min_text_view"
+                    app:layout_constraintHorizontal_bias="0"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/logout_button" />
+                    app:layout_constraintTop_toBottomOf="@+id/today_pick_name" />
+
+                <TextView
+                    android:id="@+id/today_pick_min_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-light"
+                    android:textColor="@color/secondary_text"
+                    android:textSize="@dimen/default_text"
+                    app:layout_constraintBottom_toBottomOf="@+id/today_pick_trainer_name_text_view"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/today_pick_name" />
+
+                <TextView
+                    android:id="@+id/today_pick_category"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-light"
+                    android:textColor="@color/secondary_text"
+                    android:textSize="@dimen/default_text"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/today_pick_trainer_name_text_view" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
-        </ScrollView>
 
-    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+            <View
+                android:id="@+id/second_divider"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/divider_height"
+                android:layout_marginTop="@dimen/margin_medium"
+                android:background="@color/secondary_text"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/todays_pick_root" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+            <ImageView
+                android:id="@+id/new_classes_icon"
+                android:layout_width="@dimen/home_section_icon"
+                android:layout_height="0dp"
+                android:contentDescription="@string/clock_icon"
+                android:src="@drawable/clock_icon"
+                app:layout_constraintBottom_toBottomOf="@+id/new_classes_text_view"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/new_classes_text_view" />
+
+            <TextView
+                android:id="@+id/new_classes_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_small"
+                android:layout_marginTop="@dimen/margin_medium"
+                android:fontFamily="sans-serif-medium"
+                android:text="@string/new_classes"
+                android:textSize="@dimen/header_text"
+                app:layout_constraintStart_toEndOf="@+id/new_classes_icon"
+                app:layout_constraintTop_toBottomOf="@+id/second_divider" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/new_classes_recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_medium"
+                app:layout_constraintTop_toBottomOf="@+id/new_classes_icon"
+                tools:layout_editor_absoluteX="16dp" />
+
+            <View
+                android:id="@+id/between_new_and_liked_classes_divider"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/divider_height"
+                android:layout_marginTop="@dimen/margin_medium"
+                android:background="@color/secondary_text"
+                android:visibility="gone"
+                app:layout_constraintTop_toBottomOf="@+id/new_classes_recycler_view"
+                tools:layout_editor_absoluteX="16dp" />
+
+            <ImageView
+                android:id="@+id/liked_icon"
+                android:layout_width="@dimen/home_section_icon"
+                android:layout_height="0dp"
+                android:contentDescription="@string/heart_icon"
+                android:src="@drawable/heart_liked_icon"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="@+id/liked_text_view"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/liked_text_view" />
+
+            <TextView
+                android:id="@+id/liked_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_small"
+                android:layout_marginTop="@dimen/margin_medium"
+                android:fontFamily="sans-serif-medium"
+                android:text="@string/by_you"
+                android:textSize="@dimen/header_text"
+                android:visibility="gone"
+                app:layout_constraintStart_toEndOf="@+id/liked_icon"
+                app:layout_constraintTop_toBottomOf="@+id/between_new_and_liked_classes_divider" />
+
+            <Button
+                android:id="@+id/see_liked_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/see_all"
+                android:textAllCaps="false"
+                android:textColor="@color/light_blue"
+                android:textSize="@dimen/header_text"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="@+id/liked_text_view"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/liked_text_view" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/liked_recycler_view"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_medium"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/liked_icon" />
+
+            <View
+                android:id="@+id/between_liked_and_journeys_divider"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/divider_height"
+                android:layout_marginTop="@dimen/margin_medium"
+                android:background="@color/secondary_text"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/liked_recycler_view" />
+
+            <ImageView
+                android:id="@+id/journeys_icon_home"
+                android:layout_width="@dimen/home_section_icon"
+                android:layout_height="0dp"
+                android:contentDescription="@string/journeys_icon"
+                android:src="@drawable/journeys_icon"
+                app:layout_constraintBottom_toBottomOf="@+id/journeys_text_view"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/journeys_text_view" />
+
+            <TextView
+                android:id="@+id/journeys_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_small"
+                android:layout_marginTop="@dimen/margin_medium"
+                android:drawablePadding="@dimen/drawable_padding"
+                android:fontFamily="sans-serif-medium"
+                android:text="@string/journeys"
+                android:textSize="@dimen/header_text"
+                app:layout_constraintStart_toEndOf="@+id/journeys_icon_home"
+                app:layout_constraintTop_toBottomOf="@+id/between_liked_and_journeys_divider" />
+
+            <Button
+                android:id="@+id/see_journeys_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/see_all"
+                android:textAllCaps="false"
+                android:textColor="@color/light_blue"
+                android:textSize="@dimen/header_text"
+                app:layout_constraintBottom_toBottomOf="@+id/journeys_text_view"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/journeys_text_view" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/journey_recycler_view"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_medium"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/journeys_icon_home" />
+
+            <View
+                android:id="@+id/fourth_divider"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/divider_height"
+                android:layout_marginTop="@dimen/margin_medium"
+                android:background="@color/secondary_text"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/journey_recycler_view" />
+
+            <ImageView
+                android:id="@+id/trainers_icon"
+                android:layout_width="@dimen/home_section_icon"
+                android:layout_height="0dp"
+                android:contentDescription="@string/trainer_icon"
+                android:src="@drawable/trainer_placeholder_icon"
+                app:layout_constraintBottom_toBottomOf="@+id/trainers_text_view"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/trainers_text_view"
+                app:tint="@color/white" />
+
+            <TextView
+                android:id="@+id/trainers_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_small"
+                android:layout_marginTop="@dimen/margin_medium"
+                android:drawablePadding="@dimen/drawable_padding"
+                android:fontFamily="sans-serif-medium"
+                android:text="@string/trainers"
+                android:textSize="@dimen/header_text"
+                app:layout_constraintStart_toEndOf="@+id/trainers_icon"
+                app:layout_constraintTop_toBottomOf="@id/fourth_divider" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/instructor_recycler_view"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_medium"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/trainers_icon" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/logout_button"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_big"
+                android:drawablePadding="@dimen/drawable_padding"
+                android:text="@string/logout"
+                android:textSize="@dimen/default_text"
+                app:icon="@drawable/logout_icon"
+                app:iconGravity="textStart"
+                app:iconSize="20dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/instructor_recycler_view"
+                app:strokeColor="@color/joga_green"
+                app:strokeWidth="2dp" />
+
+            <TextView
+                android:id="@+id/copyright_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_very_small"
+                android:text="@string/copyright"
+                android:textColor="@color/secondary_text"
+                android:textSize="@dimen/secondary_text"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/logout_button" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

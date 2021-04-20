@@ -13,6 +13,7 @@ import dk.joga.jogago.api.Resource
 
 class ClassDetailsViewModel(private val id: String, application: Application) : AndroidViewModel(application) {
     private var playerManager: PlayerManager? = null
+    var startedVideo = false
 
     val classWrapper = object : RefreshableSource<Class>() {
         override fun provideLiveData(): LiveData<Resource<Class>> {

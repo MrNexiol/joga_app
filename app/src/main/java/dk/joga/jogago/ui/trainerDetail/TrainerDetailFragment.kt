@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.google.android.gms.cast.framework.CastContext
 import dk.joga.jogago.R
@@ -20,6 +21,9 @@ class TrainerDetailFragment : Fragment() {
     private val binding get() = _binding!!
     private val args: TrainerDetailFragmentArgs by navArgs()
     private val adapter = TrainerDetailAdapter()
+    private var itemsCount = 0
+    private var isMore = true
+    private var videoShown = false
     private lateinit var viewModelFactory: TrainerDetailViewModelFactory
     private lateinit var viewModel: TrainerDetailViewModel
 
@@ -31,37 +35,39 @@ class TrainerDetailFragment : Fragment() {
         viewModelFactory = TrainerDetailViewModelFactory(args.trainerId, requireActivity().application)
         viewModel = ViewModelProvider(this, viewModelFactory).get(TrainerDetailViewModel::class.java)
 
-        val recyclerView = binding.instructorClassesRecyclerView
-        recyclerView.adapter = adapter
-        recyclerView.layoutManager = LinearLayoutManager(context)
-
         viewModel.instructorWrapper.getData().observe(viewLifecycleOwner, { resource ->
             if (resource.status == Status.Success) {
                 (requireActivity() as MainActivity).changeScreenTitle(resource.data!!.name)
-                viewModel.initializePlayerManager(binding.trainerVideo, CastContext.getSharedInstance(requireActivity()), resource.data.videoUrl, resource.data.videoTitle)
-                Glide.with(this).load(resource.data.avatar_url).fallback(R.drawable.placeholder_image).into(binding.trainerThumbnail)
                 @Suppress("SENSELESS_COMPARISON")
                 if (resource.data.videoUrl != "" && resource.data.videoUrl != null) {
-                    binding.trainerVideoRoot.visibility = View.VISIBLE
-                    binding.trainerThumbnailAndListDivider.visibility = View.VISIBLE
-                    binding.trainerVideoTitle.visibility = View.VISIBLE
-                    binding.trainerVideoDuration.visibility = View.VISIBLE
+                    Glide.with(this).load(resource.data.avatar_url).fallback(R.drawable.placeholder_image).into(binding.trainerThumbnail)
+                    viewModel.initializePlayerManager(binding.trainerVideo, CastContext.getSharedInstance(requireActivity()), resource.data.videoUrl, resource.data.videoTitle)
+                    if (!videoShown) {
+                        binding.trainerMotionLayout.transitionToStart()
+                        videoShown = true
+                    }
                     binding.trainerVideoTitle.text = resource.data.videoTitle
                     binding.trainerVideoDuration.text = getString(R.string.min, resource.data.videoDuration)
                     if (viewModel.isPlaying()) {
                         showVideo()
                     }
                 } else {
-                    binding.trainerVideoRoot.visibility = View.GONE
-                    binding.trainerThumbnailAndListDivider.visibility = View.GONE
-                    binding.trainerVideoTitle.visibility = View.GONE
-                    binding.trainerVideoDuration.visibility = View.GONE
+                    binding.trainerMotionLayout.setTransition(R.id.collapsed, R.id.collapsed)
+                    binding.trainerMotionLayout.getTransition(R.id.video_transition).setEnable(false)
                 }
             }
         })
         viewModel.instructorClassesWrapper.getData().observe(viewLifecycleOwner, { resource ->
             if (resource.status == Status.Success) {
-                adapter.setData(resource.data!!)
+                if (viewModel.isLoading) {
+                    adapter.addData(resource.data!!)
+                    itemsCount += resource.data.count()
+                    viewModel.isLoading = false
+                } else {
+                    adapter.setData(resource.data!!)
+                    itemsCount = resource.data.count()
+                }
+                isMore = itemsCount != resource.totalCount
             }
         })
 
@@ -73,11 +79,27 @@ class TrainerDetailFragment : Fragment() {
         binding.trainerPlayButton.setOnClickListener {
             showVideo()
         }
-    }
 
-    override fun onResume() {
-        super.onResume()
-        viewModel.refreshData()
+        binding.root.setOnRefreshListener {
+            viewModel.resetData()
+            binding.root.isRefreshing = false
+        }
+
+        val recyclerView = binding.instructorClassesRecyclerView
+        recyclerView.adapter = adapter
+        recyclerView.layoutManager = LinearLayoutManager(context)
+        recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener(){
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                val layoutManager: LinearLayoutManager = recyclerView.layoutManager as LinearLayoutManager
+                if (layoutManager.findLastVisibleItemPosition() >= itemsCount - 1 && isMore) {
+                    viewModel.changePageNumber()
+                } else if (layoutManager.findFirstCompletelyVisibleItemPosition() >= 1) {
+                    binding.trainerMotionLayout.progress = 1f
+                }
+                binding.root.isEnabled = layoutManager.findLastVisibleItemPosition() <= 1
+            }
+        })
     }
 
     override fun onDestroyView() {

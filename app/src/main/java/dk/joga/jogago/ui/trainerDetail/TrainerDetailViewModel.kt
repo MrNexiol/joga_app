@@ -14,6 +14,7 @@ import dk.joga.jogago.api.Resource
 
 class TrainerDetailViewModel(trainerId: String, application: Application) : AndroidViewModel(application) {
     private var playerManager: PlayerManager? = null
+    var isLoading = false
 
     val instructorWrapper = object : RefreshableSource<Instructor>() {
         override fun provideLiveData(): LiveData<Resource<Instructor>> {
@@ -22,7 +23,7 @@ class TrainerDetailViewModel(trainerId: String, application: Application) : Andr
     }
     val instructorClassesWrapper = object : RefreshableSource<List<Class>>() {
         override fun provideLiveData(): LiveData<Resource<List<Class>>> {
-            return AppContainer.repository.getInstructorClasses(trainerId)
+            return AppContainer.repository.getInstructorClasses(trainerId, page)
         }
     }
 
@@ -48,7 +49,7 @@ class TrainerDetailViewModel(trainerId: String, application: Application) : Andr
     }
 
     override fun onCleared() {
-        playerManager!!.release()
+        playerManager?.release()
     }
 
     fun initializePlayerManager(playerView: PlayerView, castContext: CastContext, videoUrl: String, classTitle: String) {
@@ -57,5 +58,18 @@ class TrainerDetailViewModel(trainerId: String, application: Application) : Andr
         } else {
             playerManager!!.changePlayer(playerView)
         }
+    }
+
+    fun changePageNumber() {
+        if (!isLoading) {
+            instructorClassesWrapper.page++
+            isLoading = true
+            refreshData()
+        }
+    }
+
+    fun resetData() {
+        instructorClassesWrapper.page = 1
+        refreshData()
     }
 }
