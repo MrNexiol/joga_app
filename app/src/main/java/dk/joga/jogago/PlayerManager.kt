@@ -102,8 +102,8 @@ class PlayerManager(var playerView: PlayerView, val context: Context, castContex
         }
     }
 
-    fun pauseVideo() {
-        currentPlayer?.pause()
+    fun stopVideo() {
+        currentPlayer?.stop()
     }
 
     fun isPlaying(): Boolean {

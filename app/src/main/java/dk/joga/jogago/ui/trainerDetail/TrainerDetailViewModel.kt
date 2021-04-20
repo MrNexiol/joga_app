@@ -73,7 +73,7 @@ class TrainerDetailViewModel(trainerId: String, application: Application) : Andr
         refreshData()
     }
 
-    fun pauseVideo() {
-        playerManager?.pauseVideo()
+    fun stopVideo() {
+        playerManager?.stopVideo()
     }
 }

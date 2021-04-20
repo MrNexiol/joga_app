@@ -39,7 +39,7 @@ class TrainerDetailFragment : Fragment() {
         viewModel = ViewModelProvider(this, viewModelFactory).get(TrainerDetailViewModel::class.java)
 
         findNavController().addOnDestinationChangedListener { _, _, _ ->
-            viewModel.pauseVideo()
+            viewModel.stopVideo()
         }
 
         viewModel.instructorWrapper.getData().observe(viewLifecycleOwner, { resource ->
