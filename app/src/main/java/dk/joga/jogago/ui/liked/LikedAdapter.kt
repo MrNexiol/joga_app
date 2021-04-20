@@ -15,14 +15,14 @@ import dk.joga.jogago.databinding.LikeableRecyclerViewItemBinding
 class LikedAdapter : RecyclerView.Adapter<LikedAdapter.ViewHolder>() {
 
     private var data = mutableListOf<Class>()
-    private var liked: Array<Boolean> = emptyArray()
 
     class ViewHolder(
-    val binding: LikeableRecyclerViewItemBinding) : RecyclerView.ViewHolder(binding.root)
+            val binding: LikeableRecyclerViewItemBinding) : RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = LikeableRecyclerViewItemBinding
             .inflate(LayoutInflater.from(parent.context), parent, false)
+        binding.heartIcon.setOnClickListener {  }
         return ViewHolder(binding)
     }
 
@@ -36,9 +36,7 @@ class LikedAdapter : RecyclerView.Adapter<LikedAdapter.ViewHolder>() {
         holder.binding.likedClassName.text = data[position].title
         holder.binding.heartIcon.isSelected = true
         holder.binding.heartIcon.setOnClickListener {
-            liked[position] = !liked[position]
-            AppContainer.repository.toggleClassLike(data[position].id)
-            holder.binding.heartIcon.isSelected = liked[position]
+            removeItem(position)
         }
         holder.binding.likedClassFocus.text = data[position].focus
         holder.binding.likedClassDuration.text = holder.itemView.context.getString(R.string.min, data[position].duration)
@@ -53,17 +51,22 @@ class LikedAdapter : RecyclerView.Adapter<LikedAdapter.ViewHolder>() {
         return data.size
     }
 
+    private fun removeItem(position: Int) {
+        AppContainer.repository.toggleClassLike(data[position].id)
+        this.data.removeAt(position)
+        notifyItemRemoved(position)
+        notifyItemRangeChanged(position, data.size)
+    }
+
     fun setData(data: List<Class>){
         this.data.removeAll(this.data)
         this.data.addAll(data)
-        liked = Array(this.data.size) { true }
         notifyDataSetChanged()
     }
 
     fun addData(data: List<Class>){
         val tmp = this.data.count()
         this.data.addAll(data)
-        liked = Array(this.data.size) { true }
         notifyItemInserted(tmp)
     }
 }
