@@ -34,7 +34,7 @@
     <string name="all_classes">Holdtyper</string>
     <string name="play">Afspil</string>
     <string name="focus">focus: </string>
-    <string name="instructor_no_classes">"This instructor doesn't have any classes"</string>
+    <string name="watched">Set!</string>
 
     <string name="saved_token_key">saved_token_key</string>
     <string name="saved_user_id">saved_user_id</string>
