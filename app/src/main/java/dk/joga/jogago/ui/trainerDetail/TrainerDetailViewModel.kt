@@ -31,7 +31,7 @@ class TrainerDetailViewModel(trainerId: String, application: Application) : Andr
         refreshData()
     }
 
-    fun refreshData() {
+    private fun refreshData() {
         instructorClassesWrapper.refresh()
         instructorWrapper.refresh()
     }
@@ -71,5 +71,9 @@ class TrainerDetailViewModel(trainerId: String, application: Application) : Andr
     fun resetData() {
         instructorClassesWrapper.page = 1
         refreshData()
+    }
+
+    fun pauseVideo() {
+        playerManager?.pauseVideo()
     }
 }

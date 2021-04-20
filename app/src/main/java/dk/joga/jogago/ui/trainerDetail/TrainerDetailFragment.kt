@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -36,6 +37,10 @@ class TrainerDetailFragment : Fragment() {
         _binding = FragmentTrainerDetailBinding.inflate(inflater, container, false)
         viewModelFactory = TrainerDetailViewModelFactory(args.trainerId, requireActivity().application)
         viewModel = ViewModelProvider(this, viewModelFactory).get(TrainerDetailViewModel::class.java)
+
+        findNavController().addOnDestinationChangedListener { _, _, _ ->
+            viewModel.pauseVideo()
+        }
 
         viewModel.instructorWrapper.getData().observe(viewLifecycleOwner, { resource ->
             if (resource.status == Status.Success) {
