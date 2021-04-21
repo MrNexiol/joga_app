@@ -94,6 +94,22 @@ class ClassDetailsFragment : Fragment() {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        if (viewModel.wasPlayingDuringStop) {
+            viewModel.showVideo()
+            viewModel.wasPlayingDuringStop = false
+        }
+    }
+
+    override fun onStop() {
+        super.onStop()
+        if (viewModel.isPlaying()) {
+            viewModel.wasPlayingDuringStop = true
+        }
+        viewModel.stopVideo()
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         (requireActivity() as MainActivity).setLikeIcon(false)

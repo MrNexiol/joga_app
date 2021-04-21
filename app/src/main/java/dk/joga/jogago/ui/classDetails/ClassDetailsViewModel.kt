@@ -14,6 +14,7 @@ import dk.joga.jogago.api.Resource
 class ClassDetailsViewModel(private val id: String, application: Application) : AndroidViewModel(application) {
     private var playerManager: PlayerManager? = null
     var startedVideo = false
+    var wasPlayingDuringStop = false
 
     val classWrapper = object : RefreshableSource<Class>() {
         override fun provideLiveData(): LiveData<Resource<Class>> {
@@ -28,6 +29,10 @@ class ClassDetailsViewModel(private val id: String, application: Application) : 
 
     fun showVideo() {
         playerManager!!.startVideo()
+    }
+
+    fun stopVideo() {
+        playerManager?.stopVideo()
     }
 
     fun isPlaying(): Boolean {
