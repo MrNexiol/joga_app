@@ -3,6 +3,7 @@ package dk.joga.jogago
 import android.content.Context
 import android.os.Handler
 import android.os.Looper
+import android.widget.Toast
 import com.google.android.exoplayer2.*
 import com.google.android.exoplayer2.ext.cast.CastPlayer
 import com.google.android.exoplayer2.ext.cast.SessionAvailabilityListener
@@ -13,7 +14,7 @@ import com.google.android.exoplayer2.upstream.DefaultHttpDataSource
 import com.google.android.exoplayer2.util.MimeTypes
 import com.google.android.gms.cast.framework.CastContext
 
-class PlayerManager(var playerView: PlayerView, val context: Context, castContext: CastContext, videoUrl: String, classTitle: String) : SessionAvailabilityListener {
+class PlayerManager(var playerView: PlayerView, val context: Context, castContext: CastContext, videoUrl: String, classTitle: String) : SessionAvailabilityListener, Player.EventListener {
 
     private var classId = ""
     private var playbackPositionMs: Long = 0
@@ -36,9 +37,11 @@ class PlayerManager(var playerView: PlayerView, val context: Context, castContex
 
         castPlayer = CastPlayer(castContext)
         castPlayer!!.setSessionAvailabilityListener(this)
+        castPlayer!!.addListener(this)
         castPlayer!!.addMediaItem(mediaItem!!)
 
         localPlayer = SimpleExoPlayer.Builder(context).build()
+        localPlayer!!.addListener(this)
         localPlayer!!.setMediaSource(hlsMediaSource)
         localPlayer!!.prepare()
 
@@ -55,6 +58,12 @@ class PlayerManager(var playerView: PlayerView, val context: Context, castContex
 
     override fun onCastSessionUnavailable() {
         setCurrentPlayer(localPlayer!!)
+    }
+
+    override fun onPlaybackStateChanged(state: Int) {
+        if (state == Player.STATE_ENDED) {
+            Toast.makeText(context, R.string.watched, Toast.LENGTH_SHORT).show()
+        }
     }
 
     private fun setCurrentPlayer(currentPlayer: Player) {
@@ -100,6 +109,10 @@ class PlayerManager(var playerView: PlayerView, val context: Context, castContex
         if (classId.isNotEmpty()) {
             handler.postDelayed(runnable, 5000)
         }
+    }
+
+    fun stopVideo() {
+        currentPlayer?.pause()
     }
 
     fun isPlaying(): Boolean {

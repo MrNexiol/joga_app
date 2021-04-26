@@ -5,6 +5,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -48,9 +50,6 @@ class TrainerDetailFragment : Fragment() {
                     }
                     binding.trainerVideoTitle.text = resource.data.videoTitle
                     binding.trainerVideoDuration.text = getString(R.string.min, resource.data.videoDuration)
-                    if (viewModel.isPlaying()) {
-                        showVideo()
-                    }
                 } else {
                     binding.trainerMotionLayout.setTransition(R.id.collapsed, R.id.collapsed)
                     binding.trainerMotionLayout.getTransition(R.id.video_transition).setEnable(false)
@@ -76,9 +75,15 @@ class TrainerDetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        if (viewModel.startedVideo) showVideoControls()
         binding.trainerPlayButton.setOnClickListener {
-            showVideo()
+            startVideo()
         }
+
+        val fullscreen: ImageView = view.findViewById(R.id.exo_fullscreen)
+        val durationTextView: TextView = view.findViewById(R.id.exo_duration)
+        fullscreen.visibility = View.GONE
+        durationTextView.setPaddingRelative(0,0,resources.getDimensionPixelSize(R.dimen.margin_small),0)
 
         binding.root.setOnRefreshListener {
             viewModel.resetData()
@@ -102,14 +107,35 @@ class TrainerDetailFragment : Fragment() {
         })
     }
 
+    override fun onResume() {
+        super.onResume()
+        if (viewModel.wasPlayingOnStop) {
+            startVideo()
+            viewModel.wasPlayingOnStop = false
+        }
+    }
+
+    override fun onStop() {
+        super.onStop()
+        if (viewModel.isPlaying()) {
+            viewModel.wasPlayingOnStop = true
+            viewModel.stopVideo()
+        }
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
 
-    private fun showVideo() {
+    private fun showVideoControls() {
         binding.trainerPlayButton.visibility = View.INVISIBLE
         binding.trainerVideo.visibility = View.VISIBLE
-        viewModel.showVideo()
+    }
+
+    private fun startVideo() {
+        showVideoControls()
+        viewModel.playVideo()
+        viewModel.startedVideo = true
     }
 }

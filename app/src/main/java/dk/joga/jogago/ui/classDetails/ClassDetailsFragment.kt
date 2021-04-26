@@ -82,19 +82,32 @@ class ClassDetailsFragment : Fragment() {
 
         val fullscreen: ImageView = view.findViewById(R.id.exo_fullscreen)
         fullscreen.setOnClickListener {
-            if (requireActivity().requestedOrientation == ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT ||
-                requireActivity().requestedOrientation == ActivityInfo.SCREEN_ORIENTATION_PORTRAIT) {
+            if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
                 requireActivity().requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
             } else {
+                requireActivity().requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
                 if (Settings.System.getInt(requireActivity().contentResolver, Settings.System.ACCELEROMETER_ROTATION, 0) == 1) {
                     // Rotation ON
-                    requireActivity().requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT
-                } else {
-                    // Rotation OFF
-                    requireActivity().requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+                    requireActivity().requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_FULL_SENSOR
                 }
             }
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (viewModel.wasPlayingDuringStop) {
+            viewModel.showVideo()
+            viewModel.wasPlayingDuringStop = false
+        }
+    }
+
+    override fun onStop() {
+        super.onStop()
+        if (viewModel.isPlaying()) {
+            viewModel.wasPlayingDuringStop = true
+        }
+        viewModel.stopVideo()
     }
 
     override fun onDestroyView() {

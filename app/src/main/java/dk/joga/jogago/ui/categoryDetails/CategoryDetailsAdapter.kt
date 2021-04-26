@@ -112,6 +112,9 @@ class CategoryDetailsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             AppContainer.repository.toggleClassLike(data[position].id)
             holder.binding.heartIcon.isSelected = liked[position]
         }
+        if (data[position].watched) {
+            holder.binding.likedClassWatchedIcon.visibility = View.VISIBLE
+        }
         holder.binding.likedClassFocus.text = data[position].focus
         holder.binding.likedClassDuration.text = holder.itemView.context.getString(R.string.min, data[position].duration)
         holder.binding.likedClassInstructorName.text = data[position].instructor.name
