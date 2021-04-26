@@ -1,6 +1,9 @@
 package dk.joga.jogago
 
 import android.content.Context
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.analytics.ktx.analytics
+import com.google.firebase.ktx.Firebase
 import dk.joga.jogago.api.RetrofitInterceptor
 import dk.joga.jogago.api.WebService
 import okhttp3.OkHttpClient
@@ -9,6 +12,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object AppContainer {
     lateinit var repository: Repository
+    lateinit var firebaseAnalytics: FirebaseAnalytics
 
     fun init(context: Context) {
         val retrofitInterceptor = RetrofitInterceptor(context)
@@ -20,5 +24,6 @@ object AppContainer {
             .build()
             .create(WebService::class.java)
         repository = Repository(retrofit)
+        firebaseAnalytics = Firebase.analytics
     }
 }
