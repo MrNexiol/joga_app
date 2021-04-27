@@ -15,8 +15,8 @@ android {
         applicationId "dk.joga.jogago"
         minSdkVersion 21
         targetSdkVersion 30
-        versionCode 13
-        versionName "1.74"
+        versionCode 14
+        versionName "1.75"
         multiDexEnabled true
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
