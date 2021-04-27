@@ -44,7 +44,7 @@ class ClassDetailsViewModel(private val id: String, application: Application) : 
     }
 
     override fun onCleared() {
-        playerManager!!.release()
+        playerManager?.release()
     }
 
     fun initializePlayerManager(playerView: PlayerView, castContext: CastContext, videoUrl: String, classTitle: String) {
