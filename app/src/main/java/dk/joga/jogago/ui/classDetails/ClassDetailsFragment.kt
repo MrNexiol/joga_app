@@ -48,6 +48,7 @@ class ClassDetailsFragment : Fragment() {
                 (requireActivity() as MainActivity).changeScreenTitle(resource.data!!.title)
                 (requireActivity() as MainActivity).setClassId(resource.data.id)
                 viewModel.classCategories = resource.data.categories
+                viewModel.classDuration = resource.data.duration
                 @Suppress("SENSELESS_COMPARISON")
                 if (resource.data.userLike.classId != null) {
                     (requireActivity() as MainActivity).setLikeIcon(true)

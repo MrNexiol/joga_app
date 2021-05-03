@@ -15,6 +15,7 @@ import dk.joga.jogago.api.Resource
 class ClassDetailsViewModel(private val id: String, application: Application) : AndroidViewModel(application) {
     private var playerManager: PlayerManager? = null
     var classCategories: List<Category> = listOf()
+    var classDuration = 0
     var startedVideo = false
     var wasPlayingDuringStop = false
 
@@ -51,14 +52,9 @@ class ClassDetailsViewModel(private val id: String, application: Application) : 
 
     fun initializePlayerManager(playerView: PlayerView, castContext: CastContext, videoUrl: String, classTitle: String) {
         if (playerManager == null) {
-            playerManager = PlayerManager(
-                classTitle,
-                playerView,
-                getApplication(),
-                castContext,
-                videoUrl
-            )
+            playerManager = PlayerManager(classTitle, playerView, getApplication(), castContext, videoUrl)
             playerManager!!.setClassId(id)
+            playerManager!!.setClassDuration(classDuration)
         } else {
             playerManager!!.changePlayer(playerView)
         }

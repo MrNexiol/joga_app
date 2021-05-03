@@ -24,6 +24,7 @@ class PlayerManager(
 ) : SessionAvailabilityListener, Player.EventListener {
 
     private var classId = ""
+    private var classDuration = 0
     private var playbackPositionMs: Long = 0
     private var currentPlayer: Player? = null
     private var castPlayer: CastPlayer? = null
@@ -145,6 +146,10 @@ class PlayerManager(
     private fun runnableTask() {
         if (currentPlayer!!.currentPosition > 20000) {
             AppContainer.repository.markClassAsWatched(classId)
+            AppContainer.firebaseAnalytics.logEvent("class_watched") {
+                param("class_title", classTitle)
+                param("class_duration", classDuration.toLong())
+            }
             removeHandlerCallback()
         } else {
             handler.postDelayed(runnable, 5000)
@@ -153,6 +158,10 @@ class PlayerManager(
 
     fun setClassId(id: String) {
         this.classId = id
+    }
+
+    fun setClassDuration(duration: Int) {
+        this.classDuration = duration
     }
 
     fun release() {
