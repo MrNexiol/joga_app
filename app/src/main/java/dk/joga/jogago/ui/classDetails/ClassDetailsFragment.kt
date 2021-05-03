@@ -47,6 +47,7 @@ class ClassDetailsFragment : Fragment() {
             if (resource.status == Status.Success) {
                 (requireActivity() as MainActivity).changeScreenTitle(resource.data!!.title)
                 (requireActivity() as MainActivity).setClassId(resource.data.id)
+                viewModel.classCategories = resource.data.categories
                 @Suppress("SENSELESS_COMPARISON")
                 if (resource.data.userLike.classId != null) {
                     (requireActivity() as MainActivity).setLikeIcon(true)
@@ -128,6 +129,11 @@ class ClassDetailsFragment : Fragment() {
         showVideoControls()
         viewModel.showVideo()
         viewModel.startedVideo = true
+        viewModel.classCategories.forEach {
+            AppContainer.firebaseAnalytics.logEvent("category_watched") {
+                param("category_name", it.name)
+            }
+        }
     }
 
     private fun showVideoControls() {

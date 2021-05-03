@@ -7,12 +7,14 @@ import com.google.android.exoplayer2.ui.PlayerView
 import com.google.android.gms.cast.framework.CastContext
 import dk.joga.jogago.AppContainer
 import dk.joga.jogago.PlayerManager
+import dk.joga.jogago.api.Category
 import dk.joga.jogago.api.Class
 import dk.joga.jogago.api.RefreshableSource
 import dk.joga.jogago.api.Resource
 
 class ClassDetailsViewModel(private val id: String, application: Application) : AndroidViewModel(application) {
     private var playerManager: PlayerManager? = null
+    var classCategories: List<Category> = listOf()
     var startedVideo = false
     var wasPlayingDuringStop = false
 
