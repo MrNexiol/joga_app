@@ -15,7 +15,13 @@ import com.google.android.exoplayer2.util.MimeTypes
 import com.google.android.gms.cast.framework.CastContext
 import com.google.firebase.analytics.ktx.logEvent
 
-class PlayerManager(var playerView: PlayerView, val context: Context, castContext: CastContext, videoUrl: String, private val classTitle: String) : SessionAvailabilityListener, Player.EventListener {
+class PlayerManager(
+    private val classTitle: String,
+    private var playerView: PlayerView,
+    private val context: Context,
+    castContext: CastContext,
+    videoUrl: String
+) : SessionAvailabilityListener, Player.EventListener {
 
     private var classId = ""
     private var playbackPositionMs: Long = 0

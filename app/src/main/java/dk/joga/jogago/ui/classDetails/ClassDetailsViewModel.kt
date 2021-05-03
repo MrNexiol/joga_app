@@ -51,7 +51,13 @@ class ClassDetailsViewModel(private val id: String, application: Application) : 
 
     fun initializePlayerManager(playerView: PlayerView, castContext: CastContext, videoUrl: String, classTitle: String) {
         if (playerManager == null) {
-            playerManager = PlayerManager(playerView, getApplication(), castContext, videoUrl, classTitle)
+            playerManager = PlayerManager(
+                classTitle,
+                playerView,
+                getApplication(),
+                castContext,
+                videoUrl
+            )
             playerManager!!.setClassId(id)
         } else {
             playerManager!!.changePlayer(playerView)
