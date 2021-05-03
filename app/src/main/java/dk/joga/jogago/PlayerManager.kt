@@ -13,8 +13,9 @@ import com.google.android.exoplayer2.upstream.DataSource
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSource
 import com.google.android.exoplayer2.util.MimeTypes
 import com.google.android.gms.cast.framework.CastContext
+import com.google.firebase.analytics.ktx.logEvent
 
-class PlayerManager(var playerView: PlayerView, val context: Context, castContext: CastContext, videoUrl: String, classTitle: String) : SessionAvailabilityListener, Player.EventListener {
+class PlayerManager(var playerView: PlayerView, val context: Context, castContext: CastContext, videoUrl: String, private val classTitle: String) : SessionAvailabilityListener, Player.EventListener {
 
     private var classId = ""
     private var playbackPositionMs: Long = 0
@@ -63,6 +64,9 @@ class PlayerManager(var playerView: PlayerView, val context: Context, castContex
     override fun onPlaybackStateChanged(state: Int) {
         if (state == Player.STATE_ENDED) {
             Toast.makeText(context, R.string.watched, Toast.LENGTH_SHORT).show()
+            AppContainer.firebaseAnalytics.logEvent("class_finished") {
+                param("class_name", classTitle)
+            }
         }
     }
 
