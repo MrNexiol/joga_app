@@ -9,6 +9,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import androidx.navigation.fragment.findNavController
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.analytics.ktx.logEvent
 import dk.joga.jogago.AppContainer
 import dk.joga.jogago.R
 import dk.joga.jogago.api.Status
@@ -49,6 +51,14 @@ class LoginFragment : Fragment() {
                     findNavController().navigate(action)
                 }
             })
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        AppContainer.firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SCREEN_VIEW) {
+            param(FirebaseAnalytics.Param.SCREEN_NAME, "Login")
+            param(FirebaseAnalytics.Param.SCREEN_CLASS, "LoginFragment")
         }
     }
 

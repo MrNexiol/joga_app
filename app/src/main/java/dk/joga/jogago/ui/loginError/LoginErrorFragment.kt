@@ -6,6 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.analytics.ktx.logEvent
+import dk.joga.jogago.AppContainer
 import dk.joga.jogago.databinding.FragmentLoginErrorBinding
 
 class LoginErrorFragment : Fragment() {
@@ -25,6 +28,14 @@ class LoginErrorFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.backToLoginButton.setOnClickListener {
             findNavController().navigateUp()
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        AppContainer.firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SCREEN_VIEW) {
+            param(FirebaseAnalytics.Param.SCREEN_NAME, "Login error")
+            param(FirebaseAnalytics.Param.SCREEN_CLASS, "LoginErrorFragment")
         }
     }
 

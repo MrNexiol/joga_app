@@ -7,6 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.analytics.ktx.logEvent
+import dk.joga.jogago.AppContainer
 import dk.joga.jogago.GridSpacingItemDecoration
 import dk.joga.jogago.R
 import dk.joga.jogago.databinding.FragmentJourneysBinding
@@ -41,6 +44,14 @@ class JourneysFragment : Fragment() {
         binding.journeysSwipeRefresh.setOnRefreshListener {
             viewModel.refreshJourneys()
             binding.journeysSwipeRefresh.isRefreshing = false
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        AppContainer.firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SCREEN_VIEW) {
+            param(FirebaseAnalytics.Param.SCREEN_NAME, "All journeys")
+            param(FirebaseAnalytics.Param.SCREEN_CLASS, "JourneysFragment")
         }
     }
 

@@ -13,6 +13,9 @@ import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.google.android.gms.cast.framework.CastContext
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.analytics.ktx.logEvent
+import dk.joga.jogago.AppContainer
 import dk.joga.jogago.R
 import dk.joga.jogago.api.Status
 import dk.joga.jogago.databinding.FragmentClassDetailsBinding
@@ -99,6 +102,10 @@ class ClassDetailsFragment : Fragment() {
         if (viewModel.wasPlayingDuringStop) {
             viewModel.showVideo()
             viewModel.wasPlayingDuringStop = false
+        }
+        AppContainer.firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SCREEN_VIEW) {
+            param(FirebaseAnalytics.Param.SCREEN_NAME, "Class details")
+            param(FirebaseAnalytics.Param.SCREEN_CLASS, "ClassDetailsFragment")
         }
     }
 
