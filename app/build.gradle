@@ -15,8 +15,8 @@ android {
         applicationId "dk.joga.jogago"
         minSdkVersion 21
         targetSdkVersion 30
-        versionCode 14
-        versionName "1.75"
+        versionCode 15
+        versionName "1.76"
         multiDexEnabled true
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -30,7 +30,8 @@ android {
         debug {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            buildConfigField("String", "BASE_URL", "\"https://joga-go.prograils.net/api/v1/\"")
+//            buildConfigField("String", "BASE_URL", "\"https://joga-go.prograils.net/api/v1/\"")
+            buildConfigField("String", "BASE_URL", "\"https://joga-go-backend.herokuapp.com/api/v1/\"")
             addConstantTo(owner, "ANALYTICS_ENABLED", "false")
         }
         release {
