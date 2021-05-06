@@ -71,8 +71,9 @@ class PlayerManager(
     override fun onPlaybackStateChanged(state: Int) {
         if (state == Player.STATE_ENDED) {
             Toast.makeText(context, R.string.watched, Toast.LENGTH_SHORT).show()
-            AppContainer.firebaseAnalytics.logEvent("class_finished") {
-                param("class_name", classTitle)
+            AppContainer.firebaseAnalytics.logEvent("video_finished") {
+                param("name", classTitle)
+                param("duration", classDuration.toLong())
             }
         }
     }
@@ -146,9 +147,9 @@ class PlayerManager(
     private fun runnableTask() {
         if (currentPlayer!!.currentPosition > 20000) {
             AppContainer.repository.markClassAsWatched(classId)
-            AppContainer.firebaseAnalytics.logEvent("class_watched") {
-                param("class_title", classTitle)
-                param("class_duration", classDuration.toLong())
+            AppContainer.firebaseAnalytics.logEvent("video_watched") {
+                param("name", classTitle)
+                param("duration", classDuration.toLong())
             }
             removeHandlerCallback()
         } else {

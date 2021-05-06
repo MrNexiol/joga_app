@@ -149,7 +149,7 @@ class HomeFragment : Fragment() {
         super.onResume()
         viewModel.refreshData()
         AppContainer.firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SCREEN_VIEW) {
-            param(FirebaseAnalytics.Param.SCREEN_NAME, "Home")
+            param(FirebaseAnalytics.Param.SCREEN_NAME, "home")
             param(FirebaseAnalytics.Param.SCREEN_CLASS, "HomeFragment")
         }
     }

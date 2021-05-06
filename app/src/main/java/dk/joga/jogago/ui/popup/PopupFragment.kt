@@ -62,7 +62,7 @@ class PopupFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         AppContainer.firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SCREEN_VIEW) {
-            param(FirebaseAnalytics.Param.SCREEN_NAME, "Popup")
+            param(FirebaseAnalytics.Param.SCREEN_NAME, "popup")
             param(FirebaseAnalytics.Param.SCREEN_CLASS, "PopupFragment")
         }
     }

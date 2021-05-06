@@ -53,7 +53,7 @@ class LogoutFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         AppContainer.firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SCREEN_VIEW) {
-            param(FirebaseAnalytics.Param.SCREEN_NAME, "Logout")
+            param(FirebaseAnalytics.Param.SCREEN_NAME, "logout")
             param(FirebaseAnalytics.Param.SCREEN_CLASS, "LogoutFragment")
         }
     }

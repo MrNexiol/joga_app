@@ -61,7 +61,7 @@ class JourneyDetailsFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         AppContainer.firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SCREEN_VIEW) {
-            param(FirebaseAnalytics.Param.SCREEN_NAME, "Journey details")
+            param(FirebaseAnalytics.Param.SCREEN_NAME, "journey_details")
             param(FirebaseAnalytics.Param.SCREEN_CLASS, "JourneyDetailsFragment")
         }
     }

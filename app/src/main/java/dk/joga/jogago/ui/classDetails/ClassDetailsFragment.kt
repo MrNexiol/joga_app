@@ -106,7 +106,7 @@ class ClassDetailsFragment : Fragment() {
             viewModel.wasPlayingDuringStop = false
         }
         AppContainer.firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SCREEN_VIEW) {
-            param(FirebaseAnalytics.Param.SCREEN_NAME, "Class details")
+            param(FirebaseAnalytics.Param.SCREEN_NAME, "class_details")
             param(FirebaseAnalytics.Param.SCREEN_CLASS, "ClassDetailsFragment")
         }
     }

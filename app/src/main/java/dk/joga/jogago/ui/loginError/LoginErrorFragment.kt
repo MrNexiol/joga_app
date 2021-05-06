@@ -34,7 +34,7 @@ class LoginErrorFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         AppContainer.firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SCREEN_VIEW) {
-            param(FirebaseAnalytics.Param.SCREEN_NAME, "Login error")
+            param(FirebaseAnalytics.Param.SCREEN_NAME, "login_error")
             param(FirebaseAnalytics.Param.SCREEN_CLASS, "LoginErrorFragment")
         }
     }
