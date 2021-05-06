@@ -30,8 +30,8 @@ android {
         debug {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-//            buildConfigField("String", "BASE_URL", "\"https://joga-go.prograils.net/api/v1/\"")
-            buildConfigField("String", "BASE_URL", "\"https://joga-go-backend.herokuapp.com/api/v1/\"")
+            buildConfigField("String", "BASE_URL", "\"https://joga-go.prograils.net/api/v1/\"")
+//            buildConfigField("String", "BASE_URL", "\"https://joga-go-backend.herokuapp.com/api/v1/\"")
             addConstantTo(owner, "ANALYTICS_ENABLED", "false")
         }
         release {
