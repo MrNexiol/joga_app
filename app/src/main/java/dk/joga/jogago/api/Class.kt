@@ -18,5 +18,6 @@ data class Class(
         val videoUrl: String,
         val watched: Boolean,
         val watchable: Boolean,
+        @SerializedName("release_date")
         val releaseDate: String
 )
