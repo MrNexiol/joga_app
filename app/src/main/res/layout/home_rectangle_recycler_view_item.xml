@@ -60,4 +60,15 @@
         android:textSize="@dimen/default_text"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/home_item_name" />
+
+    <TextView
+        android:id="@+id/home_item_release_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-light"
+        android:textColor="@color/secondary_text"
+        android:textSize="@dimen/default_text"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/home_item_category" />
 </androidx.constraintlayout.widget.ConstraintLayout>
