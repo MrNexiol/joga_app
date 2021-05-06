@@ -13,6 +13,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.google.android.gms.cast.framework.CastContext
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.analytics.ktx.logEvent
+import dk.joga.jogago.AppContainer
 import dk.joga.jogago.R
 import dk.joga.jogago.api.Status
 import dk.joga.jogago.databinding.FragmentTrainerDetailBinding
@@ -112,6 +115,10 @@ class TrainerDetailFragment : Fragment() {
         if (viewModel.wasPlayingOnStop) {
             startVideo()
             viewModel.wasPlayingOnStop = false
+        }
+        AppContainer.firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SCREEN_VIEW) {
+            param(FirebaseAnalytics.Param.SCREEN_NAME, "trainer_classes")
+            param(FirebaseAnalytics.Param.SCREEN_CLASS, "TrainerDetailsFragment")
         }
     }
 

@@ -7,6 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.analytics.ktx.logEvent
+import dk.joga.jogago.AppContainer
 import dk.joga.jogago.GridSpacingItemDecoration
 import dk.joga.jogago.R
 import dk.joga.jogago.api.Status
@@ -42,6 +45,14 @@ class ClassesFragment : Fragment() {
         binding.classesRefreshLayout.setOnRefreshListener {
             viewModel.refreshClasses()
             binding.classesRefreshLayout.isRefreshing = false
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        AppContainer.firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SCREEN_VIEW) {
+            param(FirebaseAnalytics.Param.SCREEN_NAME, "classes")
+            param(FirebaseAnalytics.Param.SCREEN_CLASS, "ClassesFragment")
         }
     }
 

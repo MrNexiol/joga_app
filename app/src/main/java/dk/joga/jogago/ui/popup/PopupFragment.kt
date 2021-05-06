@@ -8,6 +8,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.analytics.ktx.logEvent
 import dk.joga.jogago.AppContainer
 import dk.joga.jogago.JoGaApplication
 import dk.joga.jogago.R
@@ -54,6 +56,14 @@ class PopupFragment : Fragment() {
         }
         binding.letsGoButton.setOnClickListener {
 //            navigateToHome()
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        AppContainer.firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SCREEN_VIEW) {
+            param(FirebaseAnalytics.Param.SCREEN_NAME, "popup")
+            param(FirebaseAnalytics.Param.SCREEN_CLASS, "PopupFragment")
         }
     }
 //

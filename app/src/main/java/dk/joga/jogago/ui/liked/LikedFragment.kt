@@ -8,6 +8,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.analytics.ktx.logEvent
+import dk.joga.jogago.AppContainer
 import dk.joga.jogago.api.Status
 import dk.joga.jogago.databinding.FragmentLikedBinding
 
@@ -32,8 +35,11 @@ class LikedFragment : Fragment() {
                     itemsCount += resource.data.count()
                     viewModel.isLoading = false
                 } else {
-                    adapter.setData(resource.data!!)
-                    itemsCount = resource.data.count()
+                    if (!viewModel.wasRendered) {
+                        adapter.setData(resource.data!!)
+                        itemsCount = resource.data.count()
+                        viewModel.wasRendered = true
+                    }
                 }
                 if (itemsCount == resource.totalCount) {
                     isMore = false
@@ -65,6 +71,14 @@ class LikedFragment : Fragment() {
                 }
             }
         })
+    }
+
+    override fun onResume() {
+        super.onResume()
+        AppContainer.firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SCREEN_VIEW) {
+            param(FirebaseAnalytics.Param.SCREEN_NAME, "liked_classes")
+            param(FirebaseAnalytics.Param.SCREEN_CLASS, "LikedFragment")
+        }
     }
 
     override fun onDestroyView() {

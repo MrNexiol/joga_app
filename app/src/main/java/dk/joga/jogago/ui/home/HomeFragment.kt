@@ -15,6 +15,9 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.google.android.gms.cast.framework.CastButtonFactory
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.analytics.ktx.logEvent
+import dk.joga.jogago.AppContainer
 import dk.joga.jogago.R
 import dk.joga.jogago.api.Status
 import dk.joga.jogago.databinding.FragmentHomeBinding
@@ -41,6 +44,8 @@ class HomeFragment : Fragment() {
         if (token == null){
             val action = HomeFragmentDirections.actionHomeFragmentToLoginFragment()
             findNavController().navigate(action)
+        } else {
+            AppContainer.firebaseAnalytics.setUserId(sharedPreferences.getString(getString(R.string.saved_user_id), ""))
         }
     }
 
@@ -143,6 +148,10 @@ class HomeFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         viewModel.refreshData()
+        AppContainer.firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SCREEN_VIEW) {
+            param(FirebaseAnalytics.Param.SCREEN_NAME, "home")
+            param(FirebaseAnalytics.Param.SCREEN_CLASS, "HomeFragment")
+        }
     }
 
     private fun setNewClassesRecyclerView(){

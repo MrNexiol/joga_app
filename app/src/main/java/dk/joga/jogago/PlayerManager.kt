@@ -13,10 +13,18 @@ import com.google.android.exoplayer2.upstream.DataSource
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSource
 import com.google.android.exoplayer2.util.MimeTypes
 import com.google.android.gms.cast.framework.CastContext
+import com.google.firebase.analytics.ktx.logEvent
 
-class PlayerManager(var playerView: PlayerView, val context: Context, castContext: CastContext, videoUrl: String, classTitle: String) : SessionAvailabilityListener, Player.EventListener {
+class PlayerManager(
+    private val classTitle: String,
+    private var playerView: PlayerView,
+    private val context: Context,
+    castContext: CastContext,
+    videoUrl: String
+) : SessionAvailabilityListener, Player.EventListener {
 
     private var classId = ""
+    private var classDuration = 0
     private var playbackPositionMs: Long = 0
     private var currentPlayer: Player? = null
     private var castPlayer: CastPlayer? = null
@@ -63,6 +71,10 @@ class PlayerManager(var playerView: PlayerView, val context: Context, castContex
     override fun onPlaybackStateChanged(state: Int) {
         if (state == Player.STATE_ENDED) {
             Toast.makeText(context, R.string.watched, Toast.LENGTH_SHORT).show()
+            AppContainer.firebaseAnalytics.logEvent("video_finished") {
+                param("name", classTitle)
+                param("duration", classDuration.toLong())
+            }
         }
     }
 
@@ -135,6 +147,10 @@ class PlayerManager(var playerView: PlayerView, val context: Context, castContex
     private fun runnableTask() {
         if (currentPlayer!!.currentPosition > 20000) {
             AppContainer.repository.markClassAsWatched(classId)
+            AppContainer.firebaseAnalytics.logEvent("video_watched") {
+                param("name", classTitle)
+                param("duration", classDuration.toLong())
+            }
             removeHandlerCallback()
         } else {
             handler.postDelayed(runnable, 5000)
@@ -143,6 +159,10 @@ class PlayerManager(var playerView: PlayerView, val context: Context, castContex
 
     fun setClassId(id: String) {
         this.classId = id
+    }
+
+    fun setClassDuration(duration: Int) {
+        this.classDuration = duration
     }
 
     fun release() {

@@ -22,6 +22,7 @@
         android:id="@+id/cast_button"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/home_section_icon"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@+id/screen_title"
         app:layout_constraintEnd_toStartOf="@+id/like_icon"
         app:layout_constraintTop_toTopOf="@+id/screen_title" />

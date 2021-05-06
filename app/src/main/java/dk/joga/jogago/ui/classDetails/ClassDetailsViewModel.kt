@@ -7,12 +7,15 @@ import com.google.android.exoplayer2.ui.PlayerView
 import com.google.android.gms.cast.framework.CastContext
 import dk.joga.jogago.AppContainer
 import dk.joga.jogago.PlayerManager
+import dk.joga.jogago.api.Category
 import dk.joga.jogago.api.Class
 import dk.joga.jogago.api.RefreshableSource
 import dk.joga.jogago.api.Resource
 
 class ClassDetailsViewModel(private val id: String, application: Application) : AndroidViewModel(application) {
     private var playerManager: PlayerManager? = null
+    var classCategories: List<Category> = listOf()
+    var classDuration = 0
     var startedVideo = false
     var wasPlayingDuringStop = false
 
@@ -44,13 +47,14 @@ class ClassDetailsViewModel(private val id: String, application: Application) : 
     }
 
     override fun onCleared() {
-        playerManager!!.release()
+        playerManager?.release()
     }
 
     fun initializePlayerManager(playerView: PlayerView, castContext: CastContext, videoUrl: String, classTitle: String) {
         if (playerManager == null) {
-            playerManager = PlayerManager(playerView, getApplication(), castContext, videoUrl, classTitle)
+            playerManager = PlayerManager(classTitle, playerView, getApplication(), castContext, videoUrl)
             playerManager!!.setClassId(id)
+            playerManager!!.setClassDuration(classDuration)
         } else {
             playerManager!!.changePlayer(playerView)
         }

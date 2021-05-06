@@ -8,6 +8,9 @@ import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.analytics.ktx.logEvent
+import dk.joga.jogago.AppContainer
 import dk.joga.jogago.api.Status
 import dk.joga.jogago.databinding.FragmentJourneyDetailsBinding
 import dk.joga.jogago.ui.MainActivity
@@ -53,5 +56,13 @@ class JourneyDetailsFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    override fun onResume() {
+        super.onResume()
+        AppContainer.firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SCREEN_VIEW) {
+            param(FirebaseAnalytics.Param.SCREEN_NAME, "journey_details")
+            param(FirebaseAnalytics.Param.SCREEN_CLASS, "JourneyDetailsFragment")
+        }
     }
 }

@@ -15,24 +15,30 @@ android {
         applicationId "dk.joga.jogago"
         minSdkVersion 21
         targetSdkVersion 30
-        versionCode 12
-        versionName "1.73"
+        versionCode 16
+        versionName "1.77"
         multiDexEnabled true
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
+        def addConstantTo = {target, constantName, constantValue ->
+            target.manifestPlaceholders += [ (constantName):constantValue]
+            target.buildConfigField "String", "${constantName}", "\"${constantValue}\""
+        }
         debug {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
 //            buildConfigField("String", "BASE_URL", "\"https://joga-go.prograils.net/api/v1/\"")
             buildConfigField("String", "BASE_URL", "\"https://joga-go-backend.herokuapp.com/api/v1/\"")
+            addConstantTo(owner, "ANALYTICS_ENABLED", "false")
         }
         release {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             buildConfigField("String", "BASE_URL", "\"https://joga-go-backend.herokuapp.com/api/v1/\"")
+            addConstantTo(owner, "ANALYTICS_ENABLED", "true")
         }
     }
 
@@ -70,7 +76,7 @@ dependencies {
     implementation "com.google.android.exoplayer:extension-cast:$exoplayer_version"
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'androidx.mediarouter:mediarouter:1.2.2'
-    implementation 'com.google.android.gms:play-services-cast-framework:19.0.0'
+    implementation 'com.google.android.gms:play-services-cast-framework:20.0.0'
     implementation "com.squareup.retrofit2:retrofit:2.9.0"
     implementation "com.squareup.retrofit2:converter-gson:2.9.0"
     implementation 'com.github.bumptech.glide:glide:4.12.0'
