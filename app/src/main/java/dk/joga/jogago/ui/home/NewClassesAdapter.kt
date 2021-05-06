@@ -33,6 +33,9 @@ class NewClassesAdapter : RecyclerView.Adapter<NewClassesAdapter.ViewHolder>() {
         holder.binding.homeItemWatchedIcon.visibility = if (data[position].watched) View.VISIBLE else View.GONE
         holder.binding.homeItemName.text = data[position].title
         holder.binding.homeItemCategory.text = data[position].categories.joinToString()
+        holder.binding.homeItemDuration.text = holder.itemView.resources.getString(R.string.min, data[position].duration)
+        holder.binding.homeItemReleaseDate.text = data[position].releaseDate
+        holder.binding.homeItemReleaseDate.visibility = View.VISIBLE
         holder.binding.root.setOnClickListener {
             val action = HomeFragmentDirections.actionHomeFragmentToClassDetailsFragment(data[position].id)
             holder.itemView.findNavController().navigate(action)

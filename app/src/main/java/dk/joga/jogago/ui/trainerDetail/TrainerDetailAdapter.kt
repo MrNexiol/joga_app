@@ -43,7 +43,7 @@ class TrainerDetailAdapter : RecyclerView.Adapter<TrainerDetailAdapter.ViewHolde
             holder.binding.heartIcon.isSelected = liked[position]
         }
         holder.binding.likedClassFocus.text = data[position].focus
-        holder.binding.likedClassDuration.text = holder.itemView.context.getString(R.string.min, data[position].duration)
+        holder.binding.likedClassDuration.text = holder.itemView.context.getString(R.string.category_with_duration, data[position].categories.first().name, data[position].duration)
         holder.binding.likedClassInstructorName.text = data[position].instructor.name
         holder.binding.root.setOnClickListener {
             val action = TrainerDetailFragmentDirections.actionTrainerDetailFragmentToClassDetailsFragment(data[position].id)

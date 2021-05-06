@@ -21,6 +21,7 @@
     <string name="nothing_to_show">Ups! Prøv igen.</string>
     <string name="with">med %1$s</string>
     <string name="min">%1$d min</string>
+    <string name="category_with_duration">%1$s - %2$d min</string>
     <string name="today_pick">Dagens udvalgte</string>
     <string name="new_classes">Nyeste</string>
     <string name="are_you_sure">Er du sikker?</string>

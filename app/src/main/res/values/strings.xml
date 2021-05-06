@@ -21,6 +21,7 @@
     <string name="nothing_to_show">Nothing to show</string>
     <string name="with">with %1$s</string>
     <string name="min">%1$d min</string>
+    <string name="category_with_duration">%1$s - %2$d min</string>
     <string name="today_pick">Today\'s pick</string>
     <string name="new_classes">New classes</string>
     <string name="are_you_sure">Are you sure?</string>
