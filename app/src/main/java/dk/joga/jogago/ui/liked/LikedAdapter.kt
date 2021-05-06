@@ -39,7 +39,7 @@ class LikedAdapter : RecyclerView.Adapter<LikedAdapter.ViewHolder>() {
             removeItem(position)
         }
         holder.binding.likedClassFocus.text = data[position].focus
-        holder.binding.likedClassDuration.text = holder.itemView.context.getString(R.string.min, data[position].duration)
+        holder.binding.likedClassDuration.text = holder.itemView.context.getString(R.string.category_with_duration, data[position].categories.first().name, data[position].duration)
         holder.binding.likedClassInstructorName.text = data[position].instructor.name
         holder.binding.root.setOnClickListener {
             val action = LikedFragmentDirections.actionLikedFragmentToClassDetailsFragment(data[position].id)
