@@ -23,7 +23,7 @@ private const val LOADING_VIEW_TYPE = 2
 class CategoryDetailsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private var isMore = false
-    private var data = mutableListOf<Class>()
+    private var data = mutableListOf<Class?>()
     private var liked: Array<Boolean> = emptyArray()
 
     class ViewHolderFirst(
@@ -36,24 +36,30 @@ class CategoryDetailsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             val binding: InfiniteScrollSpinnerBinding) : RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return if (viewType == FIRST_VIEW_TYPE) {
-            val binding = CategoryFirstItemBinding
-                .inflate(LayoutInflater.from(parent.context), parent, false)
-            ViewHolderFirst(binding)
-        } else {
-            val binding = LikeableRecyclerViewItemBinding
-                .inflate(LayoutInflater.from(parent.context), parent, false)
-            ViewHolderRest(binding)
+        return when (viewType) {
+            FIRST_VIEW_TYPE -> {
+                val binding = CategoryFirstItemBinding
+                        .inflate(LayoutInflater.from(parent.context), parent, false)
+                ViewHolderFirst(binding)
+            }
+            LOADING_VIEW_TYPE -> {
+                val binding = InfiniteScrollSpinnerBinding
+                        .inflate(LayoutInflater.from(parent.context), parent, false)
+                ViewHolderLoading(binding)
+            }
+            else -> {
+                val binding = LikeableRecyclerViewItemBinding
+                        .inflate(LayoutInflater.from(parent.context), parent, false)
+                ViewHolderRest(binding)
+            }
         }
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        if (getItemViewType(position) == FIRST_VIEW_TYPE) {
-            holder as ViewHolderFirst
-            bindFirstItem(holder)
-        } else {
-            holder as ViewHolderRest
-            bindItem(holder, position)
+        when (holder) {
+            is ViewHolderFirst -> bindFirstItem(holder)
+            is ViewHolderRest -> bindItem(holder, position)
+            else -> {}
         }
     }
 
@@ -62,20 +68,33 @@ class CategoryDetailsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     }
 
     override fun getItemViewType(position: Int): Int {
-        return if (position == 0) FIRST_VIEW_TYPE else REST_VIEW_TYPE
+        return if (position == 0) {
+            FIRST_VIEW_TYPE
+        } else if (position == itemCount - 1 && isMore){
+            LOADING_VIEW_TYPE
+        } else {
+            REST_VIEW_TYPE
+        }
     }
 
     fun setData(data: List<Class>, isMore: Boolean){
         this.isMore = isMore
         this.data.removeAll(this.data)
         this.data.addAll(data)
+        if (isMore) this.data.add(null)
         liked = Array(this.data.size) { false }
         notifyDataSetChanged()
     }
 
     fun addData(data: List<Class>, isMore: Boolean) {
+        if (this.data.last() == null) {
+            val tmp = this.data.lastIndex
+            this.data.removeLast()
+            notifyItemRemoved(tmp)
+            notifyItemRangeChanged(tmp, itemCount)
+        }
         this.isMore = isMore
-        val tmp = this.data.count()
+        val tmp = itemCount
         this.data.addAll(data)
         liked = Array(this.data.size) { false }
         notifyItemInserted(tmp)
@@ -84,53 +103,53 @@ class CategoryDetailsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private fun bindFirstItem(holder: ViewHolderFirst) {
         val position = 0
         Glide.with(holder.itemView)
-            .load(data[position].thumbnailUrl)
+            .load(data[position]!!.thumbnailUrl)
             .fallback(R.drawable.placeholder_image)
             .transform(CenterCrop(),RoundedCorners(holder.itemView.resources.getDimensionPixelSize(R.dimen.card_radius)))
             .transition(DrawableTransitionOptions.withCrossFade())
             .into(holder.binding.categoryFirstItemThumbnail)
         holder.binding.categoryFirstItemThumbnail.setOnClickListener {
-            val action = CategoryDetailsFragmentDirections.actionCategoryFragmentToClassDetailsFragment(data[position].id)
+            val action = CategoryDetailsFragmentDirections.actionCategoryFragmentToClassDetailsFragment(data[position]!!.id)
             holder.itemView.findNavController().navigate(action)
         }
         @Suppress("SENSELESS_COMPARISON")
-        liked[position] = data[position].userLike.classId != null
-        holder.binding.categoryFirstItemWatchedIcon.visibility = if (data[position].watched) View.VISIBLE else View.GONE
+        liked[position] = data[position]!!.userLike.classId != null
+        holder.binding.categoryFirstItemWatchedIcon.visibility = if (data[position]!!.watched) View.VISIBLE else View.GONE
         holder.binding.categoryFirstItemLikeIcon.isSelected = liked[position]
         holder.binding.categoryFirstItemLikeIcon.setOnClickListener {
             liked[position] = !liked[position]
-            AppContainer.repository.toggleClassLike(data[position].id)
+            AppContainer.repository.toggleClassLike(data[position]!!.id)
             holder.binding.categoryFirstItemLikeIcon.isSelected = liked[position]
         }
-        holder.binding.categoryFirstItemName.text = data[position].title
-        holder.binding.categoryFirstItemInstructorName.text = data[position].instructor.name
-        holder.binding.categoryFirstItemDuration.text = holder.itemView.resources.getString(R.string.min, data[position].duration)
-        holder.binding.categoryFirstItemDescription.text = data[position].description
+        holder.binding.categoryFirstItemName.text = data[position]!!.title
+        holder.binding.categoryFirstItemInstructorName.text = data[position]!!.instructor.name
+        holder.binding.categoryFirstItemDuration.text = holder.itemView.resources.getString(R.string.min, data[position]!!.duration)
+        holder.binding.categoryFirstItemDescription.text = data[position]!!.description
     }
 
     private fun bindItem(holder: ViewHolderRest, position: Int) {
         Glide.with(holder.itemView)
-            .load(data[position].thumbnailUrl)
+            .load(data[position]!!.thumbnailUrl)
             .fallback(R.drawable.placeholder_image)
             .transition(DrawableTransitionOptions.withCrossFade())
             .into(holder.binding.likedClassThumbnail)
-        holder.binding.likedClassName.text = data[position].title
+        holder.binding.likedClassName.text = data[position]!!.title
         @Suppress("SENSELESS_COMPARISON")
-        liked[position] = data[position].userLike.classId != null
+        liked[position] = data[position]!!.userLike.classId != null
         holder.binding.heartIcon.isSelected = liked[position]
         holder.binding.heartIcon.setOnClickListener {
             liked[position] = !liked[position]
-            AppContainer.repository.toggleClassLike(data[position].id)
+            AppContainer.repository.toggleClassLike(data[position]!!.id)
             holder.binding.heartIcon.isSelected = liked[position]
         }
-        if (data[position].watched) {
+        if (data[position]!!.watched) {
             holder.binding.likedClassWatchedIcon.visibility = View.VISIBLE
         }
-        holder.binding.likedClassFocus.text = data[position].focus
-        holder.binding.likedClassDuration.text = holder.itemView.context.getString(R.string.min, data[position].duration)
-        holder.binding.likedClassInstructorName.text = data[position].instructor.name
+        holder.binding.likedClassFocus.text = data[position]!!.focus
+        holder.binding.likedClassDuration.text = holder.itemView.context.getString(R.string.min, data[position]!!.duration)
+        holder.binding.likedClassInstructorName.text = data[position]!!.instructor.name
         holder.binding.root.setOnClickListener {
-            val action = CategoryDetailsFragmentDirections.actionCategoryFragmentToClassDetailsFragment(data[position].id)
+            val action = CategoryDetailsFragmentDirections.actionCategoryFragmentToClassDetailsFragment(data[position]!!.id)
             holder.itemView.findNavController().navigate(action)
         }
         if (position == itemCount-1) {
