@@ -13,6 +13,7 @@ import dk.joga.jogago.AppContainer
 import dk.joga.jogago.R
 import dk.joga.jogago.api.Class
 import dk.joga.jogago.databinding.CategoryFirstItemBinding
+import dk.joga.jogago.databinding.InfiniteScrollSpinnerBinding
 import dk.joga.jogago.databinding.LikeableRecyclerViewItemBinding
 
 class CategoryDetailsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -25,6 +26,9 @@ class CategoryDetailsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     class ViewHolderRest(
             val binding: LikeableRecyclerViewItemBinding) : RecyclerView.ViewHolder(binding.root)
+
+    class ViewHolderLoading(
+            val binding: InfiniteScrollSpinnerBinding) : RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return if (viewType == 0) {
