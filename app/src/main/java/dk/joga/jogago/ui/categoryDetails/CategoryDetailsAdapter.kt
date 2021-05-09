@@ -16,6 +16,10 @@ import dk.joga.jogago.databinding.CategoryFirstItemBinding
 import dk.joga.jogago.databinding.InfiniteScrollSpinnerBinding
 import dk.joga.jogago.databinding.LikeableRecyclerViewItemBinding
 
+private const val FIRST_VIEW_TYPE = 0
+private const val REST_VIEW_TYPE = 1
+private const val LOADING_VIEW_TYPE = 2
+
 class CategoryDetailsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private var data = mutableListOf<Class>()
@@ -31,7 +35,7 @@ class CategoryDetailsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             val binding: InfiniteScrollSpinnerBinding) : RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return if (viewType == 0) {
+        return if (viewType == FIRST_VIEW_TYPE) {
             val binding = CategoryFirstItemBinding
                 .inflate(LayoutInflater.from(parent.context), parent, false)
             ViewHolderFirst(binding)
@@ -43,7 +47,7 @@ class CategoryDetailsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        if (getItemViewType(position) == 0) {
+        if (getItemViewType(position) == FIRST_VIEW_TYPE) {
             holder as ViewHolderFirst
             bindFirstItem(holder)
         } else {
@@ -57,7 +61,7 @@ class CategoryDetailsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     }
 
     override fun getItemViewType(position: Int): Int {
-        return if (position == 0) 0 else 1
+        return if (position == 0) FIRST_VIEW_TYPE else REST_VIEW_TYPE
     }
 
     fun setData(data: List<Class>){
