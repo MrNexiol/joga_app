@@ -38,7 +38,7 @@ class CategoryDetailsFragment : Fragment() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
                 val layoutManager: LinearLayoutManager = recyclerView.layoutManager as LinearLayoutManager
-                if (layoutManager.findLastVisibleItemPosition() >= itemsCount - 1) {
+                if (layoutManager.findLastVisibleItemPosition() >= itemsCount - 1 && viewModel.isMore) {
                     viewModel.changePageNumber()
                 }
             }
@@ -47,13 +47,17 @@ class CategoryDetailsFragment : Fragment() {
         viewModel.categoryClassesWrapper.getData().observe(viewLifecycleOwner, { resource ->
             if (resource.status == Status.Success) {
                 (requireActivity() as MainActivity).changeScreenTitle(args.categoryName)
+                if (itemsCount + resource.data!!.size == resource.totalCount) {
+                    viewModel.isMore = false
+                }
+
                 if (viewModel.isLoading) {
-                    adapter.addData(resource.data!!)
-                    itemsCount += resource.data.count()
+                    adapter.addData(resource.data, viewModel.isMore)
+                    itemsCount += resource.data.size
                     viewModel.isLoading = false
                 } else {
-                    adapter.setData(resource.data!!)
-                    itemsCount = resource.data.count()
+                    adapter.setData(resource.data, viewModel.isMore)
+                    itemsCount = resource.data.size
                 }
             }
         })

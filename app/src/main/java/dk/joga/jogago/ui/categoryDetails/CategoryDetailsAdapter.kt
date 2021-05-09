@@ -22,6 +22,7 @@ private const val LOADING_VIEW_TYPE = 2
 
 class CategoryDetailsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
+    private var isMore = false
     private var data = mutableListOf<Class>()
     private var liked: Array<Boolean> = emptyArray()
 
@@ -64,14 +65,16 @@ class CategoryDetailsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         return if (position == 0) FIRST_VIEW_TYPE else REST_VIEW_TYPE
     }
 
-    fun setData(data: List<Class>){
+    fun setData(data: List<Class>, isMore: Boolean){
+        this.isMore = isMore
         this.data.removeAll(this.data)
         this.data.addAll(data)
         liked = Array(this.data.size) { false }
         notifyDataSetChanged()
     }
 
-    fun addData(data: List<Class>) {
+    fun addData(data: List<Class>, isMore: Boolean) {
+        this.isMore = isMore
         val tmp = this.data.count()
         this.data.addAll(data)
         liked = Array(this.data.size) { false }
