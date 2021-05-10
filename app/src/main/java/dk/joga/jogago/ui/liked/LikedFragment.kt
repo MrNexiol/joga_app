@@ -37,11 +37,9 @@ class LikedFragment : Fragment() {
                     itemsCount += resource.data.count()
                     viewModel.isLoading = false
                 } else {
-                    if (!viewModel.wasRendered) {
-                        adapter.setData(resource.data, viewModel.isMore)
-                        itemsCount = resource.data.count()
-                        viewModel.wasRendered = true
-                    }
+                    adapter.setData(resource.data, viewModel.isMore)
+                    itemsCount = resource.data.count()
+                    viewModel.wasRendered = true
                 }
             } else {
                 adapter.setData(listOf(), false)
