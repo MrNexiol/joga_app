@@ -96,6 +96,7 @@ class CategoryDetailsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         this.isMore = isMore
         val tmp = itemCount
         this.data.addAll(data)
+        if (isMore) this.data.add(null)
         liked = Array(this.data.size) { false }
         notifyItemInserted(tmp)
     }

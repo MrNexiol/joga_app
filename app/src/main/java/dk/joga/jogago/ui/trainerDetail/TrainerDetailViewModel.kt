@@ -14,6 +14,7 @@ import dk.joga.jogago.api.Resource
 
 class TrainerDetailViewModel(trainerId: String, application: Application) : AndroidViewModel(application) {
     private var playerManager: PlayerManager? = null
+    var isMore = true
     var isLoading = false
     var startedVideo = false
     var wasPlayingOnStop = false
@@ -78,6 +79,7 @@ class TrainerDetailViewModel(trainerId: String, application: Application) : Andr
 
     fun resetData() {
         instructorClassesWrapper.page = 1
+        isMore = true
         refreshData()
     }
 

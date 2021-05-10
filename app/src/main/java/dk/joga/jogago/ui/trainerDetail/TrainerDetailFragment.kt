@@ -27,7 +27,6 @@ class TrainerDetailFragment : Fragment() {
     private val args: TrainerDetailFragmentArgs by navArgs()
     private val adapter = TrainerDetailAdapter()
     private var itemsCount = 0
-    private var isMore = true
     private var videoShown = false
     private lateinit var viewModelFactory: TrainerDetailViewModelFactory
     private lateinit var viewModel: TrainerDetailViewModel
@@ -61,15 +60,17 @@ class TrainerDetailFragment : Fragment() {
         })
         viewModel.instructorClassesWrapper.getData().observe(viewLifecycleOwner, { resource ->
             if (resource.status == Status.Success) {
+                if (itemsCount + resource.data!!.size == resource.totalCount) {
+                    viewModel.isMore = false
+                }
                 if (viewModel.isLoading) {
-                    adapter.addData(resource.data!!)
+                    adapter.addData(resource.data, viewModel.isMore)
                     itemsCount += resource.data.count()
                     viewModel.isLoading = false
                 } else {
-                    adapter.setData(resource.data!!)
+                    adapter.setData(resource.data, viewModel.isMore)
                     itemsCount = resource.data.count()
                 }
-                isMore = itemsCount != resource.totalCount
             }
         })
 
@@ -100,7 +101,7 @@ class TrainerDetailFragment : Fragment() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
                 val layoutManager: LinearLayoutManager = recyclerView.layoutManager as LinearLayoutManager
-                if (layoutManager.findLastVisibleItemPosition() >= itemsCount - 1 && isMore) {
+                if (layoutManager.findLastVisibleItemPosition() >= itemsCount - 1 && viewModel.isMore) {
                     viewModel.changePageNumber()
                 } else if (layoutManager.findFirstCompletelyVisibleItemPosition() >= 1) {
                     binding.trainerMotionLayout.progress = 1f
