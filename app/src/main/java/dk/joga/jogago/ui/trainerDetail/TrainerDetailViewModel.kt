@@ -55,7 +55,7 @@ class TrainerDetailViewModel(trainerId: String, application: Application) : Andr
         playerManager?.release()
     }
 
-    fun initializePlayerManager(playerView: PlayerView, castContext: CastContext, videoUrl: String, classTitle: String) {
+    fun initializePlayerManager(playerView: PlayerView, castContext: CastContext, videoUrl: String, classTitle: String?) {
         if (playerManager == null) {
             playerManager = PlayerManager(
                 classTitle,

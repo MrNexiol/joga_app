@@ -16,7 +16,7 @@ import com.google.android.gms.cast.framework.CastContext
 import com.google.firebase.analytics.ktx.logEvent
 
 class PlayerManager(
-    private val classTitle: String,
+    private var classTitle: String?,
     private var playerView: PlayerView,
     private val context: Context,
     castContext: CastContext,
@@ -34,6 +34,7 @@ class PlayerManager(
     private val runnable = Runnable { runnableTask() }
 
     init {
+        if (classTitle == null) classTitle = "No title"
         val dataSourceFactory: DataSource.Factory = DefaultHttpDataSource.Factory()
         val hlsMediaSource: HlsMediaSource = HlsMediaSource.Factory(dataSourceFactory).createMediaSource(MediaItem.fromUri(videoUrl))
         val metaData = MediaMetadata.Builder().setTitle(classTitle).build()
@@ -72,7 +73,7 @@ class PlayerManager(
         if (state == Player.STATE_ENDED) {
             Toast.makeText(context, R.string.watched, Toast.LENGTH_SHORT).show()
             AppContainer.firebaseAnalytics.logEvent("video_finished") {
-                param("name", classTitle)
+                param("name", classTitle!!)
                 param("duration", classDuration.toLong())
             }
         }
@@ -148,7 +149,7 @@ class PlayerManager(
         if (currentPlayer!!.currentPosition > 20000) {
             AppContainer.repository.markClassAsWatched(classId)
             AppContainer.firebaseAnalytics.logEvent("video_watched") {
-                param("name", classTitle)
+                param("name", classTitle!!)
                 param("duration", classDuration.toLong())
             }
             removeHandlerCallback()
