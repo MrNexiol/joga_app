@@ -34,6 +34,7 @@ class CategoryDetailsViewModel(id: String) : ViewModel() {
 
     fun resetData() {
         categoryClassesWrapper.page = 1
+        isMore = true
         refreshData()
     }
 }
