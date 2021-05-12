@@ -34,7 +34,9 @@ class NewClassesAdapter : RecyclerView.Adapter<NewClassesAdapter.ViewHolder>() {
         holder.binding.homeItemName.text = data[position].title
         holder.binding.homeItemCategory.text = data[position].categories.joinToString()
         holder.binding.homeItemDuration.text = holder.itemView.resources.getString(R.string.min, data[position].duration)
-        holder.binding.homeItemReleaseDate.text = data[position].releaseDate
+        val tmp: MutableList<String> = data[position].releaseDate.split('-').reversed().toMutableList()
+        tmp[2] = tmp[2].removeRange(0,2)
+        holder.binding.homeItemReleaseDate.text = tmp.joinToString(".")
         holder.binding.homeItemReleaseDate.visibility = View.VISIBLE
         holder.binding.root.setOnClickListener {
             val action = HomeFragmentDirections.actionHomeFragmentToClassDetailsFragment(data[position].id)
