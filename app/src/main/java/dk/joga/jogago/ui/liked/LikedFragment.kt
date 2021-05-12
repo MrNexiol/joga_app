@@ -72,6 +72,7 @@ class LikedFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
+        viewModel.resetData()
         AppContainer.firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SCREEN_VIEW) {
             param(FirebaseAnalytics.Param.SCREEN_NAME, "liked_classes")
             param(FirebaseAnalytics.Param.SCREEN_CLASS, "LikedFragment")

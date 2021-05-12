@@ -35,7 +35,6 @@ class LikedViewModel : ViewModel() {
 
     fun resetData() {
         likedClassesWrapper.page = 1
-        isMore = true
         refreshLikedClasses()
     }
 }
