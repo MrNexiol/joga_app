@@ -19,8 +19,6 @@ class LikedFragment : Fragment() {
     private val binding get() = _binding!!
     private val viewModel: LikedViewModel by viewModels()
     private val adapter = LikedAdapter()
-    private var itemsCount = 0
-    private var isMore = true
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -30,22 +28,17 @@ class LikedFragment : Fragment() {
 
         viewModel.likedClassesWrapper.getData().observe(viewLifecycleOwner, { resource ->
             if (resource.status == Status.Success){
+                viewModel.isMore = viewModel.itemsCount + resource.data!!.size != resource.totalCount
                 if (viewModel.isLoading) {
-                    adapter.addData(resource.data!!)
-                    itemsCount += resource.data.count()
+                    adapter.addData(resource.data, viewModel.isMore)
+                    viewModel.itemsCount += resource.data.count()
                     viewModel.isLoading = false
                 } else {
-                    if (!viewModel.wasRendered) {
-                        adapter.setData(resource.data!!)
-                        itemsCount = resource.data.count()
-                        viewModel.wasRendered = true
-                    }
-                }
-                if (itemsCount == resource.totalCount) {
-                    isMore = false
+                    adapter.setData(resource.data, viewModel.isMore)
+                    viewModel.itemsCount = resource.data.count()
                 }
             } else {
-                adapter.setData(listOf())
+                adapter.setData(listOf(), false)
             }
         })
 
@@ -66,7 +59,7 @@ class LikedFragment : Fragment() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
                 val layoutManager: LinearLayoutManager = recyclerView.layoutManager as LinearLayoutManager
-                if (layoutManager.findLastVisibleItemPosition() >= itemsCount - 1 && isMore) {
+                if (layoutManager.findLastVisibleItemPosition() >= viewModel.itemsCount - 1 && viewModel.isMore) {
                     viewModel.changePageNumber()
                 }
             }
@@ -79,6 +72,11 @@ class LikedFragment : Fragment() {
             param(FirebaseAnalytics.Param.SCREEN_NAME, "liked_classes")
             param(FirebaseAnalytics.Param.SCREEN_CLASS, "LikedFragment")
         }
+    }
+
+    override fun onStop() {
+        super.onStop()
+        viewModel.resetData()
     }
 
     override fun onDestroyView() {

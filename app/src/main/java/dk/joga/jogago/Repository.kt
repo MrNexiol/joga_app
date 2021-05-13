@@ -134,7 +134,7 @@ class Repository(private val service: WebService) {
         service.getClasses(id, page).enqueue(object : Callback<Classes>{
             override fun onResponse(call: Call<Classes>, response: Response<Classes>) {
                 if (response.body() != null){
-                    val resource = Resource(Status.Success, response.body()!!.classes)
+                    val resource = Resource(Status.Success, response.body()!!.classes, null, response.body()!!.totalCount)
                     data.value = resource
                 }
             }
