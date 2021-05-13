@@ -8,9 +8,9 @@ import dk.joga.jogago.api.RefreshableSource
 import dk.joga.jogago.api.Resource
 
 class LikedViewModel : ViewModel() {
+    var itemsCount = 0
     var isMore = true
     var isLoading = false
-    var wasRendered = false
     val likedClassesWrapper = object : RefreshableSource<List<Class>>() {
         override fun provideLiveData(): LiveData<Resource<List<Class>>> {
             return AppContainer.repository.getLikedClasses(page)
@@ -35,6 +35,7 @@ class LikedViewModel : ViewModel() {
 
     fun resetData() {
         likedClassesWrapper.page = 1
+        itemsCount = 0
         refreshLikedClasses()
     }
 }

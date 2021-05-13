@@ -19,7 +19,6 @@ class LikedFragment : Fragment() {
     private val binding get() = _binding!!
     private val viewModel: LikedViewModel by viewModels()
     private val adapter = LikedAdapter()
-    private var itemsCount = 0
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -29,17 +28,14 @@ class LikedFragment : Fragment() {
 
         viewModel.likedClassesWrapper.getData().observe(viewLifecycleOwner, { resource ->
             if (resource.status == Status.Success){
-                if (itemsCount + resource.data!!.size == resource.totalCount) {
-                    viewModel.isMore = false
-                }
+                viewModel.isMore = viewModel.itemsCount + resource.data!!.size != resource.totalCount
                 if (viewModel.isLoading) {
                     adapter.addData(resource.data, viewModel.isMore)
-                    itemsCount += resource.data.count()
+                    viewModel.itemsCount += resource.data.count()
                     viewModel.isLoading = false
                 } else {
                     adapter.setData(resource.data, viewModel.isMore)
-                    itemsCount = resource.data.count()
-                    viewModel.wasRendered = true
+                    viewModel.itemsCount = resource.data.count()
                 }
             } else {
                 adapter.setData(listOf(), false)
@@ -63,7 +59,7 @@ class LikedFragment : Fragment() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
                 val layoutManager: LinearLayoutManager = recyclerView.layoutManager as LinearLayoutManager
-                if (layoutManager.findLastVisibleItemPosition() >= itemsCount - 1 && viewModel.isMore) {
+                if (layoutManager.findLastVisibleItemPosition() >= viewModel.itemsCount - 1 && viewModel.isMore) {
                     viewModel.changePageNumber()
                 }
             }
