@@ -26,11 +26,9 @@ class LikedViewModel : ViewModel() {
     }
 
     fun changePageNumber() {
-        if (!isLoading) {
-            likedClassesWrapper.page++
-            isLoading = true
-            refreshLikedClasses()
-        }
+        likedClassesWrapper.page++
+        isLoading = true
+        refreshLikedClasses()
     }
 
     fun resetData() {
