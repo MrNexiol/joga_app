@@ -10,7 +10,6 @@ import android.view.WindowInsets
 import android.view.WindowInsetsController
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
-import com.google.android.gms.cast.framework.CastButtonFactory
 import dk.joga.jogago.AppContainer
 import dk.joga.jogago.R
 import dk.joga.jogago.databinding.ActivityMainBinding
@@ -27,7 +26,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        CastButtonFactory.setUpMediaRouteButton(this, binding.castButton)
+//        CastButtonFactory.setUpMediaRouteButton(this, binding.castButton)
 
         navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         navController = navHostFragment.navController
@@ -139,7 +138,7 @@ class MainActivity : AppCompatActivity() {
     private fun headerVisible(visible: Boolean) {
         val modifier = if (visible) View.VISIBLE else View.GONE
         binding.screenTitle.visibility = modifier
-        binding.castButton.visibility = modifier
+//        binding.castButton.visibility = modifier
         binding.topDivider.visibility = modifier
     }
 
