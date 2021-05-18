@@ -47,6 +47,22 @@
         app:layout_constraintTop_toBottomOf="@+id/category_first_item_like_icon"
         app:srcCompat="@drawable/watched_icon" />
 
+    <ImageView
+        android:id="@+id/category_first_item_new_indicator"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:adjustViewBounds="true"
+        android:contentDescription="@string/new_indicator_icon"
+        android:paddingStart="0dp"
+        android:paddingTop="3dp"
+        android:paddingEnd="3dp"
+        android:paddingBottom="3dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/category_first_item_name"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/category_first_item_name"
+        app:srcCompat="@drawable/new_class_icon" />
+
     <TextView
         android:id="@+id/category_first_item_name"
         android:layout_width="0dp"
@@ -55,7 +71,7 @@
         android:textColor="@color/joga_green"
         android:textSize="@dimen/header_text"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/category_first_item_new_indicator"
         app:layout_constraintTop_toBottomOf="@+id/category_first_item_thumbnail_root" />
 
     <TextView
