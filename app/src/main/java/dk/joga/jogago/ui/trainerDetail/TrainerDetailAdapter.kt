@@ -48,6 +48,7 @@ class TrainerDetailAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                     .transition(DrawableTransitionOptions.withCrossFade())
                     .into(holder.binding.likedClassThumbnail)
             holder.binding.likedClassWatchedIcon.visibility = if (data[position]!!.watched) View.VISIBLE else View.GONE
+            holder.binding.likedClassNewIndicator.visibility = if (data[position]!!.new) View.VISIBLE else View.GONE
             holder.binding.likedClassName.text = data[position]!!.title
             @Suppress("SENSELESS_COMPARISON")
             liked[position] = data[position]!!.userLike.classId != null

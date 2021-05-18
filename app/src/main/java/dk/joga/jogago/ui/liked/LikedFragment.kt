@@ -37,8 +37,6 @@ class LikedFragment : Fragment() {
                     adapter.setData(resource.data, viewModel.isMore)
                     viewModel.itemsCount = resource.data.count()
                 }
-            } else {
-                adapter.setData(listOf(), false)
             }
         })
 
@@ -60,6 +58,9 @@ class LikedFragment : Fragment() {
                 super.onScrolled(recyclerView, dx, dy)
                 val layoutManager: LinearLayoutManager = recyclerView.layoutManager as LinearLayoutManager
                 if (layoutManager.findLastVisibleItemPosition() >= viewModel.itemsCount - 1 && viewModel.isMore) {
+                    if (dy == 0) {
+                        viewModel.isLoading = true
+                    }
                     viewModel.changePageNumber()
                 }
             }

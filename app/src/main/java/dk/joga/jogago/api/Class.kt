@@ -19,5 +19,6 @@ data class Class(
         val watched: Boolean,
         val watchable: Boolean,
         @SerializedName("release_date")
-        val releaseDate: String
+        val releaseDate: String,
+        val new: Boolean
 )

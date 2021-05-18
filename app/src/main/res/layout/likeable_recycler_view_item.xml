@@ -101,6 +101,22 @@
         app:layout_constraintHorizontal_bias="0"
         app:layout_constraintStart_toEndOf="@+id/cardView3" />
 
+    <ImageView
+        android:id="@+id/liked_class_new_indicator"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:adjustViewBounds="true"
+        android:contentDescription="@string/new_indicator_icon"
+        android:paddingStart="0dp"
+        android:paddingTop="3dp"
+        android:paddingEnd="3dp"
+        android:paddingBottom="3dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/liked_class_name"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/liked_class_name"
+        app:srcCompat="@drawable/new_class_icon" />
+
     <TextView
         android:id="@+id/liked_class_name"
         android:layout_width="0dp"
@@ -111,7 +127,7 @@
         android:textColor="@color/joga_green"
         android:textSize="@dimen/header_text"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/liked_class_new_indicator"
         app:layout_constraintTop_toBottomOf="@+id/cardView3" />
 
     <View

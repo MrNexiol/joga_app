@@ -51,7 +51,7 @@ class ClassesFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         AppContainer.firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SCREEN_VIEW) {
-            param(FirebaseAnalytics.Param.SCREEN_NAME, "classes")
+            param(FirebaseAnalytics.Param.SCREEN_NAME, "categories")
             param(FirebaseAnalytics.Param.SCREEN_CLASS, "ClassesFragment")
         }
     }

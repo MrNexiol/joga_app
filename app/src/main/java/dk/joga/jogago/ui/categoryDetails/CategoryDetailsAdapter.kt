@@ -116,6 +116,7 @@ class CategoryDetailsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         @Suppress("SENSELESS_COMPARISON")
         liked[position] = data[position]!!.userLike.classId != null
         holder.binding.categoryFirstItemWatchedIcon.visibility = if (data[position]!!.watched) View.VISIBLE else View.GONE
+        holder.binding.categoryFirstItemNewIndicator.visibility = if (data[position]!!.new) View.VISIBLE else View.GONE
         holder.binding.categoryFirstItemLikeIcon.isSelected = liked[position]
         holder.binding.categoryFirstItemLikeIcon.setOnClickListener {
             liked[position] = !liked[position]
@@ -143,9 +144,8 @@ class CategoryDetailsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             AppContainer.repository.toggleClassLike(data[position]!!.id)
             holder.binding.heartIcon.isSelected = liked[position]
         }
-        if (data[position]!!.watched) {
-            holder.binding.likedClassWatchedIcon.visibility = View.VISIBLE
-        }
+        holder.binding.likedClassWatchedIcon.visibility = if (data[position]!!.watched) View.VISIBLE else View.GONE
+        holder.binding.likedClassNewIndicator.visibility = if (data[position]!!.new) View.VISIBLE else View.GONE
         holder.binding.likedClassFocus.text = data[position]!!.focus
         holder.binding.likedClassDuration.text = holder.itemView.context.getString(R.string.min, data[position]!!.duration)
         holder.binding.likedClassInstructorName.text = data[position]!!.instructor.name

@@ -9,14 +9,14 @@ plugins {
 
 android {
     compileSdkVersion 30
-    buildToolsVersion "30.0.2"
+    buildToolsVersion "30.0.3"
 
     defaultConfig {
         applicationId "dk.joga.jogago"
         minSdkVersion 21
         targetSdkVersion 30
-        versionCode 19
-        versionName "1.82"
+        versionCode 23
+        versionName "1.0.4"
         multiDexEnabled true
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -37,6 +37,7 @@ android {
         release {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+//            buildConfigField("String", "BASE_URL", "\"https://joga-go.prograils.net/api/v1/\"")
             buildConfigField("String", "BASE_URL", "\"https://joga-go-backend.herokuapp.com/api/v1/\"")
             addConstantTo(owner, "ANALYTICS_ENABLED", "true")
         }

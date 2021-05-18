@@ -31,6 +31,7 @@ class NewClassesAdapter : RecyclerView.Adapter<NewClassesAdapter.ViewHolder>() {
                 .transition(DrawableTransitionOptions.withCrossFade())
                 .into(holder.binding.homeItemThumbnail)
         holder.binding.homeItemWatchedIcon.visibility = if (data[position].watched) View.VISIBLE else View.GONE
+        holder.binding.homeItemNewIndicator.visibility = if (data[position].new) View.VISIBLE else View.GONE
         holder.binding.homeItemName.text = data[position].title
         holder.binding.homeItemCategory.text = data[position].categories.joinToString()
         holder.binding.homeItemDuration.text = holder.itemView.resources.getString(R.string.min, data[position].duration)

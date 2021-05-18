@@ -37,28 +37,27 @@
     <string name="focus">focus: </string>
     <string name="watched">Watched!</string>
 
-    <string name="saved_token_key">saved_token_key</string>
-    <string name="saved_user_id">saved_user_id</string>
-    <string name="saved_username">saved_username</string>
-    <string name="was_seen">was_seen</string>
-    <string name="X">X</string>
-    <string name="clock_icon">Clock icon</string>
-    <string name="star_icon">Star icon</string>
-    <string name="trainer_icon">Trainer icon</string>
-    <string name="heart_icon">Heart icon</string>
-    <string name="share_icon">Share icon</string>
-    <string name="play_icon">Play icon</string>
-    <string name="watched_icon">Watched icon</string>
-    <string name="journeys_icon">Journeys icon</string>
-    <string name="tv_share_icon">TV share icon</string>
-    <string name="instructor_avatar">Instructor avatar</string>
-    <string name="preferences_name">preferences</string>
-
-    <string name="exo_rewind">Rewind</string>
-    <string name="exo_play">Play</string>
-    <string name="exo_pause">Pause</string>
-    <string name="exo_fast_forward">Fast forward</string>
-    <string name="exo_fullscreen">Fullscreen</string>
-
-    <string name="app_id">CC1AD845</string>
+    <string name="saved_token_key" translatable="false">saved_token_key</string>
+    <string name="saved_user_id" translatable="false">saved_user_id</string>
+    <string name="saved_username" translatable="false">saved_username</string>
+    <string name="was_seen" translatable="false">was_seen</string>
+    <string name="X" translatable="false">X</string>
+    <string name="clock_icon" translatable="false">Clock icon</string>
+    <string name="star_icon" translatable="false">Star icon</string>
+    <string name="trainer_icon" translatable="false">Trainer icon</string>
+    <string name="heart_icon" translatable="false">Heart icon</string>
+    <string name="share_icon" translatable="false">Share icon</string>
+    <string name="play_icon" translatable="false">Play icon</string>
+    <string name="watched_icon" translatable="false">Watched icon</string>
+    <string name="journeys_icon" translatable="false">Journeys icon</string>
+    <string name="tv_share_icon" translatable="false">TV share icon</string>
+    <string name="new_indicator_icon" translatable="false">New class icon</string>
+    <string name="instructor_avatar" translatable="false">Instructor avatar</string>
+    <string name="preferences_name" translatable="false">preferences</string>
+    <string name="exo_rewind" translatable="false">Rewind</string>
+    <string name="exo_play" translatable="false">Play</string>
+    <string name="exo_pause" translatable="false">Pause</string>
+    <string name="exo_fast_forward" translatable="false">Fast forward</string>
+    <string name="exo_fullscreen" translatable="false">Fullscreen</string>
+    <string name="app_id" translatable="false">CC1AD845</string>
 </resources>
