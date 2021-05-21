@@ -29,10 +29,6 @@
             android:id="@+id/action_homeFragment_to_trainerDetailFragment"
             app:destination="@id/trainerDetailFragment" />
         <action
-            android:id="@+id/action_homeFragment_to_loginFragment"
-            app:destination="@id/loginFragment"
-            app:popUpTo="@id/nav_graph" />
-        <action
             android:id="@+id/action_homeFragment_to_classDetailsFragment"
             app:destination="@id/classDetailsFragment" />
         <action
@@ -123,12 +119,7 @@
         android:id="@+id/logoutFragment"
         android:name="dk.joga.jogago.ui.logout.LogoutFragment"
         android:label="fragment_logout"
-        tools:layout="@layout/fragment_logout" >
-        <action
-            android:id="@+id/action_logoutFragment_to_loginFragment"
-            app:destination="@id/loginFragment"
-            app:popUpTo="@id/nav_graph" />
-    </fragment>
+        tools:layout="@layout/fragment_logout" />
     <action
         android:id="@+id/action_global_homeFragment"
         app:destination="@id/homeFragment"
@@ -171,6 +162,11 @@
     <action
         android:id="@+id/action_global_subscriptionErrorFragment"
         app:destination="@id/subscriptionErrorFragment"
+        app:popUpTo="@id/nav_graph"
+        app:popUpToInclusive="true" />
+    <action
+        android:id="@+id/action_global_loginFragment"
+        app:destination="@id/loginFragment"
         app:popUpTo="@id/nav_graph"
         app:popUpToInclusive="true" />
 </navigation>

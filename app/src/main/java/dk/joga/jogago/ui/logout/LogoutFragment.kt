@@ -43,8 +43,7 @@ class LogoutFragment : Fragment() {
                         this?.remove(getString(R.string.saved_username))
                         this?.apply()
                     }
-                    val action = LogoutFragmentDirections.actionLogoutFragmentToLoginFragment()
-                    findNavController().navigate(action)
+                    findNavController().navigate(R.id.action_global_loginFragment)
                 }
             })
         }

@@ -42,8 +42,7 @@ class HomeFragment : Fragment() {
         sharedPreferences = requireActivity().getSharedPreferences(getString(R.string.preferences_name), Context.MODE_PRIVATE)
         val token = sharedPreferences.getString(getString(R.string.saved_token_key), null)
         if (token == null){
-            val action = HomeFragmentDirections.actionHomeFragmentToLoginFragment()
-            findNavController().navigate(action)
+            findNavController().navigate(R.id.action_global_loginFragment)
         } else {
             AppContainer.firebaseAnalytics.setUserId(sharedPreferences.getString(getString(R.string.saved_user_id), ""))
         }
