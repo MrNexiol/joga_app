@@ -40,37 +40,47 @@ class TrainerDetailFragment : Fragment() {
         viewModel = ViewModelProvider(this, viewModelFactory).get(TrainerDetailViewModel::class.java)
 
         viewModel.instructorWrapper.getData().observe(viewLifecycleOwner, { resource ->
-            if (resource.status == Status.Success) {
-                (requireActivity() as MainActivity).changeScreenTitle(resource.data!!.name)
-                @Suppress("SENSELESS_COMPARISON")
-                if (resource.data.videoUrl != "" && resource.data.videoUrl != null) {
-                    Glide.with(this).load(resource.data.avatar_url).fallback(R.drawable.placeholder_image).into(binding.trainerThumbnail)
-                    viewModel.initializePlayerManager(binding.trainerVideo, CastContext.getSharedInstance(requireActivity()), resource.data.videoUrl, resource.data.videoTitle)
-                    if (!videoShown) {
-                        binding.trainerMotionLayout.transitionToStart()
-                        videoShown = true
+            when (resource.status) {
+                Status.Success -> {
+                    (requireActivity() as MainActivity).changeScreenTitle(resource.data!!.name)
+                    @Suppress("SENSELESS_COMPARISON")
+                    if (resource.data.videoUrl != "" && resource.data.videoUrl != null) {
+                        Glide.with(this).load(resource.data.avatar_url).fallback(R.drawable.placeholder_image).into(binding.trainerThumbnail)
+                        viewModel.initializePlayerManager(binding.trainerVideo, CastContext.getSharedInstance(requireActivity()), resource.data.videoUrl, resource.data.videoTitle)
+                        if (!videoShown) {
+                            binding.trainerMotionLayout.transitionToStart()
+                            videoShown = true
+                        }
+                        binding.trainerVideoTitle.text = resource.data.videoTitle
+                        binding.trainerVideoDuration.text = getString(R.string.min, resource.data.videoDuration)
+                    } else {
+                        binding.trainerMotionLayout.setTransition(R.id.collapsed, R.id.collapsed)
+                        binding.trainerMotionLayout.getTransition(R.id.video_transition).setEnable(false)
                     }
-                    binding.trainerVideoTitle.text = resource.data.videoTitle
-                    binding.trainerVideoDuration.text = getString(R.string.min, resource.data.videoDuration)
-                } else {
-                    binding.trainerMotionLayout.setTransition(R.id.collapsed, R.id.collapsed)
-                    binding.trainerMotionLayout.getTransition(R.id.video_transition).setEnable(false)
                 }
+                Status.Empty -> {}
+                Status.SubscriptionEnded -> {}
+                else -> {}
             }
         })
         viewModel.instructorClassesWrapper.getData().observe(viewLifecycleOwner, { resource ->
-            if (resource.status == Status.Success) {
-                if (itemsCount + resource.data!!.size == resource.totalCount) {
-                    viewModel.isMore = false
+            when (resource.status) {
+                Status.Success -> {
+                    if (itemsCount + resource.data!!.size == resource.totalCount) {
+                        viewModel.isMore = false
+                    }
+                    if (viewModel.isLoading) {
+                        adapter.addData(resource.data, viewModel.isMore)
+                        itemsCount += resource.data.count()
+                        viewModel.isLoading = false
+                    } else {
+                        adapter.setData(resource.data, viewModel.isMore)
+                        itemsCount = resource.data.count()
+                    }
                 }
-                if (viewModel.isLoading) {
-                    adapter.addData(resource.data, viewModel.isMore)
-                    itemsCount += resource.data.count()
-                    viewModel.isLoading = false
-                } else {
-                    adapter.setData(resource.data, viewModel.isMore)
-                    itemsCount = resource.data.count()
-                }
+                Status.Empty -> {}
+                Status.SubscriptionEnded -> {}
+                else -> {}
             }
         })
 
