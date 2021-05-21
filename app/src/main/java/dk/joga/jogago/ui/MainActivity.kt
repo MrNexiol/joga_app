@@ -159,4 +159,8 @@ class MainActivity : AppCompatActivity() {
     fun setLikeIcon(liked: Boolean) {
         binding.likeIcon.isSelected = liked
     }
+
+    fun subscriptionError() {
+        navController.navigate(R.id.action_global_subscriptionErrorFragment)
+    }
 }
