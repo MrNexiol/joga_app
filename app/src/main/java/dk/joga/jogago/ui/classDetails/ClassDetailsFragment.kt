@@ -44,31 +44,35 @@ class ClassDetailsFragment : Fragment() {
         }
 
         viewModel.classWrapper.getData().observe(viewLifecycleOwner, { resource ->
-            if (resource.status == Status.Success) {
-                (requireActivity() as MainActivity).changeScreenTitle(resource.data!!.title)
-                (requireActivity() as MainActivity).setClassId(resource.data.id)
-                viewModel.classCategories = resource.data.categories
-                viewModel.classDuration = resource.data.duration
-                @Suppress("SENSELESS_COMPARISON")
-                if (resource.data.userLike.classId != null) {
-                    (requireActivity() as MainActivity).setLikeIcon(true)
-                }
-                viewModel.initializePlayerManager(binding.videoView, CastContext.getSharedInstance(requireActivity()), resource.data.videoUrl, resource.data.title)
-                if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
-                    Glide.with(this)
+            when (resource.status) {
+                Status.Success -> {
+                    (requireActivity() as MainActivity).changeScreenTitle(resource.data!!.title)
+                    (requireActivity() as MainActivity).setClassId(resource.data.id)
+                    viewModel.classCategories = resource.data.categories
+                    viewModel.classDuration = resource.data.duration
+                    @Suppress("SENSELESS_COMPARISON")
+                    if (resource.data.userLike.classId != null) {
+                        (requireActivity() as MainActivity).setLikeIcon(true)
+                    }
+                    viewModel.initializePlayerManager(binding.videoView, CastContext.getSharedInstance(requireActivity()), resource.data.videoUrl, resource.data.title)
+                    if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
+                        Glide.with(this)
                             .load(resource.data.thumbnailUrl)
                             .fallback(R.drawable.placeholder_image)
                             .transition(DrawableTransitionOptions.withCrossFade())
                             .into(binding.classThumbnail!!)
-                    binding.classTitleDuration!!.text = getString(R.string.title_duration, resource.data.title, resource.data.duration)
-                    binding.classDescription!!.text = resource.data.description
-                    Glide.with(this).load(resource.data.instructor.avatar_url).fallback(R.drawable.trainer_placeholder_icon).into(binding.classInstructorAvatar!!)
-                    binding.classInstructorName!!.text = resource.data.instructor.name
-                    binding.classInstructorRoot!!.setOnClickListener {
-                        val action = ClassDetailsFragmentDirections.actionClassDetailsFragmentToTrainerDetailFragment(resource.data.instructor.id)
-                        findNavController().navigate(action)
+                        binding.classTitleDuration!!.text = getString(R.string.title_duration, resource.data.title, resource.data.duration)
+                        binding.classDescription!!.text = resource.data.description
+                        Glide.with(this).load(resource.data.instructor.avatar_url).fallback(R.drawable.trainer_placeholder_icon).into(binding.classInstructorAvatar!!)
+                        binding.classInstructorName!!.text = resource.data.instructor.name
+                        binding.classInstructorRoot!!.setOnClickListener {
+                            val action = ClassDetailsFragmentDirections.actionClassDetailsFragmentToTrainerDetailFragment(resource.data.instructor.id)
+                            findNavController().navigate(action)
+                        }
                     }
                 }
+                Status.SubscriptionEnded -> {}
+                else -> {}
             }
         })
 
