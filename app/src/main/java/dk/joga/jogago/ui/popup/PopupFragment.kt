@@ -33,7 +33,7 @@ class PopupFragment : Fragment() {
 //        if (wasSeen != null){
 //            navigateToHome()
 //        }
-        val viewModel: PopupViewModel by viewModels { PopupViewModelFactory(AppContainer.repository) }
+        val viewModel: PopupViewModel by viewModels()
 //        viewModel.welcomePopup.observe(viewLifecycleOwner, { resource ->
 //            if (resource.status == Status.Success){
 //                if (Locale.getDefault().language == "da"){
