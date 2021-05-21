@@ -27,16 +27,21 @@ class LikedFragment : Fragment() {
         _binding = FragmentLikedBinding.inflate(inflater, container, false)
 
         viewModel.likedClassesWrapper.getData().observe(viewLifecycleOwner, { resource ->
-            if (resource.status == Status.Success){
-                viewModel.isMore = viewModel.itemsCount + resource.data!!.size != resource.totalCount
-                if (viewModel.isLoading) {
-                    adapter.addData(resource.data, viewModel.isMore)
-                    viewModel.itemsCount += resource.data.count()
-                    viewModel.isLoading = false
-                } else {
-                    adapter.setData(resource.data, viewModel.isMore)
-                    viewModel.itemsCount = resource.data.count()
+            when (resource.status) {
+                Status.Success -> {
+                    viewModel.isMore = viewModel.itemsCount + resource.data!!.size != resource.totalCount
+                    if (viewModel.isLoading) {
+                        adapter.addData(resource.data, viewModel.isMore)
+                        viewModel.itemsCount += resource.data.count()
+                        viewModel.isLoading = false
+                    } else {
+                        adapter.setData(resource.data, viewModel.isMore)
+                        viewModel.itemsCount = resource.data.count()
+                    }
                 }
+                Status.Empty -> {}
+                Status.SubscriptionEnded -> {}
+                else -> {}
             }
         })
 
