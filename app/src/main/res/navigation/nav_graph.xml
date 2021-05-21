@@ -91,7 +91,7 @@
     </fragment>
     <fragment
         android:id="@+id/classesFragment"
-        android:name="dk.joga.jogago.ui.classes.ClassesFragment"
+        android:name="dk.joga.jogago.ui.categories.CategoriesFragment"
         android:label="fragment_classes"
         tools:layout="@layout/fragment_classes" >
         <action

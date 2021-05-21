@@ -1,4 +1,4 @@
-package dk.joga.jogago.ui.classes
+package dk.joga.jogago.ui.categories
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -15,11 +15,11 @@ import dk.joga.jogago.R
 import dk.joga.jogago.api.Status
 import dk.joga.jogago.databinding.FragmentClassesBinding
 
-class ClassesFragment : Fragment() {
+class CategoriesFragment : Fragment() {
     private var _binding: FragmentClassesBinding? = null
     private val binding get() = _binding!!
-    private val viewModel: ClassesViewModel by viewModels()
-    private val adapter = ClassesAdapter()
+    private val viewModel: CategoriesViewModel by viewModels()
+    private val adapter = CategoriesAdapter()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
