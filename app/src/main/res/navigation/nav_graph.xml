@@ -157,4 +157,20 @@
             android:name="category_name"
             app:argType="string" />
     </fragment>
+    <fragment
+        android:id="@+id/subscriptionErrorFragment"
+        android:name="dk.joga.jogago.ui.subscription_error.SubscriptionErrorFragment"
+        android:label="fragment_subscription_error"
+        tools:layout="@layout/fragment_subscription_error" >
+        <action
+            android:id="@+id/action_subscriptionErrorFragment_to_homeFragment"
+            app:destination="@id/homeFragment"
+            app:popUpTo="@id/nav_graph"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <action
+        android:id="@+id/action_global_subscriptionErrorFragment"
+        app:destination="@id/subscriptionErrorFragment"
+        app:popUpTo="@id/nav_graph"
+        app:popUpToInclusive="true" />
 </navigation>
