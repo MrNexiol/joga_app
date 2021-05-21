@@ -14,7 +14,7 @@ class Repository(private val service: WebService) {
             override fun onResponse(call: Call<Instructors>, response: Response<Instructors>) {
                 val resource = when (response.code()) {
                     200 -> {
-                        if (response.body()!!.instructors.count() != 0) {
+                        if (response.body()!!.totalCount != 0) {
                             Resource(Status.Success, response.body()!!.instructors, null, response.body()!!.totalCount)
                         } else {
                             Resource(Status.Empty, null)
@@ -110,7 +110,7 @@ class Repository(private val service: WebService) {
             override fun onResponse(call: Call<Categories>, response: Response<Categories>) {
                 val resource = when (response.code()) {
                     200 -> {
-                        if (response.body()!!.categories.count() != 0) {
+                        if (response.body()!!.totalCount != 0) {
                             Resource(Status.Success, response.body()!!.categories, null, response.body()!!.totalCount)
                         } else {
                             Resource(Status.Empty, null)

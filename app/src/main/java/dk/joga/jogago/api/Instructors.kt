@@ -5,6 +5,6 @@ import com.google.gson.annotations.SerializedName
 data class Instructors(
     val instructors: List<Instructor>,
     val page: Int,
-    @SerializedName("total_count")
+    @SerializedName("count")
     val totalCount: Int
     )
