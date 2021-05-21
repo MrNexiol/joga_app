@@ -32,8 +32,10 @@ class CategoriesFragment : Fragment() {
         recyclerView.addItemDecoration(GridSpacingItemDecoration(resources.getDimension(R.dimen.journey_list_decoration).toInt()))
 
         viewModel.categoriesWrapper.getData().observe(viewLifecycleOwner, { resource ->
-            if (resource.status == Status.Success) {
-                adapter.setData(resource.data!!)
+            when (resource.status) {
+                Status.Success -> adapter.setData(resource.data!!)
+                Status.Empty -> {}
+                else -> {}
             }
         })
 
