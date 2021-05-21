@@ -60,7 +60,7 @@ class MainActivity : AppCompatActivity() {
                 R.id.trainerDetailFragment -> {
                     likeIconVisible(false)
                 }
-                R.id.loginFragment, R.id.loginErrorFragment, R.id.popupFragment, R.id.logoutFragment -> {
+                R.id.loginFragment, R.id.loginErrorFragment, R.id.popupFragment, R.id.logoutFragment, R.id.subscriptionErrorFragment -> {
                     bottomNavVisible(false)
                     headerVisible(false)
                 }

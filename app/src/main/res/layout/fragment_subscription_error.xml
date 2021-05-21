@@ -1,6 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.subscription_error.SubscriptionErrorFragment" />
+    tools:context=".ui.subscription_error.SubscriptionErrorFragment" >
+
+    <ImageView
+        android:id="@+id/warning_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/warning_icon"
+        android:src="@drawable/warning_icon"
+        app:layout_constraintBottom_toTopOf="@+id/no_subscription_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/no_subscription_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/edit_text_style"
+        android:gravity="center"
+        android:padding="@dimen/default_app_padding"
+        android:text="@string/no_subscription_active"
+        android:textSize="@dimen/welcome_text"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/refresh_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/margin_big"
+        android:backgroundTint="@color/joga_green"
+        android:paddingLeft="@dimen/margin_big"
+        android:paddingTop="@dimen/margin_medium"
+        android:paddingRight="@dimen/margin_big"
+        android:paddingBottom="@dimen/margin_medium"
+        android:text="@string/refresh"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/no_subscription_text" />
+
+    <Button
+        android:id="@+id/no_subscription_logout_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/logout"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/refresh_button" />
+</androidx.constraintlayout.widget.ConstraintLayout>
