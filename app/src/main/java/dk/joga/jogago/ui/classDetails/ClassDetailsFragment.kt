@@ -71,7 +71,7 @@ class ClassDetailsFragment : Fragment() {
                         }
                     }
                 }
-                Status.SubscriptionEnded -> {}
+                Status.SubscriptionEnded -> (activity as MainActivity).subscriptionError()
                 else -> {}
             }
         })

@@ -14,6 +14,7 @@ import dk.joga.jogago.GridSpacingItemDecoration
 import dk.joga.jogago.R
 import dk.joga.jogago.api.Status
 import dk.joga.jogago.databinding.FragmentCategoriesBinding
+import dk.joga.jogago.ui.MainActivity
 
 class CategoriesFragment : Fragment() {
     private var _binding: FragmentCategoriesBinding? = null
@@ -35,6 +36,7 @@ class CategoriesFragment : Fragment() {
             when (resource.status) {
                 Status.Success -> adapter.setData(resource.data!!)
                 Status.Empty -> {}
+                Status.SubscriptionEnded -> (activity as MainActivity).subscriptionError()
                 else -> {}
             }
         })

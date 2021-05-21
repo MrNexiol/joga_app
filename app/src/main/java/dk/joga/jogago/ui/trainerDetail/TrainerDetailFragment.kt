@@ -59,7 +59,7 @@ class TrainerDetailFragment : Fragment() {
                     }
                 }
                 Status.Empty -> {}
-                Status.SubscriptionEnded -> {}
+                Status.SubscriptionEnded -> (activity as MainActivity).subscriptionError()
                 else -> {}
             }
         })

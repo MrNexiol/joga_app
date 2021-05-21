@@ -13,6 +13,7 @@ import com.google.firebase.analytics.ktx.logEvent
 import dk.joga.jogago.AppContainer
 import dk.joga.jogago.api.Status
 import dk.joga.jogago.databinding.FragmentLikedBinding
+import dk.joga.jogago.ui.MainActivity
 
 class LikedFragment : Fragment() {
     private var _binding: FragmentLikedBinding? = null
@@ -40,7 +41,7 @@ class LikedFragment : Fragment() {
                     }
                 }
                 Status.Empty -> {}
-                Status.SubscriptionEnded -> {}
+                Status.SubscriptionEnded -> (activity as MainActivity).subscriptionError()
                 else -> {}
             }
         })

@@ -20,6 +20,7 @@ import dk.joga.jogago.AppContainer
 import dk.joga.jogago.R
 import dk.joga.jogago.api.Status
 import dk.joga.jogago.databinding.FragmentHomeBinding
+import dk.joga.jogago.ui.MainActivity
 
 class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
@@ -63,6 +64,7 @@ class HomeFragment : Fragment() {
             when (resource.status) {
                 Status.Success -> newClassAdapter.setData(resource.data!!)
                 Status.Empty -> newClassAdapter.setData(listOf())
+                Status.SubscriptionEnded -> (activity as MainActivity).subscriptionError()
                 else -> {}
             }
         })
@@ -76,6 +78,7 @@ class HomeFragment : Fragment() {
                     likedClassAdapter.setData(listOf())
                     likedClassesSectionVisibility(false)
                 }
+                Status.SubscriptionEnded -> (activity as MainActivity).subscriptionError()
                 else -> { }
             }
         })
@@ -89,6 +92,7 @@ class HomeFragment : Fragment() {
                     journeyAdapter.setData(listOf())
                     journeySectionVisibility(false)
                 }
+                Status.SubscriptionEnded -> (activity as MainActivity).subscriptionError()
                 else -> { }
             }
         })
@@ -96,6 +100,7 @@ class HomeFragment : Fragment() {
             when (resource.status) {
                 Status.Success -> instructorAdapter.setData(resource.data!!)
                 Status.Empty -> instructorAdapter.setData(listOf())
+                Status.SubscriptionEnded -> (activity as MainActivity).subscriptionError()
                 else -> { }
             }
         })
@@ -117,6 +122,7 @@ class HomeFragment : Fragment() {
                     binding.todayPickCategory.text = resource.data.categories.joinToString()
                 }
                 Status.Empty -> todaysPickVisibility(false)
+                Status.SubscriptionEnded -> (activity as MainActivity).subscriptionError()
                 else -> {
                 }
             }
