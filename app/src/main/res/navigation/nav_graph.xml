@@ -93,7 +93,7 @@
         android:id="@+id/classesFragment"
         android:name="dk.joga.jogago.ui.categories.CategoriesFragment"
         android:label="fragment_classes"
-        tools:layout="@layout/fragment_classes" >
+        tools:layout="@layout/fragment_categories" >
         <action
             android:id="@+id/action_classesFragment_to_categoryFragment"
             app:destination="@id/categoryFragment" />

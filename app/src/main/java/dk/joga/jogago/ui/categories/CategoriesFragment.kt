@@ -13,10 +13,10 @@ import dk.joga.jogago.AppContainer
 import dk.joga.jogago.GridSpacingItemDecoration
 import dk.joga.jogago.R
 import dk.joga.jogago.api.Status
-import dk.joga.jogago.databinding.FragmentClassesBinding
+import dk.joga.jogago.databinding.FragmentCategoriesBinding
 
 class CategoriesFragment : Fragment() {
-    private var _binding: FragmentClassesBinding? = null
+    private var _binding: FragmentCategoriesBinding? = null
     private val binding get() = _binding!!
     private val viewModel: CategoriesViewModel by viewModels()
     private val adapter = CategoriesAdapter()
@@ -25,7 +25,7 @@ class CategoriesFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentClassesBinding.inflate(inflater, container, false)
+        _binding = FragmentCategoriesBinding.inflate(inflater, container, false)
         val recyclerView = binding.classesRecyclerView
         recyclerView.adapter = adapter
         recyclerView.layoutManager = GridLayoutManager(context, 2)
