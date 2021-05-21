@@ -8,35 +8,23 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class Repository(private val service: WebService) {
-    fun getWelcomePopup(): LiveData<Resource<WelcomePopup>>{
-        val data = MutableLiveData<Resource<WelcomePopup>>()
-        service.getWelcomePopup().enqueue(object : Callback<WelcomePopupResponse>{
-            override fun onResponse(call: Call<WelcomePopupResponse>, response: Response<WelcomePopupResponse>) {
-                if (response.body() != null){
-                    val resource = Resource(Status.Success, response.body()!!.welcomePopup)
-                    data.value = resource
-                } else {
-                    val resource = Resource(Status.Empty, null)
-                    data.value = resource
-                }
-            }
-            override fun onFailure(call: Call<WelcomePopupResponse>, t: Throwable) {
-                val resource = Resource(Status.Fail, null, t)
-                data.value = resource
-            }
-
-        })
-        return data
-    }
-
     fun getInstructors(): LiveData<Resource<List<Instructor>>> {
         val data = MutableLiveData<Resource<List<Instructor>>>()
         service.getInstructors().enqueue(object : Callback<Instructors>{
             override fun onResponse(call: Call<Instructors>, response: Response<Instructors>) {
-                if (response.body() != null){
-                    val resource = Resource(Status.Success, response.body()!!.instructors)
-                    data.value = resource
+                val resource = when (response.code()) {
+                    200 -> {
+                        if (response.body()!!.instructors.count() != 0) {
+                            Resource(Status.Success, response.body()!!.instructors, null, response.body()!!.totalCount)
+                        } else {
+                            Resource(Status.Empty, null)
+                        }
+                    }
+                    401 -> Resource(Status.Unauthorized, null)
+                    403 -> Resource(Status.SubscriptionEnded, null)
+                    else -> Resource(Status.Fail, null)
                 }
+                data.value = resource
             }
             override fun onFailure(call: Call<Instructors>, t: Throwable) {
                 val resource = Resource(Status.Fail, null, t)
@@ -50,10 +38,13 @@ class Repository(private val service: WebService) {
         val data = MutableLiveData<Resource<Instructor>>()
         service.getInstructor(id).enqueue(object : Callback<InstructorResponse>{
             override fun onResponse(call: Call<InstructorResponse>, response: Response<InstructorResponse>) {
-                if (response.body() != null){
-                    val resource = Resource(Status.Success, response.body()!!.instructor)
-                    data.value = resource
+                val resource = when (response.code()) {
+                    200 -> Resource(Status.Success, response.body()!!.instructor)
+                    401 -> Resource(Status.Unauthorized, null)
+                    403 -> Resource(Status.SubscriptionEnded, null)
+                    else -> Resource(Status.Fail, null)
                 }
+                data.value = resource
             }
 
             override fun onFailure(call: Call<InstructorResponse>, t: Throwable) {
@@ -69,18 +60,19 @@ class Repository(private val service: WebService) {
         val data = MutableLiveData<Resource<List<Journey>>>()
         service.getJourneys(page).enqueue(object : Callback<Journeys>{
             override fun onResponse(call: Call<Journeys>, response: Response<Journeys>) {
-                if (response.body() != null){
-                    if (response.body()!!.journeys.isNotEmpty()) {
-                        val resource = Resource(Status.Success, response.body()!!.journeys)
-                        data.value = resource
-                    } else {
-                        val resource = Resource(Status.Empty, null)
-                        data.value = resource
+                val resource = when (response.code()) {
+                    200 -> {
+                        if (response.body()!!.totalCount != 0) {
+                            Resource(Status.Success, response.body()!!.journeys, null, response.body()!!.totalCount)
+                        } else {
+                            Resource(Status.Empty, null)
+                        }
                     }
-                } else {
-                    val resource = Resource(Status.Fail, null)
-                    data.value = resource
+                    401 -> Resource(Status.Unauthorized, null)
+                    403 -> Resource(Status.SubscriptionEnded, null)
+                    else -> Resource(Status.Fail, null)
                 }
+                data.value = resource
             }
             override fun onFailure(call: Call<Journeys>, t: Throwable) {
                 val resource = Resource(Status.Fail, null, t)
@@ -94,10 +86,13 @@ class Repository(private val service: WebService) {
         val data = MutableLiveData<Resource<Journey>>()
         service.getJourney(id).enqueue(object : Callback<JourneyResponse>{
             override fun onResponse(call: Call<JourneyResponse>, response: Response<JourneyResponse>) {
-                if (response.body() != null){
-                    val resource = Resource(Status.Success, response.body()!!.journey)
-                    data.value = resource
+                val resource = when (response.code()) {
+                    200 -> Resource(Status.Success, response.body()!!.journey)
+                    401 -> Resource(Status.Unauthorized, null)
+                    403 -> Resource(Status.SubscriptionEnded, null)
+                    else -> Resource(Status.Fail, null)
                 }
+                data.value = resource
             }
 
             override fun onFailure(call: Call<JourneyResponse>, t: Throwable) {
@@ -113,13 +108,19 @@ class Repository(private val service: WebService) {
         val data = MutableLiveData<Resource<List<Category>>>()
         service.getCategories(page).enqueue(object : Callback<Categories>{
             override fun onResponse(call: Call<Categories>, response: Response<Categories>) {
-                if (response.body()!!.categories.isEmpty()){
-                    val resource = Resource(Status.Empty, listOf<Category>())
-                    data.value = resource
-                } else {
-                    val resource = Resource(Status.Success, response.body()!!.categories)
-                    data.value = resource
+                val resource = when (response.code()) {
+                    200 -> {
+                        if (response.body()!!.categories.count() != 0) {
+                            Resource(Status.Success, response.body()!!.categories, null, response.body()!!.totalCount)
+                        } else {
+                            Resource(Status.Empty, null)
+                        }
+                    }
+                    401 -> Resource(Status.Unauthorized, null)
+                    403 -> Resource(Status.SubscriptionEnded, null)
+                    else -> Resource(Status.Fail, null)
                 }
+                data.value = resource
             }
             override fun onFailure(call: Call<Categories>, t: Throwable) {
                 val resource = Resource(Status.Fail, null, t)
@@ -129,14 +130,23 @@ class Repository(private val service: WebService) {
         return data
     }
 
-    fun getCategory(id: String, page: Int = 1): LiveData<Resource<List<Class>>> {
+    fun getCategoryClasses(id: String, page: Int = 1): LiveData<Resource<List<Class>>> {
         val data = MutableLiveData<Resource<List<Class>>>()
         service.getClasses(id, page).enqueue(object : Callback<Classes>{
             override fun onResponse(call: Call<Classes>, response: Response<Classes>) {
-                if (response.body() != null){
-                    val resource = Resource(Status.Success, response.body()!!.classes, null, response.body()!!.totalCount)
-                    data.value = resource
+                val resource = when (response.code()) {
+                    200 -> {
+                        if (response.body()!!.totalCount != 0) {
+                            Resource(Status.Success, response.body()!!.classes, null, response.body()!!.totalCount)
+                        } else {
+                            Resource(Status.Empty, null)
+                        }
+                    }
+                    401 -> Resource(Status.Unauthorized, null)
+                    403 -> Resource(Status.SubscriptionEnded, null)
+                    else -> Resource(Status.Fail, null)
                 }
+                data.value = resource
             }
 
             override fun onFailure(call: Call<Classes>, t: Throwable) {
@@ -151,15 +161,19 @@ class Repository(private val service: WebService) {
         val data = MutableLiveData<Resource<List<Class>>>()
         service.getNewClasses().enqueue(object : Callback<Classes>{
             override fun onResponse(call: Call<Classes>, response: Response<Classes>) {
-                if (response.body() != null){
-                    if (response.body()!!.classes.isEmpty()){
-                        val resource = Resource(Status.Empty, listOf<Class>())
-                        data.value = resource
-                    } else {
-                        val resource = Resource(Status.Success, response.body()!!.classes)
-                        data.value = resource
+                val resource = when (response.code()) {
+                    200 -> {
+                        if (response.body()!!.totalCount != 0) {
+                            Resource(Status.Success, response.body()!!.classes, null, response.body()!!.totalCount)
+                        } else {
+                            Resource(Status.Empty, null)
+                        }
                     }
+                    401 -> Resource(Status.Unauthorized, null)
+                    403 -> Resource(Status.SubscriptionEnded, null)
+                    else -> Resource(Status.Fail, null)
                 }
+                data.value = resource
             }
 
             override fun onFailure(call: Call<Classes>, t: Throwable) {
@@ -175,15 +189,19 @@ class Repository(private val service: WebService) {
         val data = MutableLiveData<Resource<List<Class>>>()
         service.getLikedClasses(page).enqueue(object : Callback<Classes>{
             override fun onResponse(call: Call<Classes>, response: Response<Classes>) {
-                if (response.body() != null){
-                    if (response.body()!!.classes.isEmpty()){
-                        val resource = Resource(Status.Empty, listOf<Class>())
-                        data.value = resource
-                    } else {
-                        val resource = Resource(Status.Success, response.body()!!.classes, null, response.body()!!.totalCount)
-                        data.value = resource
+                val resource = when (response.code()) {
+                    200 -> {
+                        if (response.body()!!.totalCount != 0) {
+                            Resource(Status.Success, response.body()!!.classes, null, response.body()!!.totalCount)
+                        } else {
+                            Resource(Status.Empty, null)
+                        }
                     }
+                    401 -> Resource(Status.Unauthorized, null)
+                    403 -> Resource(Status.SubscriptionEnded, null)
+                    else -> Resource(Status.Fail, null)
                 }
+                data.value = resource
             }
 
             override fun onFailure(call: Call<Classes>, t: Throwable) {
@@ -199,10 +217,19 @@ class Repository(private val service: WebService) {
         val data = MutableLiveData<Resource<List<Class>>>()
         service.getInstructorClasses(instructorId, page).enqueue(object : Callback<Classes>{
             override fun onResponse(call: Call<Classes>, response: Response<Classes>) {
-                if (response.body() != null){
-                    val resource = Resource(Status.Success, response.body()!!.classes, null, response.body()!!.totalCount)
-                    data.value = resource
+                val resource = when (response.code()) {
+                    200 -> {
+                        if (response.body()!!.totalCount != 0) {
+                            Resource(Status.Success, response.body()!!.classes, null, response.body()!!.totalCount)
+                        } else {
+                            Resource(Status.Empty, null)
+                        }
+                    }
+                    401 -> Resource(Status.Unauthorized, null)
+                    403 -> Resource(Status.SubscriptionEnded, null)
+                    else -> Resource(Status.Fail, null)
                 }
+                data.value = resource
             }
 
             override fun onFailure(call: Call<Classes>, t: Throwable) {
@@ -218,13 +245,13 @@ class Repository(private val service: WebService) {
         val data = MutableLiveData<Resource<Class>>()
         service.getDailyClass().enqueue(object : Callback<ClassResponse>{
             override fun onResponse(call: Call<ClassResponse>, response: Response<ClassResponse>) {
-                if (response.body() != null){
-                    val resource = Resource(Status.Success, response.body()!!.lecture)
-                    data.value = resource
-                } else {
-                    val resource = Resource(Status.Fail, null)
-                    data.value = resource
+                val resource = when (response.code()) {
+                    200 -> Resource(Status.Success, response.body()!!.lecture)
+                    401 -> Resource(Status.Unauthorized, null)
+                    403 -> Resource(Status.SubscriptionEnded, null)
+                    else -> Resource(Status.Fail, null)
                 }
+                data.value = resource
             }
 
             override fun onFailure(call: Call<ClassResponse>, t: Throwable) {
@@ -239,13 +266,13 @@ class Repository(private val service: WebService) {
         val data = MutableLiveData<Resource<Class>>()
         service.getClass(id).enqueue(object : Callback<ClassResponse>{
             override fun onResponse(call: Call<ClassResponse>, response: Response<ClassResponse>) {
-                if (response.body() != null){
-                    val resource = Resource(Status.Success, response.body()!!.lecture)
-                    data.value = resource
-                } else {
-                    val resource = Resource(Status.Fail, null)
-                    data.value = resource
+                val resource = when (response.code()) {
+                    200 -> Resource(Status.Success, response.body()!!.lecture)
+                    401 -> Resource(Status.Unauthorized, null)
+                    403 -> Resource(Status.SubscriptionEnded, null)
+                    else -> Resource(Status.Fail, null)
                 }
+                data.value = resource
             }
 
             override fun onFailure(call: Call<ClassResponse>, t: Throwable) {
@@ -260,13 +287,13 @@ class Repository(private val service: WebService) {
         val data = MutableLiveData<Resource<Login>>()
         service.login(username, password).enqueue(object : Callback<Login>{
             override fun onResponse(call: Call<Login>, response: Response<Login>) {
-                if (response.body() != null){
-                    val resource = Resource(Status.Success, response.body())
-                    data.value = resource
-                } else {
-                    val resource = Resource(Status.Fail, response.body())
-                    data.value = resource
+                val resource = when (response.code()) {
+                    201 -> Resource(Status.Success, response.body()!!)
+                    401 -> Resource(Status.Unauthorized, null)
+                    403 -> Resource(Status.SubscriptionEnded, null)
+                    else -> Resource(Status.Fail, null)
                 }
+                data.value = resource
             }
             override fun onFailure(call: Call<Login>, t: Throwable) {
                 val resource = Resource(Status.Fail, null, t)
@@ -280,10 +307,13 @@ class Repository(private val service: WebService) {
         val data = MutableLiveData<Resource<Void>>()
         service.toggleLike(id).enqueue(object : Callback<Void>{
             override fun onResponse(call: Call<Void>, response: Response<Void>) {
-                if (response.code() == 200){
-                    val resource = Resource(Status.Success, response.body())
-                    data.value = resource
+                val resource = when (response.code()) {
+                    201 -> Resource(Status.Success, response.body()!!)
+                    401 -> Resource(Status.Unauthorized, null)
+                    403 -> Resource(Status.SubscriptionEnded, null)
+                    else -> Resource(Status.Fail, null)
                 }
+                data.value = resource
             }
 
             override fun onFailure(call: Call<Void>, t: Throwable) {
@@ -298,13 +328,13 @@ class Repository(private val service: WebService) {
         val data = MutableLiveData<Resource<Void>>()
         service.markClassAsWatched(classId).enqueue(object : Callback<Void>{
             override fun onResponse(call: Call<Void>, response: Response<Void>) {
-                if (response.code() == 201){
-                    val resource = Resource(Status.Success, response.body())
-                    data.value = resource
-                } else {
-                    val resource = Resource(Status.Fail, response.body())
-                    data.value = resource
+                val resource = when (response.code()) {
+                    201 -> Resource(Status.Success, response.body()!!)
+                    401 -> Resource(Status.Unauthorized, null)
+                    403 -> Resource(Status.SubscriptionEnded, null)
+                    else -> Resource(Status.Fail, null)
                 }
+                data.value = resource
             }
 
             override fun onFailure(call: Call<Void>, t: Throwable) {
@@ -320,10 +350,13 @@ class Repository(private val service: WebService) {
         val data = MutableLiveData<Resource<Void>>()
         service.logout().enqueue(object : Callback<Void>{
             override fun onResponse(call: Call<Void>, response: Response<Void>) {
-                if (response.code() == 200){
-                    val resource = Resource(Status.Success, response.body())
-                    data.value = resource
+                val resource = when (response.code()) {
+                    200 -> Resource(Status.Success, response.body()!!)
+                    401 -> Resource(Status.Unauthorized, null)
+                    403 -> Resource(Status.SubscriptionEnded, null)
+                    else -> Resource(Status.Fail, null)
                 }
+                data.value = resource
             }
 
             override fun onFailure(call: Call<Void>, t: Throwable) {
@@ -333,4 +366,25 @@ class Repository(private val service: WebService) {
         })
         return data
     }
+
+//    fun getWelcomePopup(): LiveData<Resource<WelcomePopup>>{
+//        val data = MutableLiveData<Resource<WelcomePopup>>()
+//        service.getWelcomePopup().enqueue(object : Callback<WelcomePopupResponse>{
+//            override fun onResponse(call: Call<WelcomePopupResponse>, response: Response<WelcomePopupResponse>) {
+//                if (response.body() != null){
+//                    val resource = Resource(Status.Success, response.body()!!.welcomePopup)
+//                    data.value = resource
+//                } else {
+//                    val resource = Resource(Status.Empty, null)
+//                    data.value = resource
+//                }
+//            }
+//            override fun onFailure(call: Call<WelcomePopupResponse>, t: Throwable) {
+//                val resource = Resource(Status.Fail, null, t)
+//                data.value = resource
+//            }
+//
+//        })
+//        return data
+//    }
 }

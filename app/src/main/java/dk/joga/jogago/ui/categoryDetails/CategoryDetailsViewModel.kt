@@ -12,7 +12,7 @@ class CategoryDetailsViewModel(id: String) : ViewModel() {
     var isLoading = false
     val categoryClassesWrapper = object : RefreshableSource<List<Class>>() {
         override fun provideLiveData(): LiveData<Resource<List<Class>>> {
-            return AppContainer.repository.getCategory(id, page)
+            return AppContainer.repository.getCategoryClasses(id, page)
         }
     }
 

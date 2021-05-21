@@ -7,5 +7,5 @@ import dk.joga.jogago.api.Resource
 import dk.joga.jogago.api.WelcomePopup
 
 class PopupViewModel(repository: Repository) : ViewModel() {
-    val welcomePopup: LiveData<Resource<WelcomePopup>> = repository.getWelcomePopup()
+//    val welcomePopup: LiveData<Resource<WelcomePopup>> = repository.getWelcomePopup()
 }
