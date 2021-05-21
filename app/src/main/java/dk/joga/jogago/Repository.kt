@@ -351,7 +351,7 @@ class Repository(private val service: WebService) {
         service.logout().enqueue(object : Callback<Void>{
             override fun onResponse(call: Call<Void>, response: Response<Void>) {
                 val resource = when (response.code()) {
-                    200 -> Resource(Status.Success, response.body()!!)
+                    200 -> Resource(Status.Success, response.body())
                     401 -> Resource(Status.Unauthorized, null)
                     403 -> Resource(Status.SubscriptionEnded, null)
                     else -> Resource(Status.Fail, null)
