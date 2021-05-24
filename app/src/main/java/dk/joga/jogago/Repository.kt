@@ -289,13 +289,6 @@ class Repository(private val service: WebService) {
             override fun onResponse(call: Call<Login>, response: Response<Login>) {
                 val resource = when (response.code()) {
                     201 -> Resource(Status.Success, response.body()!!)
-                    401 -> {
-                        if (response.errorBody() != null && response.errorBody()!!.string().contains("Inactive subscription.")) {
-                            Resource(Status.SubscriptionEnded, null)
-                        } else {
-                            Resource(Status.Fail, null)
-                        }
-                    }
                     else -> Resource(Status.Fail, null)
                 }
                 data.value = resource

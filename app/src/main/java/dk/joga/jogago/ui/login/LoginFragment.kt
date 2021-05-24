@@ -35,8 +35,10 @@ class LoginFragment : Fragment() {
         binding.loginButton.setOnClickListener {
             val username = binding.usernameEditText.text.toString()
             val password = binding.passwordEditText.text.toString()
+
             val imm: InputMethodManager = requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
             imm.hideSoftInputFromWindow(view.windowToken, 0)
+
             AppContainer.repository.login(username, password).observe(viewLifecycleOwner, { resource ->
                 when (resource.status) {
                     Status.Success -> {
@@ -47,10 +49,6 @@ class LoginFragment : Fragment() {
                             this?.commit()
                         }
                         navigateToHome()
-                    }
-                    Status.SubscriptionEnded -> {
-                        findNavController().navigate(R.id.action_global_subscriptionErrorFragment)
-                        //add flag to hide buttons
                     }
                     else -> {
                         val action = LoginFragmentDirections.actionLoginFragmentToLoginErrorFragment()
