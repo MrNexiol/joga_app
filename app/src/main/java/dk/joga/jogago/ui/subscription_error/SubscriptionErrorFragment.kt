@@ -28,8 +28,8 @@ class SubscriptionErrorFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding.refreshButton.setOnClickListener {
-            val username = sharedPrefs.getString(getString(R.string.username), null)
-            val password = sharedPrefs.getString(getString(R.string.password), null)
+            val username = sharedPrefs.getString(getString(R.string.saved_username), null)
+            val password = sharedPrefs.getString(getString(R.string.saved_password), null)
             if (username != null && password != null) {
                 AppContainer.repository.login(username, password).observe(viewLifecycleOwner, { resource ->
                     when (resource.status) {
@@ -41,7 +41,7 @@ class SubscriptionErrorFragment : Fragment() {
                             }
                             findNavController().navigate(R.id.action_global_homeFragment)
                         }
-                        Status.Unauthorized -> Toast.makeText(context, R.string.no_subscription_active, Toast.LENGTH_LONG).show()
+                        Status.SubscriptionEnded -> Toast.makeText(context, R.string.no_subscription_active, Toast.LENGTH_LONG).show()
                         else -> Toast.makeText(context, R.string.connection_error, Toast.LENGTH_LONG).show()
                     }
                 })
