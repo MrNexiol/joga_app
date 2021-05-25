@@ -39,10 +39,12 @@
     <string name="no_subscription_active" translatable="false">You don\'t have active subscription, please buy one in web panel</string>
     <string name="refresh" translatable="false">Refresh now</string>
     <string name="connection_error" translatable="false">Connection error. Try again later.</string>
+    <string name="sub_login_error" translatable="false">Connection error. Logout and try again.</string>
 
     <string name="saved_token_key" translatable="false">saved_token_key</string>
     <string name="saved_user_id" translatable="false">saved_user_id</string>
     <string name="saved_username" translatable="false">saved_username</string>
+    <string name="saved_password" translatable="false">saved_password</string>
     <string name="was_seen" translatable="false">was_seen</string>
     <string name="X" translatable="false">X</string>
     <string name="clock_icon" translatable="false">Clock icon</string>
