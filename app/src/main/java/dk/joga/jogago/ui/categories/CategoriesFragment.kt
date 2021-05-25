@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import com.google.firebase.analytics.FirebaseAnalytics
@@ -35,9 +36,9 @@ class CategoriesFragment : Fragment() {
         viewModel.categoriesWrapper.getData().observe(viewLifecycleOwner, { resource ->
             when (resource.status) {
                 Status.Success -> adapter.setData(resource.data!!)
-                Status.Empty -> {}
+                Status.Empty -> adapter.setData(listOf())
                 Status.SubscriptionEnded -> (activity as MainActivity).subscriptionError()
-                else -> {}
+                else -> Toast.makeText(context, R.string.connection_error, Toast.LENGTH_LONG).show()
             }
         })
 

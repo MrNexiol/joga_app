@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.logEvent
@@ -44,6 +45,8 @@ class LogoutFragment : Fragment() {
                         this?.apply()
                     }
                     findNavController().navigate(R.id.action_global_loginFragment)
+                } else {
+                    Toast.makeText(context, R.string.connection_error, Toast.LENGTH_LONG).show()
                 }
             })
         }

@@ -38,6 +38,7 @@
     <string name="watched">Watched!</string>
     <string name="no_subscription_active" translatable="false">You don\'t have active subscription, please buy one in web panel</string>
     <string name="refresh" translatable="false">Refresh now</string>
+    <string name="connection_error" translatable="false">Connection error. Try again later.</string>
 
     <string name="saved_token_key" translatable="false">saved_token_key</string>
     <string name="saved_user_id" translatable="false">saved_user_id</string>

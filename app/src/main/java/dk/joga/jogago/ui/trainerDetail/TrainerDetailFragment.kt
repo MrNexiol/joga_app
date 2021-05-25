@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -60,7 +61,7 @@ class TrainerDetailFragment : Fragment() {
                 }
                 Status.Empty -> {}
                 Status.SubscriptionEnded -> (activity as MainActivity).subscriptionError()
-                else -> {}
+                else -> Toast.makeText(context, R.string.connection_error, Toast.LENGTH_LONG).show()
             }
         })
         viewModel.instructorClassesWrapper.getData().observe(viewLifecycleOwner, { resource ->
