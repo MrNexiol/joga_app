@@ -22,6 +22,7 @@ class LikedFragment : Fragment() {
     private val binding get() = _binding!!
     private val viewModel: LikedViewModel by viewModels()
     private val adapter = LikedAdapter()
+    private var itemsCount = 0
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -32,17 +33,20 @@ class LikedFragment : Fragment() {
         viewModel.likedClassesWrapper.getData().observe(viewLifecycleOwner, { resource ->
             when (resource.status) {
                 Status.Success -> {
-                    viewModel.isMore = viewModel.itemsCount + resource.data!!.size != resource.totalCount
+                    if (itemsCount + resource.data!!.size == resource.totalCount) {
+                        viewModel.isMore = false
+                    }
+
                     if (viewModel.isLoading) {
                         adapter.addData(resource.data, viewModel.isMore)
-                        viewModel.itemsCount += resource.data.count()
+                        itemsCount += resource.data.size
                         viewModel.isLoading = false
                     } else {
                         adapter.setData(resource.data, viewModel.isMore)
-                        viewModel.itemsCount = resource.data.count()
+                        itemsCount = resource.data.size
                     }
                 }
-                Status.Empty -> {}
+                Status.Empty -> adapter.setData(listOf(), false)
                 Status.SubscriptionEnded -> (activity as MainActivity).subscriptionError()
                 else -> Toast.makeText(context, R.string.connection_error, Toast.LENGTH_LONG).show()
             }
@@ -65,10 +69,7 @@ class LikedFragment : Fragment() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
                 val layoutManager: LinearLayoutManager = recyclerView.layoutManager as LinearLayoutManager
-                if (layoutManager.findLastVisibleItemPosition() >= viewModel.itemsCount - 1 && viewModel.isMore) {
-                    if (dy == 0) {
-                        viewModel.isLoading = true
-                    }
+                if (layoutManager.findLastVisibleItemPosition() >= itemsCount - 1 && viewModel.isMore) {
                     viewModel.changePageNumber()
                 }
             }

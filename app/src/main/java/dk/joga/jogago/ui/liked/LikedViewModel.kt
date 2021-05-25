@@ -8,7 +8,6 @@ import dk.joga.jogago.api.RefreshableSource
 import dk.joga.jogago.api.Resource
 
 class LikedViewModel : ViewModel() {
-    var itemsCount = 0
     var isMore = true
     var isLoading = false
     val likedClassesWrapper = object : RefreshableSource<List<Class>>() {
@@ -18,22 +17,24 @@ class LikedViewModel : ViewModel() {
     }
 
     init {
-        refreshLikedClasses()
+        refreshData()
     }
 
-    private fun refreshLikedClasses() {
+    private fun refreshData() {
         likedClassesWrapper.refresh()
     }
 
     fun changePageNumber() {
-        likedClassesWrapper.page++
-        isLoading = true
-        refreshLikedClasses()
+        if (!isLoading) {
+            likedClassesWrapper.page++
+            isLoading = true
+            refreshData()
+        }
     }
 
     fun resetData() {
         likedClassesWrapper.page = 1
-        itemsCount = 0
-        refreshLikedClasses()
+        isMore = true
+        refreshData()
     }
 }
