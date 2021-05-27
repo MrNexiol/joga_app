@@ -96,6 +96,8 @@ class TrainerDetailFragment : Fragment() {
         }
 
         val fullscreen: ImageView = view.findViewById(R.id.exo_fullscreen)
+        val playButton: ImageView = view.findViewById(R.id.exo_play)
+        val pauseButton: ImageView = view.findViewById(R.id.exo_pause)
         val durationTextView: TextView = view.findViewById(R.id.exo_duration)
         fullscreen.visibility = View.GONE
         durationTextView.setPaddingRelative(0,0,resources.getDimensionPixelSize(R.dimen.margin_small),0)
@@ -103,6 +105,14 @@ class TrainerDetailFragment : Fragment() {
         binding.root.setOnRefreshListener {
             viewModel.resetData()
             binding.root.isRefreshing = false
+        }
+        pauseButton.setOnClickListener {
+            viewModel.stopVideo()
+            (activity as MainActivity).allowScreenLocking()
+        }
+        playButton.setOnClickListener {
+            viewModel.playVideo()
+            (activity as MainActivity).preventScreenLocking()
         }
 
         val recyclerView = binding.instructorClassesRecyclerView

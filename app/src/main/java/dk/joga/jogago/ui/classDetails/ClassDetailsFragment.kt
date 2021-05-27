@@ -91,6 +91,8 @@ class ClassDetailsFragment : Fragment() {
         }
 
         val fullscreen: ImageView = view.findViewById(R.id.exo_fullscreen)
+        val playButton: ImageView = view.findViewById(R.id.exo_play)
+        val pauseButton: ImageView = view.findViewById(R.id.exo_pause)
         fullscreen.setOnClickListener {
             if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
                 requireActivity().requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
@@ -101,6 +103,14 @@ class ClassDetailsFragment : Fragment() {
                     requireActivity().requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_FULL_SENSOR
                 }
             }
+        }
+        pauseButton.setOnClickListener {
+            viewModel.stopVideo()
+            (activity as MainActivity).allowScreenLocking()
+        }
+        playButton.setOnClickListener {
+            viewModel.showVideo()
+            (activity as MainActivity).preventScreenLocking()
         }
     }
 
