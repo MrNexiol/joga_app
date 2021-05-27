@@ -128,6 +128,11 @@ class TrainerDetailFragment : Fragment() {
             startVideo()
             viewModel.wasPlayingOnStop = false
         }
+        if (viewModel.isPlaying()) {
+            (activity as MainActivity).preventScreenLocking()
+        } else {
+            (activity as MainActivity).allowScreenLocking()
+        }
         AppContainer.firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SCREEN_VIEW) {
             param(FirebaseAnalytics.Param.SCREEN_NAME, "trainer_classes")
             param(FirebaseAnalytics.Param.SCREEN_CLASS, "TrainerDetailsFragment")
@@ -144,6 +149,7 @@ class TrainerDetailFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
+        (activity as MainActivity).allowScreenLocking()
         _binding = null
     }
 
@@ -156,5 +162,6 @@ class TrainerDetailFragment : Fragment() {
         showVideoControls()
         viewModel.playVideo()
         viewModel.startedVideo = true
+        (activity as MainActivity).preventScreenLocking()
     }
 }
