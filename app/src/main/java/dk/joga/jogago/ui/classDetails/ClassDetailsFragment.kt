@@ -110,6 +110,11 @@ class ClassDetailsFragment : Fragment() {
             viewModel.showVideo()
             viewModel.wasPlayingDuringStop = false
         }
+        if (viewModel.isPlaying()) {
+            (activity as MainActivity).preventScreenLocking()
+        } else {
+            (activity as MainActivity).allowScreenLocking()
+        }
         AppContainer.firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SCREEN_VIEW) {
             param(FirebaseAnalytics.Param.SCREEN_NAME, "class_details")
             param(FirebaseAnalytics.Param.SCREEN_CLASS, "ClassDetailsFragment")
@@ -128,6 +133,7 @@ class ClassDetailsFragment : Fragment() {
         super.onDestroyView()
         (requireActivity() as MainActivity).setLikeIcon(false)
         (requireActivity() as MainActivity).setClassId("")
+        (activity as MainActivity).allowScreenLocking()
         _binding = null
     }
 
@@ -135,6 +141,7 @@ class ClassDetailsFragment : Fragment() {
         showVideoControls()
         viewModel.showVideo()
         viewModel.startedVideo = true
+        (activity as MainActivity).preventScreenLocking()
         viewModel.classCategories.forEach {
             AppContainer.firebaseAnalytics.logEvent("category_watched") {
                 param("category_name", it.name)
