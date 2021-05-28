@@ -15,7 +15,7 @@ android {
         applicationId "dk.joga.jogago"
         minSdkVersion 21
         targetSdkVersion 30
-        versionCode 26
+        versionCode 27
         versionName "1.0.5"
         multiDexEnabled true
 
