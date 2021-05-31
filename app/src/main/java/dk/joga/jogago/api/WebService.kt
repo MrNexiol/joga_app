@@ -43,6 +43,9 @@ interface WebService {
     @POST("sessions")
     fun login(@Query("username") username: String, @Query("password") password: String): Call<Login>
 
+    @POST("sessions/extend")
+    fun relogin(@Query("token") token: String, @Query("refresh_token") refreshToken: String): Call<Login>
+
     @POST("like/{id}")
     fun toggleLike(@Path("id") id: String): Call<Void>
 
