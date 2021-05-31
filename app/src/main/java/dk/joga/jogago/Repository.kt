@@ -312,6 +312,25 @@ class Repository(private val service: WebService) {
         return data
     }
 
+    fun relogin(token: String, refreshToken: String): LiveData<Resource<Login>>{
+        val data = MutableLiveData<Resource<Login>>()
+        service.login(token, refreshToken).enqueue(object : Callback<Login>{
+            override fun onResponse(call: Call<Login>, response: Response<Login>) {
+                val resource = when (response.code()) {
+                    201 -> Resource(Status.Success, response.body()!!)
+                    401 -> Resource(Status.Unauthorized, null)
+                    else -> Resource(Status.Fail, null)
+                }
+                data.value = resource
+            }
+            override fun onFailure(call: Call<Login>, t: Throwable) {
+                val resource = Resource(Status.Fail, null, t)
+                data.value = resource
+            }
+        })
+        return data
+    }
+
     fun toggleClassLike(id: String): LiveData<Resource<Void>>{
         val data = MutableLiveData<Resource<Void>>()
         service.toggleLike(id).enqueue(object : Callback<Void>{
