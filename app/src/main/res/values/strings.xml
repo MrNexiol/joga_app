@@ -36,10 +36,15 @@
     <string name="play">Play</string>
     <string name="focus">focus: </string>
     <string name="watched">Watched!</string>
+    <string name="no_subscription_active" translatable="false">You don\'t have active subscription, please buy one in web panel</string>
+    <string name="refresh" translatable="false">Refresh now</string>
+    <string name="connection_error" translatable="false">Connection error. Try again later.</string>
+    <string name="sub_login_error" translatable="false">Connection error. Logout and try again.</string>
 
     <string name="saved_token_key" translatable="false">saved_token_key</string>
     <string name="saved_user_id" translatable="false">saved_user_id</string>
     <string name="saved_username" translatable="false">saved_username</string>
+    <string name="saved_password" translatable="false">saved_password</string>
     <string name="was_seen" translatable="false">was_seen</string>
     <string name="X" translatable="false">X</string>
     <string name="clock_icon" translatable="false">Clock icon</string>
@@ -52,6 +57,7 @@
     <string name="journeys_icon" translatable="false">Journeys icon</string>
     <string name="tv_share_icon" translatable="false">TV share icon</string>
     <string name="new_indicator_icon" translatable="false">New class icon</string>
+    <string name="warning_icon" translatable="false">Warning icon</string>
     <string name="instructor_avatar" translatable="false">Instructor avatar</string>
     <string name="preferences_name" translatable="false">preferences</string>
     <string name="exo_rewind" translatable="false">Rewind</string>

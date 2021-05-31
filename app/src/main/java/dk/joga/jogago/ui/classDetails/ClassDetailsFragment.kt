@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.provider.Settings
 import android.view.*
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -44,31 +45,35 @@ class ClassDetailsFragment : Fragment() {
         }
 
         viewModel.classWrapper.getData().observe(viewLifecycleOwner, { resource ->
-            if (resource.status == Status.Success) {
-                (requireActivity() as MainActivity).changeScreenTitle(resource.data!!.title)
-                (requireActivity() as MainActivity).setClassId(resource.data.id)
-                viewModel.classCategories = resource.data.categories
-                viewModel.classDuration = resource.data.duration
-                @Suppress("SENSELESS_COMPARISON")
-                if (resource.data.userLike.classId != null) {
-                    (requireActivity() as MainActivity).setLikeIcon(true)
-                }
-                viewModel.initializePlayerManager(binding.videoView, CastContext.getSharedInstance(requireActivity()), resource.data.videoUrl, resource.data.title)
-                if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
-                    Glide.with(this)
+            when (resource.status) {
+                Status.Success -> {
+                    (requireActivity() as MainActivity).changeScreenTitle(resource.data!!.title)
+                    (requireActivity() as MainActivity).setClassId(resource.data.id)
+                    viewModel.classCategories = resource.data.categories
+                    viewModel.classDuration = resource.data.duration
+                    @Suppress("SENSELESS_COMPARISON")
+                    if (resource.data.userLike.classId != null) {
+                        (requireActivity() as MainActivity).setLikeIcon(true)
+                    }
+                    viewModel.initializePlayerManager(binding.videoView, CastContext.getSharedInstance(requireActivity()), resource.data.videoUrl, resource.data.title)
+                    if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
+                        Glide.with(this)
                             .load(resource.data.thumbnailUrl)
                             .fallback(R.drawable.placeholder_image)
                             .transition(DrawableTransitionOptions.withCrossFade())
                             .into(binding.classThumbnail!!)
-                    binding.classTitleDuration!!.text = getString(R.string.title_duration, resource.data.title, resource.data.duration)
-                    binding.classDescription!!.text = resource.data.description
-                    Glide.with(this).load(resource.data.instructor.avatar_url).fallback(R.drawable.trainer_placeholder_icon).into(binding.classInstructorAvatar!!)
-                    binding.classInstructorName!!.text = resource.data.instructor.name
-                    binding.classInstructorRoot!!.setOnClickListener {
-                        val action = ClassDetailsFragmentDirections.actionClassDetailsFragmentToTrainerDetailFragment(resource.data.instructor.id)
-                        findNavController().navigate(action)
+                        binding.classTitleDuration!!.text = getString(R.string.title_duration, resource.data.title, resource.data.duration)
+                        binding.classDescription!!.text = resource.data.description
+                        Glide.with(this).load(resource.data.instructor.avatar_url).fallback(R.drawable.trainer_placeholder_icon).into(binding.classInstructorAvatar!!)
+                        binding.classInstructorName!!.text = resource.data.instructor.name
+                        binding.classInstructorRoot!!.setOnClickListener {
+                            val action = ClassDetailsFragmentDirections.actionClassDetailsFragmentToTrainerDetailFragment(resource.data.instructor.id)
+                            findNavController().navigate(action)
+                        }
                     }
                 }
+                Status.SubscriptionEnded -> (activity as MainActivity).subscriptionError()
+                else -> Toast.makeText(context, R.string.connection_error, Toast.LENGTH_LONG).show()
             }
         })
 
@@ -86,6 +91,8 @@ class ClassDetailsFragment : Fragment() {
         }
 
         val fullscreen: ImageView = view.findViewById(R.id.exo_fullscreen)
+        val playButton: ImageView = view.findViewById(R.id.exo_play)
+        val pauseButton: ImageView = view.findViewById(R.id.exo_pause)
         fullscreen.setOnClickListener {
             if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
                 requireActivity().requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
@@ -97,6 +104,14 @@ class ClassDetailsFragment : Fragment() {
                 }
             }
         }
+        pauseButton.setOnClickListener {
+            viewModel.stopVideo()
+            (activity as MainActivity).allowScreenLocking()
+        }
+        playButton.setOnClickListener {
+            viewModel.showVideo()
+            (activity as MainActivity).preventScreenLocking()
+        }
     }
 
     override fun onResume() {
@@ -104,6 +119,11 @@ class ClassDetailsFragment : Fragment() {
         if (viewModel.wasPlayingDuringStop) {
             viewModel.showVideo()
             viewModel.wasPlayingDuringStop = false
+        }
+        if (viewModel.isPlaying()) {
+            (activity as MainActivity).preventScreenLocking()
+        } else {
+            (activity as MainActivity).allowScreenLocking()
         }
         AppContainer.firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SCREEN_VIEW) {
             param(FirebaseAnalytics.Param.SCREEN_NAME, "class_details")
@@ -123,6 +143,7 @@ class ClassDetailsFragment : Fragment() {
         super.onDestroyView()
         (requireActivity() as MainActivity).setLikeIcon(false)
         (requireActivity() as MainActivity).setClassId("")
+        (activity as MainActivity).allowScreenLocking()
         _binding = null
     }
 
@@ -130,6 +151,7 @@ class ClassDetailsFragment : Fragment() {
         showVideoControls()
         viewModel.showVideo()
         viewModel.startedVideo = true
+        (activity as MainActivity).preventScreenLocking()
         viewModel.classCategories.forEach {
             AppContainer.firebaseAnalytics.logEvent("category_watched") {
                 param("category_name", it.name)

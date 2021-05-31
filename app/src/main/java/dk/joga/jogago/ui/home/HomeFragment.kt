@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -14,13 +15,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
-import com.google.android.gms.cast.framework.CastButtonFactory
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.logEvent
 import dk.joga.jogago.AppContainer
 import dk.joga.jogago.R
 import dk.joga.jogago.api.Status
 import dk.joga.jogago.databinding.FragmentHomeBinding
+import dk.joga.jogago.ui.MainActivity
 
 class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
@@ -42,8 +43,7 @@ class HomeFragment : Fragment() {
         sharedPreferences = requireActivity().getSharedPreferences(getString(R.string.preferences_name), Context.MODE_PRIVATE)
         val token = sharedPreferences.getString(getString(R.string.saved_token_key), null)
         if (token == null){
-            val action = HomeFragmentDirections.actionHomeFragmentToLoginFragment()
-            findNavController().navigate(action)
+            findNavController().navigate(R.id.action_global_loginFragment)
         } else {
             AppContainer.firebaseAnalytics.setUserId(sharedPreferences.getString(getString(R.string.saved_user_id), ""))
         }
@@ -61,54 +61,70 @@ class HomeFragment : Fragment() {
         setInstructorRecyclerView()
 
         viewModel.newClassesWrapper.getData().observe(viewLifecycleOwner, { resource ->
-            if (resource.status == Status.Success){
-                newClassAdapter.setData(resource.data!!)
-            } else if (resource.status == Status.Empty){
-                newClassAdapter.setData(listOf())
+            when (resource.status) {
+                Status.Success -> newClassAdapter.setData(resource.data!!)
+                Status.Empty -> newClassAdapter.setData(listOf())
+                Status.SubscriptionEnded -> (activity as MainActivity).subscriptionError()
+                else -> Toast.makeText(context, R.string.connection_error, Toast.LENGTH_LONG).show()
             }
         })
         viewModel.likedClassesWrapper.getData().observe(viewLifecycleOwner, { resource ->
-            if (resource.status == Status.Success){
-                likedClassAdapter.setData(resource.data!!.take(3))
-                likedClassesSectionVisibility(true)
-            } else {
-                likedClassAdapter.setData(listOf())
-                likedClassesSectionVisibility(false)
+            when (resource.status) {
+                Status.Success -> {
+                    likedClassAdapter.setData(resource.data!!.take(3))
+                    likedClassesSectionVisibility(true)
+                }
+                Status.Empty -> {
+                    likedClassAdapter.setData(listOf())
+                    likedClassesSectionVisibility(false)
+                }
+                Status.SubscriptionEnded -> (activity as MainActivity).subscriptionError()
+                else -> { }
             }
         })
         viewModel.journeysWrapper.getData().observe(viewLifecycleOwner, { resource ->
-            if (resource.status == Status.Success){
-                journeyAdapter.setData(resource.data!!)
-                journeySectionVisibility(true)
-            } else if (resource.status == Status.Empty){
-                journeyAdapter.setData(listOf())
-                journeySectionVisibility(false)
+            when (resource.status) {
+                Status.Success -> {
+                    journeyAdapter.setData(resource.data!!.take(3))
+                    journeySectionVisibility(true)
+                }
+                Status.Empty -> {
+                    journeyAdapter.setData(listOf())
+                    journeySectionVisibility(false)
+                }
+                Status.SubscriptionEnded -> (activity as MainActivity).subscriptionError()
+                else -> { }
             }
         })
         viewModel.instructorsWrapper.getData().observe(viewLifecycleOwner, { resource ->
-            if (resource.status == Status.Success){
-                instructorAdapter.setData(resource.data!!)
-            } else if (resource.status == Status.Empty){
-                instructorAdapter.setData(listOf())
+            when (resource.status) {
+                Status.Success -> instructorAdapter.setData(resource.data!!)
+                Status.Empty -> instructorAdapter.setData(listOf())
+                Status.SubscriptionEnded -> (activity as MainActivity).subscriptionError()
+                else -> { }
             }
         })
         viewModel.dailyClassWrapper.getData().observe(viewLifecycleOwner, { resource ->
-            if (resource.status == Status.Success) {
-                todaysPickVisibility(true)
-                dailyClassId = resource.data!!.id
-                Glide.with(this)
+            when (resource.status) {
+                Status.Success -> {
+                    todaysPickVisibility(true)
+                    dailyClassId = resource.data!!.id
+                    Glide.with(this)
                         .load(resource.data.thumbnailUrl)
                         .fallback(R.drawable.placeholder_image)
                         .transform(RoundedCorners(resources.getDimensionPixelSize(R.dimen.card_radius)))
                         .transition(DrawableTransitionOptions.withCrossFade())
                         .into(binding.todaysPickThumbnail)
-                binding.todayPickWatchedIcon.visibility = if (resource.data.watched) View.VISIBLE else View.GONE
-                binding.todayPickName.text = resource.data.title
-                binding.todayPickTrainerNameTextView.text = getString(R.string.with, resource.data.instructor.name)
-                binding.todayPickMinTextView.text = getString(R.string.min, resource.data.duration)
-                binding.todayPickCategory.text = resource.data.categories.joinToString()
-            } else {
-                todaysPickVisibility(false)
+                    binding.todayPickWatchedIcon.visibility = if (resource.data.watched) View.VISIBLE else View.GONE
+                    binding.todayPickName.text = resource.data.title
+                    binding.todayPickTrainerNameTextView.text = getString(R.string.with, resource.data.instructor.name)
+                    binding.todayPickMinTextView.text = getString(R.string.min, resource.data.duration)
+                    binding.todayPickCategory.text = resource.data.categories.joinToString()
+                }
+                Status.Empty -> todaysPickVisibility(false)
+                Status.SubscriptionEnded -> (activity as MainActivity).subscriptionError()
+                else -> {
+                }
             }
         })
 

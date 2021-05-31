@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -12,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.logEvent
 import dk.joga.jogago.AppContainer
+import dk.joga.jogago.R
 import dk.joga.jogago.api.Status
 import dk.joga.jogago.databinding.FragmentCategoryBinding
 import dk.joga.jogago.ui.MainActivity
@@ -45,20 +47,25 @@ class CategoryDetailsFragment : Fragment() {
         })
 
         viewModel.categoryClassesWrapper.getData().observe(viewLifecycleOwner, { resource ->
-            if (resource.status == Status.Success) {
-                (requireActivity() as MainActivity).changeScreenTitle(args.categoryName)
-                if (itemsCount + resource.data!!.size == resource.totalCount) {
-                    viewModel.isMore = false
-                }
+            when (resource.status) {
+                Status.Success -> {
+                    (requireActivity() as MainActivity).changeScreenTitle(args.categoryName)
+                    if (itemsCount + resource.data!!.size == resource.totalCount) {
+                        viewModel.isMore = false
+                    }
 
-                if (viewModel.isLoading) {
-                    adapter.addData(resource.data, viewModel.isMore)
-                    itemsCount += resource.data.size
-                    viewModel.isLoading = false
-                } else {
-                    adapter.setData(resource.data, viewModel.isMore)
-                    itemsCount = resource.data.size
+                    if (viewModel.isLoading) {
+                        adapter.addData(resource.data, viewModel.isMore)
+                        itemsCount += resource.data.size
+                        viewModel.isLoading = false
+                    } else {
+                        adapter.setData(resource.data, viewModel.isMore)
+                        itemsCount = resource.data.size
+                    }
                 }
+                Status.Empty -> adapter.setData(listOf(), false)
+                Status.SubscriptionEnded -> (activity as MainActivity).subscriptionError()
+                else -> Toast.makeText(context, R.string.connection_error, Toast.LENGTH_LONG).show()
             }
         })
         return binding.root

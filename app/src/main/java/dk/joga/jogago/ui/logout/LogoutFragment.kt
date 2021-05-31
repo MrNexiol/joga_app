@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.logEvent
@@ -41,10 +42,12 @@ class LogoutFragment : Fragment() {
                         this?.remove(getString(R.string.saved_token_key))
                         this?.remove(getString(R.string.saved_user_id))
                         this?.remove(getString(R.string.saved_username))
+                        this?.remove(getString(R.string.saved_password))
                         this?.apply()
                     }
-                    val action = LogoutFragmentDirections.actionLogoutFragmentToLoginFragment()
-                    findNavController().navigate(action)
+                    findNavController().navigate(R.id.action_global_loginFragment)
+                } else {
+                    Toast.makeText(context, R.string.connection_error, Toast.LENGTH_LONG).show()
                 }
             })
         }

@@ -224,6 +224,7 @@
                 android:layout_height="@dimen/divider_height"
                 android:layout_marginTop="@dimen/margin_medium"
                 android:background="@color/secondary_text"
+                android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/liked_recycler_view" />
@@ -234,6 +235,7 @@
                 android:layout_height="0dp"
                 android:contentDescription="@string/journeys_icon"
                 android:src="@drawable/journeys_icon"
+                android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="@+id/journeys_text_view"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/journeys_text_view" />
@@ -248,6 +250,7 @@
                 android:fontFamily="sans-serif-medium"
                 android:text="@string/journeys"
                 android:textSize="@dimen/header_text"
+                android:visibility="gone"
                 app:layout_constraintStart_toEndOf="@+id/journeys_icon_home"
                 app:layout_constraintTop_toBottomOf="@+id/between_liked_and_journeys_divider" />
 
@@ -259,6 +262,7 @@
                 android:textAllCaps="false"
                 android:textColor="@color/light_blue"
                 android:textSize="@dimen/header_text"
+                android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="@+id/journeys_text_view"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/journeys_text_view" />
@@ -268,6 +272,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_medium"
+                android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/journeys_icon_home" />

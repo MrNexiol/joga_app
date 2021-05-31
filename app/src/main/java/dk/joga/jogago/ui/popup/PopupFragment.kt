@@ -33,18 +33,18 @@ class PopupFragment : Fragment() {
 //        if (wasSeen != null){
 //            navigateToHome()
 //        }
-        val viewModel: PopupViewModel by viewModels { PopupViewModelFactory(AppContainer.repository) }
-        viewModel.welcomePopup.observe(viewLifecycleOwner, { resource ->
-            if (resource.status == Status.Success){
-                if (Locale.getDefault().language == "da"){
-                    binding.popupWelcomeTextView.text = resource.data!!.titleDa
-                    binding.popupMessageTextView.text = resource.data.textDa
-                } else {
-                    binding.popupWelcomeTextView.text = resource.data!!.titleEn
-                    binding.popupMessageTextView.text = resource.data.textEn
-                }
-            }
-        })
+        val viewModel: PopupViewModel by viewModels()
+//        viewModel.welcomePopup.observe(viewLifecycleOwner, { resource ->
+//            if (resource.status == Status.Success){
+//                if (Locale.getDefault().language == "da"){
+//                    binding.popupWelcomeTextView.text = resource.data!!.titleDa
+//                    binding.popupMessageTextView.text = resource.data.textDa
+//                } else {
+//                    binding.popupWelcomeTextView.text = resource.data!!.titleEn
+//                    binding.popupMessageTextView.text = resource.data.textEn
+//                }
+//            }
+//        })
         return binding.root
     }
 

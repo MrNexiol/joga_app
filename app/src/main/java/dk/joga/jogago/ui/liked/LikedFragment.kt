@@ -5,20 +5,24 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.logEvent
 import dk.joga.jogago.AppContainer
+import dk.joga.jogago.R
 import dk.joga.jogago.api.Status
 import dk.joga.jogago.databinding.FragmentLikedBinding
+import dk.joga.jogago.ui.MainActivity
 
 class LikedFragment : Fragment() {
     private var _binding: FragmentLikedBinding? = null
     private val binding get() = _binding!!
     private val viewModel: LikedViewModel by viewModels()
     private val adapter = LikedAdapter()
+    private var itemsCount = 0
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -27,16 +31,24 @@ class LikedFragment : Fragment() {
         _binding = FragmentLikedBinding.inflate(inflater, container, false)
 
         viewModel.likedClassesWrapper.getData().observe(viewLifecycleOwner, { resource ->
-            if (resource.status == Status.Success){
-                viewModel.isMore = viewModel.itemsCount + resource.data!!.size != resource.totalCount
-                if (viewModel.isLoading) {
-                    adapter.addData(resource.data, viewModel.isMore)
-                    viewModel.itemsCount += resource.data.count()
-                    viewModel.isLoading = false
-                } else {
-                    adapter.setData(resource.data, viewModel.isMore)
-                    viewModel.itemsCount = resource.data.count()
+            when (resource.status) {
+                Status.Success -> {
+                    if (itemsCount + resource.data!!.size == resource.totalCount) {
+                        viewModel.isMore = false
+                    }
+
+                    if (viewModel.isLoading) {
+                        adapter.addData(resource.data, viewModel.isMore)
+                        itemsCount += resource.data.size
+                        viewModel.isLoading = false
+                    } else {
+                        adapter.setData(resource.data, viewModel.isMore)
+                        itemsCount = resource.data.size
+                    }
                 }
+                Status.Empty -> adapter.setData(listOf(), false)
+                Status.SubscriptionEnded -> (activity as MainActivity).subscriptionError()
+                else -> Toast.makeText(context, R.string.connection_error, Toast.LENGTH_LONG).show()
             }
         })
 
@@ -57,10 +69,7 @@ class LikedFragment : Fragment() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
                 val layoutManager: LinearLayoutManager = recyclerView.layoutManager as LinearLayoutManager
-                if (layoutManager.findLastVisibleItemPosition() >= viewModel.itemsCount - 1 && viewModel.isMore) {
-                    if (dy == 0) {
-                        viewModel.isLoading = true
-                    }
+                if (layoutManager.findLastVisibleItemPosition() >= itemsCount - 1 && viewModel.isMore) {
                     viewModel.changePageNumber()
                 }
             }

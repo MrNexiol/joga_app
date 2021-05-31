@@ -29,10 +29,6 @@
             android:id="@+id/action_homeFragment_to_trainerDetailFragment"
             app:destination="@id/trainerDetailFragment" />
         <action
-            android:id="@+id/action_homeFragment_to_loginFragment"
-            app:destination="@id/loginFragment"
-            app:popUpTo="@id/nav_graph" />
-        <action
             android:id="@+id/action_homeFragment_to_classDetailsFragment"
             app:destination="@id/classDetailsFragment" />
         <action
@@ -91,9 +87,9 @@
     </fragment>
     <fragment
         android:id="@+id/classesFragment"
-        android:name="dk.joga.jogago.ui.classes.ClassesFragment"
+        android:name="dk.joga.jogago.ui.categories.CategoriesFragment"
         android:label="fragment_classes"
-        tools:layout="@layout/fragment_classes" >
+        tools:layout="@layout/fragment_categories" >
         <action
             android:id="@+id/action_classesFragment_to_categoryFragment"
             app:destination="@id/categoryFragment" />
@@ -123,12 +119,7 @@
         android:id="@+id/logoutFragment"
         android:name="dk.joga.jogago.ui.logout.LogoutFragment"
         android:label="fragment_logout"
-        tools:layout="@layout/fragment_logout" >
-        <action
-            android:id="@+id/action_logoutFragment_to_loginFragment"
-            app:destination="@id/loginFragment"
-            app:popUpTo="@id/nav_graph" />
-    </fragment>
+        tools:layout="@layout/fragment_logout" />
     <action
         android:id="@+id/action_global_homeFragment"
         app:destination="@id/homeFragment"
@@ -157,4 +148,25 @@
             android:name="category_name"
             app:argType="string" />
     </fragment>
+    <fragment
+        android:id="@+id/subscriptionErrorFragment"
+        android:name="dk.joga.jogago.ui.subscription_error.SubscriptionErrorFragment"
+        android:label="fragment_subscription_error"
+        tools:layout="@layout/fragment_subscription_error" >
+        <action
+            android:id="@+id/action_subscriptionErrorFragment_to_homeFragment"
+            app:destination="@id/homeFragment"
+            app:popUpTo="@id/nav_graph"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <action
+        android:id="@+id/action_global_subscriptionErrorFragment"
+        app:destination="@id/subscriptionErrorFragment"
+        app:popUpTo="@id/nav_graph"
+        app:popUpToInclusive="true" />
+    <action
+        android:id="@+id/action_global_loginFragment"
+        app:destination="@id/loginFragment"
+        app:popUpTo="@id/nav_graph"
+        app:popUpToInclusive="true" />
 </navigation>

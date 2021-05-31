@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -40,37 +41,47 @@ class TrainerDetailFragment : Fragment() {
         viewModel = ViewModelProvider(this, viewModelFactory).get(TrainerDetailViewModel::class.java)
 
         viewModel.instructorWrapper.getData().observe(viewLifecycleOwner, { resource ->
-            if (resource.status == Status.Success) {
-                (requireActivity() as MainActivity).changeScreenTitle(resource.data!!.name)
-                @Suppress("SENSELESS_COMPARISON")
-                if (resource.data.videoUrl != "" && resource.data.videoUrl != null) {
-                    Glide.with(this).load(resource.data.avatar_url).fallback(R.drawable.placeholder_image).into(binding.trainerThumbnail)
-                    viewModel.initializePlayerManager(binding.trainerVideo, CastContext.getSharedInstance(requireActivity()), resource.data.videoUrl, resource.data.videoTitle)
-                    if (!videoShown) {
-                        binding.trainerMotionLayout.transitionToStart()
-                        videoShown = true
+            when (resource.status) {
+                Status.Success -> {
+                    (requireActivity() as MainActivity).changeScreenTitle(resource.data!!.name)
+                    @Suppress("SENSELESS_COMPARISON")
+                    if (resource.data.videoUrl != "" && resource.data.videoUrl != null) {
+                        Glide.with(this).load(resource.data.avatar_url).fallback(R.drawable.placeholder_image).into(binding.trainerThumbnail)
+                        viewModel.initializePlayerManager(binding.trainerVideo, CastContext.getSharedInstance(requireActivity()), resource.data.videoUrl, resource.data.videoTitle)
+                        if (!videoShown) {
+                            binding.trainerMotionLayout.transitionToStart()
+                            videoShown = true
+                        }
+                        binding.trainerVideoTitle.text = resource.data.videoTitle
+                        binding.trainerVideoDuration.text = getString(R.string.min, resource.data.videoDuration)
+                    } else {
+                        binding.trainerMotionLayout.setTransition(R.id.collapsed, R.id.collapsed)
+                        binding.trainerMotionLayout.getTransition(R.id.video_transition).setEnable(false)
                     }
-                    binding.trainerVideoTitle.text = resource.data.videoTitle
-                    binding.trainerVideoDuration.text = getString(R.string.min, resource.data.videoDuration)
-                } else {
-                    binding.trainerMotionLayout.setTransition(R.id.collapsed, R.id.collapsed)
-                    binding.trainerMotionLayout.getTransition(R.id.video_transition).setEnable(false)
                 }
+                Status.Empty -> {}
+                Status.SubscriptionEnded -> (activity as MainActivity).subscriptionError()
+                else -> Toast.makeText(context, R.string.connection_error, Toast.LENGTH_LONG).show()
             }
         })
         viewModel.instructorClassesWrapper.getData().observe(viewLifecycleOwner, { resource ->
-            if (resource.status == Status.Success) {
-                if (itemsCount + resource.data!!.size == resource.totalCount) {
-                    viewModel.isMore = false
+            when (resource.status) {
+                Status.Success -> {
+                    if (itemsCount + resource.data!!.size == resource.totalCount) {
+                        viewModel.isMore = false
+                    }
+                    if (viewModel.isLoading) {
+                        adapter.addData(resource.data, viewModel.isMore)
+                        itemsCount += resource.data.count()
+                        viewModel.isLoading = false
+                    } else {
+                        adapter.setData(resource.data, viewModel.isMore)
+                        itemsCount = resource.data.count()
+                    }
                 }
-                if (viewModel.isLoading) {
-                    adapter.addData(resource.data, viewModel.isMore)
-                    itemsCount += resource.data.count()
-                    viewModel.isLoading = false
-                } else {
-                    adapter.setData(resource.data, viewModel.isMore)
-                    itemsCount = resource.data.count()
-                }
+                Status.Empty -> {}
+                Status.SubscriptionEnded -> {}
+                else -> {}
             }
         })
 
@@ -85,6 +96,8 @@ class TrainerDetailFragment : Fragment() {
         }
 
         val fullscreen: ImageView = view.findViewById(R.id.exo_fullscreen)
+        val playButton: ImageView = view.findViewById(R.id.exo_play)
+        val pauseButton: ImageView = view.findViewById(R.id.exo_pause)
         val durationTextView: TextView = view.findViewById(R.id.exo_duration)
         fullscreen.visibility = View.GONE
         durationTextView.setPaddingRelative(0,0,resources.getDimensionPixelSize(R.dimen.margin_small),0)
@@ -92,6 +105,14 @@ class TrainerDetailFragment : Fragment() {
         binding.root.setOnRefreshListener {
             viewModel.resetData()
             binding.root.isRefreshing = false
+        }
+        pauseButton.setOnClickListener {
+            viewModel.stopVideo()
+            (activity as MainActivity).allowScreenLocking()
+        }
+        playButton.setOnClickListener {
+            viewModel.playVideo()
+            (activity as MainActivity).preventScreenLocking()
         }
 
         val recyclerView = binding.instructorClassesRecyclerView
@@ -117,6 +138,11 @@ class TrainerDetailFragment : Fragment() {
             startVideo()
             viewModel.wasPlayingOnStop = false
         }
+        if (viewModel.isPlaying()) {
+            (activity as MainActivity).preventScreenLocking()
+        } else {
+            (activity as MainActivity).allowScreenLocking()
+        }
         AppContainer.firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SCREEN_VIEW) {
             param(FirebaseAnalytics.Param.SCREEN_NAME, "trainer_classes")
             param(FirebaseAnalytics.Param.SCREEN_CLASS, "TrainerDetailsFragment")
@@ -133,6 +159,7 @@ class TrainerDetailFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
+        (activity as MainActivity).allowScreenLocking()
         _binding = null
     }
 
@@ -145,5 +172,6 @@ class TrainerDetailFragment : Fragment() {
         showVideoControls()
         viewModel.playVideo()
         viewModel.startedVideo = true
+        (activity as MainActivity).preventScreenLocking()
     }
 }

@@ -35,20 +35,26 @@ class LoginFragment : Fragment() {
         binding.loginButton.setOnClickListener {
             val username = binding.usernameEditText.text.toString()
             val password = binding.passwordEditText.text.toString()
+
             val imm: InputMethodManager = requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
             imm.hideSoftInputFromWindow(view.windowToken, 0)
+
             AppContainer.repository.login(username, password).observe(viewLifecycleOwner, { resource ->
-                if(resource.status == Status.Success) {
-                    with(sharedPrefs?.edit()){
-                        this?.putString(getString(R.string.saved_token_key), resource.data!!.token)
-                        this?.putString(getString(R.string.saved_user_id), resource.data!!.userId)
-                        this?.putString(getString(R.string.saved_username), username)
-                        this?.commit()
+                when (resource.status) {
+                    Status.Success -> {
+                        with(sharedPrefs?.edit()){
+                            this?.putString(getString(R.string.saved_token_key), resource.data!!.token)
+                            this?.putString(getString(R.string.saved_user_id), resource.data!!.userId)
+                            this?.putString(getString(R.string.saved_password), password)
+                            this?.putString(getString(R.string.saved_username), username)
+                            this?.commit()
+                        }
+                        navigateToHome()
                     }
-                    navigateToHome()
-                } else {
-                    val action = LoginFragmentDirections.actionLoginFragmentToLoginErrorFragment()
-                    findNavController().navigate(action)
+                    else -> {
+                        val action = LoginFragmentDirections.actionLoginFragmentToLoginErrorFragment()
+                        findNavController().navigate(action)
+                    }
                 }
             })
         }

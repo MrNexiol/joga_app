@@ -1,3 +1,10 @@
 package dk.joga.jogago.api
 
-data class Instructors(val instructors: List<Instructor>)
+import com.google.gson.annotations.SerializedName
+
+data class Instructors(
+    val instructors: List<Instructor>,
+    val page: Int,
+    @SerializedName("count")
+    val totalCount: Int
+    )

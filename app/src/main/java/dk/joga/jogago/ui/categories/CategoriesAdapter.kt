@@ -1,4 +1,4 @@
-package dk.joga.jogago.ui.classes
+package dk.joga.jogago.ui.categories
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -12,7 +12,7 @@ import dk.joga.jogago.R
 import dk.joga.jogago.api.Category
 import dk.joga.jogago.databinding.ClassesRecyclerViewItemBinding
 
-class ClassesAdapter : RecyclerView.Adapter<ClassesAdapter.ViewHolder>() {
+class CategoriesAdapter : RecyclerView.Adapter<CategoriesAdapter.ViewHolder>() {
 
     private var data: List<Category> = listOf()
 
@@ -33,7 +33,7 @@ class ClassesAdapter : RecyclerView.Adapter<ClassesAdapter.ViewHolder>() {
                 .transition(DrawableTransitionOptions.withCrossFade())
                 .into(holder.binding.classThumbnailImageView)
         holder.binding.root.setOnClickListener {
-            val action = ClassesFragmentDirections.actionClassesFragmentToCategoryFragment(data[position].id, data[position].name)
+            val action = CategoriesFragmentDirections.actionClassesFragmentToCategoryFragment(data[position].id, data[position].name)
             it.findNavController().navigate(action)
         }
     }
