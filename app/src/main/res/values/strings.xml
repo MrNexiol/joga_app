@@ -42,6 +42,7 @@
     <string name="sub_login_error" translatable="false">Connection error. Logout and try again.</string>
 
     <string name="saved_token_key" translatable="false">saved_token_key</string>
+    <string name="saved_refresh_token_key" translatable="false">saved_refresh_token_key</string>
     <string name="saved_user_id" translatable="false">saved_user_id</string>
     <string name="saved_username" translatable="false">saved_username</string>
     <string name="saved_password" translatable="false">saved_password</string>

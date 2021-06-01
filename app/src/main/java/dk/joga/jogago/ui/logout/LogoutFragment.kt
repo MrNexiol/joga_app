@@ -40,6 +40,7 @@ class LogoutFragment : Fragment() {
                 if (resource.status == Status.Success){
                     with(sharedPrefs?.edit()){
                         this?.remove(getString(R.string.saved_token_key))
+                        this?.remove(getString(R.string.saved_refresh_token_key))
                         this?.remove(getString(R.string.saved_user_id))
                         this?.remove(getString(R.string.saved_username))
                         this?.remove(getString(R.string.saved_password))
