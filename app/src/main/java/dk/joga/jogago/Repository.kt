@@ -312,22 +312,25 @@ class Repository(private val service: WebService) {
         return data
     }
 
-    fun relogin(token: String, refreshToken: String): LiveData<Resource<Login>>{
-        val data = MutableLiveData<Resource<Login>>()
-        service.login(token, refreshToken).enqueue(object : Callback<Login>{
-            override fun onResponse(call: Call<Login>, response: Response<Login>) {
-                val resource = when (response.code()) {
-                    201 -> Resource(Status.Success, response.body()!!)
-                    401 -> Resource(Status.Unauthorized, null)
-                    else -> Resource(Status.Fail, null)
-                }
-                data.value = resource
-            }
-            override fun onFailure(call: Call<Login>, t: Throwable) {
-                val resource = Resource(Status.Fail, null, t)
-                data.value = resource
-            }
-        })
+    fun syncLogin(username: String, password: String): Resource<Login> {
+        lateinit var data: Resource<Login>
+        val response = service.login(username, password).execute().body()
+        data = if (response != null) {
+            Resource(Status.Success, response)
+        } else {
+            Resource(Status.Fail, null)
+        }
+        return data
+    }
+
+    fun relogin(token: String, refreshToken: String): Resource<Login>{
+        lateinit var data: Resource<Login>
+        val response = service.login(token, refreshToken).execute().body()
+        data = if (response != null) {
+            Resource(Status.Success, response)
+        } else {
+            Resource(Status.Fail, null)
+        }
         return data
     }
 
