@@ -1,5 +1,6 @@
 package dk.joga.jogago.ui
 
+import android.content.Context
 import android.content.pm.ActivityInfo
 import android.content.res.Configuration
 import android.os.Build
@@ -9,6 +10,7 @@ import android.view.View
 import android.view.WindowInsets
 import android.view.WindowInsetsController
 import android.view.WindowManager
+import android.widget.Toast
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.google.android.gms.cast.framework.CastButtonFactory
@@ -171,5 +173,19 @@ class MainActivity : AppCompatActivity() {
 
     fun allowScreenLocking() {
         window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+    }
+
+    fun logout() {
+        val sharedPrefs = getSharedPreferences(getString(R.string.preferences_name), Context.MODE_PRIVATE)
+        with(sharedPrefs?.edit()){
+            this?.remove(getString(R.string.saved_token_key))
+            this?.remove(getString(R.string.saved_refresh_token_key))
+            this?.remove(getString(R.string.saved_user_id))
+            this?.remove(getString(R.string.saved_username))
+            this?.remove(getString(R.string.saved_password))
+            this?.apply()
+        }
+        Toast.makeText(this,getString(R.string.connection_error),Toast.LENGTH_SHORT).show()
+        navController.navigate(R.id.action_global_loginFragment)
     }
 }
