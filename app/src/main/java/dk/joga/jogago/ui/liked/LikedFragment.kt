@@ -47,6 +47,7 @@ class LikedFragment : Fragment() {
                     }
                 }
                 Status.Empty -> adapter.setData(listOf(), false)
+                Status.Unauthorized -> (activity as MainActivity).logout()
                 Status.SubscriptionEnded -> (activity as MainActivity).subscriptionError()
                 else -> Toast.makeText(context, R.string.connection_error, Toast.LENGTH_LONG).show()
             }

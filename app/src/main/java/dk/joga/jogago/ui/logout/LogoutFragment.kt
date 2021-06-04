@@ -16,6 +16,7 @@ import dk.joga.jogago.R
 import dk.joga.jogago.api.Status
 import dk.joga.jogago.databinding.FragmentLogoutBinding
 import dk.joga.jogago.BuildConfig
+import dk.joga.jogago.ui.MainActivity
 
 class LogoutFragment : Fragment() {
     private var _binding: FragmentLogoutBinding? = null
@@ -37,18 +38,20 @@ class LogoutFragment : Fragment() {
         binding.currentAppVersionTextView.text = BuildConfig.VERSION_NAME
         binding.logMeOutButton.setOnClickListener {
             AppContainer.repository.logout().observe(viewLifecycleOwner, { resource ->
-                if (resource.status == Status.Success){
-                    with(sharedPrefs?.edit()){
-                        this?.remove(getString(R.string.saved_token_key))
-                        this?.remove(getString(R.string.saved_refresh_token_key))
-                        this?.remove(getString(R.string.saved_user_id))
-                        this?.remove(getString(R.string.saved_username))
-                        this?.remove(getString(R.string.saved_password))
-                        this?.apply()
+                when (resource.status) {
+                    Status.Success -> {
+                        with(sharedPrefs?.edit()){
+                            this?.remove(getString(R.string.saved_token_key))
+                            this?.remove(getString(R.string.saved_refresh_token_key))
+                            this?.remove(getString(R.string.saved_user_id))
+                            this?.remove(getString(R.string.saved_username))
+                            this?.remove(getString(R.string.saved_password))
+                            this?.apply()
+                        }
+                        findNavController().navigate(R.id.action_global_loginFragment)
                     }
-                    findNavController().navigate(R.id.action_global_loginFragment)
-                } else {
-                    Toast.makeText(context, R.string.connection_error, Toast.LENGTH_LONG).show()
+                    Status.Unauthorized -> (activity as MainActivity).logout()
+                    else -> Toast.makeText(context, R.string.connection_error, Toast.LENGTH_LONG).show()
                 }
             })
         }

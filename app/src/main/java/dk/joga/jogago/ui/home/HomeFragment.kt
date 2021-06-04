@@ -64,8 +64,9 @@ class HomeFragment : Fragment() {
             when (resource.status) {
                 Status.Success -> newClassAdapter.setData(resource.data!!)
                 Status.Empty -> newClassAdapter.setData(listOf())
+                Status.Unauthorized -> (activity as MainActivity).logout()
                 Status.SubscriptionEnded -> (activity as MainActivity).subscriptionError()
-                else -> Toast.makeText(context, R.string.connection_error, Toast.LENGTH_LONG).show()
+                else -> Toast.makeText(context, R.string.connection_error, Toast.LENGTH_SHORT).show()
             }
         })
         viewModel.likedClassesWrapper.getData().observe(viewLifecycleOwner, { resource ->
@@ -78,8 +79,9 @@ class HomeFragment : Fragment() {
                     likedClassAdapter.setData(listOf())
                     likedClassesSectionVisibility(false)
                 }
+                Status.Unauthorized -> (activity as MainActivity).logout()
                 Status.SubscriptionEnded -> (activity as MainActivity).subscriptionError()
-                else -> { }
+                else -> Toast.makeText(context, R.string.connection_error, Toast.LENGTH_SHORT).show()
             }
         })
         viewModel.journeysWrapper.getData().observe(viewLifecycleOwner, { resource ->
@@ -92,16 +94,18 @@ class HomeFragment : Fragment() {
                     journeyAdapter.setData(listOf())
                     journeySectionVisibility(false)
                 }
+                Status.Unauthorized -> (activity as MainActivity).logout()
                 Status.SubscriptionEnded -> (activity as MainActivity).subscriptionError()
-                else -> { }
+                else -> Toast.makeText(context, R.string.connection_error, Toast.LENGTH_SHORT).show()
             }
         })
         viewModel.instructorsWrapper.getData().observe(viewLifecycleOwner, { resource ->
             when (resource.status) {
                 Status.Success -> instructorAdapter.setData(resource.data!!)
                 Status.Empty -> instructorAdapter.setData(listOf())
+                Status.Unauthorized -> (activity as MainActivity).logout()
                 Status.SubscriptionEnded -> (activity as MainActivity).subscriptionError()
-                else -> { }
+                else -> Toast.makeText(context, R.string.connection_error, Toast.LENGTH_SHORT).show()
             }
         })
         viewModel.dailyClassWrapper.getData().observe(viewLifecycleOwner, { resource ->
@@ -122,9 +126,9 @@ class HomeFragment : Fragment() {
                     binding.todayPickCategory.text = resource.data.categories.joinToString()
                 }
                 Status.Empty -> todaysPickVisibility(false)
+                Status.Unauthorized -> (activity as MainActivity).logout()
                 Status.SubscriptionEnded -> (activity as MainActivity).subscriptionError()
-                else -> {
-                }
+                else -> Toast.makeText(context, R.string.connection_error, Toast.LENGTH_SHORT).show()
             }
         })
 

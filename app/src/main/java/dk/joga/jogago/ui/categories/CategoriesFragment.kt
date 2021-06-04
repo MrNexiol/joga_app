@@ -37,6 +37,7 @@ class CategoriesFragment : Fragment() {
             when (resource.status) {
                 Status.Success -> adapter.setData(resource.data!!)
                 Status.Empty -> adapter.setData(listOf())
+                Status.Unauthorized -> (activity as MainActivity).logout()
                 Status.SubscriptionEnded -> (activity as MainActivity).subscriptionError()
                 else -> Toast.makeText(context, R.string.connection_error, Toast.LENGTH_LONG).show()
             }

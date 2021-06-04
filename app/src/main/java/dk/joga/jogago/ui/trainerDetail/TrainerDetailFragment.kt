@@ -60,8 +60,9 @@ class TrainerDetailFragment : Fragment() {
                     }
                 }
                 Status.Empty -> {}
+                Status.Unauthorized -> (activity as MainActivity).logout()
                 Status.SubscriptionEnded -> (activity as MainActivity).subscriptionError()
-                else -> Toast.makeText(context, R.string.connection_error, Toast.LENGTH_LONG).show()
+                else -> Toast.makeText(context, R.string.connection_error, Toast.LENGTH_SHORT).show()
             }
         })
         viewModel.instructorClassesWrapper.getData().observe(viewLifecycleOwner, { resource ->
@@ -80,8 +81,9 @@ class TrainerDetailFragment : Fragment() {
                     }
                 }
                 Status.Empty -> {}
-                Status.SubscriptionEnded -> {}
-                else -> {}
+                Status.Unauthorized -> (activity as MainActivity).logout()
+                Status.SubscriptionEnded -> (activity as MainActivity).subscriptionError()
+                else -> Toast.makeText(context, R.string.connection_error, Toast.LENGTH_SHORT).show()
             }
         })
 
