@@ -323,7 +323,7 @@ class Repository(private val service: WebService) {
         return data
     }
 
-    fun relogin(token: String, refreshToken: String): Resource<Login>{
+    fun refreshToken(token: String, refreshToken: String): Resource<Login>{
         lateinit var data: Resource<Login>
         val response = service.login(token, refreshToken).execute().body()
         data = if (response != null) {

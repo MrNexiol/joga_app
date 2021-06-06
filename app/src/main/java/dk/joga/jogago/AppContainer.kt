@@ -18,7 +18,10 @@ object AppContainer {
     fun init(context: Context) {
         val retrofitInterceptor = RetrofitInterceptor(context)
         val retrofitAuthenticator = RetrofitAuthenticator(context)
-        val okHttpClient = OkHttpClient().newBuilder().addInterceptor(retrofitInterceptor).authenticator(retrofitAuthenticator).build()
+        val okHttpClient = OkHttpClient().newBuilder()
+                .authenticator(retrofitAuthenticator)
+                .addInterceptor(retrofitInterceptor)
+                .build()
         val retrofit = Retrofit.Builder()
             .baseUrl(BuildConfig.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())

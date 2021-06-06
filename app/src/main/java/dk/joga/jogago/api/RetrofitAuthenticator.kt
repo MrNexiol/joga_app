@@ -29,7 +29,7 @@ class RetrofitAuthenticator(val context: Context) : Authenticator {
         val refreshToken = preferences.getString(context.getString(R.string.saved_refresh_token_key), null)
         var newToken: String? = null
         if (oldToken != null && refreshToken != null) {
-            val reloginData = AppContainer.repository.relogin(oldToken, refreshToken)
+            val reloginData = AppContainer.repository.refreshToken(oldToken, refreshToken)
             if (reloginData.status == Status.Success) {
                 newToken = reloginData.data!!.token
                 with(preferences.edit()) {
