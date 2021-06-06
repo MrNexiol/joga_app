@@ -4,8 +4,8 @@ import retrofit2.Call
 import retrofit2.http.*
 
 interface ServiceJoGa {
-    @GET("welcome_popup")
-    fun getWelcomePopup(): Call<WelcomePopupResponse>
+//    @GET("welcome_popup")
+//    fun getWelcomePopup(): Call<WelcomePopupResponse>
 
     @GET("instructors")
     fun getInstructors(): Call<Instructors>
@@ -45,7 +45,4 @@ interface ServiceJoGa {
 
     @POST("classes/{id}/mark_as_watched")
     fun markClassAsWatched(@Path("id") id: String): Call<Void>
-
-    @DELETE("sessions")
-    fun logout(): Call<Void>
 }

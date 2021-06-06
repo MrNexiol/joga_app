@@ -283,46 +283,6 @@ class Repository(private val serviceJoGa: ServiceJoGa, val serviceLogin: Service
         return data
     }
 
-    fun login(username: String, password: String): LiveData<Resource<Login>>{
-        val data = MutableLiveData<Resource<Login>>()
-        serviceLogin.login(username, password).enqueue(object : Callback<Login>{
-            override fun onResponse(call: Call<Login>, response: Response<Login>) {
-                val resource = when (response.code()) {
-                    201 -> Resource(Status.Success, response.body()!!)
-                    401 -> {
-                        if (response.errorBody() != null) {
-                            if (response.errorBody()!!.string().equals("Inactive subscription.")){
-                                Resource(Status.SubscriptionEnded, null)
-                            } else {
-                                Resource(Status.Unauthorized, null)
-                            }
-                        } else {
-                            Resource(Status.Unauthorized, null)
-                        }
-                    }
-                    else -> Resource(Status.Fail, null)
-                }
-                data.value = resource
-            }
-            override fun onFailure(call: Call<Login>, t: Throwable) {
-                val resource = Resource(Status.Fail, null, t)
-                data.value = resource
-            }
-        })
-        return data
-    }
-
-    fun refreshToken(token: String, refreshToken: String): Resource<Login>{
-        lateinit var data: Resource<Login>
-        val response = serviceLogin.login(token, refreshToken).execute().body()
-        data = if (response != null) {
-            Resource(Status.Success, response)
-        } else {
-            Resource(Status.Fail, null)
-        }
-        return data
-    }
-
     fun toggleClassLike(id: String): LiveData<Resource<Void>>{
         val data = MutableLiveData<Resource<Void>>()
         serviceJoGa.toggleLike(id).enqueue(object : Callback<Void>{
@@ -366,9 +326,49 @@ class Repository(private val serviceJoGa: ServiceJoGa, val serviceLogin: Service
         return data
     }
 
+    fun login(username: String, password: String): LiveData<Resource<Login>>{
+        val data = MutableLiveData<Resource<Login>>()
+        serviceLogin.login(username, password).enqueue(object : Callback<Login>{
+            override fun onResponse(call: Call<Login>, response: Response<Login>) {
+                val resource = when (response.code()) {
+                    201 -> Resource(Status.Success, response.body()!!)
+                    401 -> {
+                        if (response.errorBody() != null) {
+                            if (response.errorBody()!!.string().equals("Inactive subscription.")){
+                                Resource(Status.SubscriptionEnded, null)
+                            } else {
+                                Resource(Status.Unauthorized, null)
+                            }
+                        } else {
+                            Resource(Status.Unauthorized, null)
+                        }
+                    }
+                    else -> Resource(Status.Fail, null)
+                }
+                data.value = resource
+            }
+            override fun onFailure(call: Call<Login>, t: Throwable) {
+                val resource = Resource(Status.Fail, null, t)
+                data.value = resource
+            }
+        })
+        return data
+    }
+
+    fun refreshToken(token: String, refreshToken: String): Resource<Login>{
+        lateinit var data: Resource<Login>
+        val response = serviceLogin.relogin(token, refreshToken).execute().body()
+        data = if (response != null) {
+            Resource(Status.Success, response)
+        } else {
+            Resource(Status.Fail, null)
+        }
+        return data
+    }
+
     fun logout(): LiveData<Resource<Void>>{
         val data = MutableLiveData<Resource<Void>>()
-        serviceJoGa.logout().enqueue(object : Callback<Void>{
+        serviceLogin.logout().enqueue(object : Callback<Void>{
             override fun onResponse(call: Call<Void>, response: Response<Void>) {
                 val resource = when (response.code()) {
                     200 -> Resource(Status.Success, response.body())
