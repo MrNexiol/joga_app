@@ -7,10 +7,10 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class Repository(private val service: WebService) {
+class Repository(private val serviceJoGa: ServiceJoGa) {
     fun getInstructors(): LiveData<Resource<List<Instructor>>> {
         val data = MutableLiveData<Resource<List<Instructor>>>()
-        service.getInstructors().enqueue(object : Callback<Instructors>{
+        serviceJoGa.getInstructors().enqueue(object : Callback<Instructors>{
             override fun onResponse(call: Call<Instructors>, response: Response<Instructors>) {
                 val resource = when (response.code()) {
                     200 -> {
@@ -36,7 +36,7 @@ class Repository(private val service: WebService) {
 
     fun getInstructor(id: String): LiveData<Resource<Instructor>> {
         val data = MutableLiveData<Resource<Instructor>>()
-        service.getInstructor(id).enqueue(object : Callback<InstructorResponse>{
+        serviceJoGa.getInstructor(id).enqueue(object : Callback<InstructorResponse>{
             override fun onResponse(call: Call<InstructorResponse>, response: Response<InstructorResponse>) {
                 val resource = when (response.code()) {
                     200 -> Resource(Status.Success, response.body()!!.instructor)
@@ -58,7 +58,7 @@ class Repository(private val service: WebService) {
 
     fun getJourneys(page: Int = 1): LiveData<Resource<List<Journey>>> {
         val data = MutableLiveData<Resource<List<Journey>>>()
-        service.getJourneys(page).enqueue(object : Callback<Journeys>{
+        serviceJoGa.getJourneys(page).enqueue(object : Callback<Journeys>{
             override fun onResponse(call: Call<Journeys>, response: Response<Journeys>) {
                 val resource = when (response.code()) {
                     200 -> {
@@ -84,7 +84,7 @@ class Repository(private val service: WebService) {
 
     fun getJourney(id: String): LiveData<Resource<Journey>> {
         val data = MutableLiveData<Resource<Journey>>()
-        service.getJourney(id).enqueue(object : Callback<JourneyResponse>{
+        serviceJoGa.getJourney(id).enqueue(object : Callback<JourneyResponse>{
             override fun onResponse(call: Call<JourneyResponse>, response: Response<JourneyResponse>) {
                 val resource = when (response.code()) {
                     200 -> Resource(Status.Success, response.body()!!.journey)
@@ -106,7 +106,7 @@ class Repository(private val service: WebService) {
 
     fun getCategories(page: Int = 1): LiveData<Resource<List<Category>>> {
         val data = MutableLiveData<Resource<List<Category>>>()
-        service.getCategories(page).enqueue(object : Callback<Categories>{
+        serviceJoGa.getCategories(page).enqueue(object : Callback<Categories>{
             override fun onResponse(call: Call<Categories>, response: Response<Categories>) {
                 val resource = when (response.code()) {
                     200 -> {
@@ -132,7 +132,7 @@ class Repository(private val service: WebService) {
 
     fun getCategoryClasses(id: String, page: Int = 1): LiveData<Resource<List<Class>>> {
         val data = MutableLiveData<Resource<List<Class>>>()
-        service.getClasses(id, page).enqueue(object : Callback<Classes>{
+        serviceJoGa.getClasses(id, page).enqueue(object : Callback<Classes>{
             override fun onResponse(call: Call<Classes>, response: Response<Classes>) {
                 val resource = when (response.code()) {
                     200 -> {
@@ -159,7 +159,7 @@ class Repository(private val service: WebService) {
 
     fun getNewClasses(): LiveData<Resource<List<Class>>> {
         val data = MutableLiveData<Resource<List<Class>>>()
-        service.getNewClasses().enqueue(object : Callback<Classes>{
+        serviceJoGa.getNewClasses().enqueue(object : Callback<Classes>{
             override fun onResponse(call: Call<Classes>, response: Response<Classes>) {
                 val resource = when (response.code()) {
                     200 -> {
@@ -187,7 +187,7 @@ class Repository(private val service: WebService) {
 
     fun getLikedClasses(page: Int = 1): LiveData<Resource<List<Class>>> {
         val data = MutableLiveData<Resource<List<Class>>>()
-        service.getLikedClasses(page).enqueue(object : Callback<Classes>{
+        serviceJoGa.getLikedClasses(page).enqueue(object : Callback<Classes>{
             override fun onResponse(call: Call<Classes>, response: Response<Classes>) {
                 val resource = when (response.code()) {
                     200 -> {
@@ -215,7 +215,7 @@ class Repository(private val service: WebService) {
 
     fun getInstructorClasses(instructorId: String, page: Int = 1): LiveData<Resource<List<Class>>> {
         val data = MutableLiveData<Resource<List<Class>>>()
-        service.getInstructorClasses(instructorId, page).enqueue(object : Callback<Classes>{
+        serviceJoGa.getInstructorClasses(instructorId, page).enqueue(object : Callback<Classes>{
             override fun onResponse(call: Call<Classes>, response: Response<Classes>) {
                 val resource = when (response.code()) {
                     200 -> {
@@ -243,7 +243,7 @@ class Repository(private val service: WebService) {
 
     fun getDailyClass(): LiveData<Resource<Class>> {
         val data = MutableLiveData<Resource<Class>>()
-        service.getDailyClass().enqueue(object : Callback<ClassResponse>{
+        serviceJoGa.getDailyClass().enqueue(object : Callback<ClassResponse>{
             override fun onResponse(call: Call<ClassResponse>, response: Response<ClassResponse>) {
                 val resource = when (response.code()) {
                     200 -> Resource(Status.Success, response.body()!!.lecture)
@@ -264,7 +264,7 @@ class Repository(private val service: WebService) {
 
     fun getClass(id: String): LiveData<Resource<Class>> {
         val data = MutableLiveData<Resource<Class>>()
-        service.getClass(id).enqueue(object : Callback<ClassResponse>{
+        serviceJoGa.getClass(id).enqueue(object : Callback<ClassResponse>{
             override fun onResponse(call: Call<ClassResponse>, response: Response<ClassResponse>) {
                 val resource = when (response.code()) {
                     200 -> Resource(Status.Success, response.body()!!.lecture)
@@ -285,7 +285,7 @@ class Repository(private val service: WebService) {
 
     fun login(username: String, password: String): LiveData<Resource<Login>>{
         val data = MutableLiveData<Resource<Login>>()
-        service.login(username, password).enqueue(object : Callback<Login>{
+        serviceJoGa.login(username, password).enqueue(object : Callback<Login>{
             override fun onResponse(call: Call<Login>, response: Response<Login>) {
                 val resource = when (response.code()) {
                     201 -> Resource(Status.Success, response.body()!!)
@@ -314,7 +314,7 @@ class Repository(private val service: WebService) {
 
     fun syncLogin(username: String, password: String): Resource<Login> {
         lateinit var data: Resource<Login>
-        val response = service.login(username, password).execute().body()
+        val response = serviceJoGa.login(username, password).execute().body()
         data = if (response != null) {
             Resource(Status.Success, response)
         } else {
@@ -325,7 +325,7 @@ class Repository(private val service: WebService) {
 
     fun refreshToken(token: String, refreshToken: String): Resource<Login>{
         lateinit var data: Resource<Login>
-        val response = service.login(token, refreshToken).execute().body()
+        val response = serviceJoGa.login(token, refreshToken).execute().body()
         data = if (response != null) {
             Resource(Status.Success, response)
         } else {
@@ -336,7 +336,7 @@ class Repository(private val service: WebService) {
 
     fun toggleClassLike(id: String): LiveData<Resource<Void>>{
         val data = MutableLiveData<Resource<Void>>()
-        service.toggleLike(id).enqueue(object : Callback<Void>{
+        serviceJoGa.toggleLike(id).enqueue(object : Callback<Void>{
             override fun onResponse(call: Call<Void>, response: Response<Void>) {
                 val resource = when (response.code()) {
                     201 -> Resource(Status.Success, response.body()!!)
@@ -357,7 +357,7 @@ class Repository(private val service: WebService) {
 
     fun markClassAsWatched(classId: String): LiveData<Resource<Void>>{
         val data = MutableLiveData<Resource<Void>>()
-        service.markClassAsWatched(classId).enqueue(object : Callback<Void>{
+        serviceJoGa.markClassAsWatched(classId).enqueue(object : Callback<Void>{
             override fun onResponse(call: Call<Void>, response: Response<Void>) {
                 val resource = when (response.code()) {
                     201 -> Resource(Status.Success, response.body()!!)
@@ -379,7 +379,7 @@ class Repository(private val service: WebService) {
 
     fun logout(): LiveData<Resource<Void>>{
         val data = MutableLiveData<Resource<Void>>()
-        service.logout().enqueue(object : Callback<Void>{
+        serviceJoGa.logout().enqueue(object : Callback<Void>{
             override fun onResponse(call: Call<Void>, response: Response<Void>) {
                 val resource = when (response.code()) {
                     200 -> Resource(Status.Success, response.body())

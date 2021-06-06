@@ -3,7 +3,7 @@ package dk.joga.jogago.api
 import retrofit2.Call
 import retrofit2.http.*
 
-interface WebService {
+interface ServiceJoGa {
     @GET("welcome_popup")
     fun getWelcomePopup(): Call<WelcomePopupResponse>
 

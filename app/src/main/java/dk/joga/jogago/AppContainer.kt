@@ -6,7 +6,7 @@ import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.ktx.Firebase
 import dk.joga.jogago.api.RetrofitAuthenticator
 import dk.joga.jogago.api.RetrofitInterceptor
-import dk.joga.jogago.api.WebService
+import dk.joga.jogago.api.ServiceJoGa
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -27,7 +27,7 @@ object AppContainer {
             .addConverterFactory(GsonConverterFactory.create())
             .client(okHttpClient)
             .build()
-            .create(WebService::class.java)
+            .create(ServiceJoGa::class.java)
         repository = Repository(retrofit)
         firebaseAnalytics = Firebase.analytics
     }
