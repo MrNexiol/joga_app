@@ -7,7 +7,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class Repository(private val serviceJoGa: ServiceJoGa) {
+class Repository(private val serviceJoGa: ServiceJoGa, val serviceLogin: ServiceLogin) {
     fun getInstructors(): LiveData<Resource<List<Instructor>>> {
         val data = MutableLiveData<Resource<List<Instructor>>>()
         serviceJoGa.getInstructors().enqueue(object : Callback<Instructors>{
@@ -285,7 +285,7 @@ class Repository(private val serviceJoGa: ServiceJoGa) {
 
     fun login(username: String, password: String): LiveData<Resource<Login>>{
         val data = MutableLiveData<Resource<Login>>()
-        serviceJoGa.login(username, password).enqueue(object : Callback<Login>{
+        serviceLogin.login(username, password).enqueue(object : Callback<Login>{
             override fun onResponse(call: Call<Login>, response: Response<Login>) {
                 val resource = when (response.code()) {
                     201 -> Resource(Status.Success, response.body()!!)
@@ -312,20 +312,9 @@ class Repository(private val serviceJoGa: ServiceJoGa) {
         return data
     }
 
-    fun syncLogin(username: String, password: String): Resource<Login> {
-        lateinit var data: Resource<Login>
-        val response = serviceJoGa.login(username, password).execute().body()
-        data = if (response != null) {
-            Resource(Status.Success, response)
-        } else {
-            Resource(Status.Fail, null)
-        }
-        return data
-    }
-
     fun refreshToken(token: String, refreshToken: String): Resource<Login>{
         lateinit var data: Resource<Login>
-        val response = serviceJoGa.login(token, refreshToken).execute().body()
+        val response = serviceLogin.login(token, refreshToken).execute().body()
         data = if (response != null) {
             Resource(Status.Success, response)
         } else {

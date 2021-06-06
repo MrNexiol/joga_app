@@ -7,6 +7,7 @@ import com.google.firebase.ktx.Firebase
 import dk.joga.jogago.api.RetrofitAuthenticator
 import dk.joga.jogago.api.RetrofitInterceptor
 import dk.joga.jogago.api.ServiceJoGa
+import dk.joga.jogago.api.ServiceLogin
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -22,13 +23,21 @@ object AppContainer {
                 .authenticator(retrofitAuthenticator)
                 .addInterceptor(retrofitInterceptor)
                 .build()
-        val retrofit = Retrofit.Builder()
-            .baseUrl(BuildConfig.BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
-            .client(okHttpClient)
-            .build()
-            .create(ServiceJoGa::class.java)
-        repository = Repository(retrofit)
+
+        val serviceJoGa = Retrofit.Builder()
+                .baseUrl(BuildConfig.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(okHttpClient)
+                .build()
+                .create(ServiceJoGa::class.java)
+
+        val serviceLogin = Retrofit.Builder()
+                .baseUrl(BuildConfig.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build()
+                .create(ServiceLogin::class.java)
+
+        repository = Repository(serviceJoGa, serviceLogin)
         firebaseAnalytics = Firebase.analytics
     }
 }
