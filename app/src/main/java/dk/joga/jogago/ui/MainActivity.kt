@@ -182,7 +182,6 @@ class MainActivity : AppCompatActivity() {
             this?.remove(getString(R.string.saved_refresh_token_key))
             this?.remove(getString(R.string.saved_user_id))
             this?.remove(getString(R.string.saved_username))
-            this?.remove(getString(R.string.saved_password))
             this?.apply()
         }
         Toast.makeText(this,getString(R.string.connection_error),Toast.LENGTH_SHORT).show()

@@ -46,7 +46,6 @@ class LoginFragment : Fragment() {
                             this?.putString(getString(R.string.saved_token_key), resource.data!!.token)
                             this?.putString(getString(R.string.saved_refresh_token_key), resource.data!!.refreshToken)
                             this?.putString(getString(R.string.saved_user_id), resource.data!!.userId)
-                            this?.putString(getString(R.string.saved_password), password)
                             this?.putString(getString(R.string.saved_username), username)
                             this?.commit()
                         }

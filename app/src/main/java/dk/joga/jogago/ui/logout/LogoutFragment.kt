@@ -45,7 +45,6 @@ class LogoutFragment : Fragment() {
                             this?.remove(getString(R.string.saved_refresh_token_key))
                             this?.remove(getString(R.string.saved_user_id))
                             this?.remove(getString(R.string.saved_username))
-                            this?.remove(getString(R.string.saved_password))
                             this?.apply()
                         }
                         findNavController().navigate(R.id.action_global_loginFragment)
