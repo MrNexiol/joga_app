@@ -34,6 +34,7 @@ object AppContainer {
         val serviceLogin = Retrofit.Builder()
                 .baseUrl(BuildConfig.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
+                .client(okHttpClient)
                 .build()
                 .create(ServiceLogin::class.java)
 
