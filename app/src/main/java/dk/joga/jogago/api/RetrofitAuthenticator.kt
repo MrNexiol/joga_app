@@ -11,7 +11,7 @@ import okhttp3.Route
 class RetrofitAuthenticator(val context: Context) : Authenticator {
     override fun authenticate(route: Route?, response: Response): Request? {
         val updatedToken: String? = getUpdatedToken()
-        
+
         return if (updatedToken == null) {
             null
         } else {

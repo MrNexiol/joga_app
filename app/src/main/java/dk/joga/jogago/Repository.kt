@@ -6,8 +6,9 @@ import dk.joga.jogago.api.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.lang.Exception
 
-class Repository(private val serviceJoGa: ServiceJoGa, val serviceLogin: ServiceLogin) {
+class Repository(private val serviceJoGa: ServiceJoGa, private val serviceLogin: ServiceLogin) {
     fun getInstructors(): LiveData<Resource<List<Instructor>>> {
         val data = MutableLiveData<Resource<List<Instructor>>>()
         serviceJoGa.getInstructors().enqueue(object : Callback<Instructors>{
@@ -357,11 +358,18 @@ class Repository(private val serviceJoGa: ServiceJoGa, val serviceLogin: Service
 
     fun refreshToken(token: String, refreshToken: String): Resource<Login>{
         lateinit var data: Resource<Login>
-        val response = serviceLogin.relogin(token, refreshToken).execute().body()
+        var error: Exception? = null
+        var response: Login? = null
+        try {
+            response = serviceLogin.relogin(token, refreshToken).execute().body()
+        } catch (ex: Exception) {
+            error = ex
+        }
+
         data = if (response != null) {
             Resource(Status.Success, response)
         } else {
-            Resource(Status.Fail, null)
+            Resource(Status.Fail, null, error)
         }
         return data
     }
